@@ -7,29 +7,31 @@
     "light": "#60A5FA",
     "dark": "#1D4ED8"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.png",
   "navigation": {
     "tabs": [
       {
         "tab": "Guides",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "First steps",
             "pages": [
               "index",
-              "quickstart",
-              "development"
+              "get_started"
             ]
           },
           {
-            "group": "Essentials",
+            "group": "VideoFusion",
+            "icon": "video",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "video-api/overview",
+              "video-api/texttovideo",
+              "video-api/imgtovideo",
+              "video-api/texttovideo-ultra",
+              "video-api/image-to-video-ultra",
+              "video-api/scene-maker",
+              "video-api/base64-to-url",
+              "video-api/fetchvideo"
             ]
           }
         ]
@@ -88,8 +90,8 @@
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Go to modelslab.com",
+      "href": "https://modelslab.com"
     }
   },
   "footer": {
