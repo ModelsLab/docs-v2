@@ -1,0 +1,83 @@
+---
+title: "Enterprise: Fashion Endpoint"
+---
+
+## Overview[​](#overview "Direct link to Overview")
+
+This endpoint allows you to wear a cloth image sample on an existing model body. The ideal input images should have white background, fully visible model body, and the cloth should be an individual piece.
+
+![Fashion endpoint result](\images\enterprise-api\image-editing\assets\images\Fashion-ae35005b2e022cc90044d7760c301db9.jpg)
+
+<Warning>
+  Make sure you add your [s3 details](/enterprise-api/general/update-s3-details) for `video` server, so you can receive image generated in your bucket. Images generated without s3 details being added will be delete after **24 hours**
+</Warning>
+
+## Request[​](#request "Direct link to Request")
+
+```
+--request POST 'https://modelslab.com/api/v1/enterprise/image_editing/fashion' \
+```
+
+Make a `POST` request to [https://modelslab.com/api/v1/enterprise/image\_editing/fashion](https://modelslab.com/api/v1/enterprise/image_editing/fashion) endpoint and pass the required parameters as a request body to the endpoint.
+
+## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
+
+| Parameter                 | Description                                                                                                             |
+| :------------------------ | :---------------------------------------------------------------------------------------------------------------------- |
+| **key**                   | Your API Key used for request authorization                                                                             |
+| **init\_image**           | Image URL of the model to try the dress on                                                                              |
+| **cloth\_image**          | Cloth/Dress URL for the garment to try-on                                                                               |
+| **cloth\_type**           | One of `upper_body`, `lower_body` or `dresses` based on where the garment is to be worn                                 |
+| **prompt**                | Text prompt with description of the things you want in the image to be generated                                        |
+| **negative\_prompt**      | Items you don't want in the image                                                                                       |
+| **num\_inference\_steps** | Number of denoising steps. Value accepted are 21,31 or 41.                                                              |
+| **temp**                  | it accepts `true` or `false`. Default: `false`. If it is set to `true`, then generated image will be removed in 24hours |
+| **guidance\_scale**       | Scale for classifier-free guidance (minimum: 1; maximum: 20)                                                            |
+| **webhook**               | Set an URL to get a POST API call once the image generation is complete.                                                |
+| **track\_id**             | This ID is returned in the response to the webhook API call. This will be used to identify the webhook request.         |
+
+## Example[​](#example "Direct link to Example")
+
+### Body[​](#body "Direct link to Body")
+
+Body
+
+```
+{   "key": "",   "prompt": ":A realistic photo of a model wearing a beautiful t-shirt",   "negative_prompt": "Low quality, unrealistic, bad cloth, warped cloth",   "init_image": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/5dzoZ9qWI2FQxwceFDb3zULRtwCRmF-metaZjA5NjMyX3BhcmVudF8xXzE2NTMwMDMzODguanBn-.jpg",   "cloth_image": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/5BDmwvtizESFRO24uGDW1iu1u5TXhB-metaM2JmZmFkY2U5NDNkOGU3MDJhZDE0YTk2OTY2NjQ0NjYuanBn-.jpg",   "cloth_type": "upper_body",   "guidance_scale": 7.5,   "num_inference_steps": 21,   "seed": null,   "temp": false,   "webhook": null,   "track_id": null }
+```
+
+### Request[​](#request-1 "Direct link to Request")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({   "key": "",   "prompt": "A realistic photo of a model wearing a beautiful t-shirt",   "negative_prompt": "Low quality, unrealistic, bad cloth, warped cloth",   "init_image": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/5dzoZ9qWI2FQxwceFDb3zULRtwCRmF-metaZjA5NjMyX3BhcmVudF8xXzE2NTMwMDMzODguanBn-.jpg",   "cloth_image": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/5BDmwvtizESFRO24uGDW1iu1u5TXhB-metaM2JmZmFkY2U5NDNkOGU3MDJhZDE0YTk2OTY2NjQ0NjYuanBn-.jpg",   "cloth_type": "upper_body",   "guidance_scale": 7.5,   "num_inference_steps": 21,   "seed": null,   "temp": false,   "webhook": null,   "track_id": null  });var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v1/enterprise/image_editing/fashion", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [   "key" =>  "",   "prompt" => "A realistic photo of a model wearing a beautiful t-shirt",   "negative_prompt" =>  "Low quality, unrealistic, bad cloth, warped cloth",   "init_image" => "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/5dzoZ9qWI2FQxwceFDb3zULRtwCRmF-metaZjA5NjMyX3BhcmVudF8xXzE2NTMwMDMzODguanBn-.jpg",   "cloth_image": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/5BDmwvtizESFRO24uGDW1iu1u5TXhB-metaM2JmZmFkY2U5NDNkOGU3MDJhZDE0YTk2OTY2NjQ0NjYuanBn-.jpg",   "cloth_type" => "upper_body",   "guidance_scale" => 7.5,   "num_inference_steps" => 21,   "seed" => null,   "temp" => false,   "webhook" => null,   "track_id" =>  null ];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v1/enterprise/image_editing/fashion',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v1/enterprise/image_editing/fashion',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({   "key": "",   "prompt" => "A realistic photo of a model wearing a beautiful t-shirt",   "negative_prompt": "Low quality, unrealistic, bad cloth, warped cloth",   "init_image" => "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/5dzoZ9qWI2FQxwceFDb3zULRtwCRmF-metaZjA5NjMyX3BhcmVudF8xXzE2NTMwMDMzODguanBn-.jpg",   "cloth_image": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/5BDmwvtizESFRO24uGDW1iu1u5TXhB-metaM2JmZmFkY2U5NDNkOGU3MDJhZDE0YTk2OTY2NjQ0NjYuanBn-.jpg",   "cloth_type": "upper_body",   "guidance_scale": 7.5,   "num_inference_steps": 21,   "seed": null,   "temp": false,   "webhook": null,   "track_id": null   })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v1/enterprise/image_editing/fashion"payload = json.dumps({   "key": "",   "prompt" => "A realistic photo of a model wearing a beautiful t-shirt",   "negative_prompt": "Low quality, unrealistic, bad cloth, warped cloth",   "init_image" => "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/5dzoZ9qWI2FQxwceFDb3zULRtwCRmF-metaZjA5NjMyX3BhcmVudF8xXzE2NTMwMDMzODguanBn-.jpg",   "cloth_image": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/5BDmwvtizESFRO24uGDW1iu1u5TXhB-metaM2JmZmFkY2U5NDNkOGU3MDJhZDE0YTk2OTY2NjQ0NjYuanBn-.jpg",   "cloth_type": "upper_body",   "guidance_scale": 7.5,   "num_inference_steps": 21,   "seed": null,   "temp": false,   "webhook": None,   "track_id": None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+       OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\": \"\",\n   \"prompt\": \"A realistic photo of a model wearing a beautiful white top.\",\n   \"negative_prompt\": \"Low quality, unrealistic, bad cloth, warped cloth\",\n   \"image\": \"https://www.vstar.in/media/cache/350x0/catalog/product/f/0/f09632_parent_1_1653003388.jpg\",\n   \"cloth_image\": \"https://thumbs.dreamstime.com/b/plain-hollow-female-tank-top-shirt-isolated-white-background-30020169.jpg\",\n   \"cloth_type\": \"upper_body\",\n   \"guidance_scale\": 8.0,\n   \"num_inference_steps\": 21,\n   \"seed\": 128915590,\n   \"temp\": \"no\",\n   \"webhook\": null,\n   \"track_id\": null \n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v1/enterprise/image_editing/fashion")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
+```
+
+### Response[​](#response "Direct link to Response")
+
+Example Response
+
+```
+{    {    "status": "success",    "generationTime": 3.13963508605957,    "id": 13204,    "output": [],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/generations/284c4f3d-4bf6-4bad-a603-d2a1948de0cf.png"    ],    "meta": {        "base64": "no",        "cloth": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/5BDmwvtizESFRO24uGDW1iu1u5TXhB-metaM2JmZmFkY2U5NDNkOGU3MDJhZDE0YTk2OTY2NjQ0NjYuanBn-.jpg",        "cloth_type": "upper_body",        "file_prefix": "284c4f3d-4bf6-4bad-a603-d2a1948de0cf",        "guidance_scale": 7.5,        "image": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/5dzoZ9qWI2FQxwceFDb3zULRtwCRmF-metaZjA5NjMyX3BhcmVudF8xXzE2NTMwMDMzODguanBn-.jpg",        "negative_prompt": "low quality",        "num_inference_steps": 20,        "num_samples": 1,        "outdir": "out",        "prompt": ":A realistic photo of a model wearing a beautiful t-shirt",        "refine_face": "yes",        "scale": 5,        "seed": 70128919,        "temp": false,    }}}
+```

@@ -1,0 +1,88 @@
+---
+title: "Specific Video Swap Endpoint"
+---
+
+## Overview[​](#overview "Direct link to Overview")
+
+The Specific Video Swap endpoint allows swapping specific faces in a video based on a reference image.
+
+[Open in Playground 🚀](https://videofusion.playground.modelslab.com/deepfake)
+
+## Request[​](#request "Direct link to Request")
+
+```
+--request POST 'https://modelslab.com/api/v6/deepfake/specific_video_swap' \
+```
+
+Make a `POST` request to [https://modelslab.com/api/v6/deepfake/specific\_video\_swap](https://modelslab.com/api/v6/deepfake/specific_video_swap) endpoint and pass the required parameters in the request body.
+
+## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
+
+| **Parameter**        | **Description**                                                                   | **Values**         |
+| -------------------- | --------------------------------------------------------------------------------- | ------------------ |
+| **key**              | Your unique API key used for authorization.                                       | String             |
+| **init\_image**      | The image containing multiple faces to be swapped.                                | URL                |
+| **init\_video**      | The video containing the face(s) to replace the faces in the image.               | URL                |
+| **reference\_image** | A reference image containing the specific face to swap from the initial image.    | URL                |
+| **output\_format**   | The desired output format of the video (e.g., `mp4`).                             | String (e.g., mp4) |
+| **watermark**        | Indicates if the generated result should include a watermark. Defaults to `true`. | TRUE or FALSE      |
+| **webhook**          | A URL to receive a POST API call once the video generation is complete.           | URL                |
+| **track\_id**        | An ID included in the webhook response to identify the request.                   | Integer            |
+
+[Open in Playground 🚀](https://videofusion.playground.modelslab.com/deepfake)
+
+## Example[​](#example "Direct link to Example")
+
+### Body[​](#body "Direct link to Body")
+
+Body
+
+```
+{    "key": "",    "init_video": "https://tawk.link/6332cd5154f06e12d8971855/vc/66d997a6a2bc5fe2b627a250/v/4239c555189b772d5ca1bd5aa4bf872c4c12a07e/sdfsdfsdf.mp4",    "init_image" :"https://images-ext-1.discordapp.net/external/rJOvGZHIWsIijkfvCn5dByZNh_RfZZxUIiyyo7yOFIY/https/images.hindustantimes.com/rf/image_size_630x354/HT/p2/2017/12/27/Pictures/_1e5bc084-ead1-11e7-ad70-11504944e689.jpg?format=webp&width=984&height=553",    "reference_image": "https://images-ext-1.discordapp.net/external/Z8sBOyxEy9tsqkd9gsNK2dHZh-Em6LDqrmyjcDeMXII/https/i.ibb.co/2PGZ3p7/lmao.png?format=webp&quality=lossless&width=412&height=662",    "output_format": "mp4",    "webhook": null,    "track_id": null}
+```
+
+### Request[​](#request-1 "Direct link to Request")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({    "key": "",    "init_video": "https://tawk.link/6332cd5154f06e12d8971855/vc/66d997a6a2bc5fe2b627a250/v/4239c555189b772d5ca1bd5aa4bf872c4c12a07e/sdfsdfsdf.mp4",    "init_image" :"https://images-ext-1.discordapp.net/external/rJOvGZHIWsIijkfvCn5dByZNh_RfZZxUIiyyo7yOFIY/https/images.hindustantimes.com/rf/image_size_630x354/HT/p2/2017/12/27/Pictures/_1e5bc084-ead1-11e7-ad70-11504944e689.jpg?format=webp&width=984&height=553",    "reference_image": "https://images-ext-1.discordapp.net/external/Z8sBOyxEy9tsqkd9gsNK2dHZh-Em6LDqrmyjcDeMXII/https/i.ibb.co/2PGZ3p7/lmao.png?format=webp&quality=lossless&width=412&height=662",    "output_format": "mp4",    "webhook": null,    "track_id": null});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v6/deepfake/specific_video_swap", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [    "key" => "",    "init_video" => "https://tawk.link/6332cd5154f06e12d8971855/vc/66d997a6a2bc5fe2b627a250/v/4239c555189b772d5ca1bd5aa4bf872c4c12a07e/sdfsdfsdf.mp4",    "init_image"  => "https://images-ext-1.discordapp.net/external/rJOvGZHIWsIijkfvCn5dByZNh_RfZZxUIiyyo7yOFIY/https/images.hindustantimes.com/rf/image_size_630x354/HT/p2/2017/12/27/Pictures/_1e5bc084-ead1-11e7-ad70-11504944e689.jpg?format=webp&width=984&height=553",    "reference_image"=>"https://images-ext-1.discordapp.net/external/Z8sBOyxEy9tsqkd9gsNK2dHZh-Em6LDqrmyjcDeMXII/https/i.ibb.co/2PGZ3p7/lmao.png?format=webp&quality=lossless&width=412&height=662",    "output_format"=>"mp4",    "webhook" =>  null,    "track_id" => null];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v6/deepfake/specific_video_swap',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v6/deepfake/specific_video_swap',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key": "",    "init_video": "https://tawk.link/6332cd5154f06e12d8971855/vc/66d997a6a2bc5fe2b627a250/v/4239c555189b772d5ca1bd5aa4bf872c4c12a07e/sdfsdfsdf.mp4",    "init_image" :"https://images-ext-1.discordapp.net/external/rJOvGZHIWsIijkfvCn5dByZNh_RfZZxUIiyyo7yOFIY/https/images.hindustantimes.com/rf/image_size_630x354/HT/p2/2017/12/27/Pictures/_1e5bc084-ead1-11e7-ad70-11504944e689.jpg?format=webp&width=984&height=553",    "reference_image": "https://images-ext-1.discordapp.net/external/Z8sBOyxEy9tsqkd9gsNK2dHZh-Em6LDqrmyjcDeMXII/https/i.ibb.co/2PGZ3p7/lmao.png?format=webp&quality=lossless&width=412&height=662",    "output_format": "mp4",    "webhook": null,    "track_id": null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v6/deepfake/specific_video_swap"payload = json.dumps({    "key": "",    "init_video": "https://tawk.link/6332cd5154f06e12d8971855/vc/66d997a6a2bc5fe2b627a250/v/4239c555189b772d5ca1bd5aa4bf872c4c12a07e/sdfsdfsdf.mp4",    "init_image" :"https://images-ext-1.discordapp.net/external/rJOvGZHIWsIijkfvCn5dByZNh_RfZZxUIiyyo7yOFIY/https/images.hindustantimes.com/rf/image_size_630x354/HT/p2/2017/12/27/Pictures/_1e5bc084-ead1-11e7-ad70-11504944e689.jpg?format=webp&width=984&height=553",    "reference_image": "https://images-ext-1.discordapp.net/external/Z8sBOyxEy9tsqkd9gsNK2dHZh-Em6LDqrmyjcDeMXII/https/i.ibb.co/2PGZ3p7/lmao.png?format=webp&quality=lossless&width=412&height=662",    "output_format": "mp4",    "webhook": None,    "track_id": None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\r\n    \"key\": \" \",\r\n    \"init_video\": \"https://tawk.link/6332cd5154f06e12d8971855/vc/66d997a6a2bc5fe2b627a250/v/4239c555189b772d5ca1bd5aa4bf872c4c12a07e/sdfsdfsdf.mp4\",\r\n    \"init_image\" :\"https://images-ext-1.discordapp.net/external/rJOvGZHIWsIijkfvCn5dByZNh_RfZZxUIiyyo7yOFIY/https/images.hindustantimes.com/rf/image_size_630x354/HT/p2/2017/12/27/Pictures/_1e5bc084-ead1-11e7-ad70-11504944e689.jpg?format=webp&width=984&height=553\",\r\n    \"reference_image\": \"https://images-ext-1.discordapp.net/external/Z8sBOyxEy9tsqkd9gsNK2dHZh-Em6LDqrmyjcDeMXII/https/i.ibb.co/2PGZ3p7/lmao.png?format=webp&quality=lossless&width=412&height=662\",\r\n   \"output_format\": \"mp4\",\r\n    \"webhook\": null,\r\n    \"track_id\": null\r\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v6/deepfake/specific_video_swap")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
+```
+
+### Response[​](#response "Direct link to Response")
+
+* Success
+* Processing
+* Error
+
+```
+{    "status": "success",    "generationTime": 10.1,    "id": 298,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/ef3c52e9-fc99-473b-932d-d6ee3d064a88.mp4"    ],    "proxy_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/ef3c52e9-fc99-473b-932d-d6ee3d064a88.mp4"    ],    "meta": {        "file_prefix": "ef3c52e9-fc99-473b-932d-d6ee3d064a88",        "outdir": "out/",        "output_format": "mp4",        "reference_image": "https://images-ext-1.discordapp.net/external/Z8sBOyxEy9tsqkd9gsNK2dHZh-Em6LDqrmyjcDeMXII/https/i.ibb.co/2PGZ3p7/lmao.png?format=webp&quality=lossless&width=412&height=662",        "seed": 3230606555,        "source_image": "https://images-ext-1.discordapp.net/external/rJOvGZHIWsIijkfvCn5dByZNh_RfZZxUIiyyo7yOFIY/https/images.hindustantimes.com/rf/image_size_630x354/HT/p2/2017/12/27/Pictures/_1e5bc084-ead1-11e7-ad70-11504944e689.jpg?format=webp&width=984&height=553",        "target_video_url": "https://tawk.link/6332cd5154f06e12d8971855/vc/66d997a6a2bc5fe2b627a250/v/4239c555189b772d5ca1bd5aa4bf872c4c12a07e/sdfsdfsdf.mp4",        "watermark": "yes",        "watermark_image": null    }}
+```
+
+```
+{    "status": "processing",    "tip": "Your video is processing in background, you can get this video using fetch API",    "eta": 605,    "message": "Try to fetch request after seconds estimated",    "fetch_result": "https://modelslab.com/api/v6/deepfake/fetch/298",    "id": 298,    "output": [],    "meta": {        "file_prefix": "ef3c52e9-fc99-473b-932d-d6ee3d064a88",        "outdir": "out/",        "output_format": "mp4",        "reference_image": "https://images-ext-1.discordapp.net/external/Z8sBOyxEy9tsqkd9gsNK2dHZh-Em6LDqrmyjcDeMXII/https/i.ibb.co/2PGZ3p7/lmao.png?format=webp&quality=lossless&width=412&height=662",        "seed": 3230606555,        "source_image": "https://images-ext-1.discordapp.net/external/rJOvGZHIWsIijkfvCn5dByZNh_RfZZxUIiyyo7yOFIY/https/images.hindustantimes.com/rf/image_size_630x354/HT/p2/2017/12/27/Pictures/_1e5bc084-ead1-11e7-ad70-11504944e689.jpg?format=webp&width=984&height=553",        "target_video_url": "https://tawk.link/6332cd5154f06e12d8971855/vc/66d997a6a2bc5fe2b627a250/v/4239c555189b772d5ca1bd5aa4bf872c4c12a07e/sdfsdfsdf.mp4",        "watermark": "yes",        "watermark_image": null    },    "future_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/ef3c52e9-fc99-473b-932d-d6ee3d064a88.mp4"    ]}
+```
+
+```
+{    "status": "error",    "message": "Error message"}
+```

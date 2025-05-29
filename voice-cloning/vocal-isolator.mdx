@@ -1,0 +1,89 @@
+---
+title: "Vocal Isolator Endpoint"
+---
+
+## Overview[​](#overview "Direct link to Overview")
+
+The endpoint separate the vocals from the background music of a video and audio file.
+
+## Request[​](#request "Direct link to Request")
+
+```
+--request POST 'https://modelslab.com/api/v6/voice/vocal_isolator' \
+```
+
+Make a `POST` request to [https://modelslab.com/api/v6/voice/vocal\_isolator](https://modelslab.com/api/v6/voice/vocal_isolator) endpoint and pass the required parameters as a request body.
+
+## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
+
+| Parameter       | Description                                                                               | Values               |
+| --------------- | ----------------------------------------------------------------------------------------- | -------------------- |
+| **key**         | The API key used for authenticating your request.                                         | String               |
+| **init\_video** | The video you want to isolate the vocals from.                                            | URL                  |
+| **init\_audio** | The audio you want to isolate the vocal from                                              | URL                  |
+| **base64**      | Indicates whether the input audio file is provided in base64 format. Defaults to `false`. | TRUE or FALSE        |
+| **seed**        | Random seed for reproducibility (if 0, a random seed is generated)                        | Int (random number ) |
+| **webhook**     | A URL where the API will send a POST request once the audio generation is complete.       | URL                  |
+| **track\_id**   | An ID returned in the API response, used to identify webhook requests                     | Integral value       |
+
+Either `init_video` or `init_audio` is required. If both are provided, the `init_video` takes precedence.
+
+[Open in Playground 🚀](https://audiogen.modelslab.com/)
+
+***
+
+## Example[​](#example "Direct link to Example")
+
+### Body[​](#body "Direct link to Body")
+
+Body
+
+```
+{    "key": "", "init_video": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/IxEA4uB8vGWAk1BQVvqbciebfgGFMK-metadmlkZW9wbGF5YmFja180Lm1wNA==-.mp4", "seed":234322, "base64": false "webhook": null, "track_id": null   }
+```
+
+### Request[​](#request-1 "Direct link to Request")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({ "key": "", "init_video": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/IxEA4uB8vGWAk1BQVvqbciebfgGFMK-metadmlkZW9wbGF5YmFja180Lm1wNA==-.mp4", "output_format":"mp3", "seed":234322, "base64": false "webhook": null, "track_id": null  });var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v6/voice/vocal_isolator", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [ "key" => "", "init_video" => "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/IxEA4uB8vGWAk1BQVvqbciebfgGFMK-metadmlkZW9wbGF5YmFja180Lm1wNA==-.mp4", "seed" => 234322, "base64" => false "webhook" => null, "track_id" => null ];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v6/voice/vocal_isolator',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v6/voice/vocal_isolator',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({     "key": "",     "init_video": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/IxEA4uB8vGWAk1BQVvqbciebfgGFMK-metadmlkZW9wbGF5YmFja180Lm1wNA==-.mp4",     "seed":234322,     "base64": false     "webhook": null,     "track_id": null   })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v6/voice/vocal_isolator"payload = json.dumps({ "key": "", "init_video": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/IxEA4uB8vGWAk1BQVvqbciebfgGFMK-metadmlkZW9wbGF5YmFja180Lm1wNA==-.mp4", "seed":234322, "base64": false "webhook": None, "track_id": None })headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\":\"\",\n    \"init_video\": \"https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/IxEA4uB8vGWAk1BQVvqbciebfgGFMK-metadmlkZW9wbGF5YmFja180Lm1wNA==-.mp4\",\n    \"output_format\":\"mp3\",\n    \"seed\":234322\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v6/voice/vocal_isolator")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .addHeader("X-API-Key", "{{token}}")  .build();Response response = client.newCall(request).execute();
+```
+
+### Response[​](#response "Direct link to Response")
+
+* Success
+* Processing
+* Error
+
+```
+{    "status": "success",    "generationTime": 1.904285192489624,    "id": 334166,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/a3f8a04c-26c1-485c-b3b5-5c6244a0d395.wav"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/generations/a3f8a04c-26c1-485c-b3b5-5c6244a0d395.wav"    ],    "meta": {        "input_audio": "tmp/rock_en.wav",        "file_type": "wav",        "device": "cuda",        "webhook": null,        "id": null,        "filename": "a3f8a04c-26c1-485c-b3b5-5c6244a0d395",        "temp": "no",        "base64": "no"    }}
+```
+
+```
+{    "status": "processing",    "tip": "Your vocal isolation is processing in background, you can get the result using fetch API",    "eta": 100,    "message": "Try to fetch request after seconds estimated",    "fetch_result": "https://modelslab.com/api/v6/voice/fetch/334166",    "id": 334166,    "output": [],    "future_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/a3f8a04c-26c1-485c-b3b5-5c6244a0d395.wav"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/generations/a3f8a04c-26c1-485c-b3b5-5c6244a0d395.wav"    ],    "meta": {        "input_audio": "tmp/rock_en.wav",        "file_type": "wav",        "device": "cuda",        "webhook": null,        "id": null,        "filename": "a3f8a04c-26c1-485c-b3b5-5c6244a0d395",        "temp": "no",        "base64": "no"    }}
+```
+
+```
+{    "status": "error",    "message": "Error message"}
+```

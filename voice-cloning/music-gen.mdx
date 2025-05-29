@@ -1,0 +1,125 @@
+---
+title: "Music Gen Endpoint"
+---
+
+## Overview[​](#overview "Direct link to Overview")
+
+The **Music Generation API** allows you to generate music based on textual prompts and optional conditioning melodies. This API is ideal for applications in music composition, sound design, and creative audio projects.
+
+[Open in Playground 🚀](https://audiogen.modelslab.com/music-gen)
+
+### **Sample Generation**[​](#sample-generation "Direct link to sample-generation")
+
+***
+
+### **Example 1: Without Conditioning**[​](#example-1-without-conditioning "Direct link to example-1-without-conditioning")
+
+#### **Prompt:**[​](#prompt "Direct link to prompt")
+
+> sitar, tabla, flute, Indian classical, fusion, meditative, G# minor, 96 bpm
+
+#### **Generated Music:**[​](#generated-music "Direct link to generated-music")
+
+[Your browser does not support the audio tag.](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/fa492b5b-499e-4029-b64b-927821440009.wav)
+
+***
+
+### **Example 2: With Conditioning**[​](#example-2-with-conditioning "Direct link to example-2-with-conditioning")
+
+#### **Prompt:**[​](#prompt-1 "Direct link to prompt-1")
+
+> marimba, percussion, bass, tropical house, melodic riff, G# minor, 96 bpm
+
+#### **Conditioning Melody:**[​](#conditioning-melody "Direct link to conditioning-melody")
+
+[Your browser does not support the audio tag.](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/IxizU51vL2IwiEjy6XtvbDECa9f16E-metaU2hhcGUgb2YgeW91IFJpbmd0b25lIO+9nO+9nCBJbnN0cnVtZW50YWwgQkdNIO+9nO+9nCBMSUdIVCBHT0pPLndhdg==-.wav)
+
+> **Note:** The conditioning melody link should be to a downloadable music file, not a YouTube Video/Music link.
+
+#### **Generated Music:**[​](#generated-music-1 "Direct link to generated-music-1")
+
+[Your browser does not support the audio tag.](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/62de0ed6-28cd-41c3-b09b-56d013c7cedd.wav)
+
+***
+
+## Request[​](#request "Direct link to Request")
+
+```
+--request POST 'https://modelslab.com/api/v6/voice/music_gen' 
+```
+
+## Watch the Musicgen API Demo video to see it in action Postman.[​](#watch-the-musicgen-api-demo-video-to-see-it-in-action-postman "Direct link to Watch the Musicgen API Demo video to see it in action Postman.")
+
+Make a `POST` request to [https://modelslab.com/api/v6/voice/music\_gen](https://modelslab.com/api/v6/voice/music_gen) endpoint and pass the required parameters as a request body.
+
+## **Body Attributes**[​](#body-attributes "Direct link to body-attributes")
+
+| Parameter                      | Description                                                                | Values            |
+| ------------------------------ | -------------------------------------------------------------------------- | ----------------- |
+| **key**                        | Your API Key for request authorization.                                    | `string`          |
+| **prompt**                     | The input text for music generation.                                       | `string`          |
+| **init\_audio** (optional)     | Conditioning melody for music generation (upload URL, up to 30 seconds).   | `URL`             |
+| **sampling\_rate** (optional)  | Sampling rate of the generated music. Default: `32000`, Minimum: `10000`.  | `integer`         |
+| **max\_new\_token** (optional) | Maximum number of new tokens for music generation. Range: `256` to `1024`. | `integer`         |
+| **base64**                     | Whether the input sound clip is in base64 format. Default: `false`.        | `TRUE` or `FALSE` |
+| **temp**                       | Temporary links for regions blocking storage site access.                  | `TRUE` or `FALSE` |
+| **webhook**                    | URL to receive a POST callback upon completion.                            | `URL`             |
+| **track\_id**                  | Unique ID for identifying webhook responses.                               | `integer`         |
+
+[Open in Playground 🚀](https://audiogen.modelslab.com/music-gen)
+
+## Example[​](#example "Direct link to Example")
+
+### Body[​](#body "Direct link to Body")
+
+Body
+
+```
+{    "key":"",    "prompt":"marimba, percussion, bass, tropical house, melodic riff, G# minor, 96 bpm",    "init_audio":"https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/IxizU51vL2IwiEjy6XtvbDECa9f16E-metaU2hhcGUgb2YgeW91IFJpbmd0b25lIO+9nO+9nCBJbnN0cnVtZW50YWwgQkdNIO+9nO+9nCBMSUdIVCBHT0pPLndhdg==-.wav",    "sampling_rate":32000,    "base64":false,    "temp": false,    "webhook": null,    "track_id": null}
+```
+
+### Request[​](#request-1 "Direct link to Request")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({    "key":"",    "prompt":"marimba, percussion, bass, tropical house, melodic riff, G# minor, 96 bpm",    "init_audio":"https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/IxizU51vL2IwiEjy6XtvbDECa9f16E-metaU2hhcGUgb2YgeW91IFJpbmd0b25lIO+9nO+9nCBJbnN0cnVtZW50YWwgQkdNIO+9nO+9nCBMSUdIVCBHT0pPLndhdg==-.wav",    "sampling_rate":32000,    "base64":false,    "temp": false,    "webhook": null,    "track_id": null});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v6/voice/music_gen", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [    "key" => "",    "prompt" => "marimba, percussion, bass, tropical house, melodic riff, G# minor, 96 bpm",    "init_audio" => "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/IxizU51vL2IwiEjy6XtvbDECa9f16E-metaU2hhcGUgb2YgeW91IFJpbmd0b25lIO+9nO+9nCBJbnN0cnVtZW50YWwgQkdNIO+9nO+9nCBMSUdIVCBHT0pPLndhdg==-.wav",    "sampling_rate" => 32000,    "base64" => false,    "temp" => false,    "webhook" => null,    "track_id" => null ];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v6/voice/music_gen',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v6/voice/music_gen',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({     "key":"",    "prompt":"marimba, percussion, bass, tropical house, melodic riff, G# minor, 96 bpm",    "init_audio":"https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/IxizU51vL2IwiEjy6XtvbDECa9f16E-metaU2hhcGUgb2YgeW91IFJpbmd0b25lIO+9nO+9nCBJbnN0cnVtZW50YWwgQkdNIO+9nO+9nCBMSUdIVCBHT0pPLndhdg==-.wav",    "sampling_rate":32000,    "base64":true,    "temp": false,    "webhook": null,    "track_id": null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v6/voice/music_gen"payload = json.dumps({    "key":"",    "prompt":"marimba, percussion, bass, tropical house, melodic riff, G# minor, 96 bpm",    "init_audio":"https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/IxizU51vL2IwiEjy6XtvbDECa9f16E-metaU2hhcGUgb2YgeW91IFJpbmd0b25lIO+9nO+9nCBJbnN0cnVtZW50YWwgQkdNIO+9nO+9nCBMSUdIVCBHT0pPLndhdg==-.wav",    "sampling_rate":32000,    "base64":False,    "temp": False,    "webhook": None,    "track_id":None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\":\"\",\n    \"prompt\":\"marimba, percussion, bass, tropical house, melodic riff, G# minor, 96 bpm\",\n    \"init_audio\":\"https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/IxizU51vL2IwiEjy6XtvbDECa9f16E-metaU2hhcGUgb2YgeW91IFJpbmd0b25lIO+9nO+9nCBJbnN0cnVtZW50YWwgQkdNIO+9nO+9nCBMSUdIVCBHT0pPLndhdg==-.wav\",\n    \"sampling_rate\":32000,\n    \"base64\":true,\n    \"temp\": false,\n    \"webhook\":\"\",\n    \"track_id\":\"\"\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v6/voice/music_gen")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
+```
+
+### Response[​](#response "Direct link to Response")
+
+* Success
+* Processing
+* Error
+
+```
+{    "status": "success",    "generationTime": 7.8882811069488525,    "id": 310815,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/e143f35e-8d69-4530-80df-e0cad201b3f6.wav"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/generations/30ea5aee-fba8-4b65-bf71-2fc2b6b197c0.wav"    ],    "meta": {        "base64": "no",        "conditioning_melody": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/IxizU51vL2IwiEjy6XtvbDECa9f16E-metaU2hhcGUgb2YgeW91IFJpbmd0b25lIO+9nO+9nCBJbnN0cnVtZW50YWwgQkdNIO+9nO+9nCBMSUdIVCBHT0pPLndhdg==-.wav",        "filename": "30ea5aee-fba8-4b65-bf71-2fc2b6b197c0.wav",        "input_text": "marimba, percussion, bass, tropical house, melodic riff, G# minor, 96 bpm",        "max_new_token": 256,        "sampling_rate": 32000,        "temp": "no"    }}
+```
+
+```
+{    "status": "processing",    "tip": "Your music generation is processing in background, you can get the result using fetch API",    "eta": 100,    "message": "Try to fetch request after seconds estimated",    "fetch_result": "https://modelslab.com/api/v6/voice/fetch/310815",    "id": 310815,    "output": [],    "future_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/e143f35e-8d69-4530-80df-e0cad201b3f6.wav"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/generations/30ea5aee-fba8-4b65-bf71-2fc2b6b197c0.wav"    ],    "meta": {        "base64": "no",        "conditioning_melody": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/IxizU51vL2IwiEjy6XtvbDECa9f16E-metaU2hhcGUgb2YgeW91IFJpbmd0b25lIO+9nO+9nCBJbnN0cnVtZW50YWwgQkdNIO+9nO+9nCBMSUdIVCBHT0pPLndhdg==-.wav",        "filename": "30ea5aee-fba8-4b65-bf71-2fc2b6b197c0.wav",        "input_text": "marimba, percussion, bass, tropical house, melodic riff, G# minor, 96 bpm",        "max_new_token": 256,        "sampling_rate": 32000,        "temp": "no"    }}
+```
+
+```
+{    "status": "error",    "message": "Error message"}
+```

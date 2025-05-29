@@ -1,0 +1,134 @@
+---
+title: "Text to Video Ultra Endpoint"
+---
+
+## Overview[​](#overview "Direct link to Overview")
+
+Text to Video Ultra endpoint helps generate HD video, with high quality and high resolution, from a given text prompt.
+
+Each API call costs $0.2, which is equivalent to 31 credits from the Basic Plan (3250 API Credits) and 43 credits from the Standard Plan (10000 API Credits).
+
+Experience the next level of AI-driven video creation with Text-to-Video Ultra today! 🚀
+
+[Open in Playground 🚀](https://videofusion.playground.modelslab.com/)
+
+### Example Video Generation[​](#example-video-generation "Direct link to Example Video Generation")
+
+Previous
+
+[Video 5](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/FWeftvb9Gi2qdTzIENBXazbTIJYbC5-metaZmJlNjI4MTEtYTFiNS00OTY4LTkzZWEtYTgwMThjN2FkZjVkLm1wNA==-.mp4)
+
+[Video 1](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/kBahGxYhJv9e1w5eX44ysQpza6z2hX-metaMmYzYmNlOTItZDEyNy00N2EyLWIzYjMtNzg5YWFmNDZiYjczLm1wNA==-.mp4)
+
+[Video 2](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/ooPfIpDKoQc9o0AUyY2o3ywqbUpmJM-metadDJ2LTE0Ql84MzJfNDgwXzFfMV9NYWtlX21lX2FfYmFkX2NoZWVzeV9hbmRfa2l0c2NoeV90aWt0b2tfdmlkZW9fd2l0XzIwMjUwMzA2XzA4MTczMC5tcDQ=-.mp4)
+
+[Video 3](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/R1RcY49EKLk600eJMDDQaKU3ZM0rc7-metaZTllYWIyOTYtNGM1Yy00NzgyLWI2OTctZGVlNWY3ODhkYmFmLm1wNA==-.mp4)
+
+[Video 4](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/OAe5oRkjceBqtjYaG06dojlKM0swrC-metaZDM3ZDQ0YjctNjU0OC00YTk4LTljODMtYjIxZTM3NjcxZjc3Lm1wNA==-.mp4)
+
+[Video 5](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/FWeftvb9Gi2qdTzIENBXazbTIJYbC5-metaZmJlNjI4MTEtYTFiNS00OTY4LTkzZWEtYTgwMThjN2FkZjVkLm1wNA==-.mp4)
+
+[Video 1](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/kBahGxYhJv9e1w5eX44ysQpza6z2hX-metaMmYzYmNlOTItZDEyNy00N2EyLWIzYjMtNzg5YWFmNDZiYjczLm1wNA==-.mp4)
+
+[Video 2](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/ooPfIpDKoQc9o0AUyY2o3ywqbUpmJM-metadDJ2LTE0Ql84MzJfNDgwXzFfMV9NYWtlX21lX2FfYmFkX2NoZWVzeV9hbmRfa2l0c2NoeV90aWt0b2tfdmlkZW9fd2l0XzIwMjUwMzA2XzA4MTczMC5tcDQ=-.mp4)
+
+[Video 3](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/R1RcY49EKLk600eJMDDQaKU3ZM0rc7-metaZTllYWIyOTYtNGM1Yy00NzgyLWI2OTctZGVlNWY3ODhkYmFmLm1wNA==-.mp4)
+
+[Video 4](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/OAe5oRkjceBqtjYaG06dojlKM0swrC-metaZDM3ZDQ0YjctNjU0OC00YTk4LTljODMtYjIxZTM3NjcxZjc3Lm1wNA==-.mp4)
+
+[Video 5](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/FWeftvb9Gi2qdTzIENBXazbTIJYbC5-metaZmJlNjI4MTEtYTFiNS00OTY4LTkzZWEtYTgwMThjN2FkZjVkLm1wNA==-.mp4)
+
+Next
+
+* 1
+* 2
+* 3
+* 4
+* 5
+
+## Request[​](#request "Direct link to Request")
+
+```
+--request POST 'https://modelslab.com/api/v6/video/text2video_ultra' \
+```
+
+Make a `POST` request to [https://modelslab.com/api/v6/video/text2video\_ultra](https://modelslab.com/api/v6/video/text2video_ultra) endpoint and pass the required parameters in the request body.
+
+## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
+
+| Parameter                 | Description                                                                                                         | Values                                      |
+| :------------------------ | :------------------------------------------------------------------------------------------------------------------ | :------------------------------------------ |
+| **key**                   | Your API Key used for request authorization.                                                                        | key                                         |
+| **prompt**                | Text prompt with a description of the things you want in the video to be generated.                                 | String                                      |
+| **negative\_prompt**      | Items you don't want in the video.                                                                                  | String                                      |
+| **seed**                  | Seed is used to reproduce results. The same seed will give you the same image again. Pass null for a random number. | Integer or `null`                           |
+| **resolution**            | the resolution of the generated output                                                                              | The maximum is 480 .                        |
+| **num\_frames**           | The number of frames in the generated video. Default is 81                                                          | Integer                                     |
+| **num\_inference\_steps** | Number of denoising steps. Default is 25. Maximum is 30.                                                            | Integer (Default: 25, Max: 30).             |
+| **guidance\_scale**       | Scale for classifier-free guidance. Minimum is 0.0, maximum is 8.0                                                  | min: 0.0, max: 8.0                          |
+| **fps**                   | Frames per second rate of the generated video. Should be less than `num_frames`                                     | Max 16                                      |
+| **portrait**              | Indicates whether the output should be in portrait mode. It accepts `true` or `false`. Default `false`              | Boolean                                     |
+| **sample\_shift**         | Controls the sampling shift in the generation process. Default value is `5`                                         | Integer (Default: 5, Max: 10)               |
+| **temp**                  | If `true`, stores the video in temporary storage (cleaned every 24 hours). Default is `false`.                      | The default is `false`. (`TRUE` or `FALSE`) |
+| **webhook**               | A URL to receive a POST API call once the video generation is complete.                                             | URL                                         |
+| **track\_id**             | A unique ID used in the webhook response to identify the request.                                                   | string                                      |
+
+[Open in Playground 🚀](https://videofusion.playground.modelslab.com/)
+
+## Example[​](#example "Direct link to Example")
+
+### Body[​](#body "Direct link to Body")
+
+When the model\_id is `cogvideox`, the request json looks like so,
+
+Body
+
+```
+{     "key":"",     "prompt":"Space Station in space",    "negative_prompt":"low quality",    "resolution":480,    "num_frames":81,    "num_inference_steps":30,    "guidance_scale": 5.0,    "shift_sample":3,    "fps":16,    "webhook": null,    "track_id":null}
+```
+
+### Request[​](#request-1 "Direct link to Request")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({    "key":"",    "prompt":"Space Station in space",    "negative_prompt":"low quality",    "resolution":480,    "num_frames":81,    "num_inference_steps":30,    "guidance_scale": 5.0,    "shift_sample":3,    "fps":16,    "webhook": null,    "track_id":null});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v6/video/text2video_ultra", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [    "key" => "",    "prompt" =>"Space Station in space",    "negative_prompt" => "low quality",    "resolution" => 480,    "num_frames" => 81,    "num_inference_steps" => 30,    "guidance_scale" => 5.0,    "shift_sample" => 3,    "fps" => 16,    "webhook" =>  null,    "track_id" => null ];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v6/video/text2video_ultra',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v6/video/text2video_ultra',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key":"",     "prompt":"Space Station in space",    "negative_prompt":"low quality",    "resolution":480,    "num_frames":81,    "num_inference_steps":30,    "guidance_scale": 5.0,    "shift_sample":3,    "fps":16,    "webhook": null,    "track_id":null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v6/video/text2video_ultra"payload = json.dumps({    "key":"",    "prompt":"Space Station in space",    "negative_prompt":"low quality",    "resolution":480,    "num_frames":81,    "num_inference_steps":30,    "guidance_scale": 5.0,    "shift_sample":3,    "fps":16,    "webhook":None,    "track_id":None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\":\"23bpzO5IEtpcpQ0CBpJrAhgrb07tWtOoHKX9oZqBpPWbhX1kcGkhnvwJimTo\",\n    \"prompt\":\"Space Station in space\",\n    \"negative_prompt\":\"low quality\",\n    \"resolution\":480,\n    \"num_frames\":81,\n    \"num_inference_steps\":30,\n    \"guidance_scale\": 5.0,\n    \"shift_sample\":3,\n    \"fps\":16,\n    \"webhook\": null,\n    \"track_id\":null\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v6/video/text2video_ultra")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .addHeader("X-API-Key", "{{token}}")  .build();Response response = client.newCall(request).execute();
+```
+
+### Response[​](#response "Direct link to Response")
+
+* Success
+* Processing
+* Error
+
+```
+{    "status": "success",    "generationTime": 4.49,    "id": 147,    "output": [        "https://modelslab-bom.s3.amazonaws.com/generations/09e6f35f-2a47-4271-82a5-9cfff8bbc43a.mp4"    ],    "proxy_links": [        "https://modelslab-bom.s3.amazonaws.com/generations/09e6f35f-2a47-4271-82a5-9cfff8bbc43a.mp4"    ],    "meta": {        "base64": "no",        "file_prefix": "a51498bf-0eee-44c5-a473-81cc867b288a",        "fps": 16,        "guidance_scale": 5,        "id": null,        "instant_response": "no",        "negative_prompt": "low quality",        "num_frames": 81,        "num_inference_steps": 30,        "opacity": 0.8,        "output_type": "mp4",        "padding_down": 10,        "padding_right": 10,        "portrait": "no",        "prompt": "Space Station in space",        "rescale": "yes",        "resolution": 480,        "sample_shift": 3,        "scale_down": 6,        "seed": 3644269522,        "temp": "no",        "track_id": null,        "watermark": "no",        "webhook": null    },    "future_links": [        "https://modelslab-bom.s3.amazonaws.com/generations/09e6f35f-2a47-4271-82a5-9cfff8bbc43a.mp4"    ]}
+```
+
+```
+{    "status": "processing",    "tip": "Your video is processing in background, you can get this video using fetch API",    "eta": 960,    "message": "Try to fetch request after seconds estimated",    "fetch_result": "https://modelslab.com/api/v6/video/fetch/147",    "id": 147,    "output": [],    "meta": {        "base64": "no",        "file_prefix": "a51498bf-0eee-44c5-a473-81cc867b288a",        "fps": 16,        "guidance_scale": 5,        "id": null,        "instant_response": "no",        "negative_prompt": "low quality",        "num_frames": 81,        "num_inference_steps": 30,        "opacity": 0.8,        "output_type": "mp4",        "padding_down": 10,        "padding_right": 10,        "portrait": "no",        "prompt": "Space Station in space",        "rescale": "yes",        "resolution": 480,        "sample_shift": 3,        "scale_down": 6,        "seed": 3644269522,        "temp": "no",        "track_id": null,        "watermark": "no",        "webhook": null    },    "future_links": [        "https://modelslab-bom.s3.amazonaws.com/generations/09e6f35f-2a47-4271-82a5-9cfff8bbc43a.mp4"    ]}
+```
+
+```
+{    "status": "error",    "message": "Error message"}
+```

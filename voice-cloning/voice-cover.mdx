@@ -1,0 +1,128 @@
+---
+title: "Voice Cover Endpoint"
+---
+
+## Overview[​](#overview "Direct link to Overview")
+
+The Voice Cover endpoint allows you to transform a song or audio file into a different voice using a provided model. Find all available voice models [HERE](https://modelslab.com/models/category/voice-cloning).
+
+[Open in Playground 🚀](https://audiogen.modelslab.com/)
+
+## **Sample Music Generation Output**[​](#sample-music-generation-output "Direct link to sample-music-generation-output")
+
+***
+
+### **Input Audio**[​](#input-audio "Direct link to input-audio")
+
+A YouTube video or music link provided for processing:
+
+[Your browser does not support the audio tag.](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/DYqigyvdTOFbPYGhMIKPiiOXWdPNVu-metaTHVpcyBGb25zaSAtIERlc3BhY2l0byByaW5ndG9uZSByZWZyYWluLndhdg==-.wav)
+
+***
+
+### **Generated Output**[​](#generated-output "Direct link to generated-output")
+
+* **Voice Model ID**: *arianagrande*
+* **Processed Music Output**:
+
+[Your browser does not support the audio tag.](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/VjkRkyhn9VxNzuKPfw3O692qQ9aCvb-metaZDRlNDY1MTQtZGEwYi00ZWI4LWI0NjctMzBjOWMzMTI4ODNjKDEpLndhdg==-.wav)
+
+***
+
+## Request[​](#request "Direct link to Request")
+
+```
+--request POST 'https://modelslab.com/api/v6/voice/voice_cover' \
+```
+
+## Watch the Voice Cover API Demo video to see it in action Postman.[​](#watch-the-voice-cover-api-demo-video-to-see-it-in-action-postman "Direct link to Watch the Voice Cover API Demo video to see it in action Postman.")
+
+Make a `POST` request to [https://modelslab.com/api/v6/voice/voice\_cover](https://modelslab.com/api/v6/voice/voice_cover) endpoint and pass the required parameters as a request body.
+
+## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
+
+| Parameter                        | Description                                                                                                                                                                    | Values                                               |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------- |
+| **key**                          | The API key used to authorize the request.                                                                                                                                     | String                                               |
+| **init\_audio**                  | A URL (YouTube links supported; **shorts/live/playlist links not supported**) or valid `.wav` file in base64 format for the audio to be cloned.                                | MP3/WAV URL or base64 data                           |
+| **model\_id**                    | The ID of the voice cloning model. Get the model ID from the provided source.                                                                                                  | String                                               |
+| **pitch**                        | Controls the pitch transformation between voices.                                                                                                                              | "m2f", "f2m" or "none"                               |
+| **algorithm**                    | The algorithm used for voice cloning. Defaults to `rmvpe`.                                                                                                                     | "rmvpe" or "mangio-crepe"                            |
+| **rate**                         | Controls the generated voice's resemblance to the training data.                                                                                                               | Floating point, between 0 to 1                       |
+| **seed**                         | The seed value to reproduce results. Use null for a random value.                                                                                                              | Integral value                                       |
+| **language**                     | The language for the voice. arabic, brazilian portuguese, chinese, dutch, french, hindi, hungarian, italian, japanese, korean, polish, russian, turkish. Default is `english`. | String                                               |
+| **emotion**                      | Emotion of the voice. Defaults to `neutral`.                                                                                                                                   | One of \["neutral", "happy", "sad", "angry", "dull"] |
+| **speed**                        | The playback speed of the speaker. Defaults to 1.0.                                                                                                                            | Float (0.5x to 2x)                                   |
+| **radius**                       | Median filtering length to reduce voice artifacts. Defaults to 3.                                                                                                              | Float (0 to 3)                                       |
+| **mix**                          | Controls the loudness similarity to the original audio. Defaults to 0.25.                                                                                                      | Float (0 to 1)                                       |
+| **hop\_length**                  | The frequency of pitch analysis. Used with the mangio-crepe algorithm.                                                                                                         | Integral value                                       |
+| **originality**                  | Controls similarity to the original vocals' voiceless consonants. Defaults to 0.33                                                                                             | Float (0 to 1)                                       |
+| **lead\_voice\_volume\_delta**   | Adjusts the volume of lead vocals.                                                                                                                                             | Integer (-5 to +5)                                   |
+| **backup\_voice\_volume\_delta** | Adjusts the volume of backup vocals.                                                                                                                                           | Integer (-5 to +5)                                   |
+| **instrument\_volume\_delta**    | Adjusts the volume of instrumental tracks.                                                                                                                                     | Integer (-5 to +5)                                   |
+| **reverb\_size**                 | Specifies the size of the reverb room. Defaults to 0.15.                                                                                                                       | Float (0 to 1)                                       |
+| **wetness**                      | The reverb applied to generated vocals. Defaults to 0.2.                                                                                                                       | Float (0 to 1)                                       |
+| **dryness**                      | The reverb applied to original vocals. Defaults to 0.8.                                                                                                                        | Float (0 to 1)                                       |
+| **damping**                      | The damping factor for high frequencies in the reverb. Defaults to 0.7.                                                                                                        | Float (0 to 1)                                       |
+| **base64**                       | Indicates if the input sound clip is in base64 format. Defaults to false.                                                                                                      | TRUE or FALSE                                        |
+| **temp**                         | Specifies if temporary links should be used valid for 24 hours. This can help if access to certain storage sites is blocked. Defaults to "false" .                             | TRUE or FALSE                                        |
+| **webhook**                      | URL to receive a POST API call once the audio generation is complete.                                                                                                          | URL                                                  |
+| **track\_id**                    | An ID returned in the API response, used to identify the webhook request.                                                                                                      | Integral value                                       |
+
+[Open in Playground 🚀](https://audiogen.modelslab.com/)
+
+## Example[​](#example "Direct link to Example")
+
+### Body[​](#body "Direct link to Body")
+
+Body
+
+```
+{"key": "","init_audio": "https://www.youtube.com/watch?v=ixkoVwKQaJg","model_id": "zoro","pitch": "none","rate": 0.5,"radius": 3,"mix": 0.25,"algorithm": "rmvpe","hop_length": 128,"originality": 0.5,"lead_voice_volume_delta": "+1","backup_voice_volume_delta": "-2","instrument_volume_delta":"+2","reverb_size": 0.15,"wetness": 0.2,"dryness": 0.8,"damping": 0.7,"base64": false,"temp": false,"webhook": null,"track_id" : null}
+```
+
+### Request[​](#request-1 "Direct link to Request")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({"key": "","init_audio": "https://www.youtube.com/watch?v=ixkoVwKQaJg","model_id": "zoro","pitch": "none","rate": 0.5,"radius": 3,"mix": 0.25,"algorithm": "rmvpe","hop_length": 128,"originality": 0.5,"lead_voice_volume_delta": "+1","backup_voice_volume_delta": "-2","instrument_volume_delta":"+2","reverb_size": 0.15,"wetness": 0.2,"dryness": 0.8,"damping": 0.7,"base64": false,"temp": false,"webhook": null,"track_id" : null});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v6/voice/voice_cover", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = ["key" => "","init_audio" => "https://www.youtube.com/watch?v=ixkoVwKQaJg","model_id" => "zoro","pitch" => "none","rate" => 0.5,"radius" => 3,"mix" => 0.25,"algorithm" => "rmvpe","hop_length" => 128,"originality" => 0.5,"lead_voice_volume_delta" => "+1","backup_voice_volume_delta" => "-2","instrument_volume_delta":"+2","reverb_size" =>  0.15,"wetness" => 0.2,"dryness" => 0.8,"damping" => 0.7,"base64" => false,"temp" => false,"webhook" => null,"track_id"  => null];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v6/voice/voice_cover',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v6/voice/voice_cover',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({   "key": "","init_audio": "https://www.youtube.com/watch?v=ixkoVwKQaJg","model_id": "zoro","pitch": "none","rate": 0.5,"radius": 3,"mix": 0.25,"algorithm": "rmvpe","hop_length": 128,"originality": 0.5,"lead_voice_volume_delta": "+1","backup_voice_volume_delta": "-2","instrument_volume_delta":"+2","reverb_size": 0.15,"wetness": 0.2,"dryness": 0.8,"damping": 0.7,"base64": false,"temp": false,"webhook": null,"track_id" : null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v6/voice/voice_cover"payload = json.dumps({ "key": "","init_audio": "https://www.youtube.com/watch?v=ixkoVwKQaJg","model_id": "zoro","pitch": "none","rate": 0.5,"radius": 3,"mix": 0.25,"algorithm": "rmvpe","hop_length": 128,"originality": 0.5,"lead_voice_volume_delta": "+1","backup_voice_volume_delta": "-2","instrument_volume_delta":"+2","reverb_size": 0.15,"wetness": 0.2,"dryness": 0.8,"damping": 0.7,"base64": False,"temp": False,"webhook": None,"track_id" : None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n        \"key\":\"\",\n        \"init_audio\": \"https://www.youtube.com/watch?v=ixkoVwKQaJg\",\n        \"model_id\": \"zoro\",\n        \"pitch\": \"none\",\n        \"rate\": 0.5,\n        \"radius\": 3,\n        \"mix\": 0.25,\n        \"algorithm\": \"rmvpe\",\n        \"hop_length\": 128,\n        \"originality\": 0.5,\n        \"lead_voice_volume_delta\": \"+1\",\n        \"backup_voice_volume_delta\": \"-2\",\n        \"instrument_volume_delta\":\"+2\",\n        \"reverb_size\": 0.15,\n        \"wetness\": 0.2,\n        \"dryness\": 0.8,\n        \"damping\": 0.7,\n        \"base64\": false,\n        \"temp\": false\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v6/voice/voice_cover")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
+```
+
+### Response[​](#response "Direct link to Response")
+
+* Success
+* Processing
+* Error
+
+```
+{    "generationTime": 1.5732920169830322,    "id": 10,    "links":  [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/0af5d107-4143-4095-8552-c7c5a3af237e.wav"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/generations/0af5d107-4143-4095-8552-c7c5a3af237e.wav"    ],    "audio_time": 231.6,    "meta": {        "algorithm": "rmvpe",        "backup_voice_volume_delta": -2,        "base64": "no",        "damping": 0.7,        "dryness": 0.8,        "emotion": "Neutral",        "filename": "0af5d107-4143-4095-8552-c7c5a3af237e.wav",        "hop_length": 128,        "id": null,        "input_sound_clip": "https://www.youtube.com/watch?v=ixkoVwKQaJg",        "instrument_volume_delta": 2,        "is_youtube": true,        "language": "english",        "lead_voice_volume_delta": 1,        "mix": 0.25,        "model_id": "zoro",        "originality": 0.5,        "paths": "/my_workspace/server/tmp/input-0af5d107-4143-4095-8552-c7c5a3af237e.wav",        "pitch": "none",        "radius": 3,        "rate": 0.5,        "reverb_size": 0.15,        "seed": 3012382833,        "speed": 1,        "temp": "no",        "track_id": null,        "webhook": null,        "wetness": 0.2    }}
+```
+
+```
+{    "status": "processing",    "tip": "Your voice cover is processing in background, you can get the result using fetch API",    "eta": 100,    "message": "Try to fetch request after seconds estimated",    "fetch_result": "https://modelslab.com/api/v6/voice/fetch/10",    "id": 10,    "output": [],    "future_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/0af5d107-4143-4095-8552-c7c5a3af237e.wav"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/generations/0af5d107-4143-4095-8552-c7c5a3af237e.wav"    ],    "meta": {        "algorithm": "rmvpe",        "backup_voice_volume_delta": -2,        "base64": "no",        "damping": 0.7,        "dryness": 0.8,        "emotion": "Neutral",        "filename": "0af5d107-4143-4095-8552-c7c5a3af237e.wav",        "hop_length": 128,        "id": null,        "input_sound_clip": "https://www.youtube.com/watch?v=ixkoVwKQaJg",        "instrument_volume_delta": 2,        "is_youtube": true,        "language": "english",        "lead_voice_volume_delta": 1,        "mix": 0.25,        "model_id": "zoro",        "originality": 0.5,        "paths": "/my_workspace/server/tmp/input-0af5d107-4143-4095-8552-c7c5a3af237e.wav",        "pitch": "none",        "radius": 3,        "rate": 0.5,        "reverb_size": 0.15,        "seed": 3012382833,        "speed": 1,        "temp": "no",        "track_id": null,        "webhook": null,        "wetness": 0.2    }}
+```
+
+```
+{    "status": "error",    "message": "Error message"}
+```

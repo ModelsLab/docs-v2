@@ -1,0 +1,109 @@
+---
+title: "Song Generator Endpoint"
+---
+
+## Overview[​](#overview "Direct link to Overview")
+
+The Song Generator endpoint enables you to generate song by providing a lyrics along with a valid audio URL as reference
+
+#### **Prompt**[​](#prompt "Direct link to prompt")
+
+> \[00:10.00]Moonlight spills through broken blinds \[00:13.20]Your shadow dances on the dashboard shrine \[00:16.85]Neon ghosts in gasoline rain.
+
+***
+
+### **Generated Output**[​](#generated-output "Direct link to generated-output")
+
+[Your browser does not support the audio tag.](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/Qm6kNXFiGICybinbBmrmXaunvUJxYk-metaOTc5ZjkzYjktYWY0MS00OWZlLTg5MzUtZmQwOGUxOGRkYjFkLndhdg==-.wav)
+
+***
+
+### **Compilation of Generations**[​](#compilation-of-generations "Direct link to compilation-of-generations")
+
+## Request[​](#request "Direct link to Request")
+
+```
+--request POST 'https://modelslab.com/api/v6/voice/song_generator' \
+```
+
+Make a `POST` request to [https://modelslab.com/api/v6/voice/song\_generator](https://modelslab.com/api/v6/voice/song_generator) endpoint and pass the required parameters as a request body.
+
+## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
+
+| Parameter              | Description                                                                                                                         | Values                    |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
+| **key**                | The API key used for authenticating your request.                                                                                   |                           |
+| **lyrics\_generation** | pass `true` if you want to generate lyrics automatically                                                                            | Boolean `true` or `false` |
+| **lyrics**             | Lyrics in LRC format (timestamp + lyrics). The only supported language is English. It is required if `lyrics_generation` is `false` | Text                      |
+| **prompt**             | Topic for lyrics generation. It is required if `lyrics_generation` is `true` The only supported language is English.                | Text                      |
+| **init\_audio**        | URL to the reference audio file to influencestyle or Copy the style of music.                                                       | MP3/WAV URL               |
+| **webhook**            | A URL where the API will send a POST request once the audio generation is complete.                                                 | URL                       |
+| **track\_id**          | An ID returned in the API response, used to identify webhook requests                                                               | Integral value            |
+
+***
+
+## Example[​](#example "Direct link to Example")
+
+### Body[​](#body "Direct link to Body")
+
+Sample request when `lyrics_generation` is `false`
+
+Body
+
+```
+{       "key":"",    "lyrics_generation":false,    "init_audio":"https://storage.googleapis.com/falserverless/model_tests/diffrythm/rock_en.wav",    "lyrics":"[00:10.00]Moonlight spills through broken blinds [00:13.20]Your shadow dances on the dashboard shrine [00:16.85]Neon ghosts in gasoline rain",    "webhook":null,     "track_id": null}
+```
+
+Sample request when `lyrics_generation` is `true`
+
+Body
+
+```
+{       "key":"",    "lyrics_generation":true,    "init_audio":"https://storage.googleapis.com/falserverless/model_tests/diffrythm/rock_en.wav",    "prompt":"Love over everything",    "webhook":null,     "track_id": null}
+```
+
+### Request[​](#request-1 "Direct link to Request")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({   "key":"",    "lyrics_generation":false,    "init_audio":"https://storage.googleapis.com/falserverless/model_tests/diffrythm/rock_en.wav",    "lyrics":"[00:10.00]Moonlight spills through broken blinds [00:13.20]Your shadow dances on the dashboard shrine [00:16.85]Neon ghosts in gasoline rain",    "webhook":null,     "track_id": null});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v6/voice/song_generator", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [ "key":"",    "lyrics_generation" => false,    "init_audio" => "https://storage.googleapis.com/falserverless/model_tests/diffrythm/rock_en.wav",    "lyrics" => "[00:10.00]Moonlight spills through broken blinds [00:13.20]Your shadow dances on the dashboard shrine [00:16.85]Neon ghosts in gasoline rain",    "webhook" => null,     "track_id" =>  null ];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v6/voice/song_generator',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v6/voice/song_generator',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({     "key":"",    "lyrics_generation":false,    "init_audio":"https://storage.googleapis.com/falserverless/model_tests/diffrythm/rock_en.wav",    "lyrics":"[00:10.00]Moonlight spills through broken blinds [00:13.20]Your shadow dances on the dashboard shrine [00:16.85]Neon ghosts in gasoline rain",    "webhook":null,     "track_id": null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v6/voice/song_generator"payload = json.dumps({   "key":"",    "lyrics_generation":false,    "init_audio":"https://storage.googleapis.com/falserverless/model_tests/diffrythm/rock_en.wav",    "lyrics":"[00:10.00]Moonlight spills through broken blinds [00:13.20]Your shadow dances on the dashboard shrine [00:16.85]Neon ghosts in gasoline rain",    "webhook":None,     "track_id": None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\":\"\",\n    \"lyrics_generation\":false,\n    \"init_audio\":\"https://storage.googleapis.com/falserverless/model_tests/diffrythm/rock_en.wav\",\n    \"lyrics\":\"[00:10.00]Moonlight spills through broken blinds [00:13.20]Your shadow dances on the dashboard shrine [00:16.85]Neon ghosts in gasoline rain\",\n    \"webhook\":null, \n    \"track_id\": null\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v6/voice/song_generator")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .addHeader("X-API-Key", "{{token}}")  .build();Response response = client.newCall(request).execute();
+```
+
+### Response[​](#response "Direct link to Response")
+
+* Success
+* Processing
+* Error
+
+```
+{    "status": "success",    "generationTime": 1.904285192489624,    "id": 334166,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/a3f8a04c-26c1-485c-b3b5-5c6244a0d395.wav"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/generations/a3f8a04c-26c1-485c-b3b5-5c6244a0d395.wav"    ],    "meta": {        "lrc": "[00:10.00]Moonlight spills through broken blinds [00:13.20]Your shadow dances on the dashboard shrine [00:16.85]Neon ghosts in gasoline rain",        "ref_audio_path": "tmp/rock_en.wav",        "text_prompt": null,        "prompt_type": "audio",        "seed": 42,        "randomize_seed": false,        "steps": 32,        "cfg_strength": 4,        "file_type": "wav",        "odeint_method": "euler",        "music_duration": "95s",        "device": "cuda",        "webhook": null,        "id": null,        "filename": "a3f8a04c-26c1-485c-b3b5-5c6244a0d395",        "temp": "no",        "track_id": null,        "base64": "no"    }}
+```
+
+```
+{    "status": "processing",    "tip": "Your song is processing in background, you can get this song using fetch API",    "eta": 100,    "message": "Try to fetch request after seconds estimated",    "fetch_result": "https://modelslab.com/api/v6/voice/fetch/334166",    "id": 334166,    "output": [],    "future_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/a3f8a04c-26c1-485c-b3b5-5c6244a0d395.wav"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/generations/a3f8a04c-26c1-485c-b3b5-5c6244a0d395.wav"    ],    "meta": {        "lrc": "[00:10.00]Moonlight spills through broken blinds [00:13.20]Your shadow dances on the dashboard shrine [00:16.85]Neon ghosts in gasoline rain",        "ref_audio_path": "tmp/rock_en.wav",        "text_prompt": null,        "prompt_type": "audio",        "seed": 42,        "randomize_seed": false,        "steps": 32,        "cfg_strength": 4,        "file_type": "wav",        "odeint_method": "euler",        "music_duration": "95s",        "device": "cuda",        "webhook": null,        "id": null,        "filename": "a3f8a04c-26c1-485c-b3b5-5c6244a0d395",        "temp": "no",        "track_id": null,        "base64": "no"    }}
+```
+
+```
+{    "status": "error",    "message": "Error message"}
+```

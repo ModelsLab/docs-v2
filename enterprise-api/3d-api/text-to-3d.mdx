@@ -1,0 +1,87 @@
+---
+title: "Enterprise: Text to 3D Endpoint"
+---
+
+## Overview[​](#overview "Direct link to Overview")
+
+This endpoint generates an 3d object from a text prompt.
+
+<Warning>
+  Make sure you add your [s3 details](/enterprise-api/general/update-s3-details) for `3d` server, so you can receive image generated in your bucket. Images generated without s3 details being added will be delete after **24hours**
+</Warning>
+
+## Request[​](#request "Direct link to Request")
+
+```
+--request POST 'https://modelslab.com/api/v1/enterprise/3d/text_to_3d' \
+```
+
+Make a `POST` request to [https://modelslab.com/api/v1/enterprise/3d/text\_to\_3d](https://modelslab.com/api/v1/enterprise/3d/text_to_3d) endpoint and pass the required parameters as a request body.
+
+## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
+
+| Parameter                                                             | Description                                                                                      |
+| :-------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------- |
+| **key** (required)                                                    | Your API Key used for request authorization.                                                     |
+| **model\_id** (optional, default=`"instantmesh"`)                     | Specifies the model to be used for the 3D generation.                                            |
+| **prompt** (required, default=`"A full body mesh of a dog"`)          | Text prompt for generating the 3D model.                                                         |
+| **render** (optional, default=`false`)                                | Whether to render a NeRF video of the 3D model.                                                  |
+| **output\_format** (optional, `glb`,`obj`,`stl`,`ply` default=`obj` ) | The format of the output 3d object                                                               |
+| **negative\_prompt** (optional, default=`""`)                         | Negative prompt to exclude certain elements.                                                     |
+| **guidance\_scale** (optional, default=`1`)                           | Controls the guidance between the prompt and the generated model.                                |
+| **num\_inference\_steps** (required, default=`10`)                    | The number of inference steps to generate the 3D model.                                          |
+| **ss\_guidance\_strength** (optional, float, default: 7.5)            | Controls the strength of style-space guidance.                                                   |
+| **ss\_sampling\_steps** (optional, int, default: 12)                  | Number of sampling steps for style-space guidance. Range: 1 to 50                                |
+| **slat\_guidance\_strength** (optional, float, default: 3.0)          | Controls the strength of slat guidance. Range: 0.0 to 10.0                                       |
+| **slat\_sampling\_steps** (optional, int, default: 12)                | Number of sampling steps for slat guidance. Range: 1 to 50.                                      |
+| **mesh\_simplify** (optional, float, default: 0.90)                   | number of triangles to randomly skip render. Degree of mesh simplification. Range: 0.90 to 0.98. |
+| **foreground\_ratio** (required, default=`0.85`)                      | Ratio of the foreground size to the image size. Only used when `remove_bg` is enabled.           |
+| **remove\_bg** (optional, default=`false`)                            | If true, removes the background from the generated 3D model.                                     |
+| **resolution** (required, default=`256`, max=`512`)                   | Specifies the resolution of the generated 3D model.                                              |
+| **chunk\_size** (optional, default=`8192`, max=`12000`)               | Size of chunks used in the process (affects VRAM usage).                                         |
+| **seed** (optional, default=`0`)                                      | Random seed for reproducibility. If set to 0, a random seed will be generated.                   |
+| **temp** (optional, default=`"no"`)                                   | If set to `"yes"`, the output files will be saved in a temporary directory.                      |
+
+## Example[​](#example "Direct link to Example")
+
+### Body[​](#body "Direct link to Body")
+
+Body
+
+```
+{    "key": "",    "foreground_ratio": "0.85",    "prompt": "a ghost wearing white bedsheet",    "num_inference_steps": "30",    "resolution": 512,    "guidance_scale": "3",    "ss_sampling_steps": 50,    "slat_sampling_steps": 50,    "output_format":"glb",    "seed": 0,    "temp": "no",    "webhook": null,    "track_id": null}
+```
+
+### Request[​](#request-1 "Direct link to Request")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({    "key": "",    "foreground_ratio": "0.85",    "prompt": "a ghost wearing white bedsheet",    "num_inference_steps": "30",    "resolution": 512,    "guidance_scale": "3",    "ss_sampling_steps": 50,    "output_format":"glb",    "slat_sampling_steps": 50,    "seed": 0,    "temp": "no",    "webhook": null,    "track_id": null});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v1/enterprise/3d/text_to_3d", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [    "key": "",    "foreground_ratio" => "0.85",    "prompt": "a ghost wearing white bedsheet",    "num_inference_steps" => "30",    "resolution" => 512,    "output_format" => "glb",    "guidance_scale" => "3",    "ss_sampling_steps" => 50,    "slat_sampling_steps" => 50,    "seed" => 0,    "temp" => "no",    "webhook" => null,    "track_id" => null];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v1/enterprise/3d/text_to_3d',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v1/enterprise/3d/text_to_3d',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key": "",    "foreground_ratio": "0.85",    "prompt": "a ghost wearing white bedsheet",    "num_inference_steps": "30",    "resolution": 512,    "guidance_scale": "3",    "output_format":"glb",    "ss_sampling_steps": 50,    "slat_sampling_steps": 50,    "seed": 0,    "temp": "no",    "webhook": null,    "track_id": null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v1/enterprise/3d/text_to_3d"payload = json.dumps({   "key": "",    "foreground_ratio": "0.85",    "prompt": "a ghost wearing white bedsheet",    "num_inference_steps": "30",    "resolution": 512,    "guidance_scale": "3",    "ss_sampling_steps": 50,    "slat_sampling_steps": 50,    "output_format":"glb",    "seed": 0,    "temp": "no",    "webhook": None,    "track_id": None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n  \"key\": \"\",\n  \"model_id\": \"instantmesh\",\n  \"prompt\": \"A full body mesh of a dog\",\n  \"negative_prompt\": \"\",\n  \"guidance_scale\": 0.0,\n  \"num_inference_steps\": 10,\n  \"foreground_ratio\": 0.85,\n  \"remove_bg\": false,\n  \"resolution\": 256,\n  \"chunk_size\": 8192,\n  \"seed\": 0,\n  \"temp\": \"no\"\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v1/enterprise/3d/text_to_3d")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
+```
+
+### Response[​](#response "Direct link to Response")
+
+```
+{    "status": "success",    "warning": "",    "id": null,    "generationTime": 20.85,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/out/3dfadd74-05e3-40cc-969a-96196d239162.obj"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/out/3dfadd74-05e3-40cc-969a-96196d239162.obj"    ],    "nsfw_content_detected": false,    "webhook_status": "",    "meta": {        "chunk_size": 8192,        "file_prefix": "3dfadd74-05e3-40cc-969a-96196d239162",        "foreground_ratio": ".85",        "guidance_scale": 10,        "negative_prompt": "low quality",        "num_inference_steps": 10,        "prompt": "Image of a car",        "remove_bg": true,        "render": false,        "resolution": 256,        "seed": 1782676780,        "temp": "no"    }}
+```

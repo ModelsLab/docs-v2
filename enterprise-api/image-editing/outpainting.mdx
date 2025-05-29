@@ -1,0 +1,86 @@
+---
+title: "Enterprise: Outpainting Endpoint"
+---
+
+## Overview[​](#overview "Direct link to Overview")
+
+This endpoint helps to outpaint by expanding the giving image
+
+![Outpainting endpoint result](\images\enterprise-api\image-editing\assets\images\Outpainting-f3a573d3b82f42a8177ad36204082feb.jpg)
+
+<Warning>
+  Make sure you add your [s3 details](/enterprise-api/general/update-s3-details) for `image_editing` server, so you can receive image generated in your bucket. Images generated without s3 details being added will be delete after **24hours**
+</Warning>
+
+## Request[​](#request "Direct link to Request")
+
+```
+--request POST 'https://modelslab.com/api/v1/enterprise/image_editing/outpaint' \
+```
+
+Make a `POST` request to [https://modelslab.com/api/v1/enterprise/image\_editing/outpaint](https://modelslab.com/api/v1/enterprise/image_editing/outpaint) endpoint and pass the required parameters as a request body to the endpoint.
+
+## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
+
+| Parameter                 | Description                                                                                                    | Values                             |
+| :------------------------ | :------------------------------------------------------------------------------------------------------------- | :--------------------------------- |
+| **key**                   | Your API Key used for request authorization                                                                    | key                                |
+| **prompt**                | The text prompt to guide image generation. Default: "high quality"                                             | string (default: "high quality")   |
+| **negative\_prompt**      | Aspects to avoid in the generated image. Default: "low quality"                                                | string (default: "low quality")    |
+| **image**                 | URL of the initial image to outpaint                                                                           | URL (example: valid image URL)     |
+| **width**                 | Width of the output image. Max: 1440. Default: 1280                                                            | integer (default: 1280, max: 1440) |
+| **height**                | Height of the output image. Max: 1440. Default: 720                                                            | integer (default: 720, max: 1440)  |
+| **overlap\_width**        | Width of the mask overlap area. Max: 42. Default: 10                                                           | integer (default: 10, max: 42)     |
+| **num\_inference\_steps** | Number of denoising steps. Max: 30. Default: 10                                                                | integer (default: 10, max: 30)     |
+| **guidance\_scale**       | How closely to follow the prompt. Default: 8.0                                                                 | float (default: 8.0)               |
+| **seed**                  | Seed for reproducible results (-1 or 0 for random)                                                             | integer (default: random)          |
+| **temp**                  | Whether to save output temporarily. Default: true                                                              | Boolean (default: true)            |
+| **base64**                | Whether the `image` is base64 encoded. Default: false                                                          | Boolean (default: false)           |
+| **webhook**               | Set a URL to get a POST API call once the image generation is complete                                         | URL                                |
+| **track\_id**             | This ID is returned in the response to the webhook API call. This will be used to identify the webhook request | Integral value                     |
+
+## Example[​](#example "Direct link to Example")
+
+### Body[​](#body "Direct link to Body")
+
+Body
+
+```
+{    "key": "",    "seed": 12345,    "width": 512,    "height": 512,    "prompt": "a majestic cat house, lush greenery, filled with plants, high quality, cartoonish, realistic, 4k",    "image": "https://i.ibb.co/wp0w7nt/1-d212fe65-f95c-4bbe-b275-99f0dedd901a.png",    "negative_prompt": "dull background, text, characters, symbols, unrealistic, repetitive background, boring background, bad, low quality, black background",    "overlap_width": 32,    "num_inference_steps": 15,    "guidance_scale": 8.0,    "temp": true,    "base64": false,    "webhook": null,    "track_id": null}
+```
+
+### Request[​](#request-1 "Direct link to Request")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({    "key": "",    "seed": 12345,    "width": 512,    "height": 512,    "prompt": "a majestic cat house, lush greenery, filled with plants, high quality, cartoonish, realistic, 4k",    "image": "https://i.ibb.co/wp0w7nt/1-d212fe65-f95c-4bbe-b275-99f0dedd901a.png",    "negative_prompt": "dull background, text, characters, symbols, unrealistic, repetitive background, boring background, bad, low quality, black background",    "overlap_width": 32,    "num_inference_steps": 15,    "guidance_scale": 8.0,    "temp": true,    "base64": false,    "webhook": null,    "track_id": null});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v1/enterprise/image_editing/outpaint", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [    "key"=>"",    "seed"=>12345,    "width"=>512,    "height"=>512,    "prompt"=>"a majestic cat house, lush greenery, filled with plants, high quality, cartoonish, realistic, 4k",    "image"=>"https://i.ibb.co/wp0w7nt/1-d212fe65-f95c-4bbe-b275-99f0dedd901a.png",    "negative_prompt"=>"dull background, text, characters, symbols, unrealistic, repetitive background, boring background, bad, low quality, black background",    "overlap_width"=>32,    "num_inference_steps"=>15,    "guidance_scale"=>8.0,    "temp"=>true,    "base64"=>false,    "webhook"=>null,    "track_id"=>null];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v1/enterprise/image_editing/outpaint',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v1/enterprise/image_editing/outpaint',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key": "",    "seed": 12345,    "width": 512,    "height": 512,    "prompt": "a majestic cat house, lush greenery, filled with plants, high quality, cartoonish, realistic, 4k",    "image": "https://i.ibb.co/wp0w7nt/1-d212fe65-f95c-4bbe-b275-99f0dedd901a.png",    "negative_prompt": "dull background, text, characters, symbols, unrealistic, repetitive background, boring background, bad, low quality, black background",    "overlap_width": 32,    "num_inference_steps": 15,    "guidance_scale": 8.0,    "temp": true,    "base64": false,    "webhook": null,    "track_id": null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v1/enterprise/image_editing/outpaint"payload = json.dumps({    "key": "",    "seed": 12345,    "width": 512,    "height": 512,    "prompt": "a majestic cat house, lush greenery, filled with plants, high quality, cartoonish, realistic, 4k",    "image": "https://i.ibb.co/wp0w7nt/1-d212fe65-f95c-4bbe-b275-99f0dedd901a.png",    "negative_prompt": "dull background, text, characters, symbols, unrealistic, repetitive background, boring background, bad, low quality, black background",    "overlap_width": 32,    "num_inference_steps": 15,    "guidance_scale": 8.0,    "temp": true,    "base64": false,    "webhook": None,    "track_id": None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+       OkHttpClient client = new OkHttpClient().newBuilder()  .build();    MediaType mediaType = MediaType.parse("application/json");    RequestBody body = RequestBody.create(mediaType, "{\n    \"key\":\"\",\n    \"seed\":12345,\n    \"width\":512,\n    \"height\":512,\n    \"prompt\":\"a majestic cat house, lush greenery, filled with plants, high quality, cartoonish, realistic, 4k\",\n    \"image\":\"https://i.ibb.co/wp0w7nt/1-d212fe65-f95c-4bbe-b275-99f0dedd901a.png\",\n    \"negative_prompt\":\"dull background, text, characters, symbols, unrealistic, repetitive background, boring background, bad, low quality, black background\",\n    \"overlap_width\": 32,\n    \"num_inference_steps\": 15,\n    \"guidance_scale\": 8.0,\n    \"temp\": true,\n    \"base64\": false\"\n}");    Request request = new Request.Builder()      .url("https://modelslab.com/api/v1/enterprise/image_editing/outpaint")      .method("POST", body)      .addHeader("Content-Type", "application/json")      .build();    Response response = client.newCall(request).execute();
+```
+
+### Response[​](#response "Direct link to Response")
+
+Example Response
+
+```
+{    "status": "success",    "generationTime": 5.230603456497192,    "id": 873,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/47b84646-fd81-4aaf-83fd-a25506b3d8d6.png"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/generations/47b84646-fd81-4aaf-83fd-a25506b3d8d6.png"    ],    "meta": {        "base64": "no",        "file_prefix": "870b62e7-77a5-46c4-a4c3-0dbf73efbbda",        "guidance_scale": 8,        "height": 512,        "init_image": "https://i.ibb.co/wp0w7nt/1-d212fe65-f95c-4bbe-b275-99f0dedd901a.png",        "negative_prompt": "dull background, text, characters, symbols, unrealistic, repetitive background, boring background, bad, low quality, black background",        "num_inference_steps": 15,        "opacity": 0.7,        "outdir": "out",        "overlap_width": 32,        "padding_down": 10,        "padding_right": 10,        "prompt": "a majestic cat house, lush greenery, filled with plants, high quality, cartoonish, realistic, 4k",        "scale_down": 6,        "seed": 12345,        "temp": "yes",        "watermark": "no",        "width": 512    }}
+```

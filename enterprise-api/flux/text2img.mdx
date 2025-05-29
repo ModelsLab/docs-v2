@@ -1,0 +1,80 @@
+---
+title: "Enterprise: Text to Image Endpoint"
+---
+
+## Overview[​](#overview "Direct link to Overview")
+
+This endpoint generates an image from a text prompt using flux model.
+
+<Warning>
+  Make sure you add your [s3 details](/enterprise-api/general/update-s3-details) for `flux` server, so you can receive image generated in your bucket. Images generated without s3 details being added will be delete after **24hours**
+</Warning>
+
+## Request[​](#request "Direct link to Request")
+
+```
+--request POST 'https://modelslab.com/api/v1/enterprise/flux/text2img' \
+```
+
+Make a `POST` request to [https://modelslab.com/api/v1/enterprise/flux/text2img](https://modelslab.com/api/v1/enterprise/flux/text2img) endpoint and pass the required parameters as a request body.
+
+## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
+
+| Parameter             | Description                                                                                                                                          |
+| :-------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **key**               | Your API Key used for request authorization.                                                                                                         |
+| **prompt**            | Text prompt with description of the things you want in the image to be generated.                                                                    |
+| **negative\_prompt**  | Items you don't want in the image.                                                                                                                   |
+| **width**             | Max Height: Width: 1024x1024.                                                                                                                        |
+| **height**            | Max Height: Width: 1024x1024.                                                                                                                        |
+| **samples**           | Number of images to be returned in response. The maximum value is 4.                                                                                 |
+| **safety\_checker**   | A checker for NSFW images. If such an image is detected, it will be replaced by a blank image.                                                       |
+| **seed**              | Seed is used to reproduce results, same seed will give you same image in return again. Pass *null* for a random number.                              |
+| **instant\_response** | queue response instantly before processing finishes instead of waiting a minimum amount of time **default**: `false`, **options**: `true` or `false` |
+| **base64**            | Get response as base64 string, **default**: `false`, **options**: `true` or `false`                                                                  |
+| **webhook**           | Set an URL to get a POST API call once the image generation is complete.                                                                             |
+| **track\_id**         | This ID is returned in the response to the webhook API call. This will be used to identify the webhook request.                                      |
+
+## Example[​](#example "Direct link to Example")
+
+### Body[​](#body "Direct link to Body")
+
+Body
+
+```
+{  "key" : "",  "prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner))",  "negative_prompt": "bad quality",  "width": "512",  "height": "512",  "safety_checker": false,  "seed": null,  "samples":1,  "base64":false,  "webhook": null,  "track_id": null}
+```
+
+### Request[​](#request-1 "Direct link to Request")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({   "key" : "",  "prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner))",  "negative_prompt": "bad quality",  "width": "512",  "height": "512",  "safety_checker": false,  "seed": null,  "samples":1,  "base64":false,  "webhook": null,  "track_id": null});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v1/enterprise/flux/text2img", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [    "key"  => "",  "prompt" => "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner))",  "negative_prompt" => "bad quality",  "width" => "512",  "height" => "512",  "safety_checker" => false,  "seed" => null,  "samples" => 1,  "base64" => false,  "webhook" =>  null,  "track_id" => null];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v1/enterprise/flux/text2img',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v1/enterprise/flux/text2img',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key" : "",    "prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner))",    "negative_prompt": "bad quality",    "width": "512",    "height": "512",    "safety_checker": false,    "seed": null,    "samples":1,    "base64":false,    "webhook": null,    "track_id": null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v1/enterprise/flux/text2img"payload = json.dumps({     "key" : "",    "prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner))",    "negative_prompt": "bad quality",    "width": "512",    "height": "512",    "safety_checker": False,    "seed": None,    "samples":1,    "base64":False,    "webhook": None,    "track_id": None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n  \"key\":\"\",\n  \"prompt\": \"Black african wearing a suit in a corporate meeting\",\n  \"negative_prompt\": \"bad quality\",\n  \"width\": \"512\",\n  \"height\": \"512\",\n   \"safety_checker\": false,\n  \"seed\": 2345,\n  \"sample\":1,\n  \"webhook\": \"\",\n  \"track_id\": 20\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v1/enterprise/flux/text2img")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
+```
+
+### Response[​](#response "Direct link to Response")
+
+```
+{  "status": "success",  "generationTime": 1.3200268745422363,  "output": [    "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/a42fd78c-898d-4daa-a1e9-1c91ad2ea894-0.png"  ],  "meta": {        "base64": "no",        "clip_skip": null,        "file_prefix": "a42fd78c-898d-4daa-a1e9-1c91ad2ea894",        "guidance_scale": 3.5,        "height": 1024,        "instant_response": "no",        "model_id": "flux",        "n_samples": 1,        "negative_prompt": "low quality",        "num_inference_steps": 10,        "opacity": 0.8,        "output_type": "png",        "padding_down": 10,        "padding_right": 10,        "prompt": "An astronaut riding a horse",        "rescale": "yes",        "scale_down": 6,        "seed": 3415551529,        "temp": "no",        "watermark": "no",        "width": 768  }}
+```

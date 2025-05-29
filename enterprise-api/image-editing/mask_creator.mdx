@@ -1,0 +1,71 @@
+---
+title: "Mask Creator Endpoint"
+---
+
+## Overview[​](#overview "Direct link to Overview")
+
+This endpoint helps to mask an object on a given image
+
+## Request[​](#request "Direct link to Request")
+
+```
+--request POST 'https://modelslab.com/api/v1/enterprise/image_editing/mask_creator' \
+```
+
+Make a `POST` request to [https://modelslab.com/api/v1/enterprise/image\_editing/mask\_creator](https://modelslab.com/api/v1/enterprise/image_editing/mask_creator) endpoint and pass the required parameters as a request body to the endpoint.
+
+## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
+
+| Parameter            | Description                                                                                                     |
+| :------------------- | :-------------------------------------------------------------------------------------------------------------- |
+| **key**              | Your API Key used for request authorization                                                                     |
+| **specific\_object** | Link to the actual image                                                                                        |
+| **base64**           | `true` or `false`                                                                                               |
+| **webhook**          | Set an URL to get a POST API call once the image generation is complete.                                        |
+| **track\_id**        | This ID is returned in the response to the webhook API call. This will be used to identify the webhook request. |
+
+## Example[​](#example "Direct link to Example")
+
+### Body[​](#body "Direct link to Body")
+
+Body
+
+```
+{    "key": "",    "init_image": "https://i.ibb.co/kMRK2mg/image2.jpg",    "specific_object": "the ball",    "track_id":null,    "webhook":null}
+```
+
+### Request[​](#request-1 "Direct link to Request")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({    "key": "",    "init_image": "https://i.ibb.co/kMRK2mg/image2.jpg",    "specific_object": "the ball",    "track_id":null,    "webhook":null});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v1/enterprise/image_editing/mask_creator", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [  "key"=> "",  "init_image"=> "https://i.ibb.co/kMRK2mg/image2.jpg",  "specific_object"=> "the ball",  "track_id"=>null,  "webhook"=>null];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v1/enterprise/image_editing/mask_creator',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v1/enterprise/image_editing/mask_creator',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key": "",    "init_image": "https://i.ibb.co/kMRK2mg/image2.jpg",    "specific_object": "the ball",    "track_id":null,    "webhook":null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v1/enterprise/image_editing/mask_creator"payload = json.dumps({    "key": "",    "init_image": "https://i.ibb.co/kMRK2mg/image2.jpg",    "specific_object": "The ball",    "track_id":None,    "webhook":None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+  OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\r\n    \"key\": \"\",\r\n    \"init_image\": \"https://i.ibb.co/kMRK2mg/image2.jpg\",\r\n    \"specific_object\": \"the ball\",\r\n    \"track_id\":null,\r\n    \"webhook\":null\r\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v1/enterprise/image_editing/mask_creator")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .addHeader("X-API-Key", "{{token}}")  .build();Response response = client.newCall(request).execute();
+```
+
+### Response[​](#response "Direct link to Response")
+
+Example Response
+
+```
+{    "status": "success",    "generationTime": 5.358475685119629,    "id": 108,    "output":  [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/db872428-8864-427d-b5a1-c5f3670de7df.png"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/generations/db872428-8864-427d-b5a1-c5f3670de7df.png"    ],    "meta": {        "base64": "no",        "file_prefix": "db872428-8864-427d-b5a1-c5f3670de7df",        "image_path": "https://i.ibb.co/kMRK2mg/image2.jpg",        "outdir": "out",        "seed": 90227904,        "temp": "no"    }}
+```

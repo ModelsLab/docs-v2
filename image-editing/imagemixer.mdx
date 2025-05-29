@@ -1,0 +1,92 @@
+---
+title: "Image Mixer Endpoint"
+---
+
+## Overview[​](#overview "Direct link to Overview")
+
+This endpoint generates image by mixing multiple images.
+
+Together with the image you can add your description of the desired result by passing prompt and negative prompt.
+
+![Image-Mixer endpoint result](\images\image-editing\assets\images\Image-Mixer-d9cc7c7856e2678cf74bc7fa034e174d.jpg)
+
+## Request[​](#request "Direct link to Request")
+
+```
+--request POST 'https://modelslab.com/api/v6/image_editing/img_mixer' \
+```
+
+Make a `POST` request to [https://modelslab.com/api/v6/image\_editing/img\_mixer](https://modelslab.com/api/v6/image_editing/img_mixer) endpoint and pass the required parameters as a request body to the endpoint.
+
+## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
+
+| Parameter            | Description                                                                                                                    | Values        |
+| :------------------- | :----------------------------------------------------------------------------------------------------------------------------- | :------------ |
+| **key**              | Your API Key used for request authorization                                                                                    | string        |
+| **prompt**           | Text prompt with description of the things you want in the image to be generated                                               | string        |
+| **negative\_prompt** | Items you don't want in the image                                                                                              | string        |
+| **init\_image**      | An array of image URLs to mixed. Max: 4 images. Example: `"init_image":[ "https://image-url-1.jpg","https://image-url-2.jpg"]` | URL           |
+| **width**            | The width of the image. Max: 1024 pixels                                                                                       | integer       |
+| **height**           | The height of the image. Max: 1024 pixels                                                                                      | integer       |
+| **steps**            | Number of denoising steps. Min: 1. Max: 50                                                                                     | integer       |
+| **guidance\_scale**  | Scale for classifier-free guidance. Min: 1. Max: 20                                                                            | float         |
+| **seed**             | Seed used to reproduce results. Same seed will give you the same image again. Pass null for a random number                    | integer, null |
+| **samples**          | Number of images to be returned in response. Max: 1                                                                            | integer       |
+| **webhook**          | Set a URL to receive a POST API call once the image generation is complete                                                     | URL           |
+| **track\_id**        | This ID is returned in the response to the webhook API call and will be used to identify the webhook request                   | integer       |
+
+## Example[​](#example "Direct link to Example")
+
+### Body[​](#body "Direct link to Body")
+
+Body
+
+```
+{    "key":"",    "seed":12345,    "init_image":[        "https://img.freepik.com/premium-photo/red-roses-rose-petals-white-backgroundvalentines-day-concept_167862-5720.jpg"        "https://huggingface.co/datasets/diffusers/test-arrays/resolve/main/stable_diffusion_inpaint/boy.png"    ],    "prompt":"rose man",    "negative_prompt":"A polluted city",    "width":800,    "height":600,    "guidance_scale":10,    "steps":41,    "samples":1}
+```
+
+### Request[​](#request-1 "Direct link to Request")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({    "key":"",    "seed":12345,    "init_image":[        "https://img.freepik.com/premium-photo/red-roses-rose-petals-white-backgroundvalentines-day-concept_167862-5720.jpg"        "https://huggingface.co/datasets/diffusers/test-arrays/resolve/main/stable_diffusion_inpaint/boy.png"    ],    "prompt":"rose man",    "negative_prompt":"A polluted city",    "width":800,    "height":600,    "guidance_scale":10,    "steps":41,    "samples":1});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v6/image_editing/img_mixer", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [    "key" => "",    "seed" => 12345,    "init_image" =>[        "https://img.freepik.com/premium-photo/red-roses-rose-petals-white-backgroundvalentines-day-concept_167862-5720.jpg"        "https://huggingface.co/datasets/diffusers/test-arrays/resolve/main/stable_diffusion_inpaint/boy.png"    ],    "prompt" => "rose man",    "negative_prompt" => "A polluted city",    "width" => 800,    "height" => 600,    "guidance_scale" => 10,    "steps" => 41,    "samples" => 1  ];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v6/image_editing/img_mixer',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v6/image_editing/img_mixer',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key":"",    "seed":12345,    "init_image":[        "https://img.freepik.com/premium-photo/red-roses-rose-petals-white-backgroundvalentines-day-concept_167862-5720.jpg"        "https://huggingface.co/datasets/diffusers/test-arrays/resolve/main/stable_diffusion_inpaint/boy.png"    ],    "prompt":"rose man",    "negative_prompt":"A polluted city",    "width":800,    "height":600,    "guidance_scale":10,    "steps":41,    "samples":1    "track_id": null    "webhook": null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v6/image_editing/img_mixer"payload = json.dumps({    "key":"",    "seed":12345,    "init_image":[        "https://img.freepik.com/premium-photo/red-roses-rose-petals-white-backgroundvalentines-day-concept_167862-5720.jpg"        "https://huggingface.co/datasets/diffusers/test-arrays/resolve/main/stable_diffusion_inpaint/boy.png"    ],    "prompt":"rose man",    "negative_prompt":"A polluted city",    "width":800,    "height":600,    "guidance_scale":10,    "steps":41,    "samples":1    "track_id": None    "webhook": None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\":\"\",\n    \"prompt\":\"The figurine is in the crystal ball\",\n    \"init_image\": [\n        \"https://bytedance-research-uno-flux.hf.space/gradio_api/file=/tmp/gradio/8386d81b6a944489e69213e441b4d888981c0a294e6311a316fdc7d3cf99b02b/ref1.png\",\n        \"https://bytedance-research-uno-flux.hf.space/gradio_api/file=/tmp/gradio/e589e0ba92b2919f029ce651077aa3a66dd42ad52782339a02e23f3679d6dbb9/ref2.png\"\n    ],\n    \"seed\":12343455,\n    \"guidance_scale\":4,\n    \"num_inference_steps\":25,\n    \"webhook\":null,\n    \"track_id\": null\n    \n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v6/image_editing/img_mixer")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .addHeader("X-API-Key", "{{token}}")  .build();Response response = client.newCall(request).execute();
+```
+
+### Response[​](#response "Direct link to Response")
+
+* Success
+* Processing
+* Error
+
+```
+{    "status": "success",    "generationTime": 19.260561227798462,    "id": 349,    "output": [        "https://cdn2.stablediffusionapi.com/generations/8aa6cb76-0c62-4ebc-a29a-3a3e3727bc88-0.png"    ],    "meta": {        "H": 600,        "W": 800,        "file_prefix": "8aa6cb76-0c62-4ebc-a29a-3a3e3727bc88",        "guidance_scale": 10,        "init_image": "https://img.freepik.com/premium-photo/red-roses-rose-petals-white-backgroundvalentines-day-concept_167862-5720.jpg,https://huggingface.co/datasets/diffusers/test-arrays/resolve/main/stable_diffusion_inpaint/boy.png",        "init_image_weights": "0.5,0.7",        "n_samples": 1,        "negative_prompt": "A polluted city",        "outdir": "out",        "prompt": "rose man",        "seed": 12345,        "steps": 41    }}
+```
+
+```
+{    "status": "processing",    "tip": "Your image is processing in background, you can get this image using fetch API",    "eta": 5,    "message": "Try to fetch request after seconds estimated",    "fetch_result": "https://modelslab.com/api/v6/image_editing/fetch/349",    "id": 349,    "output": [],    "future_links": [        "https://cdn2.stablediffusionapi.com/generations/8aa6cb76-0c62-4ebc-a29a-3a3e3727bc88-0.png"    ],    "meta": {        "H": 600,        "W": 800,        "file_prefix": "8aa6cb76-0c62-4ebc-a29a-3a3e3727bc88",        "guidance_scale": 10,        "init_image": "https://img.freepik.com/premium-photo/red-roses-rose-petals-white-backgroundvalentines-day-concept_167862-5720.jpg,https://huggingface.co/datasets/diffusers/test-arrays/resolve/main/stable_diffusion_inpaint/boy.png",        "init_image_weights": "0.5,0.7",        "n_samples": 1,        "negative_prompt": "A polluted city",        "outdir": "out",        "prompt": "rose man",        "seed": 12345,        "steps": 41    }}
+```
+
+```
+{    "status": "error",    "message": "Error message"}
+```
