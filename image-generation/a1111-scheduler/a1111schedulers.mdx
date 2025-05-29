@@ -1,0 +1,30 @@
+---
+title: "A1111 Schedulers"
+---
+
+## A1111 Diffusers Scheduler Mapping[​](#a1111-diffusers-scheduler-mapping "Direct link to A1111 Diffusers Scheduler Mapping")
+
+| A1111               | Stable Diffusion API            | Additional Parameters & Notes                                              |
+| :------------------ | :------------------------------ | :------------------------------------------------------------------------- |
+| DPM++ 2M            | DPMSolverMultistepScheduler     |                                                                            |
+| DPM++ 2M Karras     | DPMSolverMultistepScheduler     | init with `use_karras_sigmas="yes"`                                        |
+| DPM++ 2M SDE        | DPMSolverMultistepScheduler     | init with `algorithm_type="dpmsolver+++"`                                  |
+| DPM++ 2M SDE Karras | DPMSolverMultistepScheduler     | init with `algorithm_type="dpmsolver+++"` and `use_karras_sigmas="yes"`    |
+| DPM++ 2S a          | N/A                             | Very similar to DPMSolverMultistepScheduler                                |
+| DPM++ 2S a Karras   | N/A                             | Very similar to DPMSolverMultistepScheduler with use\_karras\_sigmas="yes" |
+| DPM++ SDE           | DPMSolverSinglestepScheduler    |                                                                            |
+| DPM++ SDE Karras    | DPMSolverSinglestepScheduler    | init with `use_karras_sigmas="yes"`                                        |
+| DPM2                | KDPM2DiscreteScheduler          |                                                                            |
+| DPM2 Karras         | KDPM2DiscreteScheduler          | init with `use_karras_sigmas="yes"`                                        |
+| DPM2 a              | KDPM2AncestralDiscreteScheduler |                                                                            |
+| DPM2 a Karras       | KDPM2AncestralDiscreteScheduler | init with `use_karras_sigmas="yes"`                                        |
+| DPM adaptive        | N/A                             |                                                                            |
+| DPM fast            | N/A                             |                                                                            |
+| Euler               | EulerDiscreteScheduler          |                                                                            |
+| Euler a             | EulerAncestralDiscreteScheduler |                                                                            |
+| Heun                | HeunDiscreteScheduler           |                                                                            |
+| LMS                 | LMSDiscreteScheduler            |                                                                            |
+| LMS Karras          | LMSDiscreteScheduler            | Init with `use_karras_sigmas="yes"`                                        |
+| N/A                 | DEIS                            |                                                                            |
+| N/A                 | UniPCMultistepScheduler         |                                                                            |
+| N/A                 | LCMScheduler                    |                                                                            |

@@ -1,0 +1,93 @@
+---
+title: "Enterprise: Image to Video Endpoint"
+---
+
+## Overview[​](#overview "Direct link to Overview")
+
+Text to Video endpoint generates video from image.
+
+![Text to video endpoint result](\images\enterprise-api\video\assets\images\Image-to-video-06907dcc4363b727c589be0243af41f4.jpg)
+
+<Warning>
+  Make sure you add your [s3 details](/enterprise-api/general/update-s3-details) for `video` server, so you can receive image generated in your bucket. Images generated without s3 details being added will be delete after **24 hours**
+</Warning>
+
+## Request[​](#request "Direct link to Request")
+
+```
+--request POST 'https://modelslab.com/api/v1/enterprise/video/img2video' \
+```
+
+Make a `POST` request to [https://modelslab.com/api/v1/enterprise/video/img2video](https://modelslab.com/api/v1/enterprise/video/img2video) endpoint and pass the required parameters in the request body.
+
+## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
+
+| Parameter                         | Description                                                                                                                      | Values                                 |
+| --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| **key**                           | Your unique API key used for authorization.                                                                                      | string                                 |
+| **model\_id**                     | The ID of the model to use.                                                                                                      | Allowed values: `svd`                  |
+| **negative\_prompt**              | Items you do not want in the video.                                                                                              | string                                 |
+| **enhance\_prompt**               | Enhance prompts for better results; **options: yes/no**..                                                                        | string                                 |
+| **init\_image**                   | A link or base64 equivalent of a valid PNG, JPEG, or other image format file to use as initial image conditioning.               | URL or base64                          |
+| **height**                        | The height of the video.                                                                                                         | Maximum: 512 pixels                    |
+| **width**                         | The width of the video.                                                                                                          | Maximum: 512 pixels                    |
+| **num\_frames**                   | The number of frames in the generated video.                                                                                     | Maximum: 25. Default: 16               |
+| **num\_inference\_steps**         | The number of denoising steps.                                                                                                   | Maximum: 50. Default: 20               |
+| **min\_guidance\_scale**          | The start value of the guidance scale for video generation when using `svd` as the model.                                        | Min: 0                                 |
+| **max\_guidance\_scale**          | The end value of the guidance scale for video generation when using `svd` as the model.                                          | Max: 8                                 |
+| **motion\_bucket\_id**            | Higher values lead to more motion in generated videos.                                                                           | Default: 127                           |
+| **noise\_aug\_strength**          | The strength for noise initialization when using `svd` as the model.                                                             | Min: 0, Max: 1                         |
+| **fps**                           | The frames per second rate of the generated video.                                                                               | Max: 16                                |
+| **output\_type**                  | The output type of the video.                                                                                                    | `mp4`, `gif`, `base64`                 |
+| **latent\_interpolation\_method** | The interpolation method for generating the video.                                                                               | Default: `lerp`. Other option: `slerp` |
+| **clip\_skip**                    | The number of CLIP layers to skip.                                                                                               | Default: null. Max: 2                  |
+| **instant\_response**             | Set to true if you want an instant response with future links for queued requests instead of waiting for a fixed amount of time. | Default: false (TRUE or FALSE)         |
+| **temp**                          | Set to true if you want to store your generations on temporary storage. Temporary files are cleaned every 24 hours.              | Default: false (TRUE or FALSE)         |
+| **webhook**                       | Provide a URL to receive a POST API call once the video generation is complete.                                                  | URL                                    |
+| **track\_id**                     | This ID is returned in the response to the webhook API call and will be used to identify the webhook request.                    | Integer                                |
+
+## Example[​](#example "Direct link to Example")
+
+### Body[​](#body "Direct link to Body")
+
+Body
+
+```
+{    "key":"",    "model_id":"svd",    "init_image": "https://imagedelivery.net/PP4qZJxMlvGLHJQBm3ErNg/e2f9cb8e-cb87-4143-dd81-a9e77e3bb800/768",    "height":512,    "width":512,    "num_frames":25,    "num_inference_steps":20,    "min_guidance_scale":1,    "max_guidance_scale":3,    "motion_bucket_id":20,    "noise_aug_strength":0.02,    "base64":false,    "webhook":null,    "track_id":null}
+```
+
+### Request[​](#request-1 "Direct link to Request")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({    "key":"",    "model_id":"svd",    "init_image": "https://imagedelivery.net/PP4qZJxMlvGLHJQBm3ErNg/e2f9cb8e-cb87-4143-dd81-a9e77e3bb800/768",    "height":512,    "width":512,    "num_frames":25,    "num_inference_steps":20,    "min_guidance_scale":1,    "max_guidance_scale":3,    "motion_bucket_id":20,    "noise_aug_strength":0.02,    "base64":false,    "webhook":null,    "track_id":null});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v1/enterprise/video/img2video", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [    "key" =>"",    "model_id" =>"svd",    "init_image" => "https://imagedelivery.net/PP4qZJxMlvGLHJQBm3ErNg/e2f9cb8e-cb87-4143-dd81-a9e77e3bb800/768",    "height" =>512,    "width" => 512,    "num_frames" => 25,    "num_inference_steps" => 20,    "min_guidance_scale" => 1,    "max_guidance_scale" => 3,    "motion_bucket_id" => 20,    "noise_aug_strength" => 0.02,    "base64" => false,    "webhook" => null,    "track_id" => null];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v1/enterprise/video/img2video',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v1/enterprise/video/img2video',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key":"",    "model_id":"svd",    "init_image": "https://imagedelivery.net/PP4qZJxMlvGLHJQBm3ErNg/e2f9cb8e-cb87-4143-dd81-a9e77e3bb800/768",    "height":512,    "width":512,    "num_frames":25,    "num_inference_steps":20,    "min_guidance_scale":1,    "max_guidance_scale":3,    "motion_bucket_id":20,    "noise_aug_strength":0.02,    "base64":false,    "webhook":null,    "track_id":null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v1/enterprise/video/img2video"payload = json.dumps({   "key":"",    "model_id":"svd",    "init_image": "https://imagedelivery.net/PP4qZJxMlvGLHJQBm3ErNg/e2f9cb8e-cb87-4143-dd81-a9e77e3bb800/768",    "height":512,    "width":512,    "num_frames":25,    "num_inference_steps":20,    "min_guidance_scale":1,    "max_guidance_scale":3,    "motion_bucket_id":20,    "noise_aug_strength":0.02,    "base64":False,    "webhook":None,    "track_id":None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\":\"\",\n    \"model_id\":\"svd\",\n    \"init_image\": \"https://imagedelivery.net/PP4qZJxMlvGLHJQBm3ErNg/e2f9cb8e-cb87-4143-dd81-a9e77e3bb800/768\",\n    \"height\":512,\n    \"width\":512,\n    \"num_frames\":25,\n    \"num_inference_steps\":20,\n    \"min_guidance_scale\":1,\n    \"max_guidance_scale\":3,\n    \"motion_bucket_id\":20,\n    \"noise_aug_strength\":0.02,\n    \"strength\":0.7,\n    \"base64\":false,\n    \"webhook\":null,\n    \"track_id\":null\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v1/enterprise/video/img2video")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
+```
+
+### Response[​](#response "Direct link to Response")
+
+Example Response
+
+```
+{    "status": "success",    "generationTime": 8.49,    "id": 146,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/video_generations/80a0922a-4230-4b65-b8c2-0a7c4606b17b.gif"    ],    "proxy_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/video_generations/80a0922a-4230-4b65-b8c2-0a7c4606b17b.gif"    ],    "meta": {        "base64": "no",        "file_prefix": "c9173348-fbeb-4da2-9f86-e157763be54b",        "fps": 7,        "height": 512,        "init_image": "https://imagedelivery.net/PP4qZJxMlvGLHJQBm3ErNg/e2f9cb8e-cb87-4143-dd81-a9e77e3bb800/768",        "instant_response": "no",        "max_guidance_scale": 3,        "min_guidance_scale": 1,        "model_id": "svd",        "motion_bucket_id": 20,        "noise_aug_strength": 0.02,        "num_frames": 25,        "num_inference_steps": 20,        "seed": 3811131349,        "temp": "no",        "width": 512    }}
+```

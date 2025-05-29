@@ -1,0 +1,100 @@
+---
+title: "Head shot Endpoint"
+---
+
+## Overview[​](#overview "Direct link to Overview")
+
+This endpoint allows you to generate head shot image
+
+[Open in Playground 🚀](https://imagen.playground.modelslab.com/avatar-generator)
+
+***
+
+![Head-Shot endpoint result](\images\image-editing\assets\images\Head-Shot-f4982ff9247a211781404e0a6badb559.jpg)
+
+<Warning>
+  Image url generated will not be accessible after 24 hours, kindly save your image generations accordingly
+</Warning>
+
+## Request[​](#request "Direct link to Request")
+
+```
+--request POST 'https://modelslab.com/api/v6/image_editing/head_shot' \
+```
+
+Make a `POST` request to [https://modelslab.com/api/v6/image\_editing/head\_shot](https://modelslab.com/api/v6/image_editing/head_shot) endpoint and pass the required parameters as a request body to the endpoint.
+
+## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
+
+| Parameter                 | Description                                                                                                                                                                               | Values                                         |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| **key**                   | Your API Key used for request authorization                                                                                                                                               | string                                         |
+| **prompt**                | Text prompt describing the content you want in the generated image                                                                                                                        | string                                         |
+| **face\_image**           | Link or valid base64 data of the face you want your generations to resemble                                                                                                               | data:image/jpeg;base64,\{your\_base64\_string} |
+| **width**                 | Width of your generated image. Maximum dimension: 512 x 768 pixels                                                                                                                        | integer                                        |
+| **height**                | Height of your generated image. Maximum dimension: 512 x 768 pixels                                                                                                                       | integer                                        |
+| **num\_inference\_steps** | Number of denoising steps. Accepted values are 21, 31, or 41                                                                                                                              | integer                                        |
+| **guidance\_scale**       | Scale for classifier-free guidance. Minimum: 1, Maximum: 5                                                                                                                                | integer                                        |
+| **s\_scale**              | Adjust the weight of the face structure. Range: 0.0 to 2.0, default: 1.0                                                                                                                  | float                                          |
+| **samples**               | The number of images to be returned in response. The maximum value is 2. **Note:** For resolutions such as 512x768,one sample will be generated, even if the `samples` value is set to 2. | integer (max: 2)                               |
+| **safety\_checker**       | Whether to run the safety checker to prevent NSFW image generation.                                                                                                                       | "true" or "false"                              |
+| **safety\_checker\_type** | Type of safety checker to use if safety\_checker is enabled. Options: black, blur, sensitive\_content\_text, pixelate                                                                     | string                                         |
+| **base64**                | Set to true if the provided face image is in base64 format or if you want generated images as base64 string. Default: false                                                               | "true" or "false"                              |
+| **webhook**               | URL to receive a POST API call once the image generation is complete                                                                                                                      | URL                                            |
+| **track\_id**             | ID returned in the response to the webhook API call, used to identify the webhook request                                                                                                 | integral value                                 |
+
+## Example[​](#example "Direct link to Example")
+
+### Body[​](#body "Direct link to Body")
+
+Body
+
+```
+{  "key": "",  "prompt": "pretty woman",  "negative_prompt": "anime, cartoon, drawing, big nose, long nose, fat, ugly, big lips, big mouth, face proportion mismatch, unrealistic, monochrome, lowres, bad anatomy, worst quality, low quality, blurry",  "face_image":"https://media.allure.com/photos/647f876463cd1ef47aab9c88/3:2/w_2465,h_1643,c_limit/angelina%20jolie%20blonde%20hair%20chloe.jpg",  "width": "512",  "height": "512",  "samples": "1",  "num_inference_steps": "21",  "safety_checker": false,  "base64": false,  "seed": null,  "guidance_scale": 7.5,  "webhook": null,  "track_id": null}
+```
+
+### Request[​](#request-1 "Direct link to Request")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({     "key": "",    "prompt": "pretty woman",    "negative_prompt": "anime, cartoon, drawing, big nose, long nose, fat, ugly, big lips, big mouth, face proportion mismatch, unrealistic, monochrome, lowres, bad anatomy, worst quality, low quality, blurry",    "face_image":"https://media.allure.com/photos/647f876463cd1ef47aab9c88/3:2/w_2465,h_1643,c_limit/angelina%20jolie%20blonde%20hair%20chloe.jpg",    "width": "512",    "height": "512",    "samples": "1",    "num_inference_steps": "21",    "safety_checker": false,    "base64": false,    "seed": null,    "guidance_scale": 7.5,    "webhook": null,    "track_id": null  });var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v6/image_editing/head_shot", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [    "key" => "",    "prompt" => "pretty woman",    "negative_prompt" => "anime, cartoon, drawing, big nose, long nose, fat, ugly, big lips, big mouth, face proportion mismatch, unrealistic, monochrome, lowres, bad anatomy, worst quality, low quality, blurry",    "face_image" => "https://media.allure.com/photos/647f876463cd1ef47aab9c88/3:2/w_2465,h_1643,c_limit/angelina%20jolie%20blonde%20hair%20chloe.jpg",    "width" => "512",    "height" =>  "512",    "samples" => "1",    "num_inference_steps" => "21",    "safety_checker" => false,    "base64" => false,    "seed" => null,    "guidance_scale": 7.5,    "webhook" => null,    "track_id" => null ];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v6/image_editing/head_shot',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v6/image_editing/head_shot',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key": "",    "prompt": "pretty woman",    "negative_prompt": "anime, cartoon, drawing, big nose, long nose, fat, ugly, big lips, big mouth, face proportion mismatch, unrealistic, monochrome, lowres, bad anatomy, worst quality, low quality, blurry",    "face_image":"https://media.allure.com/photos/647f876463cd1ef47aab9c88/3:2/w_2465,h_1643,c_limit/angelina%20jolie%20blonde%20hair%20chloe.jpg",    "width": "512",    "height": "512",    "samples": "1",    "num_inference_steps": "21",    "safety_checker": false,    "base64": false,    "seed": null,    "guidance_scale": 7.5,    "webhook": null,    "track_id": null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v6/image_editing/head_shot"payload = json.dumps({   "key": "",  "prompt": "pretty woman",  "negative_prompt": "anime, cartoon, drawing, big nose, long nose, fat, ugly, big lips, big mouth, face proportion mismatch, unrealistic, monochrome, lowres, bad anatomy, worst quality, low quality, blurry",  "face_image":"https://media.allure.com/photos/647f876463cd1ef47aab9c88/3:2/w_2465,h_1643,c_limit/angelina%20jolie%20blonde%20hair%20chloe.jpg",  "width": "512",  "height": "512",  "samples": "1",  "num_inference_steps": "21",  "safety_checker": False,  "base64": False,  "seed": None,  "guidance_scale": 7.5,  "webhook": None,  "track_id": None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+   OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n  \"key\": \"\",\n  \"prompt\": \"pretty woman\",\n  \"negative_prompt\": \"anime, cartoon, drawing, big nose, long nose, fat, ugly, big lips, big mouth, face proportion mismatch, unrealistic, monochrome, lowres, bad anatomy, worst quality, low quality, blurry\",\n  \"face_image\":\"https://media.allure.com/photos/647f876463cd1ef47aab9c88/3:2/w_2465,h_1643,c_limit/angelina%20jolie%20blonde%20hair%20chloe.jpg\",\n  \"width\": \"512\",\n  \"height\": \"512\",\n  \"samples\": \"1\",\n  \"num_inference_steps\": \"21\",\n  \"safety_checker\": false,\n  \"base64\": false,\n  \"seed\": null,\n  \"guidance_scale\": 7.5,\n  \"webhook\": null,\n  \"track_id\": null\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v6/image_editing/head_shot")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
+```
+
+### Response[​](#response "Direct link to Response")
+
+* Success
+* Processing
+* Error
+
+```
+{    "status": "success",    "generationTime": 7.358475685119629,    "id": 32,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/temp/8c3ef6ea-1c44-4d69-91cb-fc11971a65d1-0.png"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/temp/8c3ef6ea-1c44-4d69-91cb-fc11971a65d1-0.png"    ],    "meta": {        "base64": "no",        "face_image": "https://media.allure.com/photos/647f876463cd1ef47aab9c88/3:2/w_2465,h_1643,c_limit/angelina%20jolie%20blonde%20hair%20chloe.jpg",        "file_prefix": "8c3ef6ea-1c44-4d69-91cb-fc11971a65d1",        "guidance_scale": 7.5,        "height": 512,        "negative_prompt": "anime, cartoon, drawing, big nose, long nose, fat, ugly, big lips, big mouth, face proportion mismatch, unrealistic, monochrome, lowres, bad anatomy, worst quality, low quality, blurry",        "num_inference_steps": 21,        "outdir": "out",        "prompt": "pretty woman",        "safety_checker": "no",        "safety_checker_type": "blur",        "samples": 1,        "seed": 4029484891,        "temp": "yes",        "width": 512    }}
+```
+
+```
+{    "status": "processing",    "tip": "Your image is processing in background, you can get this image using fetch API",    "eta": 5,    "message": "Try to fetch request after seconds estimated",    "fetch_result": "https://modelslab.com/api/v6/image_editing/fetch/32",    "id": 32,    "output": [],    "future_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/temp/8c3ef6ea-1c44-4d69-91cb-fc11971a65d1-0.png"    ],    "proxy_links": [],    "meta": {        "base64": "no",        "face_image": "https://media.allure.com/photos/647f876463cd1ef47aab9c88/3:2/w_2465,h_1643,c_limit/angelina%20jolie%20blonde%20hair%20chloe.jpg",        "file_prefix": "8c3ef6ea-1c44-4d69-91cb-fc11971a65d1",        "guidance_scale": 7.5,        "height": 512,        "negative_prompt": "anime, cartoon, drawing, big nose, long nose, fat, ugly, big lips, big mouth, face proportion mismatch, unrealistic, monochrome, lowres, bad anatomy, worst quality, low quality, blurry",        "num_inference_steps": 21,        "outdir": "out",        "prompt": "pretty woman",        "safety_checker": "no",        "safety_checker_type": "blur",        "samples": 1,        "seed": 4029484891,        "temp": "yes",        "width": 512    }}
+```
+
+```
+{    "status": "error",    "message": "Error message"}
+```

@@ -1,0 +1,110 @@
+---
+title: "Text to Video Endpoint"
+---
+
+## Overview[​](#overview "Direct link to Overview")
+
+Text to Video endpoint generates and returns a video based on a text description.
+
+[Open in Playground 🚀](https://videofusion.playground.modelslab.com/text-to-video)
+
+``
+
+![Text to video endpoint result](\images\video-api\assets\images\Text-to-video-059ae4e254324cdd6b271d791167cb35.jpg)
+
+## Request[​](#request "Direct link to Request")
+
+```
+--request POST 'https://modelslab.com/api/v6/video/text2video' \
+```
+
+Make a `POST` request to [https://modelslab.com/api/v6/video/text2video](https://modelslab.com/api/v6/video/text2video) endpoint and pass the required parameters in the request body.
+
+## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
+
+| Parameter                          | Description                                                                                                         | Values                                      |
+| :--------------------------------- | :------------------------------------------------------------------------------------------------------------------ | :------------------------------------------ |
+| **key**                            | Your API Key used for request authorization.                                                                        | key                                         |
+| **model\_id**                      | The ID of the model to use. The allowed model IDs are `cogvideox`, `wanx` .                                         | Allowed values:`cogvideox`, `wanx` .        |
+| **prompt**                         | Text prompt with a description of the things you want in the video to be generated.                                 | String                                      |
+| **negative\_prompt**               | Items you don't want in the video.                                                                                  | String                                      |
+| **seed**                           | Seed is used to reproduce results. The same seed will give you the same image again. Pass null for a random number. | Integer or `null`                           |
+| **height**                         | The height of the video.                                                                                            | The maximum is 512 pixels.                  |
+| **width**                          | The width of the video.                                                                                             | The maximum is 512 pixels.                  |
+| **num\_frames**                    | The number of frames in the generated video. Default is 16. Maximum is 25.                                          | Integer (Default: 16, Max: 25).             |
+| **num\_inference\_steps**          | Number of denoising steps. Default is 20. Maximum is 50.                                                            | Integer (Default: 20, Max: 50).             |
+| **guidance\_scale**                | Scale for classifier-free guidance. Minimum is 0, maximum is 8.                                                     | min: 0, max: 8                              |
+| **clip\_skip**                     | Number of CLIP layers to skip. Skipping 2 layers often gives more aesthetic results. Default is `null`.             | Integer or `null`                           |
+| **upscale\_height**                | The upscaled height for videos generated.                                                                           | 1024                                        |
+| **upscale\_width**                 | The upscaled width for videos generated.                                                                            | 1024                                        |
+| **upscale\_strength**              | Strength of upscaling. Higher values can result in more noticeable differences.                                     | 0-1                                         |
+| **upscale\_guidance\_scale**       | Guidance scale for upscaling videos.                                                                                | 0-8                                         |
+| **upscale\_num\_inference\_steps** | Number of denoising steps for upscaling. Default is 20. Maximum is 50.                                              | The maximum is 50. The default is 20.       |
+| **use\_improved\_sampling**        | Whether to use an improved sampling technique for better temporal consistency. Defaults to `false`.                 | `TRUE` or `FALSE`                           |
+| **improved\_sampling\_seed**       | Seed for consistent video generation with improved sampling.                                                        | INTEGER                                     |
+| **fps**                            | Frames per second rate of the generated video.                                                                      | Max 16                                      |
+| **output\_type**                   | The type of output format.                                                                                          | `mp4` or `gif`                              |
+| **instant\_response**              | If `true`, returns future links for queued requests instantly instead of waiting. Default is `false`.               | The default is `false`. (`TRUE` or `FALSE`) |
+| **temp**                           | If `true`, stores the video in temporary storage (cleaned every 24 hours). Default is `false`.                      | The default is `false`. (`TRUE` or `FALSE`) |
+| **webhook**                        | A URL to receive a POST API call once the video generation is complete.                                             | URL                                         |
+| **track\_id**                      | A unique ID used in the webhook response to identify the request.                                                   | string                                      |
+
+[Open in Playground 🚀](https://videofusion.playground.modelslab.com/text-to-video)
+
+## Example[​](#example "Direct link to Example")
+
+### Body[​](#body "Direct link to Body")
+
+When the model\_id is `cogvideox`, the request json looks like so,
+
+Body
+
+```
+{    "key":"",    "model_id":"cogvideox",    "prompt":"Space Station in space",    "negative_prompt":"low quality",    "height":512,    "width":512,    "num_frames":25,    "num_inference_steps":20,    "guidance_scale":7,    "upscale_height":640,    "upscale_width":1024,    "upscale_strength":0.6,    "upscale_guidance_scale":12,    "upscale_num_inference_steps":20,    "output_type":"gif",    "webhook":null,    "track_id":null}
+```
+
+### Request[​](#request-1 "Direct link to Request")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({    "key":"",    "model_id":"cogvideox",    "prompt":"Space Station in space",    "negative_prompt":"low quality",    "height":512,    "width":512,    "num_frames":25,    "num_inference_steps":20,    "guidance_scale":7,    "upscale_height":640,    "upscale_width":1024,    "upscale_strength":0.6,    "upscale_guidance_scale":12,    "upscale_num_inference_steps":20,    "output_type":"gif",    "webhook":null,    "track_id":null});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v6/video/text2video", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [    "key" => "",    "model_id" => "cogvideox",    "prompt" => "Space Station in space",    "negative_prompt" => "low quality",    "height" =>512,    "width" => 512,    "num_frames" => 25,    "num_inference_steps" =>20,    "guidance_scale" => 7,    "upscale_height" => 640,    "upscale_width" => 1024,    "upscale_strength" => 0.6,    "upscale_guidance_scale" => 12,    "upscale_num_inference_steps" => 20,    "output_type" => "gif",    "webhook" => null,    "track_id" => null ];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v6/video/text2video',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v6/video/text2video',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key":"",    "model_id":"cogvideox",    "prompt":"Space Station in space",    "negative_prompt":"low quality",    "height":512,    "width":512,    "num_frames":25,    "num_inference_steps":20,    "guidance_scale":7,    "upscale_height":640,    "upscale_width":1024,    "upscale_strength":0.6,    "upscale_guidance_scale":12,    "upscale_num_inference_steps":20,    "output_type":"gif",    "webhook":null,    "track_id":null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v6/video/text2video"payload = json.dumps({  "key":"",    "model_id":"cogvideox",    "prompt":"Space Station in space",    "negative_prompt":"low quality",    "height":512,    "width":512,    "num_frames":25,    "num_inference_steps":20,    "guidance_scale":7,    "upscale_height":640,    "upscale_width":1024,    "upscale_strength":0.6,    "upscale_guidance_scale":12,    "upscale_num_inference_steps":20,    "output_type":"gif",    "webhook":None,    "track_id":None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\":\"\",\n    \"model_id\":\"cogvideox\",\n    \"prompt\":\"Space Station in space\",\n    \"negative_prompt\":\"low quality\",\n    \"height\":\512,\n    \"width\":512,\n    \"num_frames\":25,\n    \"num_inference_steps\":20,\n    \"guidance_scale\":7,\n    \"upscale_height\":640,\n    \"upscale_width\":1024,\n    \"upscale_strength\":0.6,\n    \"upscale_guidance_scale\":12,\n    \"upscale_num_inference_steps\":20,\n    \"output_type\":\"gif\",\n    \"webhook\":null,\n    \"track_id\":null\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v6/video/text2video")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
+```
+
+### Response[​](#response "Direct link to Response")
+
+* Success
+* Processing
+* Error
+
+```
+{    "status": "success",    "generationTime": 4.49,    "id": 147,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/video_generations/907c4d23-617b-4fbb-8254-f1e7d00b2d30.gif"    ],    "proxy_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/video_generations/907c4d23-617b-4fbb-8254-f1e7d00b2d30.gif"    ],    "meta": {        "adapter_lora": "v3_sd15_adapter",        "base64": "no",        "clip_skip": null,        "controlnet": null,        "controlnet_images": null,        "domain_lora_scale": 1,        "file_prefix": "907c4d23-617b-4fbb-8254-f1e7d00b2d30",        "fps": 7,        "guidance_scale": 7,        "height": 512,        "id": null,        "improved_sampling_seed": 42,        "instant_response": "no",        "ip_adapter_id": null,        "ip_adapter_image": null,        "ip_adapter_scale": 0.6,        "lora_models": null,        "lora_strength": 1,        "model_id": "cogvideox",        "motion_lora_strength": 1,        "motion_loras": null,        "motion_module": "v3_sd15_mm",        "negative_prompt": "low quality",        "num_frames": 25,        "num_inference_steps": 20,        "output_type": "gif",        "prompt": "Space Station in space.",        "seed": 3468127167,        "temp": "no",        "track_id": null,        "upscale_guidance_scale": 8,        "upscale_height": 1024,        "upscale_num_inference_steps": 20,        "upscale_strength": 0.6,        "upscale_width": 1024,        "use_improved_sampling": "no",        "watermark": "no",        "webhook": null,        "width": 512    },    "future_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/video_generations/907c4d23-617b-4fbb-8254-f1e7d00b2d30.gif"    ]}
+```
+
+```
+{    "status": "processing",    "tip": "Your image is processing in background, you can get this image using fetch API",    "eta": 960,    "message": "Try to fetch request after seconds estimated",    "fetch_result": "https://modelslab.com/api/v6/video/fetch/134799477",    "id": 134799477,    "output": [],    "meta": {        "adapter_lora": "v3_sd15_adapter",        "base64": "no",        "clip_skip": null,        "controlnet": null,        "controlnet_images": null,        "domain_lora_scale": 1,        "file_prefix": "0de9b0ff-2179-4b15-bb54-dc886b4fdbed",        "fps": 7,        "guidance_scale": 7,        "height": 320,        "id": "134799477",        "improved_sampling_seed": 42,        "instant_response": "no",        "ip_adapter_id": null,        "ip_adapter_image": null,        "ip_adapter_scale": 0.6,        "lora_models": null,        "lora_strength": 1,        "model_id": "cogvideox",        "motion_lora_strength": 1,        "motion_loras": null,        "motion_module": "v3_sd15_mm",        "negative_prompt": "low quality",        "num_frames": 16,        "num_inference_steps": 20,        "output_type": "gif",        "prompt": "An astronaut riding a horse",        "seed": 1591933004,        "temp": "no",        "track_id": "300",        "upscale_guidance_scale": 12,        "upscale_height": 640,        "upscale_num_inference_steps": 20,        "upscale_strength": 0.6,        "upscale_width": 1024,        "use_improved_sampling": "no",        "watermark": "no",        "webhook": "https://webhook.site/82d8bbb5-fa86-4890-882e-a638704947ce",        "width": 512    },    "future_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/video_generations/0de9b0ff-2179-4b15-bb54-dc886b4fdbed.gif"    ]}
+```
+
+```
+{    "status": "error",    "message": "Error message"}
+```

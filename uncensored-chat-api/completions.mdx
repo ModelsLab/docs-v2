@@ -1,0 +1,68 @@
+---
+title: "Uncensored Completions"
+---
+
+## Overview[​](#overview "Direct link to Overview")
+
+The Uncensored Completions endpoint generates responses based on provided prompts without restrictions. It supports OpenAI SDKs and uses Bearer token authentication.
+
+## Request[​](#request "Direct link to Request")
+
+```
+curl -X POST https://modelslab.com/api/uncensored-chat/v1/completions \  -H "Authorization: Bearer $MODELSLAB_API_KEY" \  -H "Content-Type: application/json"
+```
+
+## OpenAI SDK[​](#openai-sdk "Direct link to OpenAI SDK")
+
+This endpoint offers compatibility with the OpenAI SDKs to support developers and their apps with minimal changes. Once you update the base URL, you can start using the SDKs to make calls to Modelslab with API key.
+
+## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
+
+| **Parameter**   | **Description**                                                             | **Values**                         |
+| --------------- | --------------------------------------------------------------------------- | ---------------------------------- |
+| **prompt**      | Prompts to be used for generating completions.                              | Array                              |
+| **max\_tokens** | The maximum number of tokens (words or characters) allowed in the response. | Integer (Default: 128, Max: 30000) |
+
+## Example[​](#example "Direct link to Example")
+
+### Body[​](#body "Direct link to Body")
+
+Body Raw
+
+```
+{"prompt": "Write a tagline for an ice cream shop.","model": ""}
+```
+
+### Request[​](#request-1 "Direct link to Request")
+
+* JS
+* PHP
+* PYTHON
+
+You can import the OpenAI client from openai into your javascript application and change the base URL and API key.
+
+```
+import OpenAI from "openai";const openai = new OpenAI({  apiKey: "<api key>",  baseURL: "https://modelslab.com/api/uncensored-chat/v1",});const completion = await openai.chat.completions.create({  model: "ModelsLab/Llama-3.1-8b-Uncensored-Dare",  prompt: "Write a tagline for an ice cream shop.",});console.log(completion.choices[0].text);
+```
+
+You can install open source openai php client into your php application and change the base URL and API key.
+
+`composer require openai-php/client`
+
+```
+<?php  $yourApiKey = getenv('YOUR_API_KEY');  $baseUrl = 'https://modelslab.com/api/uncensored-chat/v1';  $client = OpenAI::client($yourApiKey, $baseUrl);  $result = $client->completions()->create([      'model' => 'ModelsLab/Llama-3.1-8b-Uncensored-Dare',      'prompt' => 'Write a tagline for an ice cream shop.'  ]);  echo $result->choices[0]->text;
+```
+
+You can import the OpenAI python package into your python application and change the base URL and API key.
+
+`pip install openai`
+
+```
+import osfrom openai import OpenAIMODELSLAB_API_KEY = os.getenv("MODELSLAB_API_KEY")client = OpenAI(    api_key=MODELSLAB_API_KEY,    base_url="https://modelslab.com/api/uncensored-chat/v1",)response = client.completions.create(  model="ModelsLab/Llama-3.1-8b-Uncensored-Dare",  prompt="Write a tagline for an ice cream shop.")print(response.choices[0].text)
+```
+
+### Response[​](#response "Direct link to Response")
+
+```
+{    "object": "text_completion",    "created": 1732624363,    "model": "ModelsLab/Llama-3.1-8b-Uncensored-Dare",    "choices": [        {            "text": "\"Indulge in our destructive addiction of ice cream.\"",            "index": 0,            "logprobs": null,            "finish_reason": "length",            "stop_reason": null,            "prompt_logprobs": null        }    ],    "usage": {        "prompt_tokens": 122,        "completion_tokens": 13,        "total_tokens": 135    }}
+```

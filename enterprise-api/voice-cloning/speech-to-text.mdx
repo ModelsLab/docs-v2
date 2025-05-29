@@ -1,0 +1,110 @@
+---
+title: "Speech To Text Endpoint"
+---
+
+## Overview[​](#overview "Direct link to Overview")
+
+Speech-to-Text transforms audio into written transcription, allowing spoken language to be converted into text for various applications.
+
+[Open in Playground 🚀](https://audiogen.modelslab.com/speech-to-text)
+
+## **Sample Audio**[​](#sample-audio "Direct link to sample-audio")
+
+***
+
+### **Example 1**[​](#example-1 "Direct link to example-1")
+
+[Your browser does not support the audio tag.](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/vwUA4NhxbUAJ3vW6RBVuayueKWuJJO-metaQ29uZmVyZW5jZS53YXY=-.wav)
+
+***
+
+### **Generated Transcription**[​](#generated-transcription "Direct link to generated-transcription")
+
+> "This is Peter. This is Johnny. Kenny. And Josh. We just wanted to take a minute to thank you."
+
+***
+
+## Request[​](#request "Direct link to Request")
+
+```
+--request POST 'https://modelslab.com/api/v1/enterprise/voice/speech_to_text' \
+```
+
+Make a `POST` request to [https://modelslab.com/api/v1/enterprise/voice/speech\_to\_text](https://modelslab.com/api/v1/enterprise/voice/speech_to_text) endpoint and pass the required parameters as a request body.
+
+## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
+
+| Parameter            | Description                                                                                                            | Values                              |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| **key**              | The API key required to authorize the request.                                                                         | String                              |
+| **init\_audio**      | The URL of the audio file to be transcribed. Supported formats: WAV, MP3,FLAC, OPUS. `min`: 5 seconds - `max`: 1 hour. | String (URL)                        |
+| **language**         | The language code of the audio content in ISO 639-1 format (e.g. 'en' for English, 'es' for Spanish).                  | String (ISO 639-1 `en`, `es`, `fr`) |
+| **timestamp\_level** | The level of detail for timestamps in the transcription. Defaults to null.                                             | `word`, `sentence`, or null         |
+| **webhook**          | A URL to receive a POST request once the transcription is complete.                                                    | URL                                 |
+| **track\_id**        | An ID included in the webhook response to identify the request.                                                        | Integral value                      |
+
+### Languages Supported[​](#languages-supported "Direct link to Languages Supported")
+
+```
+"Afrikaans": "af","Arabic": "ar","Belarusian": "be","Bengali": "bn","Bulgarian": "bg","Chinese": "zh","Czech": "cs","Danish": "da","Dutch": "nl","English": "en","Finnish": "fi","French": "fr","German": "de","Greek": "el","Hebrew": "he","Hindi": "hi","Hungarian": "hu","Indonesian": "id","Italian": "it","Japanese": "ja","Kannada": "kn","Korean": "ko","Malayalam": "ml","Marathi": "mr","Nepali": "ne","Panjabi": "pa","Persian": "fa","Polish": "pl","Portuguese": "pt","Romanian": "ro","Russian": "ru","Serbian": "sr","Spanish": "es","Swedish": "sv","Tagalog": "tl","Tamil": "ta","Telugu": "te","Thai": "th","Turkish": "tr","Ukrainian": "uk","Urdu": "ur","Vietnamese": "vi","Welsh": "cy"
+```
+
+<Info>
+  **Whisper supports several languages, but performance may vary due to factors like limited training data, script complexity, and regional dialects, potentially affecting transcription accuracy.**
+</Info>
+
+## Example[​](#example "Direct link to Example")
+
+### Body[​](#body "Direct link to Body")
+
+Body
+
+```
+{    "key": "",    "audio_url": "https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",    "language": "en",    "timestamp_level": null,    "webhook": null,    "track_id": null}
+```
+
+### Request[​](#request-1 "Direct link to Request")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({    "key": "",    "audio_url": "https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",    "language": "en",    "timestamp_level": null,    "webhook": null,    "track_id": null});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v1/enterprise/voice/speech_to_text", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [  "key" => "",  "audio_url" => "https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",  "language" => "en",  "timestamp_level" => null,  "webhook" => null,  "track_id" => null];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v1/enterprise/voice/speech_to_text',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v1/enterprise/voice/speech_to_text',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key": "",    "audio_url": "https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",    "language": "en",    "timestamp_level": null,    "webhook": null,    "track_id": null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v1/enterprise/voice/speech_to_text"payload = json.dumps({    "key": "",    "audio_url": "https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",    "language": "en",    "timestamp_level": null,    "webhook": None,    "track_id": None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\":\"\",\n    \"audio_url\":\"https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav\",\n    \"language\":\"en\",\n    \"timestamp_level\":null,\n    \"webhook\":\"\",\n    \"track_id\":\"\"\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v1/enterprise/voice/speech_to_text")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
+```
+
+### Response[​](#response "Direct link to Response")
+
+* Success
+* Processing
+* Error
+
+```
+{    "status": "success",    "eta": 5,    "id": 330711,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/2966b901-d93a-4b3b-a2f5-db2b6ea081a8.txt"    ],    "proxy_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/2966b901-d93a-4b3b-a2f5-db2b6ea081a8.txt"    ],    "meta": {        "language": "en",        "timestamp_level": null,        "file_id": "2966b901-d93a-4b3b-a2f5-db2b6ea081a8",        "duration": 11.311,        "audio_url": "https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav"    }}
+```
+
+```
+{    "status": "processing",    "tip": "Your transcription is processing in background, you can get this transcription using fetch API",    "eta": 5,    "message": "Try to fetch request after seconds estimated",    "fetch_result": "https://modelslab.com/api/v6/whisper/fetch/330711",    "id": 330711,    "output": [],    "future_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/2966b901-d93a-4b3b-a2f5-db2b6ea081a8.txt"    ],    "proxy_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/2966b901-d93a-4b3b-a2f5-db2b6ea081a8.txt"    ],    "meta": {        "language": "en",        "timestamp_level": null,        "file_id": "2966b901-d93a-4b3b-a2f5-db2b6ea081a8",        "duration": 11.311,        "audio_url": "https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav"    }}
+```
+
+```
+{    "status": "error",    "message": "Error message"}
+```
