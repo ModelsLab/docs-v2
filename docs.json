@@ -1,55 +1,284 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "willow",
-  "name": "willow stater Kit",
+  "theme": "mint",
+  "name": "Mint Starter Kit",
   "colors": {
     "primary": "#3B82F6",
-    "light": "#60A5FA",
-    "dark": "#1D4ED8"
+    "light": "#FAF9F6",
+    "dark": "#26282A"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.png",
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "claude",
+      "chatgpt"
+    ]
+  },
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Developer Guide",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "First steps",
             "pages": [
               "index",
-              "quickstart",
-              "development"
+              "get_started"
             ]
           },
           {
-            "group": "Essentials",
+            "group": "Models & pricing",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "models-and-overview",
+              "pricing",
+              "model-depreciations"
+            ]
+          },
+          {
+            "group": "Learn about ModelsLab",
+            "pages": [
+              "building-with-modelslab",
+              "use-cases",
+              "prompt-engineering"
+            ]
+          },
+          {
+            "group": "Agent components",
+            "pages": [
+              "model-context-protocol-mcp"
+            ]
+          },
+          {
+            "group": "Legal center",
+            "pages": [
+              "modelslab-privacy-policy",
+              "security-and-compliance"
             ]
           }
         ]
       },
       {
-        "tab": "API Reference",
+        "tab": "API Guide",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Using the APIs",
             "pages": [
-              "api-reference/introduction"
+              "api-reference/overview",
+              {
+                "group": "Forming the request",
+                "pages": [
+                  "api-reference/using-the-api/versions",
+                  "api-reference/using-the-api/rate-limiters",
+                  "api-reference/using-the-api/headers"
+                ]
+              },
+              {
+                "group": "Handling responses",
+                "pages": [
+                  "api-reference/using-the-api/errors",
+                  "api-reference/using-the-api/handling-stop-reasons"
+                ]
+              }
             ]
           },
           {
-            "group": "Endpoint Examples",
+            "group": "Our AI APIs",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              {
+                "group": " AI Video",
+                "pages": [
+                  "api-reference/apis/video-api/overview",
+                  "api-reference/apis/video-api/texttovideo",
+                  "api-reference/apis/video-api/imgtovideo",
+                  "api-reference/apis/video-api/texttovideo-ultra",
+                  "api-reference/apis/video-api/imagetovideo-ultra",
+                  "api-reference/apis/video-api/scene-maker",
+                  "api-reference/apis/video-api/base64-to-url"
+                ]
+              },
+              {
+                "group": "AI Image generation",
+                "pages": [
+                  "api-reference/apis/image-generation/image-generation",
+                  {
+                    "group": "Realtime Stable Diffusion",
+                    "pages": [
+                      "api-reference/apis/image-generation/realtime-stable-diffusion/overview",
+                      "api-reference/apis/image-generation/realtime-stable-diffusion/text-to-image",
+                      "api-reference/apis/image-generation/realtime-stable-diffusion/image-to-image",
+                      "api-reference/apis/image-generation/realtime-stable-diffusion/inpaint",
+                      "api-reference/apis/image-generation/realtime-stable-diffusion/fetch-image"
+                    ]
+                  },
+                  {
+                    "group": "Flux",
+                    "pages": [
+                      "api-reference/apis/image-generation/flux/flux-text-to-image"
+                    ]
+                  },
+                  {
+                    "group": "Community Models",
+                    "pages": [
+                      "api-reference/apis/image-generation/community-models/overview",
+                      "api-reference/apis/image-generation/community-models/dreambooth-text-to-image",
+                      "api-reference/apis/image-generation/community-models/dreambooth-image-to-image",
+                      "api-reference/apis/image-generation/community-models/dreambooth-inpainting",
+                      "api-reference/apis/image-generation/community-models/dreambooth-lora",
+                      "api-reference/apis/image-generation/community-models/dreambooth-lora-multi",
+                      "api-reference/apis/image-generation/community-models/dreambooth-reload-model",
+                      "api-reference/apis/image-generation/community-models/dreambooth-fetch-queue-image"
+                    ]
+                  },
+                  {
+                    "group": "ControlNet",
+                    "pages": [
+                      "api-reference/apis/image-generation/controlnet/overview",
+                      "api-reference/apis/image-generation/controlnet/controlnet-main",
+                      "api-reference/apis/image-generation/controlnet/controlnet-multi"
+                    ]
+                  },
+                  {
+                    "group": "A1111 Schedulers",
+                    "pages": [
+                      "api-reference/apis/image-generation/a1111-scheduler/overview",
+                      "api-reference/apis/image-generation/a1111-scheduler/a1111schedulers"
+                    ]
+                  },
+                  {
+                    "group": "Train Model",
+                    "pages": [
+                      "api-reference/apis/image-generation/train-model/overview",
+                      "api-reference/apis/image-generation/train-model/lora-finetune",
+                      "api-reference/apis/image-generation/train-model/finetune-list",
+                      "api-reference/apis/image-generation/train-model/finetune-status",
+                      "api-reference/apis/image-generation/train-model/finetune-delete",
+                      "api-reference/apis/image-generation/train-model/cancel-training",
+                      "api-reference/apis/image-generation/train-model/base64-crop"
+                    ]
+                  },
+                  {
+                    "group": "Model Operations",
+                    "pages": [
+                      "api-reference/apis/image-generation/model-operation/overview",
+                      "api-reference/apis/image-generation/model-operation/model-list",
+                      "api-reference/apis/image-generation/model-operation/upload-model",
+                      "api-reference/apis/image-generation/model-operation/finetune-list"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "AI Image Editing",
+                "pages": [
+                  "api-reference/apis/image-editing/overview",
+                  "api-reference/apis/image-editing/fashion",
+                  "api-reference/apis/image-editing/face-gen",
+                  "api-reference/apis/image-editing/fetchimage",
+                  "api-reference/apis/image-editing/flux-headshot",
+                  "api-reference/apis/image-editing/head-shot",
+                  "api-reference/apis/image-editing/imagemixer",
+                  "api-reference/apis/image-editing/inpaint",
+                  "api-reference/apis/image-editing/outpaint",
+                  "api-reference/apis/image-editing/mask-creator",
+                  "api-reference/apis/image-editing/object-remover",
+                  "api-reference/apis/image-editing/removebg-createmask",
+                  "api-reference/apis/image-editing/super-resolution",
+                  "api-reference/apis/image-editing/base64-to-url"
+                ]
+              },
+              {
+                "group": "AI Speech & Audio",
+                "pages": [
+                  "api-reference/apis/voice-cloning/overview",
+                  "api-reference/apis/voice-cloning/voice-cloning",
+                  "api-reference/apis/voice-cloning/text-to-speech",
+                  "api-reference/apis/voice-cloning/speech-to-text",
+                  "api-reference/apis/voice-cloning/voice-to-voice",
+                  "api-reference/apis/voice-cloning/music-gen",
+                  "api-reference/apis/voice-cloning/sfx",
+                  "api-reference/apis/voice-cloning/voice-cover",
+                  "api-reference/apis/voice-cloning/create-dubbing",
+                  "api-reference/apis/voice-cloning/vocal-isolator",
+                  "api-reference/apis/voice-cloning/lyrics-generator",
+                  "api-reference/apis/voice-cloning/song-generator",
+                  "api-reference/apis/voice-cloning/voice-list",
+                  "api-reference/apis/voice-cloning/fetchvoice",
+                  "api-reference/apis/voice-cloning/upload-voice",
+                  "api-reference/apis/voice-cloning/base64-to-url"
+                ]
+              },
+              {
+                "group": "AI Deepfake",
+                "pages": [
+                  "api-reference/apis/deepfake-api/overview",
+                  "api-reference/apis/deepfake-api/specific-face-swap",
+                  "api-reference/apis/deepfake-api/multiple-face-swap",
+                  "api-reference/apis/deepfake-api/single-video-swap",
+                  "api-reference/apis/deepfake-api/specific-video-swap",
+                  "api-reference/apis/deepfake-api/fetch"
+                ]
+              },
+              {
+                "group": "AI 3D",
+                "pages": [
+                  "api-reference/apis/3d-api/overview",
+                  "api-reference/apis/3d-api/text-to-3d",
+                  "api-reference/apis/3d-api/image-to-3d",
+                  "api-reference/apis/3d-api/fetch",
+                  "api-reference/apis/3d-api/base64-to-url"
+                ]
+              },
+              {
+                "group": "Uncensored Chat",
+                "pages": [
+                  "api-reference/apis/uncensored-chat-api/overview",
+                  "api-reference/apis/uncensored-chat-api/completions",
+                  "api-reference/apis/uncensored-chat-api/chat-completions",
+                  "api-reference/apis/uncensored-chat-api/uncensored-chat"
+                ]
+              },
+              {
+                "group": "AI Interior",
+                "pages": [
+                  "api-reference/apis/interior-api/overview",
+                  "api-reference/apis/interior-api/interior",
+                  "api-reference/apis/interior-api/exterior-restorer",
+                  "api-reference/apis/interior-api/floor-planning",
+                  "api-reference/apis/interior-api/room-decorator",
+                  "api-reference/apis/interior-api/scenario-changer"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "3rd-party APIs",
+            "pages": [
+              "api-reference/third-party-apis/video/google-vertex",
+              "api-reference/third-party-apis/video/runway-ml"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Resources",
+        "groups": [
+          {
+            "group": "Resources",
+            "pages": [
+              "resources/resources"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Release Notes",
+        "groups": [
+          {
+            "group": "Release Notes",
+            "pages": [
+              "release-notes/api"
             ]
           }
         ]
@@ -58,19 +287,19 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
+          "anchor": "Old Documentation",
+          "href": "https://docs.modelslab.com",
           "icon": "book-open-cover"
         },
         {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
+          "anchor": "Developer Discord",
+          "href": "https://discord.gg/ujtGyjY2",
+          "icon": "discord"
         },
         {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "Support",
+          "href": "https://modelslab.com/support",
+          "icon": "life-ring"
         }
       ]
     }
@@ -82,14 +311,14 @@
   "navbar": {
     "links": [
       {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "label": "Blog",
+        "href": "https://modelslab.com/blog"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Go to modelslab.com",
+      "href": "https://modelslab.com"
     }
   },
   "footer": {
