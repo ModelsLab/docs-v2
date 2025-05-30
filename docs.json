@@ -91,6 +91,10 @@
                 ]
               },
               {
+                "group": "Image",
+                "pages": []
+              },
+              {
                 "group": "Speech & Audio",
                 "pages": [
                   "api-reference/apis/voice-cloning/overview",
@@ -109,7 +113,6 @@
                   "api-reference/apis/voice-cloning/fetchvoice",
                   "api-reference/apis/voice-cloning/upload-voice",
                   "api-reference/apis/voice-cloning/base64-to-url"
-
                 ]
               },
               {
@@ -140,6 +143,36 @@
                   "api-reference/apis/3d-api/image-to-3d",
                   "api-reference/apis/3d-api/fetch",
                   "api-reference/apis/3d-api/base64-to-url"
+                ]
+              },
+              {
+                "group": "Interior",
+                "pages": [
+                  "api-reference/apis/interior-api/overview",
+                  "api-reference/apis/interior-api/interior",
+                  "api-reference/apis/interior-api/exterior-restorer",
+                  "api-reference/apis/interior-api/floor-planning",
+                  "api-reference/apis/interior-api/room-decorator",
+                  "api-reference/apis/interior-api/scenario-changer"
+                ]
+              },
+              {
+                "group": "Image Editing",
+                "pages": [
+                  "api-reference/apis/image-editing/overview",
+                  "api-reference/apis/image-editing/fashion",
+                  "api-reference/apis/image-editing/face-gen",
+                  "api-reference/apis/image-editing/fetchimage",
+                  "api-reference/apis/image-editing/flux-headshot",
+                  "api-reference/apis/image-editing/head-shot",
+                  "api-reference/apis/image-editing/imagemixer",
+                  "api-reference/apis/image-editing/inpaint",
+                  "api-reference/apis/image-editing/outpaint",
+                  "api-reference/apis/image-editing/mask-creator",
+                  "api-reference/apis/image-editing/object-remover",
+                  "api-reference/apis/image-editing/removebg-createmask",
+                  "api-reference/apis/image-editing/super-resolution",
+                  "api-reference/apis/image-editing/base64-to-url"
                 ]
               }
             ]
