@@ -24,7 +24,7 @@
             "group": "Models & pricing",
             "pages": [
               "models-and-overview",
-              "pricing", 
+              "pricing",
               "model-depreciations"
             ]
           },
@@ -78,12 +78,65 @@
           {
             "group": "Our APIs",
             "pages": [
-              "Video",
-              "Audio",
-              "Uncesnored Chat",
-              "3D",
-              "Image"
-              
+              {
+                "group": "Video",
+                "pages": [
+                  "api-reference/apis/video-api/overview",
+                  "api-reference/apis/video-api/texttovideo",
+                  "api-reference/apis/video-api/imgtovideo",
+                  "api-reference/apis/video-api/texttovideo-ultra",
+                  "api-reference/apis/video-api/imagetovideo-ultra",
+                  "api-reference/apis/video-api/scene-maker",
+                  "api-reference/apis/video-api/base64-to-url"
+                ]
+              },
+              {
+                "group": "Speech & Audio",
+                "pages": [
+                  "api-reference/apis/voice-cloning/overview",
+                  "api-reference/apis/voice-cloning/voice-cloning",
+                  "api-reference/apis/voice-cloning/text-to-speech",
+                  "api-reference/apis/voice-cloning/speech-to-text",
+                  "api-reference/apis/voice-cloning/voice-to-voice",
+                  "api-reference/apis/voice-cloning/music-gen",
+                  "api-reference/apis/voice-cloning/sfx",
+                  "api-reference/apis/voice-cloning/voice-cover",
+                  "api-reference/apis/voice-cloning/create-dubbing",
+                  "api-reference/apis/voice-cloning/vocal-isolator",
+                  "api-reference/apis/voice-cloning/lyrics-generator",
+                  "api-reference/apis/voice-cloning/song-generator",
+                  "api-reference/apis/voice-cloning/voice-list",
+                  "api-reference/apis/voice-cloning/fetchvoice",
+                  "api-reference/apis/voice-cloning/upload-voice",
+                  "api-reference/apis/voice-cloning/base64-to-url"
+
+                ]
+              },
+              {
+                "group": "Uncensored Chat",
+                "pages": [
+                  "api-reference/apis/uncensored-chat-api/overview",
+                  "api-reference/apis/uncensored-chat-api/completions",
+                  "api-reference/apis/uncensored-chat-api/chat-completions",
+                  "api-reference/apis/uncensored-chat-api/uncensored-chat"
+                ]
+              },
+              {
+                "group": "3D",
+                "pages": [
+                  "api-reference/apis/3d-api/overview",
+                  "api-reference/apis/3d-api/textto3d",
+                  "api-reference/apis/3d-api/imagetotexture"
+                ]
+              },
+              {
+                "group": "Image",
+                "pages": [
+                  "api-reference/apis/image-api/overview",
+                  "api-reference/apis/image-api/texttoimage",
+                  "api-reference/apis/image-api/imagetotexture"
+                ]
+              }
             ]
           },
           {
@@ -91,21 +144,6 @@
             "pages": [
               "api-reference/third-party-apis/video/google-vertex",
               "api-reference/third-party-apis/video/runway-ml"
-              
-            ]
-          },
-          {
-            "group": "VideoFusion",
-            "icon": "video",
-            "pages": [
-              "video-api/overview",
-              "video-api/texttovideo",
-              "video-api/imgtovideo",
-              "video-api/texttovideo-ultra",
-              "video-api/image-to-video-ultra",
-              "video-api/scene-maker",
-              "video-api/base64-to-url",
-              "video-api/fetchvideo"
             ]
           }
         ]
