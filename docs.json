@@ -1,23 +1,97 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "willow",
-  "name": "willow stater Kit",
+  "theme": "mint",
+  "name": "Mint Starter Kit",
   "colors": {
     "primary": "#3B82F6",
-    "light": "#60A5FA",
-    "dark": "#1D4ED8"
+    "light": "#FAF9F6",
+    "dark": "#26282A"
   },
   "favicon": "/favicon.png",
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Developer Guide",
         "groups": [
           {
             "group": "First steps",
             "pages": [
               "index",
               "get_started"
+            ]
+          },
+          {
+            "group": "Models & pricing",
+            "pages": [
+              "models-and-overview",
+              "pricing", 
+              "model-depreciations"
+            ]
+          },
+          {
+            "group": "Learn about ModelsLab",
+            "pages": [
+              "building-with-modelslab",
+              "use-cases",
+              "prompt-engineering"
+            ]
+          },
+          {
+            "group": "Agent components",
+            "pages": [
+              "model-context-protocol-mcp"
+            ]
+          },
+          {
+            "group": "Legal center",
+            "pages": [
+              "modelslab-privacy-policy",
+              "security-and-compliance"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Guide",
+        "groups": [
+          {
+            "group": "Using the APIs",
+            "pages": [
+              "api-reference/overview",
+              {
+                "group": "Forming the request",
+                "pages": [
+                  "api-reference/using-the-api/versions",
+                  "api-reference/using-the-api/rate-limiters",
+                  "api-reference/using-the-api/headers"
+                ]
+              },
+              {
+                "group": "Handling responses",
+                "pages": [
+                  "api-reference/using-the-api/errors",
+                  "api-reference/using-the-api/handling-stop-reasons"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Our APIs",
+            "pages": [
+              "Video",
+              "Audio",
+              "Uncesnored Chat",
+              "3D",
+              "Image"
+              
+            ]
+          },
+          {
+            "group": "3rd-party APIs",
+            "pages": [
+              "api-reference/third-party-apis/video/google-vertex",
+              "api-reference/third-party-apis/video/runway-ml"
+              
             ]
           },
           {
@@ -35,44 +109,24 @@
             ]
           }
         ]
-      },
-      {
-        "tab": "API Reference",
-        "groups": [
-          {
-            "group": "API Documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint Examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
-          }
-        ]
       }
     ],
     "global": {
       "anchors": [
         {
           "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
+          "href": "https://docs.modelslab.com",
           "icon": "book-open-cover"
         },
         {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
+          "anchor": "Developer Discord",
+          "href": "https://discord.gg/ujtGyjY2",
+          "icon": "discord"
         },
         {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "Support",
+          "href": "https://modelslab.com/support",
+          "icon": "life-ring"
         }
       ]
     }
@@ -84,8 +138,8 @@
   "navbar": {
     "links": [
       {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "label": "Blog",
+        "href": "https://modelslab.com/blog"
       }
     ],
     "primary": {
