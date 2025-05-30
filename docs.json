@@ -122,11 +122,14 @@
                 ]
               },
               {
-                "group": "3D",
+                "group": "Deepfake",
                 "pages": [
-                  "api-reference/apis/3d-api/overview",
-                  "api-reference/apis/3d-api/textto3d",
-                  "api-reference/apis/3d-api/imagetotexture"
+                  "api-reference/apis/deepfake-api/overview",
+                  "api-reference/apis/deepfake-api/single-face-swap",
+                  "api-reference/apis/deepfake-api/multiple-face-swap",
+                  "api-reference/apis/deepfake-api/single-video-swap",
+                  "api-reference/apis/deepfake-api/multiple-video-swap",
+                  "api-reference/apis/deepfake-api/fetch"
                 ]
               },
               {
