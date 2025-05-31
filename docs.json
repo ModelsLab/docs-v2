@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "ModelsLab | Stable Diffusion & LLM API Documentation",
   "colors": {
     "primary": "#3B82F6",
     "light": "#FAF9F6",
@@ -12,8 +12,7 @@
     "options": [
       "copy",
       "view",
-      "claude",
-      "chatgpt"
+      "claude"
     ]
   },
   "navigation": {
@@ -109,7 +108,7 @@
                       "api-reference/apis/image-generation/realtime-stable-diffusion/text-to-image",
                       "api-reference/apis/image-generation/realtime-stable-diffusion/image-to-image",
                       "api-reference/apis/image-generation/realtime-stable-diffusion/inpaint",
-                      "api-reference/apis/image-generation/realtime-stable-diffusion/fetch-image"
+                      "api-reference/apis/image-generation/realtime-stable-diffusion/fetchimage"
                     ]
                   },
                   {
@@ -249,6 +248,276 @@
                   "api-reference/apis/interior-api/room-decorator",
                   "api-reference/apis/interior-api/scenario-changer"
                 ]
+              },
+              {
+                "group": "General APIs",
+                "pages": [
+                  "api-reference/apis/general-api/overview",
+                  "api-reference/apis/general-api/base64-crop",
+                  "api-reference/apis/general-api/base64-to-url",
+                  "api-reference/apis/general-api/buy-model",
+                  "api-reference/apis/general-api/buy-subscription",
+                  "api-reference/apis/general-api/cancel-subscription",
+                  "api-reference/apis/general-api/clear-cache",
+                  "api-reference/apis/general-api/delete-image",
+                  "api-reference/apis/general-api/nsfw-image-check",
+                  "api-reference/apis/general-api/nsfw-prompt-check",
+                  "api-reference/apis/general-api/subscribed-product"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Enterprise APIs",
+            "pages": [
+              "api-reference/apis/enterprise-api/overview",
+              {
+                "group": "3D API",
+                "pages": [
+                  "api-reference/apis/enterprise-api/3d-api/overview",
+                  "api-reference/apis/enterprise-api/3d-api/clear-cache",
+                  "api-reference/apis/enterprise-api/3d-api/clear-queue",
+                  "api-reference/apis/enterprise-api/3d-api/fetch",
+                  "api-reference/apis/enterprise-api/3d-api/image-to-3d",
+                  "api-reference/apis/enterprise-api/3d-api/restart-server",
+                  "api-reference/apis/enterprise-api/3d-api/system-details",
+                  "api-reference/apis/enterprise-api/3d-api/text-to-3d",
+                  "api-reference/apis/enterprise-api/3d-api/update-server"
+                ]
+              },
+              {
+                "group": "Deepfake",
+                "pages": [
+                  "api-reference/apis/enterprise-api/deepfake/overview",
+                  "api-reference/apis/enterprise-api/deepfake/clear-cache",
+                  "api-reference/apis/enterprise-api/deepfake/clear-queue",
+                  "api-reference/apis/enterprise-api/deepfake/fetch",
+                  "api-reference/apis/enterprise-api/deepfake/multiple-face-swap",
+                  "api-reference/apis/enterprise-api/deepfake/restart-server",
+                  "api-reference/apis/enterprise-api/deepfake/single-video-swap",
+                  "api-reference/apis/enterprise-api/deepfake/specific-face-swap",
+                  "api-reference/apis/enterprise-api/deepfake/specific-video-swap",
+                  "api-reference/apis/enterprise-api/deepfake/system-details",
+                  "api-reference/apis/enterprise-api/deepfake/update-server"
+                ]
+              },
+              {
+                "group": "Deepseek Chat",
+                "pages": [
+                  "api-reference/apis/enterprise-api/deepseek-chat/overview",
+                  "api-reference/apis/enterprise-api/deepseek-chat/clear-cache",
+                  "api-reference/apis/enterprise-api/deepseek-chat/restart-server",
+                  "api-reference/apis/enterprise-api/deepseek-chat/start"
+                ]
+              },
+              {
+                "group": "Face Gen",
+                "pages": [
+                  "api-reference/apis/enterprise-api/face-gen/overview",
+                  "api-reference/apis/enterprise-api/face-gen/clear-cache",
+                  "api-reference/apis/enterprise-api/face-gen/clear-queue",
+                  "api-reference/apis/enterprise-api/face-gen/fetch",
+                  "api-reference/apis/enterprise-api/face-gen/make-gen",
+                  "api-reference/apis/enterprise-api/face-gen/restart-server",
+                  "api-reference/apis/enterprise-api/face-gen/system-details",
+                  "api-reference/apis/enterprise-api/face-gen/update-server"
+                ]
+              },
+              {
+                "group": "Flux",
+                "pages": [
+                  "api-reference/apis/enterprise-api/flux/overview",
+                  "api-reference/apis/enterprise-api/flux/clear-cache",
+                  "api-reference/apis/enterprise-api/flux/clear-queue",
+                  "api-reference/apis/enterprise-api/flux/fetchimage",
+                  "api-reference/apis/enterprise-api/flux/img2img",
+                  "api-reference/apis/enterprise-api/flux/restart-server",
+                  "api-reference/apis/enterprise-api/flux/system-details",
+                  "api-reference/apis/enterprise-api/flux/text2img",
+                  "api-reference/apis/enterprise-api/flux/update-server"
+                ]
+              },
+              {
+                "group": "Flux Headshot",
+                "pages": [
+                  "api-reference/apis/enterprise-api/flux-headshot/overview",
+                  "api-reference/apis/enterprise-api/flux-headshot/clear-cache",
+                  "api-reference/apis/enterprise-api/flux-headshot/clear-queue",
+                  "api-reference/apis/enterprise-api/flux-headshot/fetch",
+                  "api-reference/apis/enterprise-api/flux-headshot/make-gen",
+                  "api-reference/apis/enterprise-api/flux-headshot/restart-server",
+                  "api-reference/apis/enterprise-api/flux-headshot/system-details",
+                  "api-reference/apis/enterprise-api/flux-headshot/update-server"
+                ]
+              },
+              {
+                "group": "General",
+                "pages": [
+                  "api-reference/apis/enterprise-api/general/overview",
+                  "api-reference/apis/enterprise-api/general/update-s3-details"
+                ]
+              },
+              {
+                "group": "Image Editing",
+                "pages": [
+                  "api-reference/apis/enterprise-api/image-editing/overview",
+                  "api-reference/apis/enterprise-api/image-editing/clear-cache",
+                  "api-reference/apis/enterprise-api/image-editing/clear-queue",
+                  "api-reference/apis/enterprise-api/image-editing/face-gen",
+                  "api-reference/apis/enterprise-api/image-editing/fashion",
+                  "api-reference/apis/enterprise-api/image-editing/fetchimage",
+                  "api-reference/apis/enterprise-api/image-editing/head-shot",
+                  "api-reference/apis/enterprise-api/image-editing/magic-mix",
+                  "api-reference/apis/enterprise-api/image-editing/mask_creator",
+                  "api-reference/apis/enterprise-api/image-editing/object-removal",
+                  "api-reference/apis/enterprise-api/image-editing/outpainting",
+                  "api-reference/apis/enterprise-api/image-editing/removebg-createmask",
+                  "api-reference/apis/enterprise-api/image-editing/restart-server",
+                  "api-reference/apis/enterprise-api/image-editing/system-details",
+                  "api-reference/apis/enterprise-api/image-editing/update-server"
+                ]
+              },
+              {
+                "group": "Image to Video Ultra",
+                "pages": [
+                  "api-reference/apis/enterprise-api/image-to-video-ultra/overview",
+                  "api-reference/apis/enterprise-api/image-to-video-ultra/clear-cache",
+                  "api-reference/apis/enterprise-api/image-to-video-ultra/clear-queue",
+                  "api-reference/apis/enterprise-api/image-to-video-ultra/fetchvideo",
+                  "api-reference/apis/enterprise-api/image-to-video-ultra/imagetovideo",
+                  "api-reference/apis/enterprise-api/image-to-video-ultra/restart-server",
+                  "api-reference/apis/enterprise-api/image-to-video-ultra/system-details",
+                  "api-reference/apis/enterprise-api/image-to-video-ultra/update-server"
+                ]
+              },
+              {
+                "group": "Interior",
+                "pages": [
+                  "api-reference/apis/enterprise-api/interior/overview",
+                  "api-reference/apis/enterprise-api/interior/clear-cache",
+                  "api-reference/apis/enterprise-api/interior/clear-queue",
+                  "api-reference/apis/enterprise-api/interior/exterior-restorer",
+                  "api-reference/apis/enterprise-api/interior/fetch",
+                  "api-reference/apis/enterprise-api/interior/floor-planning",
+                  "api-reference/apis/enterprise-api/interior/make-interior",
+                  "api-reference/apis/enterprise-api/interior/restart-server",
+                  "api-reference/apis/enterprise-api/interior/room-decorator",
+                  "api-reference/apis/enterprise-api/interior/scenario-changer",
+                  "api-reference/apis/enterprise-api/interior/sketch-rendering",
+                  "api-reference/apis/enterprise-api/interior/system-details",
+                  "api-reference/apis/enterprise-api/interior/update-server"
+                ]
+              },
+              {
+                "group": "Realtime",
+                "pages": [
+                  "api-reference/apis/enterprise-api/realtime/overview",
+                  "api-reference/apis/enterprise-api/realtime/clear-cache",
+                  "api-reference/apis/enterprise-api/realtime/clear-queue",
+                  "api-reference/apis/enterprise-api/realtime/fetchimage",
+                  "api-reference/apis/enterprise-api/realtime/img2img",
+                  "api-reference/apis/enterprise-api/realtime/inpaint",
+                  "api-reference/apis/enterprise-api/realtime/restart-server",
+                  "api-reference/apis/enterprise-api/realtime/system-details",
+                  "api-reference/apis/enterprise-api/realtime/text2img",
+                  "api-reference/apis/enterprise-api/realtime/update-server"
+                ]
+              },
+              {
+                "group": "Super Resolution",
+                "pages": [
+                  "api-reference/apis/enterprise-api/super-resolution/overview",
+                  "api-reference/apis/enterprise-api/super-resolution/clear-cache",
+                  "api-reference/apis/enterprise-api/super-resolution/clear-queue",
+                  "api-reference/apis/enterprise-api/super-resolution/fetchimage",
+                  "api-reference/apis/enterprise-api/super-resolution/make",
+                  "api-reference/apis/enterprise-api/super-resolution/restart-server",
+                  "api-reference/apis/enterprise-api/super-resolution/system-details",
+                  "api-reference/apis/enterprise-api/super-resolution/update-server"
+                ]
+              },
+              {
+                "group": "Text to Image",
+                "pages": [
+                  "api-reference/apis/enterprise-api/text-to-image/overview",
+                  "api-reference/apis/enterprise-api/text-to-image/clear-cache",
+                  "api-reference/apis/enterprise-api/text-to-image/clear-queue",
+                  "api-reference/apis/enterprise-api/text-to-image/controlnet-ep",
+                  "api-reference/apis/enterprise-api/text-to-image/delete-model",
+                  "api-reference/apis/enterprise-api/text-to-image/fetch-queue-image",
+                  "api-reference/apis/enterprise-api/text-to-image/get-all-models",
+                  "api-reference/apis/enterprise-api/text-to-image/img2img",
+                  "api-reference/apis/enterprise-api/text-to-image/inpainting",
+                  "api-reference/apis/enterprise-api/text-to-image/list-schedulers",
+                  "api-reference/apis/enterprise-api/text-to-image/load-model-v2",
+                  "api-reference/apis/enterprise-api/text-to-image/load-model",
+                  "api-reference/apis/enterprise-api/text-to-image/load-vae",
+                  "api-reference/apis/enterprise-api/text-to-image/nsfw-image-check",
+                  "api-reference/apis/enterprise-api/text-to-image/restart-server",
+                  "api-reference/apis/enterprise-api/text-to-image/super-resolution",
+                  "api-reference/apis/enterprise-api/text-to-image/sync-model",
+                  "api-reference/apis/enterprise-api/text-to-image/system-details",
+                  "api-reference/apis/enterprise-api/text-to-image/text2img",
+                  "api-reference/apis/enterprise-api/text-to-image/update-server",
+                  "api-reference/apis/enterprise-api/text-to-image/upload-image",
+                  "api-reference/apis/enterprise-api/text-to-image/verify-model"
+                ]
+              },
+              {
+                "group": "Ultra Video",
+                "pages": [
+                  "api-reference/apis/enterprise-api/ultra-video/overview",
+                  "api-reference/apis/enterprise-api/ultra-video/clear-cache",
+                  "api-reference/apis/enterprise-api/ultra-video/clear-queue",
+                  "api-reference/apis/enterprise-api/ultra-video/fetchvideo",
+                  "api-reference/apis/enterprise-api/ultra-video/restart-server",
+                  "api-reference/apis/enterprise-api/ultra-video/system-details",
+                  "api-reference/apis/enterprise-api/ultra-video/texttovideo",
+                  "api-reference/apis/enterprise-api/ultra-video/update-server"
+                ]
+              },
+              {
+                "group": "Uncensored Chat",
+                "pages": [
+                  "api-reference/apis/enterprise-api/uncensored-chat/overview",
+                  "api-reference/apis/enterprise-api/uncensored-chat/clear-cache",
+                  "api-reference/apis/enterprise-api/uncensored-chat/clear-queue",
+                  "api-reference/apis/enterprise-api/uncensored-chat/restart-server",
+                  "api-reference/apis/enterprise-api/uncensored-chat/start"
+                ]
+              },
+              {
+                "group": "Video",
+                "pages": [
+                  "api-reference/apis/enterprise-api/video/overview",
+                  "api-reference/apis/enterprise-api/video/clear-cache",
+                  "api-reference/apis/enterprise-api/video/clear-queue",
+                  "api-reference/apis/enterprise-api/video/fetchvideo",
+                  "api-reference/apis/enterprise-api/video/imgtovideo",
+                  "api-reference/apis/enterprise-api/video/restart-server",
+                  "api-reference/apis/enterprise-api/video/system-details",
+                  "api-reference/apis/enterprise-api/video/texttovideo",
+                  "api-reference/apis/enterprise-api/video/update-server"
+                ]
+              },
+              {
+                "group": "Voice Cloning",
+                "pages": [
+                  "api-reference/apis/enterprise-api/voice-cloning/overview",
+                  "api-reference/apis/enterprise-api/voice-cloning/clear-cache",
+                  "api-reference/apis/enterprise-api/voice-cloning/clear-queue",
+                  "api-reference/apis/enterprise-api/voice-cloning/fetch",
+                  "api-reference/apis/enterprise-api/voice-cloning/music-gen",
+                  "api-reference/apis/enterprise-api/voice-cloning/restart-server",
+                  "api-reference/apis/enterprise-api/voice-cloning/sfx",
+                  "api-reference/apis/enterprise-api/voice-cloning/speech-to-text",
+                  "api-reference/apis/enterprise-api/voice-cloning/system-details",
+                  "api-reference/apis/enterprise-api/voice-cloning/text-to-audio",
+                  "api-reference/apis/enterprise-api/voice-cloning/update-server",
+                  "api-reference/apis/enterprise-api/voice-cloning/voice-cover",
+                  "api-reference/apis/enterprise-api/voice-cloning/voice-to-voice",
+                  "api-reference/apis/enterprise-api/voice-cloning/voice-upload"
+                ]
               }
             ]
           },
@@ -279,6 +548,21 @@
             "group": "Release Notes",
             "pages": [
               "release-notes/api"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "ModelQ",
+        "groups": [
+          {
+            "group": "ModelQ",
+            "pages": [
+              "modelq/overview",
+              "modelq/installation",
+              "modelq/usage",
+              "modelq/advanced-usage",
+              "modelq/faq"
             ]
           }
         ]
