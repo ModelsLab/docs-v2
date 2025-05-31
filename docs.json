@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "ModelsLab | Stable Diffusion & LLM API Documentation",
+  "name": "Stable Diffusion & LLM API Documentation",
   "colors": {
     "primary": "#3B82F6",
     "light": "#FAF9F6",
@@ -12,7 +12,8 @@
     "options": [
       "copy",
       "view",
-      "claude"
+      "claude",
+      "chatgpt"
     ]
   },
   "navigation": {
@@ -25,6 +26,15 @@
             "pages": [
               "index",
               "get_started"
+            ]
+          },
+          {
+            "group": "Client SDKs",
+            "pages": [
+              "sdk/python",
+              "sdk/typescript",
+              "sdk/dart",
+              "sdk/php"
             ]
           },
           {
