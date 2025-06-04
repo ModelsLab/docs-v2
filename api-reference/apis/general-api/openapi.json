@@ -67,7 +67,7 @@
       }
     },
     "/clear_cache": {
-      "post": {
+      "get": {
         "summary": "Clear user cache",
         "description": "This endpoint is used to clear the user's cache",
         "servers": [{"url": "https://modelslab.com/api/v5"}],
@@ -223,7 +223,7 @@
       }
     },
     "/subscribed_products": {
-      "post": {
+      "get": {
         "summary": "Get subscribed products",
         "description": "This endpoint allows you to see the list of all modelslab product you have subscribed to",
         "servers": [{"url": "https://modelslab.com/api"}],
