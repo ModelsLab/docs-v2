@@ -1,0 +1,626 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ModelsLab 3D API",
+    "description": "AI-powered 3D model generation API supporting text-to-3D, image-to-3D, file management, and async processing",
+    "license": {
+      "name": "MIT"
+    },
+    "version": "6.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://modelslab.com/api/v6",
+      "description": "Main API server"
+    }
+  ],
+  "paths": {
+    "/3d/image_to_3d": {
+      "post": {
+        "summary": "Generate 3D model from image",
+        "description": "Converts an input image into a 3D character model with various customization options",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImageTo3DRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "3D generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {"$ref": "#/components/schemas/Success3DResponse"},
+                    {"$ref": "#/components/schemas/Processing3DResponse"}
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/3d/text_to_3d": {
+      "post": {
+        "summary": "Generate 3D model from text",
+        "description": "Creates a 3D object from a text-based prompt with extensive customization parameters",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TextTo3DRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "3D generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {"$ref": "#/components/schemas/Success3DResponse"},
+                    {"$ref": "#/components/schemas/Processing3DResponse"}
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/3d/base64_to_url": {
+      "post": {
+        "summary": "Upload 3D object from base64",
+        "description": "Uploads a 3D object in base64 format and returns a URL for the object",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Base64ToUrlRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Upload success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Base64ToUrlResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/3d/fetch/{id}": {
+      "post": {
+        "summary": "Fetch 3D generation result",
+        "description": "Retrieves queued or already generated 3D objects by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The ID of the 3D generation to fetch"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FetchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Fetch response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {"$ref": "#/components/schemas/Success3DResponse"},
+                    {"$ref": "#/components/schemas/Processing3DResponse"}
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ImageTo3DRequest": {
+        "type": "object",
+        "required": ["key", "image"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "API key for request authorization"
+          },
+          "image": {
+            "type": "string",
+            "description": "The input image URL or file path to be used for 3D conversion"
+          },
+          "output_format": {
+            "type": "string",
+            "enum": ["obj", "stl", "ply", "glb"],
+            "default": "glb",
+            "description": "Specifies the format of the generated 3D object"
+          },
+          "render": {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates whether to render a NeRF video of the 3D model"
+          },
+          "resolution": {
+            "type": "integer",
+            "maximum": 512,
+            "default": 256,
+            "description": "Resolution of the generated 3D model"
+          },
+          "multi_image": {
+            "type": "boolean",
+            "default": false,
+            "description": "Processes multiple images together when set to true"
+          },
+          "ss_guidance_strength": {
+            "type": "number",
+            "default": 7.5,
+            "description": "Adjusts the strength of style-space guidance for better model refinement"
+          },
+          "ss_sampling_steps": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 12,
+            "description": "Number of steps for style-space sampling"
+          },
+          "slat_guidance_strength": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10.0,
+            "default": 3.0,
+            "description": "Strength of slat guidance to refine model details"
+          },
+          "slat_sampling_steps": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 12,
+            "description": "Number of steps for slat guidance sampling"
+          },
+          "mesh_simplify": {
+            "type": "number",
+            "minimum": 0.90,
+            "maximum": 0.98,
+            "default": 0.90,
+            "description": "Controls the degree of mesh simplification to optimize the output"
+          },
+          "chunk_size": {
+            "type": "integer",
+            "maximum": 12000,
+            "default": 8192,
+            "description": "Specifies the size of processing chunks, which affects VRAM usage"
+          },
+          "seed": {
+            "type": "integer",
+            "default": 0,
+            "description": "Sets a random seed for reproducibility; 0 generates a random seed"
+          },
+          "temp": {
+            "type": "string",
+            "enum": ["yes", "no"],
+            "default": "no",
+            "description": "Saves the output files in a temporary directory if set to 'yes'"
+          },
+          "webhook": {
+            "type": "string",
+            "nullable": true,
+            "description": "Webhook URL for completion notification"
+          },
+          "track_id": {
+            "type": "string",
+            "nullable": true,
+            "description": "Custom tracking ID for the request"
+          }
+        }
+      },
+      "TextTo3DRequest": {
+        "type": "object",
+        "required": ["key", "prompt"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "API key for request authorization"
+          },
+          "prompt": {
+            "type": "string",
+            "default": "A full body mesh of a dog",
+            "description": "Text prompt to describe the 3D model to generate"
+          },
+          "resolution": {
+            "type": "integer",
+            "maximum": 512,
+            "default": 256,
+            "description": "Resolution of the generated 3D model"
+          },
+          "output_format": {
+            "type": "string",
+            "enum": ["obj", "stl", "ply", "glb"],
+            "default": "glb",
+            "description": "Format of the generated 3D model"
+          },
+          "render": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to render a NeRF video of the generated 3D model"
+          },
+          "negative_prompt": {
+            "type": "string",
+            "default": "",
+            "description": "Text to exclude specific elements from the generated model"
+          },
+          "guidance_scale": {
+            "type": "number",
+            "default": 1.0,
+            "description": "Balances the adherence to the prompt versus creativity in the generation"
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "default": 10,
+            "description": "Number of steps for generating the 3D model"
+          },
+          "ss_guidance_strength": {
+            "type": "number",
+            "default": 7.5,
+            "description": "Strength of style-space guidance for refinement"
+          },
+          "ss_sampling_steps": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 12,
+            "description": "Number of steps for style-space sampling"
+          },
+          "slat_guidance_strength": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 10.0,
+            "default": 3.0,
+            "description": "Strength of slat guidance for model details"
+          },
+          "slat_sampling_steps": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 12,
+            "description": "Number of steps for slat guidance sampling"
+          },
+          "mesh_simplify": {
+            "type": "number",
+            "minimum": 0.90,
+            "maximum": 0.98,
+            "default": 0.90,
+            "description": "Degree of mesh simplification to optimize the output model"
+          },
+          "foreground_ratio": {
+            "type": "number",
+            "default": 0.85,
+            "description": "Ratio of the foreground size to the overall image size"
+          },
+          "remove_bg": {
+            "type": "boolean",
+            "default": false,
+            "description": "Removes the background from the generated model if enabled"
+          },
+          "chunk_size": {
+            "type": "integer",
+            "maximum": 12000,
+            "default": 8192,
+            "description": "Size of processing chunks (affects VRAM usage)"
+          },
+          "seed": {
+            "type": "integer",
+            "default": 0,
+            "description": "Random seed for reproducibility; 0 generates a random seed"
+          },
+          "temp": {
+            "type": "string",
+            "enum": ["yes", "no"],
+            "default": "no",
+            "description": "Save output files in a temporary directory when set to 'yes'"
+          },
+          "webhook": {
+            "type": "string",
+            "nullable": true,
+            "description": "Webhook URL for completion notification"
+          },
+          "track_id": {
+            "type": "string",
+            "nullable": true,
+            "description": "Custom tracking ID for the request"
+          }
+        }
+      },
+      "Base64ToUrlRequest": {
+        "type": "object",
+        "required": ["key", "init_obj"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for authenticating your request"
+          },
+          "init_obj": {
+            "type": "string",
+            "description": "The base64 format of the 3D object file to be uploaded",
+            "pattern": "^data:model\\/[a-zA-Z0-9]+;base64,[A-Za-z0-9+\\/]+=*$"
+          }
+        }
+      },
+      "FetchRequest": {
+        "type": "object",
+        "required": ["key"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for authenticating your request"
+          }
+        }
+      },
+      "Success3DResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"]
+          },
+          "generationTime": {
+            "type": "number",
+            "description": "Time taken to generate the 3D model in seconds"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the generation request"
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of URLs to the generated 3D files"
+          },
+          "proxy_links": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of proxy URLs for the generated 3D files"
+          },
+          "meta": {
+            "type": "object",
+            "description": "Metadata about the generation process and parameters used",
+            "properties": {
+              "chunk_size": {
+                "type": "integer"
+              },
+              "file_prefix": {
+                "type": "string"
+              },
+              "foreground_ratio": {
+                "type": "string"
+              },
+              "guidance_scale": {
+                "type": "number"
+              },
+              "image": {
+                "type": "string"
+              },
+              "negative_prompt": {
+                "type": "string"
+              },
+              "num_inference_steps": {
+                "type": "integer"
+              },
+              "output_format": {
+                "type": "string"
+              },
+              "prompt": {
+                "type": "string"
+              },
+              "remove_bg": {
+                "type": "boolean"
+              },
+              "render": {
+                "type": "boolean"
+              },
+              "resolution": {
+                "type": "integer"
+              },
+              "seed": {
+                "type": "integer"
+              },
+              "temp": {
+                "type": "string"
+              },
+              "ss_guidance_strength": {
+                "type": "number"
+              },
+              "ss_sampling_steps": {
+                "type": "integer"
+              },
+              "slat_guidance_strength": {
+                "type": "number"
+              },
+              "slat_sampling_steps": {
+                "type": "integer"
+              },
+              "mesh_simplify": {
+                "type": "number"
+              },
+              "multi_image": {
+                "type": "boolean"
+              },
+              "texture_size": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "Processing3DResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["processing"]
+          },
+          "tip": {
+            "type": "string",
+            "description": "Helpful tip about the processing status"
+          },
+          "eta": {
+            "type": "integer",
+            "description": "Estimated time remaining in seconds"
+          },
+          "message": {
+            "type": "string",
+            "description": "Status message about the processing"
+          },
+          "fetch_result": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to fetch the result when processing is complete"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the generation request"
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Empty array during processing"
+          },
+          "meta": {
+            "type": "object",
+            "description": "Metadata about the generation process and parameters used"
+          },
+          "future_links": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of URLs where the files will be available once processing is complete"
+          },
+          "extra_assets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Additional assets that will be generated"
+          }
+        }
+      },
+      "Base64ToUrlResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"]
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the uploaded file"
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array containing the URL of the uploaded 3D object"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["status", "message"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["error"]
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message description"
+          }
+        }
+      }
+    }
+  }
+}
