@@ -1,20 +1,33 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
+  "appearance": { "default": "dark" },
+  "fonts": {
+    "heading": {
+      "family": "https://cdn.discordapp.com/attachments/1040646128791719997/1379694490570330142/EduSAHand-VariableFont_wght.woff2"
+    },
+    "body": {
+      "family": "https://cdn.discordapp.com/attachments/1040646128791719997/1379694490570330142/EduSAHand-VariableFont_wght.woff2"
+    }
+  },
+  "styling": {
+    "codeblocks": "system"
+  },
   "name": "Stable Diffusion & LLM API Documentation",
   "colors": {
     "primary": "#3B82F6",
     "light": "#FAF9F6",
     "dark": "#26282A"
   },
+  "background": {
+    "color": {
+      "light": "#effaff",
+      "dark": "#000a0f"
+    }
+  },
   "favicon": "/favicon.png",
   "contextual": {
-    "options": [
-      "copy",
-      "view",
-      "claude",
-      "chatgpt"
-    ]
+    "options": ["copy", "view", "claude", "chatgpt"]
   },
   "navigation": {
     "tabs": [
@@ -23,27 +36,15 @@
         "groups": [
           {
             "group": "First steps",
-            "pages": [
-              "index",
-              "get_started"
-            ]
+            "pages": ["index", "get_started"]
           },
           {
             "group": "Client SDKs",
-            "pages": [
-              "sdk/python",
-              "sdk/typescript",
-              "sdk/dart",
-              "sdk/php"
-            ]
+            "pages": ["sdk/python", "sdk/typescript", "sdk/dart", "sdk/php"]
           },
           {
             "group": "Models & pricing",
-            "pages": [
-              "models-and-overview",
-              "pricing",
-              "model-depreciations"
-            ]
+            "pages": ["models-and-overview", "pricing", "model-depreciations"]
           },
           {
             "group": "Learn about ModelsLab",
@@ -55,16 +56,11 @@
           },
           {
             "group": "Agent components",
-            "pages": [
-              "model-context-protocol-mcp"
-            ]
+            "pages": ["model-context-protocol-mcp"]
           },
           {
             "group": "Legal center",
-            "pages": [
-              "modelslab-privacy-policy",
-              "security-and-compliance"
-            ]
+            "pages": ["modelslab-privacy-policy", "security-and-compliance"]
           }
         ]
       },
@@ -545,9 +541,7 @@
         "groups": [
           {
             "group": "Resources",
-            "pages": [
-              "resources/resources"
-            ]
+            "pages": ["resources/resources"]
           }
         ]
       },
@@ -556,9 +550,7 @@
         "groups": [
           {
             "group": "Release Notes",
-            "pages": [
-              "release-notes/api"
-            ]
+            "pages": ["release-notes/api"]
           }
         ]
       },
