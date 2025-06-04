@@ -1,0 +1,1405 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ModelsLab Voice API",
+    "description": "A comprehensive API for AI-driven voice and audio generation including text-to-speech, voice cloning, music generation, and audio processing capabilities",
+    "license": {
+      "name": "MIT"
+    },
+    "version": "6.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://modelslab.com/api/v6"
+    }
+  ],
+  "paths": {
+    "/voice/fetch/{id}": {
+      "post": {
+        "summary": "Fetch queued voice by ID",
+        "description": "Retrieves voice generations that are currently queued or have been processed",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the voice generation to fetch",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FetchVoiceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Fetched voice response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voice/lyrics_generator": {
+      "post": {
+        "summary": "Generate lyrics from prompt",
+        "description": "Generates lyrics based on a text prompt",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LyricsGeneratorRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lyrics generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voice/music_gen": {
+      "post": {
+        "summary": "Generate music from text prompt",
+        "description": "Creates music based on textual prompts with optional conditioning melodies",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MusicGenRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Music generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voice/sfx": {
+      "post": {
+        "summary": "Generate sound effects from text",
+        "description": "Creates sound effects from text prompts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SFXRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sound effects generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voice/song_generator": {
+      "post": {
+        "summary": "Generate song from lyrics and reference audio",
+        "description": "Creates a song from lyrics and reference audio URL",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SongGeneratorRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Song generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voice/speech_to_text": {
+      "post": {
+        "summary": "Convert speech to text",
+        "description": "Transcribes audio files to text",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpeechToTextRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Speech to text response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voice/text_to_speech": {
+      "post": {
+        "summary": "Convert text to speech",
+        "description": "Generates audio from text using pre-trained voices",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TextToSpeechRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Text to speech response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voice/voice_upload": {
+      "post": {
+        "summary": "Upload voice for training",
+        "description": "Uploads an audio file to create a voice ID for use with text-to-audio",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoiceUploadRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Voice upload response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceUploadResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voice/vocal_isolator": {
+      "post": {
+        "summary": "Isolate vocals from audio",
+        "description": "Separates vocals from background music in audio or video files",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VocalIsolatorRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Vocal isolation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voice/text_to_audio": {
+      "post": {
+        "summary": "Generate audio from text with voice cloning",
+        "description": "Generates audio from text using voice cloning with audio URL or voice ID",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TextToAudioRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Text to audio response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voice/voice_cover": {
+      "post": {
+        "summary": "Transform voice in audio using AI models",
+        "description": "Transforms audio using voice cloning models with advanced controls",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoiceCoverRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Voice cover response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voice/voice_list": {
+      "post": {
+        "summary": "Get all uploaded voices",
+        "description": "Retrieves all uploaded voices for the account",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoiceListRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Voice list response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceListResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voice/voice_to_voice": {
+      "post": {
+        "summary": "Clone voice from audio to audio",
+        "description": "Clones voice from target audio to source audio",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoiceToVoiceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Voice to voice response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voice/base64_to_url": {
+      "post": {
+        "summary": "Convert base64 audio to URL",
+        "description": "Uploads base64 audio and returns a URL",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Base64ToUrlRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Base64 to URL response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Base64ToUrlResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voice/create_dubbing": {
+      "post": {
+        "summary": "Create video dubbing with voice translation",
+        "description": "Automatically translates and dubs video from one language to another",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDubbingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dubbing creation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "FetchVoiceRequest": {
+        "type": "object",
+        "required": ["key"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          }
+        }
+      },
+      "LyricsGeneratorRequest": {
+        "type": "object",
+        "required": ["key", "prompt"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Prompt with which lyrics should be generated"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST notification upon completion"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID returned in API response for webhook identification"
+          }
+        }
+      },
+      "MusicGenRequest": {
+        "type": "object",
+        "required": ["key", "prompt"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key for request authorization"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Input text for music generation"
+          },
+          "init_audio": {
+            "type": "string",
+            "format": "uri",
+            "description": "Conditioning melody URL for music generation (up to 30 seconds)"
+          },
+          "sampling_rate": {
+            "type": "integer",
+            "default": 32000,
+            "minimum": 10000,
+            "description": "Sampling rate of generated music"
+          },
+          "max_new_token": {
+            "type": "integer",
+            "minimum": 256,
+            "maximum": 1024,
+            "description": "Maximum number of new tokens for music generation"
+          },
+          "base64": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether input sound clip is in base64 format"
+          },
+          "temp": {
+            "type": "boolean",
+            "default": false,
+            "description": "Use temporary links for regions blocking storage access"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST callback upon completion"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "Unique ID for identifying webhook responses"
+          }
+        }
+      },
+      "SFXRequest": {
+        "type": "object",
+        "required": ["key", "prompt"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "API key required to authorize the request"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Descriptive input specifying the type of sound effect to generate"
+          },
+          "duration": {
+            "type": "integer",
+            "default": 10,
+            "minimum": 3,
+            "maximum": 15,
+            "description": "Length of generated sound effect in seconds"
+          },
+          "temp": {
+            "type": "boolean",
+            "default": false,
+            "description": "Use temporary links for regions blocking storage access"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST notification upon completion"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
+        }
+      },
+      "SongGeneratorRequest": {
+        "type": "object",
+        "required": ["key"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "API key for authentication"
+          },
+          "lyrics_generation": {
+            "type": "boolean",
+            "description": "Pass true to generate lyrics automatically"
+          },
+          "lyrics": {
+            "type": "string",
+            "description": "Lyrics in LRC format (timestamp + lyrics). Required if lyrics_generation is false"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Topic for lyrics generation. Required if lyrics_generation is true"
+          },
+          "init_audio": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to reference audio file to influence style"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST notification upon completion"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
+        }
+      },
+      "SpeechToTextRequest": {
+        "type": "object",
+        "required": ["key", "init_audio", "language"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "API key required to authorize the request"
+          },
+          "init_audio": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL of audio file to transcribe. Supported: WAV, MP3, FLAC, OPUS (5 seconds - 1 hour)"
+          },
+          "language": {
+            "type": "string",
+            "description": "Language code in ISO 639-1 format (e.g. 'en', 'es', 'fr')"
+          },
+          "timestamp_level": {
+            "type": "string",
+            "enum": ["word", "sentence", null],
+            "description": "Level of detail for timestamps in transcription"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST notification upon completion"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
+        }
+      },
+      "TextToSpeechRequest": {
+        "type": "object",
+        "required": ["key", "prompt", "voice_id"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "API key for authentication"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Text prompt describing audio to be generated"
+          },
+          "voice_id": {
+            "type": "string",
+            "description": "ID of trained voice"
+          },
+          "language": {
+            "type": "string",
+            "enum": ["american english", "british english", "spanish", "japanese", "mandarin chinese", "french", "brazilian portuguese", "hindi", "italian"],
+            "default": "english",
+            "description": "Language for the voice"
+          },
+          "speed": {
+            "type": "number",
+            "default": 1.0,
+            "description": "Playback speed of generated audio"
+          },
+          "emotion": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable emotion support (English only)"
+          },
+          "temp": {
+            "type": "boolean",
+            "default": false,
+            "description": "Use temporary links valid for 24 hours"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST notification upon completion"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
+        }
+      },
+      "VoiceUploadRequest": {
+        "type": "object",
+        "required": ["key", "name", "init_audio", "language"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "API key to authorize the request"
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name assigned to the voice being uploaded"
+          },
+          "init_audio": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL of audio file to upload. MP3/WAV, 10-25 seconds for optimal results"
+          },
+          "base64": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether audio file is provided as base64 string"
+          },
+          "language": {
+            "type": "string",
+            "enum": ["english", "arabic", "spanish", "german", "czech", "brazilian portuguese", "chinese", "dutch", "french", "hindi", "hungarian", "italian", "japanese", "korean", "polish", "russian", "turkish"],
+            "description": "Language of the voice"
+          },
+          "gender": {
+            "type": "string",
+            "enum": ["male", "female"],
+            "description": "Gender of the audio"
+          },
+          "thumbnail": {
+            "type": "string",
+            "format": "uri",
+            "description": "Thumbnail image URL for the audio"
+          }
+        }
+      },
+      "VocalIsolatorRequest": {
+        "type": "object",
+        "required": ["key"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "API key for authentication"
+          },
+          "init_video": {
+            "type": "string",
+            "format": "uri",
+            "description": "Video URL to isolate vocals from"
+          },
+          "init_audio": {
+            "type": "string",
+            "format": "uri",
+            "description": "Audio URL to isolate vocals from"
+          },
+          "base64": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether input is in base64 format"
+          },
+          "seed": {
+            "type": "integer",
+            "description": "Random seed for reproducibility (0 for random)"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST notification upon completion"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
+        }
+      },
+      "TextToAudioRequest": {
+        "type": "object",
+        "required": ["key", "prompt"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "API key for authentication"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Text prompt describing audio to be generated"
+          },
+          "init_audio": {
+            "type": "string",
+            "format": "uri",
+            "description": "Valid URL pointing to audio file for voice cloning (4-30 seconds)"
+          },
+          "voice_id": {
+            "type": "string",
+            "description": "ID of voice from available list"
+          },
+          "language": {
+            "type": "string",
+            "enum": ["english", "arabic", "spanish", "brazilian portuguese", "german", "czech", "chinese", "dutch", "french", "hindi", "hungarian", "italian", "japanese", "korean", "polish", "russian", "turkish"],
+            "default": "english",
+            "description": "Language for the voice"
+          },
+          "speed": {
+            "type": "number",
+            "default": 1.0,
+            "description": "Playback speed of generated audio"
+          },
+          "base64": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether input audio is in base64 format"
+          },
+          "temp": {
+            "type": "boolean",
+            "default": false,
+            "description": "Use temporary links valid for 24 hours"
+          },
+          "stream": {
+            "type": "boolean",
+            "description": "Stream response in base64 format"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST notification upon completion"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
+        }
+      },
+      "VoiceCoverRequest": {
+        "type": "object",
+        "required": ["key", "init_audio", "model_id"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "API key to authorize the request"
+          },
+          "init_audio": {
+            "type": "string",
+            "description": "URL (YouTube supported) or base64 WAV file for audio to be cloned"
+          },
+          "model_id": {
+            "type": "string",
+            "description": "ID of the voice cloning model"
+          },
+          "pitch": {
+            "type": "string",
+            "enum": ["m2f", "f2m", "none"],
+            "description": "Controls pitch transformation between voices"
+          },
+          "algorithm": {
+            "type": "string",
+            "enum": ["rmvpe", "mangio-crepe"],
+            "default": "rmvpe",
+            "description": "Algorithm used for voice cloning"
+          },
+          "rate": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Controls generated voice resemblance to training data"
+          },
+          "seed": {
+            "type": "integer",
+            "description": "Seed value to reproduce results (null for random)"
+          },
+          "language": {
+            "type": "string",
+            "default": "english",
+            "description": "Language for the voice"
+          },
+          "emotion": {
+            "type": "string",
+            "enum": ["neutral", "happy", "sad", "angry", "dull"],
+            "default": "neutral",
+            "description": "Emotion of the voice"
+          },
+          "speed": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 2.0,
+            "default": 1.0,
+            "description": "Playback speed of the speaker"
+          },
+          "radius": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 3,
+            "default": 3,
+            "description": "Median filtering length to reduce voice artifacts"
+          },
+          "mix": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0.25,
+            "description": "Controls loudness similarity to original audio"
+          },
+          "hop_length": {
+            "type": "integer",
+            "description": "Frequency of pitch analysis (mangio-crepe algorithm)"
+          },
+          "originality": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0.33,
+            "description": "Controls similarity to original vocals' voiceless consonants"
+          },
+          "lead_voice_volume_delta": {
+            "type": "string",
+            "description": "Adjusts volume of lead vocals (-5 to +5)"
+          },
+          "backup_voice_volume_delta": {
+            "type": "string",
+            "description": "Adjusts volume of backup vocals (-5 to +5)"
+          },
+          "instrument_volume_delta": {
+            "type": "string",
+            "description": "Adjusts volume of instrumental tracks (-5 to +5)"
+          },
+          "reverb_size": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0.15,
+            "description": "Size of the reverb room"
+          },
+          "wetness": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0.2,
+            "description": "Reverb applied to generated vocals"
+          },
+          "dryness": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0.8,
+            "description": "Reverb applied to original vocals"
+          },
+          "damping": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0.7,
+            "description": "Damping factor for high frequencies in reverb"
+          },
+          "base64": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether input sound clip is in base64 format"
+          },
+          "temp": {
+            "type": "boolean",
+            "default": false,
+            "description": "Use temporary links valid for 24 hours"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST notification upon completion"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
+        }
+      },
+      "VoiceListRequest": {
+        "type": "object",
+        "required": ["key"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["manual", "trained", "voice_cover"],
+            "default": "manual",
+            "description": "Type of voices to retrieve"
+          }
+        }
+      },
+      "VoiceToVoiceRequest": {
+        "type": "object",
+        "required": ["key", "init_audio", "target_audio"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "init_audio": {
+            "type": "string",
+            "description": "Source utterances URL or base64 data (max 30 seconds)"
+          },
+          "target_audio": {
+            "type": "string",
+            "description": "Target voice URL or base64 data (max 30 seconds)"
+          },
+          "stream": {
+            "type": "boolean",
+            "description": "Stream response in base64 format as chunk_output"
+          },
+          "base64": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether input sound clip is in base64 format"
+          },
+          "temp": {
+            "type": "boolean",
+            "default": false,
+            "description": "Use temporary links valid for 24 hours"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST notification upon completion"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
+        }
+      },
+      "Base64ToUrlRequest": {
+        "type": "object",
+        "required": ["key", "init_audio"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "init_audio": {
+            "type": "string",
+            "description": "Base64 format audio file (MP3/WAV, 10-15 seconds for faster upload)"
+          }
+        }
+      },
+      "CreateDubbingRequest": {
+        "type": "object",
+        "required": ["key", "init_video", "output_lang"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "API key for authentication"
+          },
+          "init_video": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to video file to be dubbed"
+          },
+          "source_lang": {
+            "type": "string",
+            "default": "en",
+            "description": "Source language code of the video"
+          },
+          "output_lang": {
+            "type": "string",
+            "enum": ["es", "fr", "hi", "it", "pt-br", "en-us", "en-gb", "ja", "zh"],
+            "description": "Target language code for dubbing"
+          },
+          "file_prefix": {
+            "type": "string",
+            "default": "10",
+            "description": "Prefix for output file name"
+          },
+          "voice_id": {
+            "type": "string",
+            "description": "ID of trained voice"
+          },
+          "voice_model": {
+            "type": "string",
+            "default": "kokoro",
+            "description": "Voice model to use"
+          },
+          "base64": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether input is in base64 format"
+          },
+          "seed": {
+            "type": "integer",
+            "description": "Random seed for reproducibility (0 for random)"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST notification upon completion"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
+        }
+      },
+      "VoiceResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success", "processing", "error"],
+            "description": "Status of the voice generation"
+          },
+          "generationTime": {
+            "type": "number",
+            "description": "Time taken to generate the audio in seconds"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the voice generation"
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of generated audio URLs"
+          },
+          "proxy_links": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of proxy audio URLs"
+          },
+          "future_links": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of future audio URLs for queued requests"
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of audio URLs (voice cover response)"
+          },
+          "meta": {
+            "type": "object",
+            "description": "Metadata about the audio generation including all parameters used"
+          },
+          "eta": {
+            "type": "integer",
+            "description": "Estimated time for completion in seconds (processing status)"
+          },
+          "message": {
+            "type": "string",
+            "description": "Status message or additional information"
+          },
+          "tip": {
+            "type": "string",
+            "description": "Additional information or tips for the user"
+          },
+          "fetch_result": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to fetch the result when processing"
+          },
+          "audio_time": {
+            "type": "number",
+            "description": "Duration of the generated audio in seconds"
+          }
+        }
+      },
+      "VoiceUploadResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success", "error"],
+            "description": "Status of the voice upload"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message"
+          },
+          "voice_id": {
+            "type": "string",
+            "description": "Generated voice ID for the uploaded voice"
+          }
+        }
+      },
+      "VoiceListResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success", "error"],
+            "description": "Status of the request"
+          },
+          "voices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VoiceItem"
+            },
+            "description": "Array of available voices"
+          }
+        }
+      },
+      "VoiceItem": {
+        "type": "object",
+        "properties": {
+          "voice_id": {
+            "type": "string",
+            "description": "Unique identifier for the voice"
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name of the voice"
+          },
+          "language": {
+            "type": "string",
+            "description": "Language of the voice"
+          }
+        }
+      },
+      "Base64ToUrlResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success", "error"],
+            "description": "Status of the conversion"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the conversion"
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of converted audio URLs"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["status", "message"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["error"]
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message description"
+          }
+        }
+      }
+    }
+  }
+}
