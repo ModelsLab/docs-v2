@@ -563,16 +563,15 @@
         ]
       },
       {
-        "tab": "ModelQ",
+        "tab": "Open Source",
         "groups": [
           {
             "group": "ModelQ",
             "pages": [
-              "modelq/overview",
-              "modelq/installation",
-              "modelq/usage",
-              "modelq/advanced-usage",
-              "modelq/faq"
+              "open-source/modelq/overview",
+              "open-source/modelq/installation",
+              "open-source/modelq/usage",
+              "open-source/modelq/advanced-usage"
             ]
           }
         ]
