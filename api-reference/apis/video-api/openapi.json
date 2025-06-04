@@ -1,0 +1,1056 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ModelsLab Video API",
+    "description": "A comprehensive API for AI-driven video generation including text-to-video, image-to-video, scene transitions, and video management capabilities",
+    "license": {
+      "name": "MIT"
+    },
+    "version": "6.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://modelslab.com/api/v6"
+    }
+  ],
+  "paths": {
+    "/video/text2video": {
+      "post": {
+        "summary": "Generate video from text prompt",
+        "description": "Creates a video based on a text description using specified models like cogvideox or wanx",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TextToVideoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Video generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/video/text2video_ultra": {
+      "post": {
+        "summary": "Generate HD video from text prompt",
+        "description": "Creates high-quality HD video from text description. Costs $0.2 per API call.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TextToVideoUltraRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "HD video generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/video/img2video": {
+      "post": {
+        "summary": "Generate video from image",
+        "description": "Creates a video from an initial image using the SVD model",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImageToVideoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Image-to-video generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/video/img2video_ultra": {
+      "post": {
+        "summary": "Generate HD video from image",
+        "description": "Creates high-quality HD video from an initial image. Costs $0.2 per API call.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImageToVideoUltraRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "HD image-to-video generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/video/scene_maker": {
+      "post": {
+        "summary": "Create scene transitions between images",
+        "description": "Enables traveling between images through latent spaces based on text prompts and provided images",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SceneMakerRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Scene transition video response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/video/base64_to_url": {
+      "post": {
+        "summary": "Convert base64 video to URL",
+        "description": "Upload a video in base64 format and retrieve it as a URL",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Base64ToUrlRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Base64 conversion response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Base64ToUrlResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/video/fetch/{id}": {
+      "post": {
+        "summary": "Fetch queued video by ID",
+        "description": "Retrieves videos that are currently queued or have been processed",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the video to fetch",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FetchVideoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Fetched video response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Video not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TextToVideoRequest": {
+        "type": "object",
+        "required": ["key", "model_id", "prompt"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "model_id": {
+            "type": "string",
+            "enum": ["cogvideox", "wanx"],
+            "description": "The ID of the model to use"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Text prompt describing the video content"
+          },
+          "negative_prompt": {
+            "type": "string",
+            "description": "Items you don't want in the video"
+          },
+          "seed": {
+            "oneOf": [
+              {"type": "integer"},
+              {"type": "null"}
+            ],
+            "description": "Seed for reproducible results. Same seed gives same result. Pass null for random"
+          },
+          "height": {
+            "type": "integer",
+            "maximum": 512,
+            "description": "Height of the video in pixels"
+          },
+          "width": {
+            "type": "integer",
+            "maximum": 512,
+            "description": "Width of the video in pixels"
+          },
+          "num_frames": {
+            "type": "integer",
+            "default": 16,
+            "maximum": 25,
+            "description": "Number of frames in the video"
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "default": 20,
+            "maximum": 50,
+            "description": "Number of denoising steps"
+          },
+          "guidance_scale": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 8,
+            "description": "Scale for classifier-free guidance"
+          },
+          "clip_skip": {
+            "oneOf": [
+              {"type": "integer", "maximum": 2},
+              {"type": "null"}
+            ],
+            "description": "Number of CLIP layers to skip. Skipping 2 layers often gives more aesthetic results"
+          },
+          "upscale_height": {
+            "type": "integer",
+            "maximum": 1024,
+            "description": "The upscaled height for videos generated"
+          },
+          "upscale_width": {
+            "type": "integer", 
+            "maximum": 1024,
+            "description": "The upscaled width for videos generated"
+          },
+          "upscale_strength": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Strength of upscaling. Higher values result in more noticeable differences"
+          },
+          "upscale_guidance_scale": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 8,
+            "description": "Guidance scale for upscaling videos"
+          },
+          "upscale_num_inference_steps": {
+            "type": "integer",
+            "default": 20,
+            "maximum": 50,
+            "description": "Number of denoising steps for upscaling"
+          },
+          "use_improved_sampling": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to use improved sampling technique for better temporal consistency"
+          },
+          "improved_sampling_seed": {
+            "type": "integer",
+            "description": "Seed for consistent video generation with improved sampling"
+          },
+          "fps": {
+            "type": "integer",
+            "maximum": 16,
+            "description": "Frames per second rate of the generated video"
+          },
+          "output_type": {
+            "type": "string",
+            "enum": ["mp4", "gif"],
+            "description": "Output format type"
+          },
+          "instant_response": {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, returns future links for queued requests instantly instead of waiting"
+          },
+          "temp": {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, stores video in temporary storage (cleaned every 24 hours)"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive a POST API call once video generation is complete"
+          },
+          "track_id": {
+            "type": "string",
+            "description": "Unique ID used in webhook response to identify the request"
+          }
+        }
+      },
+      "TextToVideoUltraRequest": {
+        "type": "object",
+        "required": ["key", "prompt"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Text prompt describing the video content"
+          },
+          "negative_prompt": {
+            "type": "string",
+            "description": "Items you don't want in the video"
+          },
+          "seed": {
+            "oneOf": [
+              {"type": "integer"},
+              {"type": "null"}
+            ],
+            "description": "Seed for reproducible results"
+          },
+          "resolution": {
+            "type": "integer",
+            "maximum": 480,
+            "description": "Resolution of the generated output"
+          },
+          "num_frames": {
+            "type": "integer",
+            "default": 81,
+            "description": "Number of frames in the video"
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "default": 25,
+            "maximum": 30,
+            "description": "Number of denoising steps"
+          },
+          "guidance_scale": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 8.0,
+            "description": "Scale for classifier-free guidance"
+          },
+          "fps": {
+            "type": "integer",
+            "maximum": 16,
+            "description": "Frames per second rate"
+          },
+          "portrait": {
+            "type": "boolean",
+            "default": false,
+            "description": "Portrait mode output"
+          },
+          "sample_shift": {
+            "type": "integer",
+            "default": 5,
+            "maximum": 10,
+            "description": "Controls the sampling shift in the generation process"
+          },
+          "temp": {
+            "type": "boolean",
+            "default": false,
+            "description": "Store in temporary storage"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "Webhook URL for completion notification"
+          },
+          "track_id": {
+            "type": "string",
+            "description": "Unique ID for webhook tracking"
+          }
+        }
+      },
+      "ImageToVideoRequest": {
+        "type": "object",
+        "required": ["key", "model_id", "init_image"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "model_id": {
+            "type": "string",
+            "enum": ["svd"],
+            "description": "The ID of the model to use"
+          },
+          "init_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL of the initial image"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Text prompt describing desired video elements"
+          },
+          "negative_prompt": {
+            "type": "string",
+            "description": "Items you don't want in the video"
+          },
+          "height": {
+            "type": "integer",
+            "maximum": 512,
+            "description": "Height in pixels"
+          },
+          "width": {
+            "type": "integer",
+            "maximum": 512,
+            "description": "Width in pixels"
+          },
+          "num_frames": {
+            "type": "integer",
+            "default": 16,
+            "maximum": 25,
+            "description": "Number of frames"
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "default": 20,
+            "maximum": 50,
+            "description": "Number of denoising steps"
+          },
+          "min_guidance_scale": {
+            "type": "number",
+            "minimum": 1.0,
+            "maximum": 8.0,
+            "default": 1.0,
+            "description": "Start value of guidance scale"
+          },
+          "max_guidance_scale": {
+            "type": "number",
+            "minimum": 1.0,
+            "maximum": 8.0,
+            "default": 3.0,
+            "description": "End value of guidance scale"
+          },
+          "motion_bucket_id": {
+            "type": "integer",
+            "default": 127,
+            "description": "Motion control parameter"
+          },
+          "noise_aug_strength": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Noise augmentation strength"
+          },
+          "fps": {
+            "type": "integer",
+            "maximum": 16,
+            "description": "Frames per second"
+          },
+          "output_type": {
+            "type": "string",
+            "enum": ["mp4", "gif"],
+            "description": "Output format"
+          },
+          "temp": {
+            "type": "boolean",
+            "default": false,
+            "description": "Store in temporary storage"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "Webhook URL"
+          },
+          "track_id": {
+            "type": "string",
+            "description": "Tracking ID"
+          }
+        }
+      },
+      "ImageToVideoUltraRequest": {
+        "type": "object",
+        "required": ["key", "init_image", "prompt"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Text prompt describing the video content"
+          },
+          "init_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL of the initial image"
+          },
+          "negative_prompt": {
+            "type": "string",
+            "description": "Items you don't want in the video"
+          },
+          "seed": {
+            "oneOf": [
+              {"type": "integer"},
+              {"type": "null"}
+            ],
+            "description": "Seed for reproducible results"
+          },
+          "resolution": {
+            "type": "integer",
+            "maximum": 480,
+            "description": "Resolution of the output"
+          },
+          "num_frames": {
+            "type": "integer",
+            "default": 81,
+            "description": "Number of frames"
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "default": 20,
+            "maximum": 25,
+            "description": "Number of denoising steps"
+          },
+          "guidance_scale": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 8.0,
+            "description": "Guidance scale"
+          },
+          "fps": {
+            "type": "integer",
+            "maximum": 16,
+            "description": "Frames per second"
+          },
+          "portrait": {
+            "type": "boolean",
+            "default": false,
+            "description": "Portrait mode"
+          },
+          "sample_shift": {
+            "type": "integer",
+            "default": 5,
+            "maximum": 10,
+            "description": "Sampling shift"
+          },
+          "base64": {
+            "type": "boolean",
+            "default": false,
+            "description": "Input image is base64 format"
+          },
+          "temp": {
+            "type": "boolean",
+            "default": false,
+            "description": "Store in temporary storage"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "Webhook URL"
+          },
+          "track_id": {
+            "type": "string",
+            "description": "Tracking ID"
+          }
+        }
+      },
+      "SceneMakerRequest": {
+        "type": "object",
+        "required": ["key", "scenes", "prompt"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "scenes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Scene"
+            },
+            "description": "Array of scene configurations"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Text prompt for scene transitions"
+          },
+          "negative_prompt": {
+            "type": "string",
+            "description": "Items to avoid during generation"
+          },
+          "height": {
+            "type": "integer",
+            "default": 704,
+            "description": "Output frame height"
+          },
+          "width": {
+            "type": "integer",
+            "default": 1280,
+            "description": "Output frame width"
+          },
+          "num_frames": {
+            "type": "integer",
+            "default": 120,
+            "description": "Total number of frames"
+          },
+          "seed": {
+            "type": "string",
+            "description": "Seed for deterministic results"
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "default": 50,
+            "description": "Number of inference steps"
+          },
+          "guidance_scale": {
+            "type": "number",
+            "default": 5.0,
+            "description": "Guidance scale"
+          },
+          "stg_scale": {
+            "type": "number",
+            "default": 1.0,
+            "description": "Spatio temporal guidance scale"
+          },
+          "stg_rescale": {
+            "type": "number",
+            "default": 0.7,
+            "description": "Spatio temporal guidance factor"
+          },
+          "frame_rate": {
+            "type": "integer",
+            "default": 25,
+            "description": "Frame rate of output video"
+          },
+          "temp": {
+            "type": "boolean",
+            "default": false,
+            "description": "Use temporary file storage"
+          }
+        }
+      },
+      "Scene": {
+        "type": "object",
+        "required": ["img_url", "start_frame_index"],
+        "properties": {
+          "img_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Valid image URL for video transition"
+          },
+          "start_frame_index": {
+            "type": "integer",
+            "description": "Starting frame index for this scene"
+          }
+        }
+      },
+      "Base64ToUrlRequest": {
+        "type": "object",
+        "required": ["key", "init_obj"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "init_obj": {
+            "type": "string",
+            "description": "Base64 encoded video data with data URI format (data:video/mp4;base64,)"
+          }
+        }
+      },
+      "FetchVideoRequest": {
+        "type": "object",
+        "required": ["key"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          }
+        }
+      },
+      "VideoResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success", "processing", "error"],
+            "description": "Status of the video generation"
+          },
+          "generationTime": {
+            "type": "number",
+            "description": "Time taken to generate the video in seconds"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the video generation"
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of generated video URLs"
+          },
+          "proxy_links": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of proxy video URLs"
+          },
+          "future_links": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of future video URLs for queued requests"
+          },
+          "meta": {
+            "type": "object",
+            "description": "Metadata about the video generation including all parameters used"
+          },
+          "eta": {
+            "type": "integer",
+            "description": "Estimated time for completion in seconds (processing status)"
+          },
+          "message": {
+            "type": "string",
+            "description": "Status message or additional information"
+          },
+          "tip": {
+            "type": "string",
+            "description": "Additional information or tips for the user"
+          },
+          "fetch_result": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to fetch the result when processing"
+          }
+        }
+      },
+      "Base64ToUrlResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success", "error"],
+            "description": "Status of the conversion"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the conversion"
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of converted video URLs"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["status", "message"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["error"]
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message description"
+          }
+        }
+      }
+    }
+  }
+}
