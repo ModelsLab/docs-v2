@@ -1,0 +1,588 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ModelsLab LLM API",
+    "description": "Uncensored chat and completions API with OpenAI compatibility for unrestricted AI conversations and text generation",
+    "license": {
+      "name": "MIT"
+    },
+    "version": "6.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://modelslab.com/api/v6",
+      "description": "Main API server"
+    },
+    {
+      "url": "https://modelslab.com/api/uncensored-chat/v1",
+      "description": "OpenAI-compatible API server"
+    }
+  ],
+  "paths": {
+    "/llm/uncensored_chat": {
+      "post": {
+        "summary": "Create uncensored chat conversation",
+        "description": "Creates chat conversations without restrictions. Highly flexible and can answer any question without content limitations.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UncensoredChatRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Chat response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UncensoredChatResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chat/completions": {
+      "post": {
+        "summary": "OpenAI-compatible chat completions",
+        "description": "OpenAI-compatible API for chat completions with Bearer token authentication",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatCompletionsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Chat completion response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatCompletionsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/completions": {
+      "post": {
+        "summary": "OpenAI-compatible text completions",
+        "description": "OpenAI-compatible API for text completions with Bearer token authentication",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompletionsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Text completion response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompletionsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Bearer token authentication using ModelsLab API key"
+      }
+    },
+    "schemas": {
+      "UncensoredChatRequest": {
+        "type": "object",
+        "required": ["key", "messages"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "messages": {
+            "type": "array",
+            "description": "Array of chat messages with role and content",
+            "items": {
+              "$ref": "#/components/schemas/ChatMessage"
+            }
+          },
+          "max_tokens": {
+            "type": "integer",
+            "default": 128,
+            "minimum": 1,
+            "maximum": 30000,
+            "description": "Maximum number of tokens allowed in the response"
+          }
+        }
+      },
+      "ChatCompletionsRequest": {
+        "type": "object",
+        "required": ["messages"],
+        "properties": {
+          "model": {
+            "type": "string",
+            "default": "ModelsLab/Llama-3.1-8b-Uncensored-Dare",
+            "description": "Model to use for chat completion"
+          },
+          "messages": {
+            "type": "array",
+            "description": "Array of chat messages with role and content",
+            "items": {
+              "$ref": "#/components/schemas/ChatMessage"
+            }
+          },
+          "max_tokens": {
+            "type": "integer",
+            "default": 128,
+            "minimum": 1,
+            "maximum": 30000,
+            "description": "Maximum number of tokens allowed in the response"
+          },
+          "temperature": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 2,
+            "default": 1,
+            "description": "Sampling temperature for randomness"
+          },
+          "top_p": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 1,
+            "description": "Nucleus sampling parameter"
+          },
+          "presence_penalty": {
+            "type": "number",
+            "minimum": -2,
+            "maximum": 2,
+            "default": 0,
+            "description": "Presence penalty for token repetition"
+          },
+          "frequency_penalty": {
+            "type": "number",
+            "minimum": -2,
+            "maximum": 2,
+            "default": 0,
+            "description": "Frequency penalty for token repetition"
+          },
+          "stream": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to stream back partial progress"
+          }
+        }
+      },
+      "CompletionsRequest": {
+        "type": "object",
+        "required": ["prompt"],
+        "properties": {
+          "model": {
+            "type": "string",
+            "default": "ModelsLab/Llama-3.1-8b-Uncensored-Dare",
+            "description": "Model to use for completion"
+          },
+          "prompt": {
+            "oneOf": [
+              {"type": "string"},
+              {"type": "array", "items": {"type": "string"}}
+            ],
+            "description": "Prompt(s) to generate completions for"
+          },
+          "max_tokens": {
+            "type": "integer",
+            "default": 128,
+            "minimum": 1,
+            "maximum": 30000,
+            "description": "Maximum number of tokens allowed in the response"
+          },
+          "temperature": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 2,
+            "default": 1,
+            "description": "Sampling temperature for randomness"
+          },
+          "top_p": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 1,
+            "description": "Nucleus sampling parameter"
+          },
+          "presence_penalty": {
+            "type": "number",
+            "minimum": -2,
+            "maximum": 2,
+            "default": 0,
+            "description": "Presence penalty for token repetition"
+          },
+          "frequency_penalty": {
+            "type": "number",
+            "minimum": -2,
+            "maximum": 2,
+            "default": 0,
+            "description": "Frequency penalty for token repetition"
+          },
+          "stream": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to stream back partial progress"
+          },
+          "stop": {
+            "oneOf": [
+              {"type": "string"},
+              {"type": "array", "items": {"type": "string"}, "maxItems": 4}
+            ],
+            "description": "Stop sequences to end generation"
+          }
+        }
+      },
+      "ChatMessage": {
+        "type": "object",
+        "required": ["role", "content"],
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": ["system", "user", "assistant"],
+            "description": "Role of the message sender"
+          },
+          "content": {
+            "type": "string",
+            "description": "Content of the message"
+          }
+        }
+      },
+      "UncensoredChatResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success", "error"],
+            "description": "Status of the request"
+          },
+          "message": {
+            "type": "string",
+            "description": "Generated response message"
+          },
+          "meta": {
+            "type": "object",
+            "description": "Metadata about the request and response",
+            "properties": {
+              "messages": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ChatMessage"
+                },
+                "description": "Complete conversation history"
+              },
+              "max_tokens": {
+                "type": "integer",
+                "description": "Maximum tokens setting used"
+              },
+              "temperature": {
+                "type": "number",
+                "description": "Temperature setting used"
+              },
+              "top_p": {
+                "type": "number",
+                "description": "Top-p setting used"
+              },
+              "presence_penalty": {
+                "type": "number",
+                "description": "Presence penalty setting used"
+              },
+              "frequency_penalty": {
+                "type": "number",
+                "description": "Frequency penalty setting used"
+              },
+              "track_id": {
+                "type": "string",
+                "nullable": true,
+                "description": "Tracking ID for the request"
+              },
+              "webhook": {
+                "type": "string",
+                "nullable": true,
+                "description": "Webhook URL if provided"
+              }
+            }
+          }
+        }
+      },
+      "ChatCompletionsResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the chat completion"
+          },
+          "object": {
+            "type": "string",
+            "enum": ["chat.completion"],
+            "description": "Object type"
+          },
+          "created": {
+            "type": "integer",
+            "description": "Unix timestamp of creation"
+          },
+          "model": {
+            "type": "string",
+            "description": "Model used for generation"
+          },
+          "choices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatChoice"
+            },
+            "description": "Array of completion choices"
+          },
+          "usage": {
+            "$ref": "#/components/schemas/Usage",
+            "description": "Token usage information"
+          },
+          "prompt_logprobs": {
+            "type": "object",
+            "nullable": true,
+            "description": "Log probabilities for prompt tokens"
+          }
+        }
+      },
+      "CompletionsResponse": {
+        "type": "object",
+        "properties": {
+          "object": {
+            "type": "string",
+            "enum": ["text_completion"],
+            "description": "Object type"
+          },
+          "created": {
+            "type": "integer",
+            "description": "Unix timestamp of creation"
+          },
+          "model": {
+            "type": "string",
+            "description": "Model used for generation"
+          },
+          "choices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompletionChoice"
+            },
+            "description": "Array of completion choices"
+          },
+          "usage": {
+            "$ref": "#/components/schemas/Usage",
+            "description": "Token usage information"
+          }
+        }
+      },
+      "ChatChoice": {
+        "type": "object",
+        "properties": {
+          "index": {
+            "type": "integer",
+            "description": "Index of the choice"
+          },
+          "message": {
+            "type": "object",
+            "properties": {
+              "role": {
+                "type": "string",
+                "enum": ["assistant"],
+                "description": "Role of the message"
+              },
+              "content": {
+                "type": "string",
+                "description": "Generated message content"
+              },
+              "tool_calls": {
+                "type": "array",
+                "items": {},
+                "description": "Tool calls made by the assistant"
+              }
+            }
+          },
+          "logprobs": {
+            "type": "object",
+            "nullable": true,
+            "description": "Log probabilities for the choice"
+          },
+          "finish_reason": {
+            "type": "string",
+            "enum": ["stop", "length", "content_filter", "function_call"],
+            "description": "Reason the generation finished"
+          },
+          "stop_reason": {
+            "type": "string",
+            "nullable": true,
+            "description": "Specific stop reason if applicable"
+          }
+        }
+      },
+      "CompletionChoice": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "Generated text completion"
+          },
+          "index": {
+            "type": "integer",
+            "description": "Index of the choice"
+          },
+          "logprobs": {
+            "type": "object",
+            "nullable": true,
+            "description": "Log probabilities for the choice"
+          },
+          "finish_reason": {
+            "type": "string",
+            "enum": ["stop", "length", "content_filter"],
+            "description": "Reason the generation finished"
+          },
+          "stop_reason": {
+            "type": "string",
+            "nullable": true,
+            "description": "Specific stop reason if applicable"
+          },
+          "prompt_logprobs": {
+            "type": "object",
+            "nullable": true,
+            "description": "Log probabilities for prompt tokens"
+          }
+        }
+      },
+      "Usage": {
+        "type": "object",
+        "properties": {
+          "prompt_tokens": {
+            "type": "integer",
+            "description": "Number of tokens in the prompt"
+          },
+          "completion_tokens": {
+            "type": "integer",
+            "description": "Number of tokens in the completion"
+          },
+          "total_tokens": {
+            "type": "integer",
+            "description": "Total number of tokens used"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["status", "message"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["error"]
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message description"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Detailed error message"
+              },
+              "type": {
+                "type": "string",
+                "description": "Error type"
+              },
+              "code": {
+                "type": "string",
+                "description": "Error code"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
