@@ -257,7 +257,9 @@
                   "api-reference/apis/interior-api/exterior-restorer",
                   "api-reference/apis/interior-api/floor-planning",
                   "api-reference/apis/interior-api/room-decorator",
-                  "api-reference/apis/interior-api/scenario-changer"
+                  "api-reference/apis/interior-api/scenario-changer",
+                  "api-reference/apis/interior-api/sketch-rendering",
+                  "api-reference/apis/interior-api/fetch"
                 ]
               },
               {
