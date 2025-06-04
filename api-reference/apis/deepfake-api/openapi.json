@@ -1,0 +1,665 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ModelsLab Deepfake API",
+    "description": "AI-powered face swap and deepfake API supporting image and video face swapping with advanced controls",
+    "license": {
+      "name": "MIT"
+    },
+    "version": "6.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://modelslab.com/api/v6",
+      "description": "Main API server"
+    }
+  ],
+  "paths": {
+    "/deepfake/single_face_swap": {
+      "post": {
+        "summary": "Specific face swap in image",
+        "description": "Swaps faces in a single image by providing the initial image, target image, and reference image for specific face identification",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpecificFaceSwapRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Face swap response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {"$ref": "#/components/schemas/SuccessDeepfakeResponse"},
+                    {"$ref": "#/components/schemas/ProcessingDeepfakeResponse"}
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deepfake/multiple_face_swap": {
+      "post": {
+        "summary": "Multiple face swap in image",
+        "description": "Swaps all detected faces in a single image with faces from a target image",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MultipleFaceSwapRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Face swap response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {"$ref": "#/components/schemas/SuccessDeepfakeResponse"},
+                    {"$ref": "#/components/schemas/ProcessingDeepfakeResponse"}
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deepfake/single_video_swap": {
+      "post": {
+        "summary": "Face swap in video",
+        "description": "Swaps all detected faces in a video with faces from an input image. Videos must be less than 1 minute long",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SingleVideoSwapRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Video face swap response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {"$ref": "#/components/schemas/SuccessVideoDeepfakeResponse"},
+                    {"$ref": "#/components/schemas/ProcessingVideoDeepfakeResponse"}
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deepfake/specific_video_swap": {
+      "post": {
+        "summary": "Specific face swap in video",
+        "description": "Swaps specific faces in a video based on a reference image identification",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpecificVideoSwapRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Specific video face swap response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {"$ref": "#/components/schemas/SuccessVideoDeepfakeResponse"},
+                    {"$ref": "#/components/schemas/ProcessingVideoDeepfakeResponse"}
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deepfake/fetch/{id}": {
+      "post": {
+        "summary": "Fetch deepfake result",
+        "description": "Retrieves queued or already generated deepfake videos/images by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The ID of the deepfake generation to fetch"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FetchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Fetch response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {"$ref": "#/components/schemas/SuccessDeepfakeResponse"},
+                    {"$ref": "#/components/schemas/ProcessingDeepfakeResponse"}
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SpecificFaceSwapRequest": {
+        "type": "object",
+        "required": ["key", "init_image", "target_image", "reference_image"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "init_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "The initial image containing the face to replace"
+          },
+          "target_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "The target image containing the face to be swapped"
+          },
+          "reference_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "A reference image containing the specific face to swap from the initial image"
+          },
+          "watermark": {
+            "type": "boolean",
+            "default": true,
+            "description": "Indicates if the generated result should include a watermark"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "description": "A URL to receive a POST API call once the image generation is complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "nullable": true,
+            "description": "An ID included in the webhook response to identify the request"
+          }
+        }
+      },
+      "MultipleFaceSwapRequest": {
+        "type": "object",
+        "required": ["key", "init_image", "target_image"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "init_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "The initial image that contains the faces to be swapped"
+          },
+          "target_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "The target image that contains the faces to replace those in the initial image"
+          },
+          "watermark": {
+            "type": "boolean",
+            "default": true,
+            "description": "Indicates if the generated result should include a watermark"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "description": "A URL to receive a POST API call once the image generation is complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "nullable": true,
+            "description": "An ID included in the webhook response to identify the request"
+          }
+        }
+      },
+      "SingleVideoSwapRequest": {
+        "type": "object",
+        "required": ["key", "init_image", "init_video"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "init_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "The image containing multiple faces to be swapped"
+          },
+          "init_video": {
+            "type": "string",
+            "format": "uri",
+            "description": "The video containing the face(s) to replace the faces in the image. Must be less than 1 minute"
+          },
+          "output_format": {
+            "type": "string",
+            "default": "mp4",
+            "description": "The output format of the video"
+          },
+          "watermark": {
+            "type": "boolean",
+            "default": true,
+            "description": "Indicates if the generated result should include a watermark"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "description": "A URL to receive a POST API call once the video generation is complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "nullable": true,
+            "description": "An ID included in the webhook response to identify the request"
+          }
+        }
+      },
+      "SpecificVideoSwapRequest": {
+        "type": "object",
+        "required": ["key", "init_image", "init_video", "reference_image"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your unique API key used for authorization"
+          },
+          "init_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "The image containing multiple faces to be swapped"
+          },
+          "init_video": {
+            "type": "string",
+            "format": "uri",
+            "description": "The video containing the face(s) to replace the faces in the image"
+          },
+          "reference_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "A reference image containing the specific face to swap from the initial image"
+          },
+          "output_format": {
+            "type": "string",
+            "default": "mp4",
+            "description": "The desired output format of the video"
+          },
+          "watermark": {
+            "type": "boolean",
+            "default": true,
+            "description": "Indicates if the generated result should include a watermark"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "description": "A URL to receive a POST API call once the video generation is complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "nullable": true,
+            "description": "An ID included in the webhook response to identify the request"
+          }
+        }
+      },
+      "FetchRequest": {
+        "type": "object",
+        "required": ["key"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for authenticating your request"
+          }
+        }
+      },
+      "SuccessDeepfakeResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"]
+          },
+          "generationTime": {
+            "type": "number",
+            "description": "Time taken to generate the result in seconds"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the generation request"
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of URLs to the generated images"
+          },
+          "proxy_links": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of proxy URLs for the generated images"
+          },
+          "meta": {
+            "type": "object",
+            "description": "Metadata about the generation process and parameters used",
+            "properties": {
+              "init_image": {
+                "type": "string",
+                "format": "uri"
+              },
+              "target_image": {
+                "type": "string",
+                "format": "uri"
+              },
+              "reference_image": {
+                "type": "string",
+                "format": "uri"
+              },
+              "seed": {
+                "type": "integer"
+              },
+              "temp": {
+                "type": "string"
+              },
+              "file_prefix": {
+                "type": "string"
+              },
+              "model_save_format": {
+                "type": "string"
+              },
+              "watermark": {
+                "type": "string"
+              },
+              "watermark_image": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          }
+        }
+      },
+      "ProcessingDeepfakeResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["processing"]
+          },
+          "tip": {
+            "type": "string",
+            "description": "Helpful tip about the processing status"
+          },
+          "eta": {
+            "type": "integer",
+            "description": "Estimated time remaining in seconds"
+          },
+          "message": {
+            "type": "string",
+            "description": "Status message about the processing"
+          },
+          "fetch_result": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to fetch the result when processing is complete"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the generation request"
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Empty array during processing"
+          },
+          "meta": {
+            "type": "object",
+            "description": "Metadata about the generation process and parameters used"
+          },
+          "future_links": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of URLs where the files will be available once processing is complete"
+          }
+        }
+      },
+      "SuccessVideoDeepfakeResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"]
+          },
+          "generationTime": {
+            "type": "number",
+            "description": "Time taken to generate the video in seconds"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the generation request"
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of URLs to the generated videos"
+          },
+          "proxy_links": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of proxy URLs for the generated videos"
+          },
+          "meta": {
+            "type": "object",
+            "description": "Metadata about the video generation process",
+            "properties": {
+              "file_prefix": {
+                "type": "string"
+              },
+              "outdir": {
+                "type": "string"
+              },
+              "output_format": {
+                "type": "string"
+              },
+              "reference_image": {
+                "type": "string",
+                "format": "uri"
+              },
+              "seed": {
+                "type": "integer"
+              },
+              "source_image": {
+                "type": "string",
+                "format": "uri"
+              },
+              "target_video_url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "watermark": {
+                "type": "string"
+              },
+              "watermark_image": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          }
+        }
+      },
+      "ProcessingVideoDeepfakeResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["processing"]
+          },
+          "tip": {
+            "type": "string",
+            "description": "Helpful tip about the processing status"
+          },
+          "eta": {
+            "type": "integer",
+            "description": "Estimated time remaining in seconds"
+          },
+          "message": {
+            "type": "string",
+            "description": "Status message about the processing"
+          },
+          "fetch_result": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to fetch the result when processing is complete"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the generation request"
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Empty array during processing"
+          },
+          "meta": {
+            "type": "object",
+            "description": "Metadata about the video generation process"
+          },
+          "future_links": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of URLs where the videos will be available once processing is complete"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["status", "message"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["error"]
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message description"
+          }
+        }
+      }
+    }
+  }
+}
