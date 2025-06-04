@@ -1,0 +1,789 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ModelsLab General API",
+    "description": "General utility endpoints for ModelsLab API including subscription management, content moderation, and file handling",
+    "license": {
+      "name": "MIT"
+    },
+    "version": "6.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://modelslab.com/api",
+      "description": "Main API server (for endpoints without version prefix)"
+    },
+    {
+      "url": "https://modelslab.com/api/v3",
+      "description": "API v3 server"
+    },
+    {
+      "url": "https://modelslab.com/api/v5", 
+      "description": "API v5 server"
+    },
+    {
+      "url": "https://modelslab.com/api/v6",
+      "description": "API v6 server"
+    }
+  ],
+  "paths": {
+    "/cancel_subscription": {
+      "post": {
+        "summary": "Cancel subscription plan",
+        "description": "This endpoint allows you to cancel subscription for a particular api key automatically",
+        "servers": [{"url": "https://modelslab.com/api/v3"}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelSubscriptionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Subscription cancellation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancelSubscriptionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clear_cache": {
+      "post": {
+        "summary": "Clear user cache",
+        "description": "This endpoint is used to clear the user's cache",
+        "servers": [{"url": "https://modelslab.com/api/v5"}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClearCacheRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cache clear response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClearCacheResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/delete_image": {
+      "post": {
+        "summary": "Delete image",
+        "description": "This endpoint is used to delete an image using the image name",
+        "servers": [{"url": "https://modelslab.com/api/v3"}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteImageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Image deletion response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteImageResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nsfw_image_check": {
+      "post": {
+        "summary": "NSFW image check",
+        "description": "This endpoint is useful to check if an image is nsfw or not",
+        "servers": [{"url": "https://modelslab.com/api/v3"}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NSFWImageCheckRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "NSFW image check response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NSFWImageCheckResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/check_nsfw_cp": {
+      "post": {
+        "summary": "NSFW prompt check",
+        "description": "This endpoint is useful to check if a prompt has cp or nsfw content",
+        "servers": [{"url": "https://modelslab.com/api"}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NSFWPromptCheckRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "NSFW prompt check response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NSFWPromptCheckResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscribed_products": {
+      "post": {
+        "summary": "Get subscribed products",
+        "description": "This endpoint allows you to see the list of all modelslab product you have subscribed to",
+        "servers": [{"url": "https://modelslab.com/api"}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubscribedProductsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Subscribed products response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscribedProductsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/base64_crop": {
+      "post": {
+        "summary": "Upload base64 image and crop",
+        "description": "Upload an image and crop it. Pass the appropriate request parameters to the endpoint. Note that the maximum file size for upload is 5MB",
+        "servers": [{"url": "https://modelslab.com/api/v3"}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Base64CropRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Base64 crop response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Base64CropResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/base64_to_url": {
+      "post": {
+        "summary": "Upload base64 to URL",
+        "description": "This endpoint allows you to convert base64 strings of image, audio, video and 3d object file to a valid URL. The url expires after 24 hours of creation. Note that the maximum file size for upload is 5MB",
+        "servers": [{"url": "https://modelslab.com/api/v6"}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Base64ToUrlRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Base64 to URL response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Base64ToUrlResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dreambooth/buy_model": {
+      "post": {
+        "summary": "Buy Lora model",
+        "description": "This endpoint allows you to buy a Lora model automatically",
+        "servers": [{"url": "https://modelslab.com/api/v3"}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuyModelRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Buy model response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuyModelResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/buy_subscription": {
+      "post": {
+        "summary": "Buy subscription plan",
+        "description": "This endpoint allows you to buy an API key with a subscription plan automatically",
+        "servers": [{"url": "https://modelslab.com/api/v3"}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuySubscriptionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Buy subscription response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuySubscriptionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CancelSubscriptionRequest": {
+        "type": "object",
+        "required": ["key", "key_to_cancel"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your default API Key used for request authorization"
+          },
+          "key_to_cancel": {
+            "type": "string",
+            "description": "The api custom api key you want to cancel the subscription for"
+          }
+        }
+      },
+      "CancelSubscriptionResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"]
+          },
+          "messege": {
+            "type": "string",
+            "example": "subscription cancelled successfully"
+          }
+        }
+      },
+      "ClearCacheRequest": {
+        "type": "object",
+        "required": ["key"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          }
+        }
+      },
+      "ClearCacheResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"]
+          },
+          "message": {
+            "type": "string",
+            "example": "Cache cleared"
+          }
+        }
+      },
+      "DeleteImageRequest": {
+        "type": "object",
+        "required": ["key", "request_id"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "request_id": {
+            "type": "integer",
+            "description": "The request id gotten while uploading image"
+          },
+          "type": {
+            "type": "string",
+            "default": "image",
+            "enum": ["image", "video", "voice", "3d"],
+            "description": "The type of assest you want to delete. Default is image"
+          }
+        }
+      },
+      "DeleteImageResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"]
+          },
+          "messege": {
+            "type": "string",
+            "example": "image deleted"
+          }
+        }
+      },
+      "NSFWImageCheckRequest": {
+        "type": "object",
+        "required": ["key", "init_image"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your enterprise API Key used for request authorization"
+          },
+          "init_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "The image you want to check"
+          }
+        }
+      },
+      "NSFWImageCheckResponse": {
+        "type": "object",
+        "properties": {
+          "images": {
+            "type": "string",
+            "format": "uri",
+            "description": "The image URL that was checked"
+          },
+          "has_nsfw_concept": {
+            "type": "array",
+            "items": {
+              "type": "boolean"
+            },
+            "description": "Array indicating if the image has NSFW content"
+          }
+        }
+      },
+      "NSFWPromptCheckRequest": {
+        "type": "object",
+        "required": ["key", "prompt"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your enterprise API Key used for request authorization"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "The prompt you want to check"
+          }
+        }
+      },
+      "NSFWPromptCheckResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"]
+          },
+          "is_cp": {
+            "type": "boolean",
+            "description": "Whether the prompt contains child pornography content"
+          },
+          "is_nsfw": {
+            "type": "boolean",
+            "description": "Whether the prompt contains NSFW content"
+          },
+          "original_prompt": {
+            "type": "string",
+            "description": "The original prompt that was checked"
+          },
+          "filtered_prompt": {
+            "type": "string",
+            "description": "The filtered version of the prompt"
+          }
+        }
+      },
+      "SubscribedProductsRequest": {
+        "type": "object",
+        "required": ["key"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          }
+        }
+      },
+      "SubscribedProductsResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"]
+          },
+          "data": {
+            "type": "object",
+            "description": "Data containing subscription information for each product",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "total_api_call": {
+                  "type": "integer",
+                  "description": "Total API calls available"
+                },
+                "api_call_remaining": {
+                  "type": "integer",
+                  "description": "Remaining API calls"
+                },
+                "percentage_used": {
+                  "type": "integer",
+                  "description": "Percentage of API calls used"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Base64CropRequest": {
+        "type": "object",
+        "required": ["key", "image", "crop"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "image": {
+            "type": "string",
+            "description": "Image to be uploaded converted in base64 format"
+          },
+          "crop": {
+            "type": "string",
+            "enum": ["true", "false"],
+            "description": "A (true/false) flag for cropping the image upon uploading"
+          }
+        }
+      },
+      "Base64CropResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"]
+          },
+          "messege": {
+            "type": "string",
+            "example": "image uploaded"
+          },
+          "link": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL of the uploaded image"
+          },
+          "request_id": {
+            "type": "integer",
+            "description": "Request ID for the uploaded image"
+          }
+        }
+      },
+      "Base64ToUrlRequest": {
+        "type": "object",
+        "required": ["key", "base64_string"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "base64_string": {
+            "type": "string",
+            "description": "Image to be uploaded converted in base64 format"
+          }
+        }
+      },
+      "Base64ToUrlResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"]
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the upload"
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of URLs to the uploaded files"
+          }
+        }
+      },
+      "BuyModelRequest": {
+        "type": "object",
+        "required": ["key", "quantity"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "quantity": {
+            "type": "string",
+            "description": "The number of models you want to buy"
+          }
+        }
+      },
+      "BuyModelResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"]
+          },
+          "messege": {
+            "type": "string",
+            "example": "Payment was charged successfuly"
+          },
+          "purchased_models": {
+            "type": "integer",
+            "description": "Number of models purchased"
+          },
+          "used_models": {
+            "type": "integer",
+            "description": "Number of models used"
+          },
+          "available_models": {
+            "type": "integer",
+            "description": "Number of available models"
+          }
+        }
+      },
+      "BuySubscriptionRequest": {
+        "type": "object",
+        "required": ["key", "plan_name"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your default API Key used for request authorization"
+          },
+          "plan_name": {
+            "type": "string",
+            "enum": ["basic_monthly", "basic_yearly", "standard_monthly", "standard_yearly", "premium_monthly", "premium_yearly"],
+            "description": "The name of the plan you want to buy"
+          }
+        }
+      },
+      "BuySubscriptionResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"]
+          },
+          "messege": {
+            "type": "string",
+            "example": "You have just bought a custom api with basic plan"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "The purchased API key"
+              },
+              "plan": {
+                "type": "string",
+                "description": "The purchased plan name"
+              }
+            }
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["status", "message"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["error"]
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          }
+        }
+      }
+    }
+  }
+}
