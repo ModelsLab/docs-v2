@@ -104,7 +104,8 @@
                   "api-reference/apis/video-api/texttovideo-ultra",
                   "api-reference/apis/video-api/imagetovideo-ultra",
                   "api-reference/apis/video-api/scene-maker",
-                  "api-reference/apis/video-api/base64-to-url"
+                  "api-reference/apis/video-api/base64-to-url",
+                  "api-reference/apis/video-api/fetchvideo"
                 ]
               },
               {
