@@ -1,4 +1,460 @@
 ---
 title: Python
-description: "Documentation for the Python SDK"
+description: "The client for Python provides a seamless interface to interact with Modelslab API."
 ---
+
+## Installation[​](#overview "Direct link to Overview")
+
+```bash
+pip install modelslab_py
+```
+
+## Connecting to Client [​](#overview "Direct link to Overview")
+Create client to connect to modelslab api.
+
+```Python
+from modelslab_py.core.client import Client
+
+client = Client(api_key="your api key")
+```
+
+## Select api schema [​](#overview "Direct link to Overview")
+Select particular api schema as need.
+```Python
+# for realtime image generation api.
+from modelslab_py.schemas.realtime import (
+    RealtimeText2ImageSchema,
+    RealtimeImage2ImageSchema
+)
+
+# for image editing api.
+from modelslab_py.schemas.image_editing import (
+    OutpaintingSchema,
+    BackgroundRemoverSchema,
+    SuperResolutionSchema,
+    FashionSchema,
+    ObjectRemovalSchema,
+    FacegenSchema,
+    InpaintingSchema,
+    HeadshotSchema,
+    FluxHeadshotSchema,
+)
+
+# for community models apis.
+from modelslab_py.schemas.community import (
+    Text2Image,
+    Image2Image,
+    Inpainting,
+    ControlNet
+)
+
+# for audio apis.
+from modelslab_py.schemas.audio import (
+    Text2Audio,
+    Text2Speech,
+    Voice2Voice,
+    VoiceCover,
+    MusicGenSchema,
+    LyricsGenerator,
+    SongGenerator,
+    Speech2Text,
+    SFX
+)
+# for deepfake apis.
+from modelslab_py.schemas.deepfake import (
+    SpecificFaceSwap,
+    MultipleFaceSwap,
+    SingleVideoSwap,
+    SpecificVideoSwap
+)
+
+# for interior apis.
+from modelslab_py.schemas.interior import (
+    SkechRendringSchema,
+    InteriorSchema,
+    RoomDecoratorSchema,
+    FloorSchema,
+    ExteriorSchema,
+    ScenarioSchema
+)
+
+# for 3d apis.
+from modelslab_py.schemas.threed import (
+    Text23D,
+    Image23D,
+)
+
+#for video apis.
+from modelslab_py.schemas.video import (
+    Text2Video,
+    Image2Video,
+    Text2VideoUltra
+)
+```
+
+## Select API Client.
+```Python
+#to use interior api.
+from modelslab_py.core.apis.interior import Interior
+
+#to use realtime api.
+from modelslab_py.core.apis.realtime import Realtime
+
+#to use image editing api.
+from modelslab_py.core.apis.image_editing import Image_editing
+
+#to use audio api.
+from modelslab_py.core.apis.audio import Audio
+
+# to use community models api.
+from modelslab_py.core.apis.community import Community
+
+# to use deepfake api.
+from modelslab_py.core.apis.deepfake import DeepFake
+
+# to use 3D api.
+from modelslab_py.core.apis.three_d import Three_D
+
+# to use Video api.
+from modelslab_py.core.apis.video import Video
+```
+
+## Realtime Api Usage
+
+```Python
+from modelslab_py.core.apis.realtime import Realtime
+from modelslab_py.core.client import Client
+
+from modelslab_py.schemas.realtime import (
+    RealtimeText2ImageSchema,
+    RealtimeImage2ImageSchema
+)
+
+client = Client(api_key="your api key ")
+
+api = Realtime(client=client, enterprise=False)
+
+#for text to image api.
+
+schema = RealtimeText2ImageSchema(...)
+response = api.text_to_image(schema)
+
+#for image to image api.
+
+schema = RealtimeImage2ImageSchema(...)
+response = api.image_to_image(schema)
+
+```
+
+## Community Api Usage
+
+```Python
+from modelslab_py.core.apis.community import Community
+from modelslab_py.core.client import Client
+
+from modelslab_py.schemas.community import (
+    Text2Image,
+    Image2Image,
+    Inpainting,
+    ControlNet
+)
+
+client = Client(api_key="your api key ")
+
+api = Community(client=client, enterprise=False)
+
+#for text to image api.
+
+schema = Text2Image(...)
+response = api.text_to_image(schema)
+
+#for image to image api.
+
+schema = Image2Image(...)
+response = api.image_to_image(schema)
+
+#for image Inpainting api
+schema = Inpainting(...)
+response = api.inpainting(schema)
+
+#for controlent api.
+schema = ControlNet(...)
+response = api.controlnet(schema)
+```
+
+## DeepFake Api Usage
+
+```Python
+from modelslab_py.core.apis.deepfake import DeepFake
+from modelslab_py.core.client import Client
+
+from modelslab_py.schemas.deepfake import (
+    SpecificFaceSwap,
+    MultipleFaceSwap,
+    SingleVideoSwap,
+    SpecificVideoSwap
+)
+
+client = Client(api_key="your api key ")
+
+api = DeepFake(client=client, enterprise=False)
+
+#for specifc face swap.
+
+schema = SpecificFaceSwap(...)
+response = api.specific_face_swap(schema)
+
+#for multiple face swap.
+
+schema = MultipleFaceSwap(...)
+response = api.specific_face_swap(schema)
+
+#for multiple video swap.
+schema = SpecificVideoSwap(...)
+response = api.multiple_video_swap(schema)
+
+#for single video swap.
+schema = SingleVideoSwap(...)
+response = api.single_video_swap(schema)
+```
+
+## Image editing Api Usage
+
+```Python
+from modelslab_py.core.apis.image_editing import Image_editing
+from modelslab_py.core.client import Client
+
+from modelslab_py.schemas.image_editing import (
+    OutpaintingSchema,
+    BackgroundRemoverSchema,
+    SuperResolutionSchema,
+    FashionSchema,
+    ObjectRemovalSchema,
+    FacegenSchema,
+    InpaintingSchema,
+    HeadshotSchema,
+    FluxHeadshotSchema,
+)
+
+client = Client(api_key="your api key ")
+
+api = Image_editing(client=client, enterprise=False)
+
+#for outpainting api.
+
+schema = OutpaintingSchema(...)
+response = api.outpainting(schema)
+
+#for background remover apis.
+
+schema = BackgroundRemoverSchema(...)
+response = api.background_remover(schema)
+
+#for super resolution api.
+schema = SuperResolutionSchema(...)
+response = api.super_resolution(schema)
+
+#for fashion api.
+schema = FashionSchema(...)
+response = api.fashion(schema)
+
+#for object remover api.
+schema = ObjectRemovalSchema(...)
+response = api.object_remover(schema)
+
+#for facegen api.
+schema = FacegenSchema(...)
+response = api.facegen(schema)
+
+#for inpainting api.
+schema = InpaintingSchema(...)
+response = api.inpainting(schema)
+
+#for headshot api.
+schema = HeadshotSchema(...)
+response = api.headshot(schema)
+
+#for flux headshot api.
+schema = FluxHeadshotSchema(...)
+response = api.flux_headshot(schema)
+
+```
+
+## Interior Api Usage
+
+```Python
+from modelslab_py.core.apis.interior import Interior
+from modelslab_py.core.client import Client
+
+from modelslab_py.schemas.interior import (
+    ExteriorSchema,
+    ScenarioSchema,
+    FloorSchema,
+    RoomDecoratorSchema,
+    InteriorSchema
+)
+
+client = Client(api_key="your api key ")
+
+api = Interior(client=client, enterprise=False)
+
+#for interior apis.
+
+schema = InteriorSchema(...)
+response = api.interior(schema)
+
+#for room decorator apis.
+
+schema = RoomDecoratorSchema(...)
+response = api.room_decorator(schema)
+
+#for floor planning apis.
+schema = FloorSchema(...)
+response = api.floor(schema)
+
+#for scenario changer apis.
+schema = ScenarioSchema(...)
+response = api.scenario(schema)
+
+#for exterior restorer apis.
+schema = ScenariExteriorSchemaoSchema(...)
+response = api.exterior_restorer(schema)
+
+#for room decorator apis.
+schema = RoomDecoratorSchema(...)
+response = api.room_decorator(schema)
+```
+
+## Audio Api Usage
+
+```Python
+from modelslab_py.core.apis.audio import Audio
+from modelslab_py.core.client import Client
+
+from modelslab_py.schemas.audio import (
+    Text2Audio,
+    Text2Speech,
+    Voice2Voice,
+    VoiceCover,
+    MusicGenSchema,
+    LyricsGenerator,
+    SongGenerator,
+    Speech2Text,
+    SFX
+)
+
+client = Client(api_key="your api key ")
+
+api = Audio(client=client, enterprise=False)
+
+#for text to audio.
+
+schema = Text2Audio(...)
+response = api.text_to_audio(schema)
+
+#for text to speech apis.
+
+schema = Text2Speech(...)
+response = api.text_to_speech(schema)
+
+#for voice to voice apis.
+schema = Voice2Voice(...)
+response = api.voice2voice(schema)
+
+#for voice cover apis.
+schema = VoiceCover(...)
+response = api.voice_cover(schema)
+
+#for music gen apis.
+schema = MusicGenSchema(...)
+response = api.music_gen(schema)
+
+#for lyrics apis.
+schema = LyricsGenerator(...)
+response = api.lyrics_gen(schema)
+
+#for song generation apis.
+schema = SongGenerator(...)
+response = api.song_generator(schema)
+
+#for speech to text apis.
+schema = Speech2Text(...)
+response = api.speech_to_text(schema)
+
+#for sfx gen apis.
+schema = SFX(...)
+response = api.sfx_gen(schema)
+```
+
+## 3D Api Usage
+
+```Python
+from modelslab_py.core.apis.three_d import Three_D
+from modelslab_py.core.client import Client
+
+from modelslab_py.schemas.threed import Text23D,Image23D
+
+client = Client(api_key="your api key ")
+
+api = Three_D(client=client, enterprise=False)
+
+#for text to 3d.
+
+schema = Text23D(...)
+response = api.text_to_3d(schema)
+
+#for image to 3d apis.
+
+schema = Image23D(...)
+response = api.image_to_3d(schema)
+
+```
+
+## Video Api Usage
+
+```Python
+from modelslab_py.core.apis.video import Video
+from modelslab_py.core.client import Client
+
+from modelslab_py.schemas.video import Text2Video, Image2Video
+
+client = Client(api_key="your api key ")
+
+api = Video(client=client, enterprise=False)
+
+#for text to video.
+
+schema = Text2Video(...)
+response = api.text_to_video(schema)
+
+#for image to video.
+
+schema = Image2Video(...)
+response = api.image_to_video(schema)
+
+```
+
+## Example Usage.
+
+```Python
+from modelslab_py.core.client import Client
+from modelslab_py.schemas.image_editing import BackgroundRemoverSchema
+from modelslab_py.utils.image_utils import *
+from modelslab_py.core.apis.image_editing import Image_editing
+
+client = Client(api_key="your api key ")
+
+image_pil = read_image_from_file("7c504529-f038-4011-b344-764e0da1d4f2-0.png")
+image = image_to_base64(image_pil)
+schema = BackgroundRemoverSchema(  
+    image=image,
+    base64=True,
+)
+
+api = Image_editing(client=client, enterprise=False)
+
+response = api.background_remover(schema=schema)
+
+print(response)
+
+```
