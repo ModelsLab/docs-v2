@@ -113,32 +113,25 @@
                 "pages": [
                   "api-reference/apis/image-generation/image-generation",
                   {
-                    "group": "Realtime Stable Diffusion",
+                    "group": "Text to Image Generation",
                     "pages": [
-                      "api-reference/apis/image-generation/realtime-stable-diffusion/overview",
                       "api-reference/apis/image-generation/realtime-stable-diffusion/text-to-image",
+                      "api-reference/apis/image-generation/flux/flux-text-to-image",
+                      "api-reference/apis/image-generation/community-models/dreambooth-text-to-image"
+                    ]
+                  },
+                  {
+                    "group": "Image to Image Generation",
+                    "pages": [
                       "api-reference/apis/image-generation/realtime-stable-diffusion/image-to-image",
+                      "api-reference/apis/image-generation/community-models/dreambooth-image-to-image"
+                    ]
+                  },
+                  {
+                    "group": "Inpainting",
+                    "pages": [
                       "api-reference/apis/image-generation/realtime-stable-diffusion/inpaint",
-                      "api-reference/apis/image-generation/realtime-stable-diffusion/fetchimage"
-                    ]
-                  },
-                  {
-                    "group": "Flux",
-                    "pages": [
-                      "api-reference/apis/image-generation/flux/flux-text-to-image"
-                    ]
-                  },
-                  {
-                    "group": "Community Models",
-                    "pages": [
-                      "api-reference/apis/image-generation/community-models/overview",
-                      "api-reference/apis/image-generation/community-models/dreambooth-text-to-image",
-                      "api-reference/apis/image-generation/community-models/dreambooth-image-to-image",
-                      "api-reference/apis/image-generation/community-models/dreambooth-inpainting",
-                      "api-reference/apis/image-generation/community-models/dreambooth-lora",
-                      "api-reference/apis/image-generation/community-models/dreambooth-lora-multi",
-                      "api-reference/apis/image-generation/community-models/dreambooth-reload-model",
-                      "api-reference/apis/image-generation/community-models/dreambooth-fetch-queue-image"
+                      "api-reference/apis/image-generation/community-models/dreambooth-inpainting"
                     ]
                   },
                   {
@@ -150,14 +143,14 @@
                     ]
                   },
                   {
-                    "group": "A1111 Schedulers",
+                    "group": "LoRA Operations",
                     "pages": [
-                      "api-reference/apis/image-generation/a1111-scheduler/overview",
-                      "api-reference/apis/image-generation/a1111-scheduler/a1111schedulers"
+                      "api-reference/apis/image-generation/community-models/dreambooth-lora",
+                      "api-reference/apis/image-generation/community-models/dreambooth-lora-multi"
                     ]
                   },
                   {
-                    "group": "Train Model",
+                    "group": "Model Training",
                     "pages": [
                       "api-reference/apis/image-generation/train-model/overview",
                       "api-reference/apis/image-generation/train-model/lora-finetune",
@@ -169,12 +162,29 @@
                     ]
                   },
                   {
-                    "group": "Model Operations",
+                    "group": "Model Management",
                     "pages": [
                       "api-reference/apis/image-generation/model-operation/overview",
                       "api-reference/apis/image-generation/model-operation/model-list",
                       "api-reference/apis/image-generation/model-operation/upload-model",
-                      "api-reference/apis/image-generation/model-operation/finetune-list"
+                      "api-reference/apis/image-generation/model-operation/finetune-list",
+                      "api-reference/apis/image-generation/community-models/dreambooth-reload-model"
+                    ]
+                  },
+                  {
+                    "group": "Utilities & Fetch",
+                    "pages": [
+                      "api-reference/apis/image-generation/realtime-stable-diffusion/fetchimage",
+                      "api-reference/apis/image-generation/community-models/dreambooth-fetch-queue-image"
+                    ]
+                  },
+                  {
+                    "group": "Advanced Features",
+                    "pages": [
+                      "api-reference/apis/image-generation/a1111-scheduler/overview",
+                      "api-reference/apis/image-generation/a1111-scheduler/a1111schedulers",
+                      "api-reference/apis/image-generation/realtime-stable-diffusion/overview",
+                      "api-reference/apis/image-generation/community-models/overview"
                     ]
                   }
                 ]
