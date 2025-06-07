@@ -32,7 +32,6 @@
             "group": "Client SDKs",
             "pages": [
               "sdk/python",
-              "sdk/typescript",
               "sdk/dart",
               "sdk/php"
             ]
