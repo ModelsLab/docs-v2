@@ -1,0 +1,33 @@
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #d7e6ff;
+  border-radius: 12px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #868686;
+  border-radius: 12px;
+}
+/* custom-button css  */
+
+.custom-button {
+  border: 1px solid #0051FF;
+  padding: 5px 20px;
+  border-radius: 20px;
+  height: 40px;
+  transition: 500ms;
+}
+
+.custom-button:hover {
+  background-color: #0051FF;
+  color: white;
+  cursor: pointer;
+}
+
+.custom-button p {
+  margin-top: 0;
+  margin-bottom: 0;
+}

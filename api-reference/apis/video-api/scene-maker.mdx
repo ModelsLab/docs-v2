@@ -1,37 +1,21 @@
 ---
 title: "Scene Maker Endpoint"
 openapi: 'POST /video/scene_maker'
+description: "Generate videos from a sequence of images using the Scene Maker API."
 ---
 
-## Overview[​](#overview "Direct link to Overview")
+<a href='https://videofusion.playground.modelslab.com/text-to-video'>
+<button className='custom-button'>
+ Open in Playground
+</button>
+</a>
 
-The Scene Maker endpoint enables traveling between images through latent spaces based on text images provided and prompt.
+### Scene Maker
+Generate videos from a sequence of images.
 
-### Generation Example[​](#generation-example "Direct link to Generation Example")
+<video loop autoPlay muted className="w-full aspect-video rounded-lg" src="https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/deBMUCd6b5m3RyJkCAO7gFWFEtawP0-metaQVAxTW8zd09xMk84MnV5MFlUMGs1X3ZpZGVvLm1wNA==-.mp4" />
 
-Previous
-
-[Video 3](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/deBMUCd6b5m3RyJkCAO7gFWFEtawP0-metaQVAxTW8zd09xMk84MnV5MFlUMGs1X3ZpZGVvLm1wNA==-.mp4)
-
-[Video 1](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/MEgELU7VTZ8i9rBUpUViuoMUytZK9P-metac2FtcGxlXzEubXA0-.mp4)
-
-[Video 2](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/hHVHUIaaZftTjPEtBLQQEoVb5ZwzVi-metadmlkZW9fb3V0cHV0XzBfZnJvbS1hLXBpbG90LWZseWluZy1hLWpldC1wbGFuZS10by1hXzEyMzRfNzA0eDEyODB4MTIwXzAubXA0-.mp4)
-
-[Video 3](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/deBMUCd6b5m3RyJkCAO7gFWFEtawP0-metaQVAxTW8zd09xMk84MnV5MFlUMGs1X3ZpZGVvLm1wNA==-.mp4)
-
-[Video 1](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/MEgELU7VTZ8i9rBUpUViuoMUytZK9P-metac2FtcGxlXzEubXA0-.mp4)
-
-[Video 2](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/hHVHUIaaZftTjPEtBLQQEoVb5ZwzVi-metadmlkZW9fb3V0cHV0XzBfZnJvbS1hLXBpbG90LWZseWluZy1hLWpldC1wbGFuZS10by1hXzEyMzRfNzA0eDEyODB4MTIwXzAubXA0-.mp4)
-
-[Video 3](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/deBMUCd6b5m3RyJkCAO7gFWFEtawP0-metaQVAxTW8zd09xMk84MnV5MFlUMGs1X3ZpZGVvLm1wNA==-.mp4)
-
-Next
-
-* 1
-* 2
-* 3
-
-## Request[​](#request "Direct link to Request")
+## Request
 
 ```
 --request POST 'https://modelslab.com/api/v6/video/scene_maker' \
@@ -39,79 +23,31 @@ Next
 
 Make a `POST` request to [https://modelslab.com/api/v6/video/scene\_maker](https://modelslab.com/api/v6/video/scene_maker) endpoint and pass the required parameters in the request body.
 
-## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
-
-| Parameter                 | Description                                                                                                                                                                                                     | Values                  |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
-| **key**                   | Your unique API key used for authorization.                                                                                                                                                                     | string                  |
-| **scenes**                | Array of scene configurations with image url (`img_url`) and start frame index (`start_frame_index`). The `start_frame_index` should never be greater than `num_frames`                                         | Array                   |
-| **img\_url**              | A valid image url for video transition [here](/video-api/scene-maker)                                                                                                                                           | string                  |
-| **start\_frame\_index**   | The index of the first frame in the input sequence to begin generating the video from. The value must be within the valid range of available frames. A value of 0 indicates starting from the very first frame. | string                  |
-| **prompt**                | Text prompt used for image/video generation.                                                                                                                                                                    | string                  |
-| **negative\_prompt**      | Text prompt to avoid during generation.                                                                                                                                                                         | string                  |
-| **height**                | Output frame height in pixels.                                                                                                                                                                                  | integer, Default: 704   |
-| **width**                 | Output frame width in pixels.                                                                                                                                                                                   | integer , Default: 1280 |
-| **num\_frames**           | Total number of frames in the output video.                                                                                                                                                                     | integer, Default: 120   |
-| **seed**                  | Seed for deterministic results                                                                                                                                                                                  | string                  |
-| **num\_inference\_steps** | Number of inference steps for generation.                                                                                                                                                                       | Default: 50             |
-| **guidance\_scale**       | Scale for classifier-free guidance                                                                                                                                                                              | Default 5.0             |
-| **stg\_scale**            | spatio temporal guidance scale.                                                                                                                                                                                 | Default: 1.0            |
-| **stg\_rescale**          | spatio temporal guidance factor.                                                                                                                                                                                | Default: 0.7            |
-| **frame\_rate**           | Frame rate of the output video.                                                                                                                                                                                 | integer Default: 25     |
-| **temp**                  | Indicates whether to use a temporary file for the processed video. The default is false.                                                                                                                        | `true` / `false`        |
-
-## Example[​](#example "Direct link to Example")
-
-### Body[​](#body "Direct link to Body")
-
-Body
-
-```
-{  "key":"",  "prompt": "a women underwater swims out just to transform into old lady",  "negative_prompt": "worst quality, inconsistent motion, blurry, jittery, distorted",    "scenes": [    {      "img_url": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/6P3f4I7fhwmtPfW127x7nqY5SYOkDu-metaMTExMS5qcGc=-.jpg",      "start_frame_index": 0    },    {      "img_url": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/VHVDlpz1mSBcFQgiNrOhe5fG3BWrVn-metaMTExLmpwZw==-.jpg",      "start_frame_index": 119    }  ],  "num_frames": 120,  "seed": 123456,  "height": 704,  "width": 1280,  "num_inference_steps": 40,  "guidance_scale": 5,  "stg_scale": 1,  "stg_rescale": 0.7,  "frame_rate": 25,  "base64": false}
-```
-
-### Request[​](#request-1 "Direct link to Request")
-
-* JS
-* PHP
-* NODE
-* PYTHON
-* JAVA
-
-```
-var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({ "key":"",  "prompt": "a women underwater swims out just to transform into old lady",  "negative_prompt": "worst quality, inconsistent motion, blurry, jittery, distorted",    "scenes": [    {      "img_url": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/6P3f4I7fhwmtPfW127x7nqY5SYOkDu-metaMTExMS5qcGc=-.jpgg",      "start_frame_index": 0    },    {      "img_url": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/VHVDlpz1mSBcFQgiNrOhe5fG3BWrVn-metaMTExLmpwZw==-.jpg",      "start_frame_index": 119    }  ],  "num_frames": 120,  "seed": 123456,  "height": 704,  "width": 1280,  "num_inference_steps": 40,  "guidance_scale": 5,  "stg_scale": 1,  "stg_rescale": 0.7,  "frame_rate": 25,  "base64": false});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v6/video/scene_maker", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
-```
-
-```
-<?php$payload = [     "key":"",    "prompt": "a women underwater swims out just to transform into old lady",    "negative_prompt": "worst quality, inconsistent motion, blurry, jittery, distorted",    "scenes" => [    {      "img_url" => "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/6P3f4I7fhwmtPfW127x7nqY5SYOkDu-metaMTExMS5qcGc=-.jpgg",      "start_frame_index" => 0    },    {      "img_url" => "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/VHVDlpz1mSBcFQgiNrOhe5fG3BWrVn-metaMTExLmpwZw==-.jpg",      "start_frame_index" => 119    }  ],  "num_frames" => 120,  "seed" => 123456,  "height" => 704,  "width" => 1280,  "num_inference_steps" => 40,  "guidance_scale" => 5,  "stg_scale" => 1,  "stg_rescale" => 0.7,  "frame_rate" => 25,  "base64" => false];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v6/video/scene_maker',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
-```
-
-```
-var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v6/video/scene_maker',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({     "key":"",  "prompt": "a women underwater swims out just to transform into old lady",  "negative_prompt": "worst quality, inconsistent motion, blurry, jittery, distorted",    "scenes": [    {      "img_url": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/6P3f4I7fhwmtPfW127x7nqY5SYOkDu-metaMTExMS5qcGc=-.jpgg",      "start_frame_index": 0    },    {      "img_url": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/VHVDlpz1mSBcFQgiNrOhe5fG3BWrVn-metaMTExLmpwZw==-.jpg",      "start_frame_index": 119    }  ],  "num_frames": 120,  "seed": 123456,  "height": 704,  "width": 1280,  "num_inference_steps": 40,  "guidance_scale": 5,  "stg_scale": 1,  "stg_rescale": 0.7,  "frame_rate": 25,  "base64": false  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
-```
-
-```
-import requestsimport jsonurl = "https://modelslab.com/api/v6/video/scene_maker"payload = json.dumps({   "key":"",  "prompt": "a women underwater swims out just to transform into old lady",  "negative_prompt": "worst quality, inconsistent motion, blurry, jittery, distorted",    "scenes": [    {      "img_url": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/6P3f4I7fhwmtPfW127x7nqY5SYOkDu-metaMTExMS5qcGc=-.jpgg",      "start_frame_index": 0    },    {      "img_url": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/VHVDlpz1mSBcFQgiNrOhe5fG3BWrVn-metaMTExLmpwZw==-.jpg",      "start_frame_index": 119    }  ],  "num_frames": 120,  "seed": 123456,  "height": 704,  "width": 1280,  "num_inference_steps": 40,  "guidance_scale": 5,  "stg_scale": 1,  "stg_rescale": 0.7,  "frame_rate": 25,  "base64": False})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
-```
-
-```
-OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n  \"key\":\"\",\n  \"prompt\": \"a women underwater swims out just to transform into old lady\",\n  \"seed\": 123456,\n    \"scenes\": [\n    {\n      \"img_url\": \"https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/6P3f4I7fhwmtPfW127x7nqY5SYOkDu-metaMTExMS5qcGc=-.jpgg\",\n      \"start_frame_index\": 0\n    },\n    {\n      \"img_url\": \"https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/VHVDlpz1mSBcFQgiNrOhe5fG3BWrVn-metaMTExLmpwZw==-.jpg\",\n      \"start_frame_index\": 119\n    }\n  ],\n  \"num_inference_steps\": 40,\n  \"guidance_scale\": 5,\n  \"stg_scale\": 1,\n  \"stg_rescale\": 0.7,\n  \"height\": 704,\n  \"width\": 1280,\n  \"num_frames\": 120,\n  \"frame_rate\": 25,\n  \"negative_prompt\": \"worst quality, inconsistent motion, blurry, jittery, distorted\",\n  \"base64\": false\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v6/video/scene_maker")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .addHeader("X-API-Key", "{{token}}")  .build();Response response = client.newCall(request).execute();
-```
-
-### Response[​](#response "Direct link to Response")
-
-* Success
-* Processing
-* Error
-
-```
-{    "status": "success",    "generationTime": 10.56,    "id": 148,    "output": [        "https://modelslab-bom.s3.amazonaws.com/generations/fba0ba98-f1a3-4905-95e6-7980b8e3190c.mp4"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/generations/fba0ba98-f1a3-4905-95e6-7980b8e3190c.mp4"    ],    "meta": {        "prompt": "a women underwater swims out just to transform into old lady",        "seed": 123456,        "num_inference_steps": 40,        "guidance_scale": 5,        "stg_scale": 1,        "stg_rescale": 0.7,        "height": 704,        "width": 1280,        "num_frames": 120,        "frame_rate": 25,        "negative_prompt": "worst quality, inconsistent motion, blurry, jittery, distorted",        "base64": "no",        "temp": "no",        "scenes": [            {                "img_url": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/6P3f4I7fhwmtPfW127x7nqY5SYOkDu-metaMTExMS5qcGc=-.jpggpg",                "start_frame_index": 0            },            {                "img_url": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/VHVDlpz1mSBcFQgiNrOhe5fG3BWrVn-metaMTExLmpwZw==-.jpg",                "start_frame_index": 119            }        ],        "watermark": "no",        "scale_down": 6,        "opacity": 0.7,        "padding_right": 10,        "padding_down": 10,        "webhook": null,        "id": 1678,        "track_id": null,        "file_prefix": "fba0ba98-f1a3-4905-95e6-7980b8e3190c",        "outdir": "out"    }}
-```
-
-```
-{    "status": "processing",    "tip": "Your video is processing in background, you can get this video using fetch API",    "eta": 960,    "message": "Try to fetch request after seconds estimated",    "fetch_result": "https://modelslab.com/api/v6/video/fetch/148",    "id": 148,    "output": [],    "meta": {        "prompt": "a women underwater swims out just to transform into old lady",        "seed": 123456,        "num_inference_steps": 40,        "guidance_scale": 5,        "stg_scale": 1,        "stg_rescale": 0.7,        "height": 704,        "width": 1280,        "num_frames": 120,        "frame_rate": 25,        "negative_prompt": "worst quality, inconsistent motion, blurry, jittery, distorted",        "base64": "no",        "temp": "no",        "scenes": [            {                "img_url": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/6P3f4I7fhwmtPfW127x7nqY5SYOkDu-metaMTExMS5qcGc=-.jpggpg",                "start_frame_index": 0            },            {                "img_url": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/VHVDlpz1mSBcFQgiNrOhe5fG3BWrVn-metaMTExLmpwZw==-.jpg",                "start_frame_index": 119            }        ],        "watermark": "no",        "scale_down": 6,        "opacity": 0.7,        "padding_right": 10,        "padding_down": 10,        "webhook": null,        "id": 1678,        "track_id": null,        "file_prefix": "fba0ba98-f1a3-4905-95e6-7980b8e3190c",        "outdir": "out"    },    "future_links": [        "https://modelslab-bom.s3.amazonaws.com/generations/fba0ba98-f1a3-4905-95e6-7980b8e3190c.mp4"    ]}
-```
-
-```
-{    "status": "error",    "message": "Error message"}
+## Body
+```json
+{
+  "key":"",
+  "prompt": "a women underwater swims out just to transform into old lady",
+  "negative_prompt": "worst quality, inconsistent motion, blurry, jittery, distorted",
+    "scenes": [
+    {
+      "img_url": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/6P3f4I7fhwmtPfW127x7nqY5SYOkDu-metaMTExMS5qcGc=-.jpg",
+      "start_frame_index": 0
+    },
+    {
+      "img_url": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/VHVDlpz1mSBcFQgiNrOhe5fG3BWrVn-metaMTExLmpwZw==-.jpg",
+      "start_frame_index": 119
+    }
+  ],
+  "num_frames": 120,
+  "seed": 123456,
+  "height": 704,
+  "width": 1280,
+  "num_inference_steps": 40,
+  "guidance_scale": 5,
+  "stg_scale": 1,
+  "stg_rescale": 0.7,
+  "frame_rate": 25,
+  "base64": false
+}
 ```

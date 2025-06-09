@@ -1,67 +1,20 @@
 ---
 title: "Base64 to Url Endpoint"
 openapi: 'POST /video/base64_to_url'
+description: "Upload a video in base64 format and retrieve it as a URL."
 ---
 
-## Overview[​](#overview "Direct link to Overview")
-
-The Base64 to URL endpoint allows you to upload a video in base64 format and retrieve it as a URL.
-
-## Request[​](#request "Direct link to Request")
-
+## Request
 ```
 --request POST 'https://modelslab.com/api/v6/video/base64_to_url' \
 ```
 
 Make a `POST` request to [https://modelslab.com/api/v6/video/base64\_to\_url](https://modelslab.com/api/v6/video/base64_to_url) endpoint and pass the required parameters as a request body.
 
-## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
-
-| Parameter       | Description                                         | Values        |
-| --------------- | --------------------------------------------------- | ------------- |
-| **key**         | Your API Key used for request authorization.        | String        |
-| **init\_video** | The base64 format of the video file to be uploaded. | Base64 string |
-
-## Example[​](#example "Direct link to Example")
-
-### Body[​](#body "Direct link to Body")
-
-Body
-
-```
-{       "key":"",    "init_obj":"data:video/mp4;base64,<base64>",}
-```
-
-### Request[​](#request-1 "Direct link to Request")
-
-* JS
-* PHP
-* NODE
-* PYTHON
-* JAVA
-
-```
-var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({      "key":"",      "init_obj":"data:video/mp4;base64, <base64>",});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v6/video/base64_to_url", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
-```
-
-```
-<?php$payload = [    "key":"",    "init_obj":"data:video/mp4;base64, <base64>",];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v6/video/base64_to_url',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
-```
-
-```
-var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v6/video/base64_to_url',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({     "key":"",     "init_obj":"data:video/mp4;base64, <base64>",  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
-```
-
-```
-import requestsimport jsonurl = "https://modelslab.com/api/v6/video/base64_to_url"payload = json.dumps({     "key":"",    "init_obj":"data:video/mp4;base64, <base64>",})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
-```
-
-```
-OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\":\"\",\n    \"init_obj\":\"data:video/mp4;base64, <base64>\",\n  }");Request request = new Request.Builder()  .url("https://modelslab.com/api/v6/video/base64_to_url")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
-```
-
-### Response[​](#response "Direct link to Response")
-
-```
-{    "status": "success",    "id": 126,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/audio/13751477591711383896.mp4"    ]}
+## Body 
+```json
+{   
+    "key":"",
+    "init_obj":"data:video/mp4;base64,<base64>",
+}
 ```
