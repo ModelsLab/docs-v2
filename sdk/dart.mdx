@@ -1,4 +1,232 @@
 ---
 title: Dart
-description: "Documentation for the Dart SDK"
+description: "The client for Dart provides a seamless interface to interact with Modelslab API."
 ---
+
+## Installation[​](#overview "Direct link to Overview")
+
+Add this to your `pubspec.yaml`:
+
+```yaml
+dependencies:
+  modelslab: ^1.0.0
+```
+
+Then run:
+
+```bash
+dart pub get
+```
+
+## Realtime Api Usage
+
+```dart
+import 'package:modelslab/core/apis/realtime.dart';
+import 'package:modelslab/core/apis/base.dart';
+import 'package:modelslab/schemas/realtime.dart';
+import 'package:modelslab/core/client.dart';
+
+var client = Client(key: "Your api key");
+var api = Realtime(client: client);
+
+//for text to image api.
+
+var schema = RealtimeText2ImageSchema(...)
+Future<Map<String, dynamic>> response = api.textToImage(schema);
+
+//for image to image api.
+
+var schema = RealtimeImage2ImageSchema(...)
+Future<Map<String, dynamic>> response = api.imageToImage(schema);
+
+```
+
+## Community Api Usage
+
+```dart
+import 'package:modelslab/core/apis/community.dart';
+import 'package:modelslab/core/apis/base.dart';
+import 'package:modelslab/schemas/community.dart';
+import 'package:modelslab/core/client.dart';
+
+var client = Client(key: "Your api key");
+var api = Community(client: client);
+
+//for text to image api.
+
+var schema = Text2Image(...)
+Future<Map<String, dynamic>> response = api.textToImage(schema);
+
+//for image to image api.
+
+var schema = Image2Image(...)
+Future<Map<String, dynamic>> response = api.imageToImage(schema);
+
+//for inpainting api.
+var schema = Inpainting(...)
+Future<Map<String, dynamic>> response = api.inpainting(schema);
+
+//for controlnet api.
+var schema = ControlNet(...)
+Future<Map<String, dynamic>> response = api.controlnet(schema);
+
+```
+
+## DeepFake Api Usage
+
+```dart
+import 'package:modelslab/core/apis/deepfake.dart';
+import 'package:modelslab/core/apis/base.dart';
+import 'package:modelslab/schemas/deepfake.dart';
+import 'package:modelslab/core/client.dart';
+
+var client = Client(key: "Your api key");
+var api = DeepFake(client: client);
+
+//for specific face swap api.
+
+var schema = SpecificFaceSwap(...)
+Future<Map<String, dynamic>> response = api.specificFaceSwap(schema);
+
+//for multiple face swap api.
+
+var schema = MultipleFaceSwap(...)
+Future<Map<String, dynamic>> response = api.multipleFaceSwap(schema);
+
+//for multiple video swap api.
+var schema = MultipleFaceSwap(...)
+Future<Map<String, dynamic>> response = api.multipleFaceSwap(schema);
+
+//for single video swap api.
+var schema = SingleVideoSwap(...)
+Future<Map<String, dynamic>> response = api.singleVideoSwap(schema);
+```
+
+## Interior Api Usage
+
+```dart
+import 'package:modelslab/core/apis/interior.dart';
+import 'package:modelslab/core/apis/base.dart';
+import 'package:modelslab/schemas/interior.dart';
+import 'package:modelslab/core/client.dart';
+
+var client = Client(key: "Your api key");
+var api = Interior(client: client);
+
+//for interior api.
+
+var schema = InteriorSchema(...)
+Future<Map<String, dynamic>> response = api.interior(schema);
+
+//for room decorator api.
+
+var schema = RoomDecoratorSchema(...)
+Future<Map<String, dynamic>> response = api.roomDecorator(schema);
+
+//for floor schema api.
+var schema = FloorSchema(...)
+Future<Map<String, dynamic>> response = api.floor(schema);
+
+//for scenario api.
+var schema = ScenarioSchema(...)
+Future<Map<String, dynamic>> response = api.scenario(schema);
+
+//for exterior api.
+var schema = ExteriorSchema(...)
+Future<Map<String, dynamic>> response = api.exteriorRestorer(schema);
+```
+
+## Audio Api Usage
+
+```dart
+import 'package:modelslab/core/apis/audio.dart';
+import 'package:modelslab/core/apis/base.dart';
+import 'package:modelslab/schemas/audio.dart';
+import 'package:modelslab/core/client.dart';
+
+var client = Client(key: "Your api key");
+var api = Audio(client: client);
+
+//for text to audio api.
+
+var schema = Text2Audio(...)
+Future<Map<String, dynamic>> response = api.textToAudio(schema);
+
+//for text to speech api.
+
+var schema = Text2Speech(...)
+Future<Map<String, dynamic>> response = api.textToSpeech(schema);
+
+//for voice to voice api.
+var schema = Voice2Voice(...)
+Future<Map<String, dynamic>> response = api.floor(schema);
+
+//for voice cover api.
+var schema = VoiceCover(...)
+Future<Map<String, dynamic>> response = api.voiceCover(schema);
+
+//for music gen api.
+var schema = MusicGenSchema(...)
+Future<Map<String, dynamic>> response = api.musicGen(schema);
+
+//for lyrics api.
+var schema = LyricsGenerator(...)
+Future<Map<String, dynamic>> response = api.lyricsGen(schema);
+
+//for song generator api.
+var schema = SongGenerator(...)
+Future<Map<String, dynamic>> response = api.songGenerator(schema);
+
+//for speechto text api.
+var schema = Speech2Text(...)
+Future<Map<String, dynamic>> response = api.speechToText(schema);
+
+//for sfx api.
+var schema = SFX(...)
+Future<Map<String, dynamic>> response = api.sfxGen(schema);
+```
+
+## 3D Api Usage
+
+```dart
+import 'package:modelslab/core/apis/threed.dart';
+import 'package:modelslab/core/apis/base.dart';
+import 'package:modelslab/schemas/threed.dart';
+import 'package:modelslab/core/client.dart';
+
+var client = Client(key: "Your api key");
+var api = ThreeD(client: client);
+
+//for text to 3D api.
+
+var schema = Text23D(...)
+Future<Map<String, dynamic>> response = api.textTo3d(schema);
+
+//for image to 3D api.
+
+var schema = Image23D(...)
+Future<Map<String, dynamic>> response = api.imageTo3d(schema);
+
+```
+
+## Video Api Usage
+
+```dart
+import 'package:modelslab/core/apis/video.dart';
+import 'package:modelslab/core/apis/base.dart';
+import 'package:modelslab/schemas/video.dart';
+import 'package:modelslab/core/client.dart';
+
+var client = Client(key: "Your api key");
+var api = Video(client: client);
+
+//for text to video api.
+
+var schema = Text2Video(...)
+Future<Map<String, dynamic>> response = api.textToVideo(schema);
+
+//for image to video api.
+
+var schema = Image2Video(...)
+Future<Map<String, dynamic>> response = api.imageToVideo(schema);
+```
