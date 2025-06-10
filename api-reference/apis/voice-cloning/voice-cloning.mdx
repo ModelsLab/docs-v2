@@ -1,75 +1,29 @@
 ---
 title: "Voice Cloning Endpoint"
 openapi: 'POST /voice/text_to_audio'
-
+description: 'Generate audio from text by cloning a provided audio URL or a selected voice ID.'
 ---
 
-## Overview[​](#overview "Direct link to Overview")
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
 
-The Text-to-Audio endpoint enables you to generate audio by providing a text input along with a valid audio URL or a pre-created voice using a voice\_id. The output is an audio file that mimics the sound of the provided audio URL or the selected voice.
+<Note>
+Note: You can either pass `init_audio` or `voice_id`. However, if both are passed at the same time the `init_audio` takes preference.
+</Note>
 
-[Open in Playground 🚀](https://audiogen.modelslab.com/ai-voice-generator)
-
-## **Sample Generation**[​](#sample-generation "Direct link to sample-generation")
-
-***
-
-### **Example 1**[​](#example-1 "Direct link to example-1")
-
-### **Init Audio Clip**[​](#init-audio-clip "Direct link to init-audio-clip")
-
-[Your browser does not support the audio tag.](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/yNcEINEPITStQQcmFMgX0ULXvjzl5M-metaaW5pdF9hdWRpb19zbXBsZSAoMykud2F2-.wav)
-
-#### **Prompt**[​](#prompt "Direct link to prompt")
-
-> In the ancient land of Eldoria, where the skies were painted with shades of mystic hues and the forests whispered secrets of old, there existed a dragon named Zephyros. Unlike the fearsome tales of dragons that plagued human hearts with terror, Zephyros was a creature of wonder and wisdom, revered by all who knew of his existence.
-
-***
-
-### **Generated Speech**[​](#generated-speech "Direct link to generated-speech")
-
-[Your browser does not support the audio tag.](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/MV7poGFhidet1Q0Ib8DMJ4WIeNc8QP-metaYXVkaW8oNCkoMSkud2F2-.wav)
-
-***
-
-## Request[​](#request "Direct link to Request")
-
-```
+```curl curl
 --request POST 'https://modelslab.com/api/v6/voice/text_to_audio' \
 ```
 
-## Watch the Text to Audio API Demo video to see it in action Postman.[​](#watch-the-text-to-audio-api-demo-video-to-see-it-in-action-postman "Direct link to Watch the Text to Audio API Demo video to see it in action Postman.")
 
-Make a `POST` request to [https://modelslab.com/api/v6/voice/text\_to\_audio](https://modelslab.com/api/v6/voice/text_to_audio) endpoint and pass the required parameters as a request body.
-
-## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
-
-| Parameter       | Description                                                                                                                                        | Values                                                                                                                                                                                         |
-| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **key**         | The API key used for authenticating your request.                                                                                                  | String                                                                                                                                                                                         |
-| **prompt**      | The text prompt that describes the audio to be generated.                                                                                          | Text                                                                                                                                                                                           |
-| **init\_audio** | A valid URL pointing to the audio file for voice cloning. The file should be 4 to 30 seconds long.                                                 | MP3/WAV URL                                                                                                                                                                                    |
-| **voice\_id**   | (Optional) The ID of a voice from the available list. If provided,the audio will be generated using this voice.                                    | See [list of voices](https://modelslab.com/voice-lists)                                                                                                                                        |
-| **language**    | The language for the voice. Defaults to English if not specified.                                                                                  | `english`, `arabic`, `spanish`, `brazilian portuguese`, `german`, `czech`, `chinese`, `dutch`, `french`, `hindi`, `hungarian`, `italian`, `japanese`, `korean`, `polish`, `russian`, `turkish` |
-| **speed**       | playback speed of the generated audio. `Defaults` to `1.0`.                                                                                        | Integral value                                                                                                                                                                                 |
-| **base64**      | Indicates whether the input audio file is provided in base64 format. Defaults to "false".                                                          | TRUE or FALSE                                                                                                                                                                                  |
-| **temp**        | Specifies if temporary links should be used valid for 24 hours. This can help if access to certain storage sites is blocked. Defaults to "false" . | TRUE or FALSE                                                                                                                                                                                  |
-| **stream**      | Optional. Use this if you want to stream response. Response is returned in base64                                                                  | Boolean `true` or `false`                                                                                                                                                                      |
-| **webhook**     | A URL where the API will send a POST request once the audio generation is complete.                                                                | URL                                                                                                                                                                                            |
-| **track\_id**   | An ID returned in the API response, used to identify webhook requests                                                                              | Integral value                                                                                                                                                                                 |
-
-## [Open in Playground 🚀](https://audiogen.modelslab.com/ai-voice-generator)[​](#custombutton-labelopen-in-playground--hrefhttpsaudiogenmodelslabcomai-voice-generator- "Direct link to custombutton-labelopen-in-playground--hrefhttpsaudiogenmodelslabcomai-voice-generator-")
-
-Note: You can either pass `init_audio` or `voice_id`. However, if both are passed at the same time the `init_audio` takes preference.
-
-***
-
-## Language-Specific Guidelines[​](#language-specific-guidelines "Direct link to Language-Specific Guidelines")
-
+## Language-Specific Guidelines
+<Note>
 When using the **Text-to-Audio API** for `Hindi` language generation, follow these best practices for accurate and natural-sounding output.
+</Note>
 
-### Best Practices for Hindi Language[​](#best-practices-for-hindi-language "Direct link to Best Practices for Hindi Language")
-
+<Tip>
+Best Practices for Hindi Language
+</Tip>
 <AccordionGroup>
   <Accordion title="Voice Cloning">
     * Use clear and well-structured Hindi sentences.
@@ -78,76 +32,30 @@ When using the **Text-to-Audio API** for `Hindi` language generation, follow the
 
   <Accordion title="Handling Numbers and Dates">
     * Write numbers in Hindi text format instead of digits.
-    * **✅Correct:** "दो हज़ार पच्चीस"
-    * **❌Incorrect:** 2025
-    * **✅Correct:** "पंद्रह अगस्त उन्नीस सौ सैंतालीस"
-    * **❌Incorrect:** 15/08/1947
+    * Correct: "दो हज़ार पच्चीस"
+    * Incorrect: 2025
+    * Correct: "पंद्रह अगस्त उन्नीस सौ सैंतालीस"
+    * Incorrect: 15/08/1947
     * Always use expanded Hindi form for dates and numbers.
   </Accordion>
 
   <Accordion title="Handling Abbreviations">
     * Convert English abbreviations to Hindi phonetic spelling.
-    * **✅Correct:** आईआईटी (for IIT)
-    * **✅Correct:** यूएसए (for USA)
-    * **✅Correct:** एमएल (for ML)
+    * Correct: आईआईटी (for IIT)
+    * Correct: यूएसए (for USA)
+    * Correct: एमएल (for ML)
     * Spell out abbreviations in Hindi script to improve pronunciation.
   </Accordion>
 </AccordionGroup>
 
-***
-
-## Example[​](#example "Direct link to Example")
-
-### Body[​](#body "Direct link to Body")
-
-Body
-
-```
-{    "key": "", "prompt":"Narrative voices capable of pronouncing terminologies & acronyms in training and ai learning materials.", "init_audio":"https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav", "language":"english", "webhook": null, "track_id": null}
-```
-
-### Request[​](#request-1 "Direct link to Request")
-
-* JS
-* PHP
-* NODE
-* PYTHON
-* JAVA
-
-```
-var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({  "key": "",  "prompt":"Narrative voices capable of pronouncing terminologies & acronyms in training and ai learning materials.",  "init_audio":"https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",  "language":"english",  "webhook": null,  "track_id": null});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v6/voice/text_to_audio", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
-```
-
-```
-<?php$payload = [  "key" => "",  "prompt" => "Narrative voices capable of pronouncing terminologies & acronyms in training and ai learning materials.",  "init_audio" => "https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",  "language" => "english",  "webhook" => null,   "track_id" => null ];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v6/voice/text_to_audio',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
-```
-
-```
-var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v6/voice/text_to_audio',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key": "",    "prompt":"Narrative voices capable of pronouncing terminologies & acronyms in training and ai learning materials.",    "init_audio":"https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",    "language":"english",    "webhook": null,    "track_id": null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
-```
-
-```
-import requestsimport jsonurl = "https://modelslab.com/api/v6/voice/text_to_audio"payload = json.dumps({  "key": "",  "prompt":"Narrative voices capable of pronouncing terminologies & acronyms in training and ai learning materials.",  "init_audio":"https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",  "language":"english",  "webhook": None,  "track_id": None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
-```
-
-```
-OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\":\"\",\n    \"prompt\":\"Narrative voices capable of pronouncing terminologies & acronyms in training and ai learning materials.\",\n    \"init_audio\":\"https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav\",\n    \"language\":\"english\"\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v6/voice/text_to_audio")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
-```
-
-### Response[​](#response "Direct link to Response")
-
-* Success
-* Processing
-* Error
-
-```
-{    "status": "success",    "generationTime": 1.904285192489624,    "id": 334166,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/b2dff60e-4636-4178-9a72-04a10a309185.wav"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/generations/b2dff60e-4636-4178-9a72-04a10a309185.wav"    ],    "meta": {        "base64": "no",        "emotion": "Neutral",        "filename": "b2dff60e-4636-4178-9a72-04a10a309185.wav",        "input_sound_clip": [            "tmp/0-b2dff60e-4636-4178-9a72-04a10a309185.wav"        ],        "input_text": "Narrative voices capable of pronouncing terminologies & acronyms in training and ai learning materials.",        "language": "english",        "speed": 1,        "temp": "no"    }}
-```
-
-```
-{    "status": "processing",    "tip": "Your audio is processing in background, you can get this audio using fetch API",    "eta": 100,    "message": "Try to fetch request after seconds estimated",    "fetch_result": "https://modelslab.com/api/v6/voice/fetch/334166",    "id": 334166,    "output": [],    "future_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/b2dff60e-4636-4178-9a72-04a10a309185.wav"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/generations/b2dff60e-4636-4178-9a72-04a10a309185.wav"    ],    "meta": {        "base64": "no",        "emotion": "Neutral",        "filename": "b2dff60e-4636-4178-9a72-04a10a309185.wav",        "input_sound_clip": [            "tmp/0-b2dff60e-4636-4178-9a72-04a10a309185.wav"        ],        "input_text": "Narrative voices capable of pronouncing terminologies & acronyms in training and ai learning materials.",        "language": "english",        "speed": 1,        "temp": "no"    }}
-```
-
-```
-{    "status": "error",    "message": "Error message"}
+## Body 
+```json json
+{    
+  "key": "", 
+  "prompt":"Narrative voices capable of pronouncing terminologies & acronyms in training and ai learning materials.", 
+  "init_audio":"https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav", 
+  "language":"english", 
+  "webhook": null, 
+  "track_id": null
+}
 ```
