@@ -8,24 +8,15 @@
     "dark": "#0051FF"
   },
   "favicon": "/favicon.png",
-  "contextual": {
-    "options": [
-      "copy",
-      "view",
-      "claude",
-      "chatgpt"
-    ]
-  },
   "navigation": {
     "tabs": [
       {
         "tab": "Developer Guide",
         "groups": [
           {
-            "group": "First steps",
+            "group": "Get Started",
             "pages": [
-              "index",
-              "get_started"
+              "index"
             ]
           },
           {
@@ -34,28 +25,6 @@
               "sdk/python",
               "sdk/dart",
               "sdk/php"
-            ]
-          },
-          {
-            "group": "Models & pricing",
-            "pages": [
-              "models-and-overview",
-              "pricing",
-              "model-depreciations"
-            ]
-          },
-          {
-            "group": "Learn about ModelsLab",
-            "pages": [
-              "building-with-modelslab",
-              "use-cases",
-              "prompt-engineering"
-            ]
-          },
-          {
-            "group": "Agent components",
-            "pages": [
-              "model-context-protocol-mcp"
             ]
           },
           {
