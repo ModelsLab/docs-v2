@@ -5,14 +5,14 @@ description: "Retrieve queued videos using the Fetch Queued Video API."
 ---
 
 ## Request
-```
+Send a `POST` request to below endpoint to return the corresponding queued videos. Where `{id}` is the ID returned together with the URL in the response upon its generation. This endpoint does not generate new video, it returns already generated/queued videos.
+
+```curl curl
 --request POST 'https://modelslab.com/api/v6/video/fetch/{id}' \
 ```
 
-Send a `POST` request to [https://modelslab.com/api/v6/video/fetch/\{id}](https://modelslab.com/api/v6/video/fetch/%7Bid%7D) endpoint to return the corresponding queued videos. Where `{id}` is the ID returned together with the URL in the response upon its generation. This endpoint does not generate new video, it returns already generated/queued videos.
-
 ## Body
-```json
+```json json
 { 
     "key": ""
 }
