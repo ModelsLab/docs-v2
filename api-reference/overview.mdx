@@ -1,109 +1,31 @@
 ---
 title: 'Overview'
-description: 'Example section for showcasing API endpoints'
+description: 'API Reference'
 ---
-# Building with ModelsLab
 
-> ModelsLab is a comprehensive [AI platform offering cutting-edge models](/models-and-overview) for image generation, video creation, and multimodal AI applications. Built for developers and enterprises, ModelsLab provides the most reliable and scalable AI infrastructure, enabling businesses to build innovative applications with state-of-the-art generative AI models.
-
-This guide introduces ModelsLab's enterprise capabilities, the end-to-end development workflow, and how to start building powerful AI-driven applications.
-
-## What you can do with ModelsLab
-
-ModelsLab is designed to empower developers and enterprises with high-performance AI models for visual content creation, video generation, and advanced multimodal applications.
-
-Here's a comprehensive overview of ModelsLab's capabilities and common use cases.
-
-| Capability | Enables you to... |
-| ---------- | ----------------- |
-| **Image Generation** | <ul><li>Create high-quality images from text descriptions for marketing campaigns and creative content</li><li>Generate product mockups, concept art, and visual prototypes</li><li>Build AI-powered design tools and creative applications</li><li>Produce personalized visual content at scale for e-commerce and social media</li><li>Create custom illustrations, logos, and branding materials</li></ul> |
-| **Video Creation** | <ul><li>Generate videos from text prompts for content marketing and storytelling</li><li>Transform static images into dynamic video content</li><li>Create animated explainer videos and product demonstrations</li><li>Build AI-powered video editing and creation tools</li><li>Produce personalized video content for customer engagement</li></ul> |
-| **Image-to-Video** | <ul><li>Animate existing images and artwork into engaging video content</li><li>Create dynamic presentations and visual narratives</li><li>Transform static product images into promotional videos</li><li>Build interactive storytelling applications</li></ul> |
-| **Multimodal AI** | <ul><li>Process and understand both text and visual inputs for comprehensive AI applications</li><li>Build intelligent content moderation systems</li><li>Create AI assistants that can analyze and generate visual content</li><li>Develop advanced search and recommendation systems</li></ul> |
-
-## Enterprise considerations
-
-ModelsLab is built with enterprise-grade security, reliability, and scalability to meet the demands of large-scale deployments and mission-critical applications.
-
-| Feature | Description |
-| ------- | ----------- |
-| **Secure** | <ul><li>Enterprise-grade security and data handling with industry-standard encryption</li><li>SOC 2 Type II compliance and GDPR-ready data processing</li><li>Secure API endpoints with authentication and rate limiting</li><li>Private deployment options for sensitive workloads</li></ul> |
-| **Scalable** | <ul><li>High-throughput API infrastructure capable of handling millions of requests</li><li>Auto-scaling capabilities to meet demand spikes</li><li>Global CDN integration for fast content delivery</li><li>Batch processing support for large-scale operations</li></ul> |
-| **Reliable** | <ul><li>99.9% uptime SLA with redundant infrastructure</li><li>Advanced error handling and retry mechanisms</li><li>Real-time status monitoring and alerting</li><li>Comprehensive logging and analytics</li></ul> |
-| **Cost-Effective** | <ul><li>Flexible pricing models including pay-per-use and subscription plans</li><li>Optimized model performance for cost efficiency</li><li>Transparent pricing with no hidden fees</li><li>Volume discounts for enterprise customers</li></ul> |
-| **Developer-Friendly** | <ul><li>Comprehensive API documentation and SDKs for multiple programming languages</li><li>Interactive API playground for testing and experimentation</li><li>Webhook support for asynchronous processing</li><li>Extensive code examples and tutorials</li></ul> |
-| **Advanced Features** | <ul><li>Custom model fine-tuning capabilities</li><li>Advanced parameter control for precise output customization</li><li>Content filtering and safety controls</li><li>Analytics and usage insights dashboard</li></ul> |
-
-## Getting started with ModelsLab
+ModelsLab is a Developer-first [AI Platform](https://modelslab.com) for image generation, video creation, and multimodal AI applications. 
+Built for developers and [Enterprise](https://modelslab.com/enterprise), ModelsLab provides state-of-the-art generative AI [Models](https://modelslab.com/models).
 
 Ready to start building? Here are your next steps:
 
 ### Quick Start Options
 
 <CardGroup cols={2}>
-  <Card title="API Documentation" icon="code" href="/api-reference/overview">
-    Explore comprehensive API documentation with examples and tutorials
+  <Card title="Developer Guide" icon="code" href="index">
+    Tutorials to integrate ModelsLab APIs into your applications
   </Card>
   <Card title="Interactive Playground" icon="play" href="https://modelslab.com/playground">
     Test models and experiment with parameters in our web interface
   </Card>
-  <Card title="SDK Downloads" icon="download" href="/resources/sdk-downloads">
+  <Card title="SDK Downloads" icon="download" href="/sdk/python">
     Get started quickly with our official SDKs for popular languages
-  </Card>
-  <Card title="Use Cases & Examples" icon="lightbulb" href="/use-cases">
-    Discover real-world applications and implementation examples
   </Card>
 </CardGroup>
 
-### Development Resources
-
-* **[Quickstart Guide](/get_started)** - Make your first API call in minutes
-* **[VideoFusion API](/video-api/overview)** - Complete video generation capabilities
-* **[Image Generation API](/api-reference/image-generation)** - Text-to-image and image editing
-* **[Code Examples](https://github.com/modelslab/examples)** - Working code samples and tutorials
-* **[Community Forum](https://discord.gg/modelslab)** - Connect with other developers and get support
-
 ### Enterprise Solutions
-
-For enterprise customers requiring custom solutions, dedicated support, or private deployments:
-
 <Note>
-Contact our enterprise team at [enterprise@modelslab.com](mailto:enterprise@modelslab.com) to discuss custom pricing, SLAs, and deployment options.
+  For enterprise customers requiring custom solutions, dedicated support, or private deployments:
+  Contact our enterprise team at [support@modelslab.com](mailto:support@modelslab.com) to discuss custom pricing, SLAs, and deployment options.
 </Note>
-
-## Popular integration patterns
-
-### Real-time Applications
-Perfect for interactive applications requiring immediate results:
-```javascript
-// Generate image on-demand
-const response = await modelslab.generateImage({
-  prompt: "A futuristic cityscape at sunset",
-  model: "stable-diffusion-xl",
-  style: "photorealistic"
-});
-```
-
-### Batch Processing
-Ideal for processing large volumes of content:
-```python
-# Process multiple requests efficiently
-batch_requests = [
-  {"prompt": "Product image 1", "style": "commercial"},
-  {"prompt": "Product image 2", "style": "commercial"},
-  {"prompt": "Product image 3", "style": "commercial"}
-]
-results = modelslab.batch_generate(batch_requests)
-```
-
-### Webhook Integration
-For asynchronous processing of long-running tasks:
-```javascript
-// Set up webhook for video generation
-const videoRequest = await modelslab.generateVideo({
-  prompt: "A time-lapse of a flower blooming",
-  webhook_url: "https://yourapp.com/webhooks/video-complete"
-});
-```
 
 Start building the future of AI-powered applications with ModelsLab today!

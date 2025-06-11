@@ -5,7 +5,7 @@
   "colors": {
     "primary": "#3B82F6",
     "light": "#FAF9F6",
-    "dark": "#0051FF"
+    "dark": "#28282B"
   },
   "favicon": "/favicon.png",
   "navigation": {
@@ -43,21 +43,8 @@
             "group": "Using the APIs",
             "pages": [
               "api-reference/overview",
-              {
-                "group": "Forming the request",
-                "pages": [
-                  "api-reference/using-the-api/versions",
-                  "api-reference/using-the-api/rate-limiters",
-                  "api-reference/using-the-api/headers"
-                ]
-              },
-              {
-                "group": "Handling responses",
-                "pages": [
-                  "api-reference/using-the-api/errors",
-                  "api-reference/using-the-api/handling-stop-reasons"
-                ]
-              }
+              "api-reference/using-the-api/rate-limiters",
+              "api-reference/using-the-api/errors"
             ]
           },
           {
@@ -248,6 +235,18 @@
               }
             ]
           },
+          {
+            "group": "3rd-party APIs",
+            "pages": [
+              "api-reference/third-party-apis/video/google-vertex",
+              "api-reference/third-party-apis/video/runway-ml"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Enterprise API",
+        "groups": [
           {
             "group": "Enterprise APIs",
             "pages": [
@@ -500,13 +499,6 @@
                   "api-reference/apis/enterprise-api/voice-cloning/voice-upload"
                 ]
               }
-            ]
-          },
-          {
-            "group": "3rd-party APIs",
-            "pages": [
-              "api-reference/third-party-apis/video/google-vertex",
-              "api-reference/third-party-apis/video/runway-ml"
             ]
           }
         ]

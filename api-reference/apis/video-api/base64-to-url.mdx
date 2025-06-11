@@ -5,14 +5,14 @@ description: "Upload a video in base64 format and retrieve it as a URL."
 ---
 
 ## Request
-```
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
+
+```curl curl
 --request POST 'https://modelslab.com/api/v6/video/base64_to_url' \
 ```
 
-Make a `POST` request to [https://modelslab.com/api/v6/video/base64\_to\_url](https://modelslab.com/api/v6/video/base64_to_url) endpoint and pass the required parameters as a request body.
-
 ## Body 
-```json
+```json json
 {   
     "key":"",
     "init_obj":"data:video/mp4;base64,<base64>",

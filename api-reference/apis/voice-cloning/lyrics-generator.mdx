@@ -1,85 +1,23 @@
 ---
-title: "Lyrics Generator Endpoint"
+title: "Lyrics Generator"
 openapi: 'POST /voice/lyrics_generator'
+description: 'The Lyrics Generator endpoint allows you to generate song lyrics from a given prompt.'
 ---
 
-## Overview[​](#overview "Direct link to Overview")
+## Request
 
-The Lyrics Generator endpoint enables you to generate lyrics by providing a prompt
+Make a `POST` request to the endpoint below and pass the required parameters in the request body.
 
-***
-
-## Request[​](#request "Direct link to Request")
-
-```
+```curl curl
 --request POST 'https://modelslab.com/api/v6/voice/lyrics_generator' \
 ```
 
-Make a `POST` request to [https://modelslab.com/api/v6/voice/lyrics\_generator](https://modelslab.com/api/v6/voice/lyrics_generator) endpoint and pass the required parameters as a request body.
-
-## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
-
-| Parameter     | Description                                                                         | Values         |
-| ------------- | ----------------------------------------------------------------------------------- | -------------- |
-| **key**       | The API key used for authenticating your request.                                   | String         |
-| **prompt**    | prompt with which lyrics should be generated.                                       | Text           |
-| **webhook**   | A URL where the API will send a POST request once the audio generation is complete. | URL            |
-| **track\_id** | An ID returned in the API response, used to identify webhook requests               | Integral value |
-
-***
-
-## Example[​](#example "Direct link to Example")
-
-### Body[​](#body "Direct link to Body")
-
-Body
-
-```
-{    "key": "", "prompt":"tokyo", "webhook": null, "track_id": null}
-```
-
-### Request[​](#request-1 "Direct link to Request")
-
-* JS
-* PHP
-* NODE
-* PYTHON
-* JAVA
-
-```
-var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({  "key": "",  "prompt":"tokyo",  "webhook": null,  "track_id": null});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v6/voice/lyrics_generator", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
-```
-
-```
-<?php$payload = [  "key" => "",  "prompt" => "tokyo",  "webhook" => null,   "track_id" => null ];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v6/voice/lyrics_generator',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
-```
-
-```
-var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v6/voice/lyrics_generator',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key": "",    "prompt":"tokyo",    "webhook": null,    "track_id": null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
-```
-
-```
-import requestsimport jsonurl = "https://modelslab.com/api/v6/voice/lyrics_generator"payload = json.dumps({  "key": "",  "prompt":"tokyo",  "webhook": None,  "track_id": None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
-```
-
-```
-OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\":\"\",\n    \"prompt\":\"tokyo\",\n    \"webhook\":null,\n    \"track_id\": null\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v6/voice/lyrics_generator")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .addHeader("X-API-Key", "{{token}}")  .build();Response response = client.newCall(request).execute();
-```
-
-### Response[​](#response "Direct link to Response")
-
-* Success
-* Processing
-* Error
-
-```
-{    "status": "success",    "generationTime": 1.904285192489624,    "id": 334166,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/a3f8a04c-26c1-485c-b3b5-5c6244a0d395.txt"    ],    "proxy_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/a3f8a04c-26c1-485c-b3b5-5c6244a0d395.txt"    ],    "meta": {        "prompt": "tokyo",        "webhook": null,        "id": null,        "filename": "a3f8a04c-26c1-485c-b3b5-5c6244a0d395",        "temp": "no",        "track_id": null,        "base64": "no"    }}
-```
-
-```
-{    "status": "processing",    "tip": "Your lyrics generation is processing in background, you can get the result using fetch API",    "eta": 100,    "message": "Try to fetch request after seconds estimated",    "fetch_result": "https://modelslab.com/api/v6/voice/fetch/334166",    "id": 334166,    "output": [],    "future_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/a3f8a04c-26c1-485c-b3b5-5c6244a0d395.txt"    ],    "proxy_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/a3f8a04c-26c1-485c-b3b5-5c6244a0d395.txt"    ],    "meta": {        "prompt": "tokyo",        "webhook": null,        "id": null,        "filename": "a3f8a04c-26c1-485c-b3b5-5c6244a0d395",        "temp": "no",        "track_id": null,        "base64": "no"    }}
-```
-
-```
-{    "status": "error",    "message": "Error message"}
+### Body
+```json json
+{
+  "key": "your-api-key",
+  "prompt": "tokyo",
+  "webhook": null,
+  "track_id": null
+}
 ```

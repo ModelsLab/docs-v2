@@ -1,115 +1,24 @@
 ---
-title: "Voice to Voice Endpoint"
+title: "Voice changer Endpoint"
 openapi: 'POST /voice/voice_to_voice'
+description: 'Change voice from one to another.'
 ---
 
-## Overview[​](#overview "Direct link to Overview")
-
-The Voice-to-Voice endpoint lets you clone a voice from a target audio file.
-
-[Open in Playground 🚀](https://audiogen.modelslab.com/voice-changer)
-
-## **Sample Generation**[​](#sample-generation "Direct link to sample-generation")
-
-***
-
-### **Example 1**[​](#example-1 "Direct link to example-1")
-
-#### **Original Sound Clip**[​](#original-sound-clip "Direct link to original-sound-clip")
-
-[Your browser does not support the audio tag.](https://assets.modelslab.com/tmp/byPtHWIEIjxjWVpUTi2lZxqQ34VbmC-metaYXVkaW8ud2F2-.wav)
-
-***
-
-#### **Target Sound Clip**[​](#target-sound-clip "Direct link to target-sound-clip")
-
-[Your browser does not support the audio tag.](https://tawk.link/6332cd5154f06e12d8971855/vc/66e97adfa2bc5fe2b6904348/v/9edabb242c4cef274c899d4c0e8747359a1f6c12/pt-sample.wav)
-
-***
-
-### **Generated Cloned Voice**[​](#generated-cloned-voice "Direct link to generated-cloned-voice")
-
-[Your browser does not support the audio tag.](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/26efa6db-2338-47ed-b3c3-8917b971bea4.wav)
-
-***
-
-## Request[​](#request "Direct link to Request")
-
-```
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
+```curl curl
 --request POST 'https://modelslab.com/api/v6/voice/voice_to_voice' \
 ```
 
-## Watch the Voice to Voice API Demo video to see it in action Postman.[​](#watch-the-voice-to-voice-api-demo-video-to-see-it-in-action-postman "Direct link to Watch the Voice to Voice API Demo video to see it in action Postman.")
-
-Make a `POST` request to [https://modelslab.com/api/v6/voice/voice\_to\_voice](https://modelslab.com/api/v6/voice/voice_to_voice) endpoint and pass the required parameters as a request body.
-
-## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
-
-| Parameter         | Description                                                                                                                                        | Values                     |
-| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
-| **key**           | Your API Key used for request authorization                                                                                                        | String                     |
-| **init\_audio**   | Source utterances. Must be a valid URL or base64 data for a wav/mp3 file. Maximum length: 30 seconds.                                              | MP3/WAV URL or base64 data |
-| **target\_audio** | Target voice that replicates the original utterances. Must be a valid URL or base64 data for a wav/mp3 file. Maximum length: 30 seconds.           | MP3/WAV URL or base64 data |
-| **stream**        | Optional. Use this if you want to stream response. Response is returned in base64 as `chunk_output`                                                | Boolean `true` or `false`  |
-| **base64**        | Whether the input sound clip is in base64 format. Defaults to false.                                                                               | TRUE or FALSE              |
-| **temp**          | Specifies if temporary links should be used valid for 24 hours. This can help if access to certain storage sites is blocked. Defaults to "false" . | TRUE or FALSE              |
-| **webhook**       | URL to receive a POST API call once the audio generation is complete.                                                                              | URL                        |
-| **track\_id**     | ID returned in the response for the webhook API call, used to identify the webhook request.                                                        | Integral value             |
-
-[Open in Playground 🚀](https://audiogen.modelslab.com/voice-changer)
-
-## Example[​](#example "Direct link to Example")
-
-### Body[​](#body "Direct link to Body")
-
-Body
-
-```
-{    "key":"",    "init_audio":"https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",    "target_audio":"https://assets.modelslab.com/tmp/gEJ3RgkrWumjCJpb8hHYD3OsID7ET9-metaSGlyZV92b2ljZV9hY3RvcnNfYW5kX3ZvaWNlX292ZXJfc2VydmljZXNfLV9CdW5ueV9TdHVkaW9fMiAoMSktW0F1ZGlvVHJpbW1lci5jb21dLm1wMw==-.mp3",    "temp":false,    "base64":false,    "webhook":null,    "track_id":null}
-```
-
-### Request[​](#request-1 "Direct link to Request")
-
-* JS
-* PHP
-* NODE
-* PYTHON
-* JAVA
-
-```
-var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({    "key":"",    "init_audio":"https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",    "target_audio":"https://assets.modelslab.com/tmp/gEJ3RgkrWumjCJpb8hHYD3OsID7ET9-metaSGlyZV92b2ljZV9hY3RvcnNfYW5kX3ZvaWNlX292ZXJfc2VydmljZXNfLV9CdW5ueV9TdHVkaW9fMiAoMSktW0F1ZGlvVHJpbW1lci5jb21dLm1wMw==-.mp3",    "temp":false,    "base64":false,    "webhook":null,    "track_id":null});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v6/voice/voice_to_voice", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
-```
-
-```
-<?php$payload = [   "key" => "",    "init_audio" => "https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",    "target_audio" => "https://assets.modelslab.com/tmp/gEJ3RgkrWumjCJpb8hHYD3OsID7ET9-metaSGlyZV92b2ljZV9hY3RvcnNfYW5kX3ZvaWNlX292ZXJfc2VydmljZXNfLV9CdW5ueV9TdHVkaW9fMiAoMSktW0F1ZGlvVHJpbW1lci5jb21dLm1wMw==-.mp3",    "temp" => false,    "base64" => false,    "webhook" => null,    "track_id" => null];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v6/voice/voice_to_voice',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
-```
-
-```
-var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v6/voice/voice_to_voice',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({     "key":"",    "init_audio":"https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",    "target_audio":"https://assets.modelslab.com/tmp/gEJ3RgkrWumjCJpb8hHYD3OsID7ET9-metaSGlyZV92b2ljZV9hY3RvcnNfYW5kX3ZvaWNlX292ZXJfc2VydmljZXNfLV9CdW5ueV9TdHVkaW9fMiAoMSktW0F1ZGlvVHJpbW1lci5jb21dLm1wMw==-.mp3",    "temp":false,    "base64":false,    "webhook":null,    "track_id":null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
-```
-
-```
-import requestsimport jsonurl = "https://modelslab.com/api/v6/voice/voice_to_voice"payload = json.dumps({   "key":"",    "init_audio":"https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",    "target_audio":"https://assets.modelslab.com/tmp/gEJ3RgkrWumjCJpb8hHYD3OsID7ET9-metaSGlyZV92b2ljZV9hY3RvcnNfYW5kX3ZvaWNlX292ZXJfc2VydmljZXNfLV9CdW5ueV9TdHVkaW9fMiAoMSktW0F1ZGlvVHJpbW1lci5jb21dLm1wMw==-.mp3",    "temp":False,    "base64":False,    "webhook":None,    "track_id":None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
-```
-
-```
-OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\":\"\",\n    \"init_audio\":\"https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav\",\n    \"target_audio\":\"https://assets.modelslab.com/tmp/gEJ3RgkrWumjCJpb8hHYD3OsID7ET9-metaSGlyZV92b2ljZV9hY3RvcnNfYW5kX3ZvaWNlX292ZXJfc2VydmljZXNfLV9CdW5ueV9TdHVkaW9fMiAoMSktW0F1ZGlvVHJpbW1lci5jb21dLm1wMw==-.mp3\",\n    \"temp\":false,\n    \"base64\":false,\n    \"webhook\":null,\n    \"track_id\":null\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v6/voice/voice_to_voice")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
-```
-
-### Response[​](#response "Direct link to Response")
-
-* Success
-* Processing
-* Error
-
-```
-{    "status": "success",    "generationTime": 0.24047088623046875,    "id": 1248951,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/45111c08-bc20-4c24-ae1b-9e20a02f75c6.wav"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/generations/45111c08-bc20-4c24-ae1b-9e20a02f75c6.wav"    ],    "audio_time": 30,    "meta": {        "base64": "no",        "filename": "45111c08-bc20-4c24-ae1b-9e20a02f75c6.wav",        "id": "1248951",        "original_sound_clip": "https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",        "target_sound_clip": "https://assets.modelslab.com/tmp/gEJ3RgkrWumjCJpb8hHYD3OsID7ET9-metaSGlyZV92b2ljZV9hY3RvcnNfYW5kX3ZvaWNlX292ZXJfc2VydmljZXNfLV9CdW5ueV9TdHVkaW9fMiAoMSktW0F1ZGlvVHJpbW1lci5jb21dLm1wMw==-.mp3",        "temp": "no",        "track_id": null,        "webhook": null    }}
-```
-
-```
-{    "status": "processing",    "tip": "Your audio is processing in background, you can get this image using fetch API",    "eta": 35,    "message": "Try to fetch request after seconds estimated",    "fetch_result": "https://modelslab.com/api/v6/voice/fetch/1248951",    "id": 1248951,    "output": [],    "future_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/45111c08-bc20-4c24-ae1b-9e20a02f75c6.wav"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/generations/45111c08-bc20-4c24-ae1b-9e20a02f75c6.wav"    ],    "audio_time": 30,    "meta": {        "base64": "no",        "filename": "45111c08-bc20-4c24-ae1b-9e20a02f75c6.wav",        "id": "1248951",        "original_sound_clip": "https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",        "target_sound_clip": "https://assets.modelslab.com/tmp/gEJ3RgkrWumjCJpb8hHYD3OsID7ET9-metaSGlyZV92b2ljZV9hY3RvcnNfYW5kX3ZvaWNlX292ZXJfc2VydmljZXNfLV9CdW5ueV9TdHVkaW9fMiAoMSktW0F1ZGlvVHJpbW1lci5jb21dLm1wMw==-.mp3",        "temp": "no",        "track_id": null,        "webhook": null    }}
-```
-
-```
-{    "status": "error",    "message": "Error message"}
+## Body
+```json json
+{    
+    "key":"",    
+    "init_audio":"https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",    
+    "target_audio":"https://assets.modelslab.com/tmp/gEJ3RgkrWumjCJpb8hHYD3OsID7ET9-metaSGlyZV92b2ljZV9hY3RvcnNfYW5kX3ZvaWNlX292ZXJfc2VydmljZXNfLV9CdW5ueV9TdHVkaW9fMiAoMSktW0F1ZGlvVHJpbW1lci5jb21dLm1wMw==-.mp3",    
+    "temp":false,    
+    "base64":false,    
+    "webhook":null,    
+    "track_id":null
+}
 ```

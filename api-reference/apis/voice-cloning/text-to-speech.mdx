@@ -1,77 +1,38 @@
 ---
 title: "Text to Speech Endpoint"
 openapi: 'POST /voice/text_to_speech'
+description: 'Generate Speech by providing a text input along with [pre trained voices](https://modelslab.com/trained-voice-lists).'
 ---
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
 
-## Overview[​](#overview "Direct link to Overview")
-
-The Text-to-Speech endpoint enables you to generate audio by providing a text input along with [pre trained voices](https://modelslab.com/trained-voice-lists).
-
-## **Sample Generation**[​](#sample-generation "Direct link to sample-generation")
-
-***
-
-### **Example 1**[​](#example-1 "Direct link to example-1")
-
-#### **Prompt**[​](#prompt "Direct link to prompt")
-
-> In the ancient land of Eldoria, where the skies were painted with shades of mystic hues and the forests whispered secrets of old, there existed a dragon named Zephyros. Unlike the fearsome tales of dragons that plagued human hearts with terror, Zephyros was a creature of wonder and wisdom, revered by all who knew of his existence.
-
-***
-
-### **Generated Output**[​](#generated-output "Direct link to generated-output")
-
-[Your browser does not support the audio tag.](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/MV7poGFhidet1Q0Ib8DMJ4WIeNc8QP-metaYXVkaW8oNCkoMSkud2F2-.wav)
-
-***
-
-## Request[​](#request "Direct link to Request")
-
-```
+```curl curl
 --request POST 'https://modelslab.com/api/v6/voice/text_to_speech' \
 ```
 
-Make a `POST` request to [https://modelslab.com/api/v6/voice/text\_to\_speech](https://modelslab.com/api/v6/voice/text_to_speech) endpoint and pass the required parameters as a request body.
+## Emotion Support
 
-## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
-
-| Parameter     | Description                                                                                                                                        | Values                                                                                                                                 |
-| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| **key**       | The API key used for authenticating your request.                                                                                                  | String                                                                                                                                 |
-| **prompt**    | The text prompt that describes the audio to be generated.                                                                                          | Text                                                                                                                                   |
-| **voice\_id** | The ID of trained voice only. You can get the list of trained voices [here](https://modelslab.com/trained-voice-lists).                            | `string` trained voice ID                                                                                                              |
-| **language**  | The language for the voice. Defaults to `english` if not specified.                                                                                | `american english`, `british english`, `spanish`, `japanese`, `mandarin chinese`, `french`, `brazilian portuguese`, `hindi`, `italian` |
-| **speed**     | playback speed of the generated audio. `Defaults` to `1.0`.                                                                                        | Integral value                                                                                                                         |
-| **emotion**   | Whether to enable emotion support. Currently only available in English. Defaults to `false`.                                                       | TRUE or FALSE                                                                                                                          |
-| **temp**      | Specifies if temporary links should be used valid for 24 hours. This can help if access to certain storage sites is blocked. Defaults to `false` . | TRUE or FALSE                                                                                                                          |
-| **webhook**   | A URL where the API will send a POST request once the audio generation is complete.                                                                | URL                                                                                                                                    |
-| **track\_id** | An ID returned in the API response, used to identify webhook requests                                                                              | Integral value                                                                                                                         |
-
-***
-
-## Emotion Support[​](#emotion-support "Direct link to Emotion Support")
-
+<Note>
 Emotion support is currently only available in English (`en`) language. When emotion is enabled, you can use special tags in your text prompt to add expressive elements to the generated speech.
+</Note>
 
-### Available Emotion-Supported Voices[​](#available-emotion-supported-voices "Direct link to Available Emotion-Supported Voices")
-
-#### Female Voices[​](#female-voices "Direct link to Female Voices")
-
+### Available Emotion-Supported Voices
+#### Female Voices
 * Tara
 * Leah
 * Jess
 * Mia
 * Zoe
 
-#### Male Voices[​](#male-voices "Direct link to Male Voices")
-
+#### Male Voices
 * Leo
 * Dan
 * Zac
 
-### Supported Emotion Tags[​](#supported-emotion-tags "Direct link to Supported Emotion Tags")
-
+#### Supported Emotion Tags
+<Tip>
 The following emotion tags can be added to speech prompts to enhance expressiveness:
+</Tip>
 
 | Tag         | Description                                          |
 | ----------- | ---------------------------------------------------- |
@@ -84,60 +45,15 @@ The following emotion tags can be added to speech prompts to enhance expressiven
 | `<yawn>`    | Simulates yawning to express boredom or tiredness    |
 | `<gasp>`    | Expresses shock or surprise                          |
 
-***
 
-## Example[​](#example "Direct link to Example")
-
-### Body[​](#body "Direct link to Body")
-
-Body
-
-```
-{    "key": "","prompt":"Build next-generation AI products without worrying about GPUs","language":"american english","voice_id":"madison","speed":1,"emotion":false}
-```
-
-### Request[​](#request-1 "Direct link to Request")
-
-* JS
-* PHP
-* NODE
-* PYTHON
-* JAVA
-
-```
-var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({  "key": "",  "prompt":"Build next-generation AI products without worrying about GPUs",    "language":"american english",    "voice_id":"madison",    "speed":1,    "emotion":false});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v6/voice/text_to_speech", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
-```
-
-```
-<?php$payload = [  "key" => "","prompt" =>"Build next-generation AI products without worrying about GPUs","language" => "american english","voice_id" =>"madison","speed" => 1,"emotion" =>false ];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v6/voice/text_to_speech',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
-```
-
-```
-var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v6/voice/text_to_speech',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key": "",   "prompt":"Build next-generation AI products without worrying about GPUs",    "language":"american english",    "voice_id":"madison",    "speed":1,    "emotion":false  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
-```
-
-```
-import requestsimport jsonurl = "https://modelslab.com/api/v6/voice/text_to_speech"payload = json.dumps({  "key": "",    "prompt":"Build next-generation AI products without worrying about GPUs",    "language":"american english",    "voice_id":"madison",    "speed":1,    "emotion":false})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
-```
-
-```
-OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\":\"\",\n    \"prompt\":\"Build next-generation AI products without worrying about GPUs\",\n    \"language\":\"american english\",\n    \"voice_id\":\"madison\",\n    \"speed\":1,\n    \"emotion\":false\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v6/voice/text_to_speech")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .addHeader("X-API-Key", "{{token}}")  .build();Response response = client.newCall(request).execute();
-```
-
-### Response[​](#response "Direct link to Response")
-
-* Success
-* Processing
-* Error
-
-```
-{    "status": "success",    "generationTime": 1.904285192489624,    "id": 334166,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/b2dff60e-4636-4178-9a72-04a10a309185.wav"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/generations/b2dff60e-4636-4178-9a72-04a10a309185.wav"    ],    "meta": {        "base64": "no",        "emotion": "Neutral",        "filename": "b2dff60e-4636-4178-9a72-04a10a309185.wav",        "input_sound_clip": [            "tmp/0-b2dff60e-4636-4178-9a72-04a10a309185.wav"        ],        "input_text": "Narrative voices capable of pronouncing terminologies & acronyms in training and ai learning materials.",        "language": "english",        "speed": 1,        "temp": "no"    }}
-```
-
-```
-{    "status": "processing",    "tip": "Your audio is processing in background, you can get this audio using fetch API",    "eta": 100,    "message": "Try to fetch request after seconds estimated",    "fetch_result": "https://modelslab.com/api/v6/voice/fetch/334166",    "id": 334166,    "output": [],    "future_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/b2dff60e-4636-4178-9a72-04a10a309185.wav"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/generations/b2dff60e-4636-4178-9a72-04a10a309185.wav"    ],    "meta": {        "base64": "no",        "emotion": "Neutral",        "filename": "b2dff60e-4636-4178-9a72-04a10a309185.wav",        "input_sound_clip": [            "tmp/0-b2dff60e-4636-4178-9a72-04a10a309185.wav"        ],        "input_text": "Narrative voices capable of pronouncing terminologies & acronyms in training and ai learning materials.",        "language": "english",        "speed": 1,        "temp": "no"    }}
-```
-
-```
-{    "status": "error",    "message": "Error message"}
+## Body
+```json json
+{    
+    "key": "",
+    "prompt":"Build next-generation AI products without worrying about GPUs",
+    "language":"american english",
+    "voice_id":"madison",
+    "speed":1,
+    "emotion":false
+}
 ```

@@ -4,27 +4,25 @@ openapi: 'POST /video/text2video'
 description: "Generate videos from text descriptions using the Text to Video API."
 ---
 
-<a href='https://videofusion.playground.modelslab.com/text-to-video'>
+<a className='custom-button' href='https://videofusion.playground.modelslab.com/text-to-video'>
 <button className='custom-button'>
  Open in Playground
 </button>
 </a>
 
-### Text to Video
-Generate videos from text descriptions.
-
 ![Text to Video Example](/images/video-api/assets/images/Text-to-video-059ae4e254324cdd6b271d791167cb35.jpg)
 
 ## Request
 
-```
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+
+```curl curl
 --request POST 'https://modelslab.com/api/v6/video/text2video' \
 ```
 
-Make a `POST` request to [https://modelslab.com/api/v6/video/text2video](https://modelslab.com/api/v6/video/text2video) endpoint and pass the required parameters in the request body.
 
 ## Body
-```json
+```json json
 {
     "key": "",
     "model_id": "cogvideox",

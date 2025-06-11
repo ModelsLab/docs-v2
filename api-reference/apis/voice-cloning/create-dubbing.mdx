@@ -1,92 +1,29 @@
 ---
 title: "Create Dubbing Endpoint"
 openapi: 'POST /voice/create_dubbing'
+description: 'The endpoint enables automatic dubbing of videos from one language to another'
 ---
 
-## Overview[​](#overview "Direct link to Overview")
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
 
-The endpoint enables automatic voice translation of videos from one language to another. It accepts a video file link and various parameters to control the dubbing process.
-
-## Request[​](#request "Direct link to Request")
-
-```
+```curl curl
 --request POST 'https://modelslab.com/api/v6/voice/create_dubbing' \
 ```
 
-Make a `POST` request to [https://modelslab.com/api/v6/voice/create\_dubbing](https://modelslab.com/api/v6/voice/create_dubbing) endpoint and pass the required parameters as a request body.
+## Body
 
-## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
+```json json
+{
+  "key": "",
+  "init_video": "https://cdn.discordapp.com/attachments/1233159947869753381/1349236625896378441/Untitled_video_-_Made_with_Clipchamp_3_1.mp4?ex=6801d407&is=68008287&hm=a4bca8d191613441a10251159356f55b9c9c5b2dbebca85fc0e866f1ba797cb8",
+  "source_lang": "hi",
+  "output_lang": "en-us",
+  "speed": 1.0,
+  "file_prefix": "spanish_dub",
+  "base64": false,
+  "webhook": null,
+  "track_id": null
+}
 
-| Parameter        | Description                                                                                                                                                                                                                                                                                                                                                 | Values               |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| **key**          | The API key used for authenticating your request.                                                                                                                                                                                                                                                                                                           | String               |
-| **init\_video**  | URL to the video file to be dubbed                                                                                                                                                                                                                                                                                                                          | URL                  |
-| **source\_lang** | Source language code of the video, default is `en`. `af`,`ar`,`hy`,`az`,`be`,`bs`,`bg`,`ca`,`zh-CN`,`zh-TW`,`hr`,`cs`,`da`,`nl`,`en`,`et`,`fi`,`fr`,`gl`,`ka`,`de`,`el`,`he`,`hi`,`hu`,`is`,`id`,`it`,`ja`,`kn`,`kk`,`ko`,`lv`,`lt`,`mk`,`ms`,`ml`,`mr`,`ne`,`no`,`fa`,`pl`,`pt`,`ro`,`ru`,`sr`,`sk`,`sl`,`es`,`sw`,`sv`,`ta`,`te`,`th`,`tr`,`uk`,`ur`,`vi` | string               |
-| **output\_lang** | Target language code for dubbing `es`, `fr`, `hi`, `it`, `pt-br`, `en-us`, `en-gb`, `ja`, `zh`                                                                                                                                                                                                                                                              | string               |
-| **file\_prefix** | Prefix for the output file name `Defaults` to `10`.                                                                                                                                                                                                                                                                                                         | string/number        |
-| **voice\_id**    | Optional. The ID of trained voice only. You can get the list of trained voices [here](https://modelslab.com/trained-voice-lists).                                                                                                                                                                                                                           | string               |
-| **voice\_model** | Optional. Voice model to use . Default `kokoro`.                                                                                                                                                                                                                                                                                                            | string               |
-| **base64**       | Indicates whether the input audio file is provided in base64 format. Defaults to `false`.                                                                                                                                                                                                                                                                   | TRUE or FALSE        |
-| **seed**         | Random seed for reproducibility (if 0, a random seed is generated)                                                                                                                                                                                                                                                                                          | Int (random number ) |
-| **webhook**      | A URL where the API will send a POST request once the audio generation is complete.                                                                                                                                                                                                                                                                         | URL                  |
-| **track\_id**    | An ID returned in the API response, used to identify webhook requests                                                                                                                                                                                                                                                                                       | Integral value       |
-
-[Open in Playground 🚀](https://audiogen.modelslab.com/)
-
-***
-
-## Example[​](#example "Direct link to Example")
-
-### Body[​](#body "Direct link to Body")
-
-Body
-
-```
-{    "key": "", "init_video": "https://cdn.discordapp.com/attachments/1233159947869753381/1349236625896378441/Untitled_video_-_Made_with_Clipchamp_3_1.mp4?ex=6801d407&is=68008287&hm=a4bca8d191613441a10251159356f55b9c9c5b2dbebca85fc0e866f1ba797cb8&", "source_lang": "hi", "output_lang": "en-us", "speed": 1.0, "file_prefix": "spanish_dub", "base64": false "webhook": null, "track_id": null   }
-```
-
-### Request[​](#request-1 "Direct link to Request")
-
-* JS
-* PHP
-* NODE
-* PYTHON
-* JAVA
-
-```
-var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({ "key": "", "init_video": "https://cdn.discordapp.com/attachments/1233159947869753381/1349236625896378441/Untitled_video_-_Made_with_Clipchamp_3_1.mp4?ex=6801d407&is=68008287&hm=a4bca8d191613441a10251159356f55b9c9c5b2dbebca85fc0e866f1ba797cb8&", "source_lang": "hi", "output_lang": "en-us", "speed": 1.0, "file_prefix": "spanish_dub", "base64": false "webhook": null, "track_id": null });var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v6/voice/create_dubbing", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
-```
-
-```
-<?php$payload = [ "key" => "", "init_video" => "https://cdn.discordapp.com/attachments/1233159947869753381/1349236625896378441/Untitled_video_-_Made_with_Clipchamp_3_1.mp4?ex=6801d407&is=68008287&hm=a4bca8d191613441a10251159356f55b9c9c5b2dbebca85fc0e866f1ba797cb8&", "source_lang" => "hi", "output_lang" => "en-us", "speed" => 1.0, "file_prefix" => "spanish_dub", "base64" => false "webhook" => null, "track_id" => null ];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v6/voice/create_dubbing',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
-```
-
-```
-var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v6/voice/create_dubbing',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({     "key": "",      "init_video": "https://cdn.discordapp.com/attachments/1233159947869753381/1349236625896378441/Untitled_video_-_Made_with_Clipchamp_3_1.mp4?ex=6801d407&is=68008287&hm=a4bca8d191613441a10251159356f55b9c9c5b2dbebca85fc0e866f1ba797cb8&",      "source_lang": "hi",      "output_lang": "en-us",      "speed": 1.0,      "file_prefix": "spanish_dub",      "base64": false      "webhook": null,      "track_id": null   })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
-```
-
-```
-import requestsimport jsonurl = "https://modelslab.com/api/v6/voice/create_dubbing"payload = json.dumps({ "key": "", "init_video": "https://cdn.discordapp.com/attachments/1233159947869753381/1349236625896378441/Untitled_video_-_Made_with_Clipchamp_3_1.mp4?ex=6801d407&is=68008287&hm=a4bca8d191613441a10251159356f55b9c9c5b2dbebca85fc0e866f1ba797cb8&", "source_lang": "hi", "output_lang": "en-us", "speed": 1.0, "file_prefix": "spanish_dub", "base64": False "webhook": None, "track_id": None })headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
-```
-
-```
-OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n\"key\":\"\",\n \"init_video\": \"https://cdn.discordapp.com/attachments/1233159947869753381/1349236625896378441/Untitled_video_-_Made_with_Clipchamp_3_1.mp4?ex=6801d407&is=68008287&hm=a4bca8d191613441a10251159356f55b9c9c5b2dbebca85fc0e866f1ba797cb8&\",\n \"source_lang\": \"hi\",\n \"output_lang\": \"en-us\",\n \"speed\": 1.0,\n \"file_prefix\": \"spanish_dub\",\n \"base64\": false\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v6/voice/create_dubbing")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .addHeader("X-API-Key", "{{token}}")  .build();Response response = client.newCall(request).execute();
-```
-
-### Response[​](#response "Direct link to Response")
-
-* Success
-* Processing
-* Error
-
-```
-{    "status": "success",    "generationTime": 1.904285192489624,    "id": 334166,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/audio_generations/dubbed_video_d0c1da80-40a0-4981-84bb-f52a44a560e5_10.mp4"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/audio_generations/dubbed_video_d0c1da80-40a0-4981-84bb-f52a44a560e5_10.mp4"    ],    "meta": {        "uuid": "d0c1da80-40a0-4981-84bb-f52a44a560e5",        "video_link": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/ykl9xK5huFozCS1lDIhlqSbzhTgsuw-metaRnVsbCBzcGVlY2hfIFB1dGluIGRlZmlhbnQgaW4gYWRkcmVzcyB0byBuYXRpb24gYWZ0ZXIgYXR0ZW1wdGVkIGFybWVkIHJlYmVsbGlvbi5tcDQ=-.mp4",        "source_lang": "ru",        "output_lang": "en-us",        "speed": "1.2",        "file_prefix": 10,        "is_base64": false    }}
-```
-
-```
-{    "status": "processing",    "tip": "Your audio is processing in background, you can get this audio using fetch API",    "eta": 100,    "message": "Try to fetch request after seconds estimated",    "fetch_result": "https://modelslab.com/api/v6/voice/fetch/271",    "id": 334166,    "output": [],    "future_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/audio_generations/dubbed_video_5e1ddde4-71d3-4a92-a8a3-dd16b1014095_spanish_dub.mp4"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/audio_generations/dubbed_video_5e1ddde4-71d3-4a92-a8a3-dd16b1014095_spanish_dub.mp4"    ],    "audio_time": null,    "meta": {        "uuid": "5e1ddde4-71d3-4a92-a8a3-dd16b1014095",        "video_link": "https://cdn.discordapp.com/attachments/1233159947869753381/1349236625896378441/Untitled_video_-_Made_with_Clipchamp_3_1.mp4?ex=6801d407&is=68008287&hm=a4bca8d191613441a10251159356f55b9c9c5b2dbebca85fc0e866f1ba797cb8&",        "source_lang": "hi",        "output_lang": "en-us",        "speed": "1",        "file_prefix": "spanish_dub",        "voice": "af_heart",        "is_base64": false,        "webhook": null,        "track_id": null,        "id": "271"    }}
-```
-
-```
-{    "status": "error",    "message": "Error message"}
 ```
