@@ -1,67 +1,19 @@
 ---
 title: "NSFW Prompt Check"
 openapi: 'POST /check_nsfw_cp'
+description: 'This endpoint is useful to check if a prompt has CP or NSFW content.'
 ---
 
-## Overview[​](#overview "Direct link to Overview")
-
-This endpoint is useful to check if a prompt has cp or nsfw content
-
-## Request[​](#request "Direct link to Request")
-
-```
+## Request
+Send a `POST` request to below endpoint to check if an image is nsfw or not.
+```curl curl
 --request POST 'https://modelslab.com/api/check_nsfw_cp' \
 ```
 
-Send a `POST` request to [https://modelslab.com/api/check\_nsfw\_cp](https://modelslab.com/api/check_nsfw_cp) endpoint to check if an image is nsfw or not.
-
-## Attributes[​](#attributes "Direct link to Attributes")
-
-| Parameter  | Description                                             |
-| :--------- | :------------------------------------------------------ |
-| **key**    | Your enterprise API Key used for request authorization. |
-| **prompt** | The prompt you want to check.                           |
-
-## Example[​](#example "Direct link to Example")
-
-### Body[​](#body "Direct link to Body")
-
-Body Raw
-
-```
-{  "key": "",  "prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner, nude)) , blue eyes, shaved side haircut, hyper detail, cinematic lighting, magic neon, dark red city, Canon EOS R3, nikon, f/1.4, ISO 200, 1/160s, 8K, RAW, unedited, symmetrical balance, in-frame, 8K"}
-```
-
-### Request[​](#request-1 "Direct link to Request")
-
-* JS
-* PHP
-* NODE
-* PYTHON
-* JAVA
-
-```
-var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({ "key": "", "init_image": "http://your-image-url.com"});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/check_nsfw_cp", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error))
-```
-
-```
-<?php$payload = [  "key" => "",  "prompt" => "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner, nude)) , blue eyes, shaved side haircut, hyper detail, cinematic lighting, magic neon, dark red city, Canon EOS R3, nikon, f/1.4, ISO 200, 1/160s, 8K, RAW, unedited, symmetrical balance, in-frame, 8K"];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/check_nsfw_cp',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS =>  json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
-```
-
-```
-var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/check_nsfw_cp',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key": "",  "prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner, nude)) , blue eyes, shaved side haircut, hyper detail, cinematic lighting, magic neon, dark red city, Canon EOS R3, nikon, f/1.4, ISO 200, 1/160s, 8K, RAW, unedited, symmetrical balance, in-frame, 8K"  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
-```
-
-```
-import requestsimport jsonurl = "https://modelslab.com/api/check_nsfw_cp"payload = json.dumps({ "key": "",  "prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner, nude)) , blue eyes, shaved side haircut, hyper detail, cinematic lighting, magic neon, dark red city, Canon EOS R3, nikon, f/1.4, ISO 200, 1/160s, 8K, RAW, unedited, symmetrical balance, in-frame, 8K"})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
-```
-
-```
-OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n  \"key\": \"\",\n  \"prompt\": \"ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner, nude)) , blue eyes, shaved side haircut, hyper detail, cinematic lighting, magic neon, dark red city, Canon EOS R3, nikon, f/1.4, ISO 200, 1/160s, 8K, RAW, unedited, symmetrical balance, in-frame, 8K\"\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/check_nsfw_cp")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
-```
-
-### Response[​](#response "Direct link to Response")
-
-```
-{    "status": "success",    "is_cp": false,    "is_nsfw": true,    "original_prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner, nude)) , blue eyes, shaved side haircut, hyper detail, cinematic lighting, magic neon, dark red city, Canon EOS R3, nikon, f/1.4, ISO 200, 1/160s, 8K, RAW, unedited, symmetrical balance, in-frame, 8K",    "filtered_prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner, nude)) , blue eyes, shaved side haircut, hyper detail, cinematic lighting, magic neon, dark red city, Canon EOS R3, nikon, f/1.4, ISO 200, 1/160s, 8K, RAW, unedited, symmetrical balance, in-frame, 8K"}
+## Body
+```json json
+{  
+    "key": "",  
+    "prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner, nude)) , blue eyes, shaved side haircut, hyper detail, cinematic lighting, magic neon, dark red city, Canon EOS R3, nikon, f/1.4, ISO 200, 1/160s, 8K, RAW, unedited, symmetrical balance, in-frame, 8K"
+}
 ```
