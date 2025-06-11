@@ -1,43 +1,23 @@
 ---
-title: "Deepfake API"
+title: "Overview"
+description: 'The Deepfake API provides a suite of endpoints to generate interactive videos and images by swapping faces in various configurations.'
 ---
 
-## Overview[​](#overview "Direct link to Overview")
-
-The Deepfake API provides a suite of endpoints to generate interactive videos and images by swapping faces in various configurations.
-
 <Warning>
-  Only Standard and Premium accounts have access to this endpoint.
+  Only Standard and Premium accounts have access to this endpoint. **[Upgrade Here](https://modelslab.com/pricing)**
 </Warning>
-
-* [Swap face in a single image](/deepfake-api/specific-face-swap)
-* [Swap multiple faces in a single image](/deepfake-api/multiple-face-swap)
-* [Swap all detected faces in a single video](/deepfake-api/single-video-swap)
-* [Swap specific face in a video](/deepfake-api/specific-video-swap)
-* [fetch](/deepfake-api/fetch)
-
-## Available Endpoints[​](#available-endpoints "Direct link to Available Endpoints")
-
-### Specific Face Swap[​](#specific-face-swap "Direct link to Specific Face Swap")
-
-Allows swapping faces in a single image.
-
-### Endpoint in Action[​](#endpoint-in-action "Direct link to Endpoint in Action")
-
-![Deepfake endpoint result](\images\deepfake-api\assets\images\Deepfake-8ab9030a469bac051f53d1936f85ae06.webp)
-
-### Multiple Face Swap[​](#multiple-face-swap "Direct link to Multiple Face Swap")
-
-Swaps faces for all detected faces within a single image.
-
-### Single Video Swap[​](#single-video-swap "Direct link to Single Video Swap")
-
-Swaps faces for all detected faces within a single video.
-
-### Specific Video Swap[​](#specific-video-swap "Direct link to Specific Video Swap")
-
-Swaps specific faces in a video based on a reference face.
-
-### Fetch Request[​](#fetch-request "Direct link to Fetch Request")
-
-Retrieve progress for queued or processing requests.
+### Endpoints
+<CardGroup>
+  <Card title="Specific face swap" href="/api-reference/apis/deepfake-api/specific-face-swap">
+    Allows swapping faces in a single image.
+  </Card>
+  <Card title="Multiple face swap" href="/api-reference/apis/deepfake-api/multiple-face-swap">
+    Swaps faces for all detected faces within a single image.
+  </Card>
+  <Card title="Single Video Swap" href="/api-reference/apis/deepfake-api/single-video-swap" >
+    Swaps faces for all detected faces within a single video.
+  </Card>
+  <Card title="Specific Video Swap" href="/api-reference/apis/deepfake-api/specific-video-swap" >
+    Swaps specific faces in a video based on a reference face.
+  </Card>
+</CardGroup>
