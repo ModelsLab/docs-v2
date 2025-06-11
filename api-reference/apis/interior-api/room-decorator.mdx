@@ -1,89 +1,29 @@
 ---
 title: "Room Decorator Endpoint"
 openapi: 'POST /interior/room_decorator'
+description: 'This endpoint helps decorate a room according to the prompt provided.'
 ---
 
-## Overview[​](#overview "Direct link to Overview")
-
-This endpoint helps decorate a room according to the prompt provided.
-
-## Request[​](#request "Direct link to Request")
-
-```
+## Request
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+```curl curl
 --request POST 'https://modelslab.com/api/v6/interior/room_decorator' \
 ```
 
-Make a `POST` request to [https://modelslab.com/api/v6/interior/room\_decorator](https://modelslab.com/api/v6/interior/room_decorator) endpoint and pass the required parameters in the request body.
-
-## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
-
-| Parameter                 | Description                                                                                                                                                                           | Values                                 |
-| :------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------------- |
-| **key**                   | Your API Key used for authenticating your request.                                                                                                                                    | String                                 |
-| **prompt**                | A text prompt describing the content you want in the generated room decor image.                                                                                                      | String                                 |
-| **init\_image**           | A URL to the initial image of the room to base the design on.                                                                                                                         | URL                                    |
-| **negative\_prompt**      | Negative prompts are descriptions of things we don't want in our image. Examples include NSFW content, extra limbs, distorted faces, poor quality, or anything else we want to avoid. | String                                 |
-| **strength**              | The degree to which the prompt influences the initial image. `1.0` corresponds to full destruction of the initial image details.                                                      | float                                  |
-| **base64**                | Specifies whether the response should be returned as a base64 string. Defaults to `false`.                                                                                            | boolean **options**: `true` or `false` |
-| **num\_inference\_steps** | The number of denoising steps. Acceptable values are `21`, `31`, or `41`.                                                                                                             | Integer (21, 31, or 41)                |
-| **guidance\_scale**       | The scale for classifier-free guidance. Minimum is `1`, and maximum is `20`.                                                                                                          | Integer (1 to 20)                      |
-| **temp**                  | Indicates if temporary links should be used, valid for 24 hours. Defaults to `false`.                                                                                                 | boolean **options**: true/false        |
-| **seed**                  | Seed for reproducibility. The same seed generates the same image. Use `null` for a random seed.                                                                                       | Integer or `null`                      |
-| **webhook**               | A URL to receive a POST API call once the image generation is complete.                                                                                                               | URL                                    |
-| **track\_id**             | An ID returned in the API response, used to identify the webhook request.                                                                                                             | Integer value                          |
-
-## Example[​](#example "Direct link to Example")
-
-### Body[​](#body "Direct link to Body")
-
-Body
-
-```
-{  "key":"",  "init_image": "https://upcdn.io/12a1yeE/raw/WhatsApp%20Image%202024-04-04%20at%208.06.42%20AM.jpeg",  "prompt": "luxury badroom, table, red carpet, wodden floor",  "negative_prompt": "bad quality",  "seed": 0,  "guidance_scale": 8,  "strength": 0.99,  "num_inference_steps": 51,  "base64": false,  "temp": false,  "webhook":null,  "track_id": null}
-```
-
-### Request[​](#request-1 "Direct link to Request")
-
-* JS
-* PHP
-* NODE
-* PYTHON
-* JAVA
-
-```
-var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({    "key":"",    "init_image": "https://upcdn.io/12a1yeE/raw/WhatsApp%20Image%202024-04-04%20at%208.06.42%20AM.jpeg",    "prompt": "luxury badroom, table, red carpet, wodden floor",    "negative_prompt": "bad quality",    "seed": 0,    "guidance_scale": 8,    "strength": 0.99,    "num_inference_steps": 51,    "base64": false,    "temp": false,    "webhook":null,    "track_id": null});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v6/interior/room_decorator", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
-```
-
-```
-<?php$payload = [      "key" => "",      "init_image" => "https://upcdn.io/12a1yeE/raw/WhatsApp%20Image%202024-04-04%20at%208.06.42%20AM.jpeg",      "prompt" => "luxury badroom, table, red carpet, wodden floor",      "negative_prompt" => "bad quality",      "seed" => 0,      "guidance_scale" => 8,      "strength" => 0.99,      "num_inference_steps" => 51,      "base64"=> false,      "temp" => false,      "webhook" => null,      "track_id" => null];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v6/interior/room_decorator',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
-```
-
-```
-var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v6/interior/room_decorator',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key":"",    "init_image": "https://upcdn.io/12a1yeE/raw/WhatsApp%20Image%202024-04-04%20at%208.06.42%20AM.jpeg",    "prompt": "luxury badroom, table, red carpet, wodden floor",    "negative_prompt": "bad quality",    "seed": 0,    "guidance_scale": 8,    "strength": 0.99,    "num_inference_steps": 51,    "base64": false,    "temp": false,    "webhook":null,    "track_id": null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
-```
-
-```
-import requestsimport jsonurl = "https://modelslab.com/api/v6/interior/room_decorator"payload = json.dumps({  "key":"",    "init_image": "https://upcdn.io/12a1yeE/raw/WhatsApp%20Image%202024-04-04%20at%208.06.42%20AM.jpeg",    "prompt": "luxury badroom, table, red carpet, wodden floor",    "negative_prompt": "bad quality",    "seed": 0,    "guidance_scale": 8,    "strength": 0.99,    "num_inference_steps": 51,    "base64": false,    "temp": false,    "webhook":None,    "track_id": None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
-```
-
-```
-OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n  \"key\":\"\",\n  \"init_image\": \"https://upcdn.io/12a1yeE/raw/WhatsApp%20Image%202024-04-04%20at%208.06.42%20AM.jpeg\",\n  \"prompt\": \"luxury badroom, table, red carpet, wodden floor\",\n  \"negative_prompt\": \"bad quality\",\n  \"seed\": 0,\n  \"guidance_scale\": 8,\n  \"strength\": 0.99,\n  \"num_inference_steps\": 51,\n  \"base64\": false,\n  \"temp\": false,\n  \"webhook\":null,\n  \"track_id\": null\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v6/interior/room_decorator")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .addHeader("X-API-Key", "{{token}}")  .build();Response response = client.newCall(request).execute();
-```
-
-### Response[​](#response "Direct link to Response")
-
-* Success
-* Processing
-* Error
-
-```
-{    "status": "success",    "generationTime": 10.1,    "id": 278,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/3ffcf7b3-34e2-4fcf-8c61-7b60bf81df37.png"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/generations/3ffcf7b3-34e2-4fcf-8c61-7b60bf81df37.png"    ],    "meta": {        "room_image": "https://upcdn.io/12a1yeE/raw/WhatsApp%20Image%202024-04-04%20at%208.06.42%20AM.jpeg",        "prompt": "luxury badroom, table, red carpet, wodden floor",        "seed": 3750372664,        "guidance_scale": 8,        "strength": 0.99,        "num_inference_steps": 51,        "base64": "no",        "temp": "no",        "specific_object": null,        "watermark": "no",        "scale_down": 6,        "opacity": 0.7,        "padding_right": 10,        "padding_down": 10,        "file_prefix": "3ffcf7b3-34e2-4fcf-8c61-7b60bf81df37",        "outdir": "out"    }}
-```
-
-```
-{    "status": "processing",    "tip": "Your image is processing in background, you can get this image using fetch API",    "eta": 20,    "message": "Try to fetch request after seconds estimated",    "fetch_result": "https://modelslab.com/api/v6/interior/fetch/278",    "id": 278,    "output": [],    "meta": {        "room_image": "https://upcdn.io/12a1yeE/raw/WhatsApp%20Image%202024-04-04%20at%208.06.42%20AM.jpeg",        "prompt": "luxury badroom, table, red carpet, wodden floor",        "seed": 3750372664,        "guidance_scale": 8,        "strength": 0.99,        "num_inference_steps": 51,        "base64": "no",        "temp": "no",        "specific_object": null,        "watermark": "no",        "scale_down": 6,        "opacity": 0.7,        "padding_right": 10,        "padding_down": 10,        "file_prefix": "3ffcf7b3-34e2-4fcf-8c61-7b60bf81df37",        "outdir": "out"    },    "future_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/3ffcf7b3-34e2-4fcf-8c61-7b60bf81df37.png"    ]}
-```
-
-```
-{    "status": "error",    "message": "Error message"}
+## Body
+```json json
+{  
+    "key":"",  
+    "init_image": "https://upcdn.io/12a1yeE/raw/WhatsApp%20Image%202024-04-04%20at%208.06.42%20AM.jpeg",  
+    "prompt": "luxury badroom, table, red carpet, wodden floor",  
+    "negative_prompt": "bad quality",  
+    "seed": 0,  
+    "guidance_scale": 8,  
+    "strength": 0.99,  
+    "num_inference_steps": 51,  
+    "base64": false,  
+    "temp": false,  
+    "webhook":null,  
+    "track_id": null
+}
 ```
