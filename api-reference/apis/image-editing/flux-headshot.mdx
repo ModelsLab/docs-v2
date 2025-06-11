@@ -1,89 +1,30 @@
 ---
 title: "Enterprise: Flux Head Shot Endpoint"
 openapi: 'POST /flux_headshot'
+description: 'This endpoint allows you to generate head shot with flux capabilities.'
 ---
+### Flux Headshot
+![Face gen endpoint result](/images/image-editing/assets/images/Face-Gen-90cdf5a0be5cc4e52b36cfcc87d9fb29.jpg)
 
-## Overview[​](#overview "Direct link to Overview")
-
-This endpoint allows you to generate head shot with flux capabilities
-
-![Face gen endpoint result](\images\image-editing\assets\images\Face-Gen-90cdf5a0be5cc4e52b36cfcc87d9fb29.jpg)
-
-## Request[​](#request "Direct link to Request")
-
-```
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body to the endpoint.
+```curl curl
 --request POST 'https://modelslab.com/api/v6/image_editing/flux_headshot' \
 ```
 
-Make a `POST` request to [https://modelslab.com/api/v6/image\_editing/flux\_headshot](https://modelslab.com/api/v6/image_editing/flux_headshot) endpoint and pass the required parameters as a request body to the endpoint.
-
-## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
-
-| Parameter                 | Description                                                                                                     |
-| :------------------------ | :-------------------------------------------------------------------------------------------------------------- |
-| **key**                   | Required. Your API Key used for request authorization                                                           |
-| **prompt**                | Required. Text prompt with description of the things you want in the image to be generated.                     |
-| **face\_image**           | Required. Link or valid base64 string image. This is the face you want your generations to resemble.            |
-| **width**                 | Width of your generated image. Max dimension: 1024 x 1024                                                       |
-| **height**                | Height of your generated image. Max dimension: 1024 x 1024                                                      |
-| **num\_inference\_steps** | Number of denoising steps. Max step accepted are 26                                                             |
-| **guidance\_scale**       | Scale for classifier-free guidance. Min value accepted is 1.0 and max value is 10.0                             |
-| **seed**                  | Required. Seed is used to reproduce results, same seed will give you same image in return again.                |
-| **webhook**               | Set an URL to get a POST API call once the image generation is complete.                                        |
-| **track\_id**             | This ID is returned in the response to the webhook API call. This will be used to identify the webhook request. |
-
-## Example[​](#example "Direct link to Example")
-
-### Body[​](#body "Direct link to Body")
-
-Body
-
-```
-{  "key": "",  "prompt": "pretty woman",  "negative_prompt": "anime, cartoon, drawing, big nose, long nose, fat, ugly, big lips, big mouth, face proportion mismatch, unrealistic, monochrome, lowres, bad anatomy, worst quality, low quality, blurry",  "face_image":"https://i.ibb.co/qYMvpkH/7b12610da886d2a8a31e62758b4b6e7c.webp",  "width": "1024",  "height": "1024",  "num_inference_steps": "21",  "seed":null,  "guidance_scale": 7.5,  "webhook": null,  "track_id": null}
-```
-
-### Request[​](#request-1 "Direct link to Request")
-
-* JS
-* PHP
-* NODE
-* PYTHON
-* JAVA
-
-```
-var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({    "key": "",    "prompt": "pretty woman",    "negative_prompt": "anime, cartoon, drawing, big nose, long nose, fat, ugly, big lips, big mouth, face proportion mismatch, unrealistic, monochrome, lowres, bad anatomy, worst quality, low quality, blurry",    "face_image":"https://i.ibb.co/qYMvpkH/7b12610da886d2a8a31e62758b4b6e7c.webp",    "width": "1024",    "height": "1024",    "num_inference_steps": "21",    "seed":null,    "guidance_scale": 7.5,    "webhook": null,    "track_id": null  });var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v6/image_editing/flux_headshot", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
-```
-
-```
-<?php$payload = [    "key" => "",    "prompt" => "pretty woman",    "negative_prompt" => "anime, cartoon, drawing, big nose, long nose, fat, ugly, big lips, big mouth, face proportion mismatch, unrealistic, monochrome, lowres, bad anatomy, worst quality, low quality, blurry",    "face_image" => "https://i.ibb.co/qYMvpkH/7b12610da886d2a8a31e62758b4b6e7c.webp",    "width"=> "1024",    "height" => "1024",    "num_inference_steps" => "21",    "seed" => null,    "guidance_scale": 7.5,    "webhook" => null,    "track_id" => null ];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v6/image_editing/flux_headshot',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
-```
-
-```
-var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v6/image_editing/flux_headshot',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key": "",    "prompt": "pretty woman",    "negative_prompt": "anime, cartoon, drawing, big nose, long nose, fat, ugly, big lips, big mouth, face proportion mismatch, unrealistic, monochrome, lowres, bad anatomy, worst quality, low quality, blurry",    "face_image":"https://i.ibb.co/qYMvpkH/7b12610da886d2a8a31e62758b4b6e7c.webp",    "width": "1024",    "height": "1024",    "num_inference_steps": "21",    "seed": null,    "guidance_scale": 7.5,    "webhook": null,    "track_id": null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
-```
-
-```
-import requestsimport jsonurl = "https://modelslab.com/api/v6/image_editing/flux_headshot"payload = json.dumps({   "key": "",  "prompt": "pretty woman",  "negative_prompt": "anime, cartoon, drawing, big nose, long nose, fat, ugly, big lips, big mouth, face proportion mismatch, unrealistic, monochrome, lowres, bad anatomy, worst quality, low quality, blurry",  "face_image":"https://i.ibb.co/qYMvpkH/7b12610da886d2a8a31e62758b4b6e7c.webp",  "width": "1024",  "height": "1024",  "num_inference_steps": "21",  "seed": None,  "guidance_scale": 7.5,  "webhook": None,  "track_id": None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
-```
-
-```
-   OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n  \"key\": \"\",\n  \"prompt\": \"pretty woman\",\n  \"negative_prompt\": \"anime, cartoon, drawing, big nose, long nose, fat, ugly, big lips, big mouth, face proportion mismatch, unrealistic, monochrome, lowres, bad anatomy, worst quality, low quality, blurry\",\n  \"face_image\":\"https://i.ibb.co/qYMvpkH/7b12610da886d2a8a31e62758b4b6e7c.webp\",\n  \"width\": \"512\",\n  \"height\": \"512\",\n  \"samples\": \"1\",\n  \"num_inference_steps\": \"21\",\n  \"safety_checker\": false,\n  \"base64\": false,\n  \"seed\": null,\n  \"guidance_scale\": 7.5,\n  \"webhook\": null,\n  \"track_id\": null\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v6/image_editing/flux_headshot")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
-```
-
-### Response[​](#response "Direct link to Response")
-
-* Success
-* Processing
-* Error
-
-```
-{    "status": "success",    "generationTime": 7.358475685119629,    "id": 32,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/0817c993-305c-42f8-b267-fdfc82a431c5.png"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/temp/8c3ef6ea-1c44-4d69-91cb-fc11971a65d1-0.png"    ],    "meta": {        "base64": "no",        "face_image": "https://i.ibb.co/qYMvpkH/7b12610da886d2a8a31e62758b4b6e7c.webp",        "file_prefix": "8c3ef6ea-1c44-4d69-91cb-fc11971a65d1",        "guidance_scale": 7.5,        "height": 512,        "negative_prompt": "anime, cartoon, drawing, big nose, long nose, fat, ugly, big lips, big mouth, face proportion mismatch, unrealistic, monochrome, lowres, bad anatomy, worst quality, low quality, blurry",        "num_inference_steps": 21,        "prompt": "pretty woman",        "samples": 1,        "seed": 4029484891,        "temp": "yes",        "width": 512    }}
-```
-
-```
-{    "status": "processing",    "tip": "Your image is processing in background, you can get this image using fetch API",    "eta": 5,    "message": "Try to fetch request after seconds estimated",    "fetch_result": "https://modelslab.com/api/v6/image_editing/fetch/32",    "id": 32,    "output": [],    "future_links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/0817c993-305c-42f8-b267-fdfc82a431c5.png"    ],    "proxy_links": [],    "meta": {        "base64": "no",        "face_image": "https://i.ibb.co/qYMvpkH/7b12610da886d2a8a31e62758b4b6e7c.webp",        "file_prefix": "8c3ef6ea-1c44-4d69-91cb-fc11971a65d1",        "guidance_scale": 7.5,        "height": 512,        "negative_prompt": "anime, cartoon, drawing, big nose, long nose, fat, ugly, big lips, big mouth, face proportion mismatch, unrealistic, monochrome, lowres, bad anatomy, worst quality, low quality, blurry",        "num_inference_steps": 21,        "prompt": "pretty woman",        "samples": 1,        "seed": 4029484891,        "temp": "yes",        "width": 512    }}
-```
-
-```
-{    "status": "error",    "message": "Error message"}
+## Body 
+```json json
+{  
+   "key": "",  
+   "prompt": "pretty woman",  
+   "negative_prompt": "anime, cartoon, drawing, big nose, long nose, fat, ugly, big lips, big mouth, face proportion mismatch, unrealistic, monochrome, lowres, bad anatomy, worst quality, low quality, blurry",  
+   "face_image":"https://i.ibb.co/qYMvpkH/7b12610da886d2a8a31e62758b4b6e7c.webp",  
+   "width": "1024",  
+   "height": "1024",  
+   "num_inference_steps": "21",  
+   "seed":null,  
+   "guidance_scale": 7.5,  
+   "webhook": null,  
+   "track_id": null
+}
 ```
