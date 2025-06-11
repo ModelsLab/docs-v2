@@ -9,11 +9,12 @@ Note:This endpoint does not generate new 3D objects; it only returns already gen
 </Note>
 
 ## Request
+Send a `POST` request to the endpoint below with {id} to retrieve queued images this does not generate new ones.
+
 ```curl curl
 --request POST 'https://modelslab.com/api/v6/3d/fetch/{id}' \
 ```
 
-Send a `POST` request to below endpoint to return the corresponding queued images. Where `{id}` is the ID returned together with the image URL in the response upon its generation. This endpoint does not generate new images, it returns already generated/queued images.
 
 ## Body 
 ```json json
