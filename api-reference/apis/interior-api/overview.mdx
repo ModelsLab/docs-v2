@@ -1,37 +1,26 @@
 ---
-title: "Interior API"
+title: "Overview"
+description: 'The Interior API provides a collection of endpoints that allow you to generate interiors, floor decorations, and floor plans.'
 ---
 
-## Overview[​](#overview "Direct link to Overview")
-
-The Interior API provides a collection of endpoints that allow you to generate interiors, floor decorations, and floor plans.
-
-* [Create an interior design from an image](/interior-api/interior)
-* [Generate a rendered image of a floor plan](/interior-api/floor-planning)
-* [decorate a room according to the prompt](/interior-api/room-decorator)
-* [Convert bad exterior to good exterior](/interior-api/exterior-restorer)
-* [Change the environment scenario](/interior-api/scenario-changer)
-* [Convert exterior house sketch into real world photo](/interior-api/sketch-rendering)
-* [Fetch processing requests](/interior-api/fetch)
-
-### Available Endpoints[​](#available-endpoints "Direct link to Available Endpoints")
-
-#### **Interior**[​](#interior "Direct link to interior")
-
-* The Interior endpoint allows you to generate home interiors easily.
-
-### Endpoint in Action[​](#endpoint-in-action "Direct link to Endpoint in Action")
-
-![Interior endpoint result](\images\interior-api\assets\images\Interior-4e8ae53d5d8c73ff6b678b3ad6321b7b.webp)
-
-#### **Floor Planning**[​](#floor-planning "Direct link to floor-planning")
-
-* The Floor Planning endpoint allows you to generate a floor plan from a room image.
-
-#### **Room Decorator**[​](#room-decorator "Direct link to room-decorator")
-
-* The Room Decorator endpoint allows you to create room decors using a prompt.
-
-#### **Fetch Request**[​](#fetch-request "Direct link to fetch-request")
-
-* The Fetch Request endpoint retrieves queued and processing requests.
+### Endpoints
+<CardGroup>
+  <Card title="Interior" href="/api-reference/apis/voice-cloning/text-to-speech">
+    The Interior endpoint allows you to generate home interiors easily.
+  </Card>
+  <Card title="Floor planning" href="/api-reference/apis/voice-cloning/voice-to-voice">
+    The Floor Planning endpoint allows you to generate a floor plan from a room image.
+  </Card>
+  <Card title="Room decorator" href="/api-reference/apis/voice-cloning/speech_to_text" >
+    The Room Decorator endpoint allows you to create room decors using a prompt.
+  </Card>
+  <Card title="Exterior restorer" href="/api-reference/apis/voice-cloning/vocal-isolator" >
+    Convert bad exterior to good exterior
+  </Card>
+  <Card title="Scenario changer" href="/api-reference/apis/voice-cloning/lyrics-generator" >
+   Change the environment scenario
+  </Card>
+  <Card title="Sketch rendering" href="/api-reference/apis/voice-cloning/song-generator">
+    Convert exterior house sketch into real world photo
+  </Card>
+</CardGroup>
