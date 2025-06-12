@@ -53,14 +53,14 @@
               {
                 "group": " AI Video",
                 "pages": [
-                  "api-reference/apis/video-api/overview",
-                  "api-reference/apis/video-api/texttovideo",
-                  "api-reference/apis/video-api/imgtovideo",
-                  "api-reference/apis/video-api/texttovideo-ultra",
-                  "api-reference/apis/video-api/imagetovideo-ultra",
-                  "api-reference/apis/video-api/scene-maker",
-                  "api-reference/apis/video-api/base64-to-url",
-                  "api-reference/apis/video-api/fetch"
+                  "api-reference/video-api/overview",
+                  "api-reference/video-api/texttovideo",
+                  "api-reference/video-api/imgtovideo",
+                  "api-reference/video-api/texttovideo-ultra",
+                  "api-reference/video-api/imagetovideo-ultra",
+                  "api-reference/video-api/scene-maker",
+                  "api-reference/video-api/base64-to-url",
+                  "api-reference/video-api/fetch"
                 ]
               },
               {
@@ -108,7 +108,7 @@
                     "group": "A1111 Schedulers",
                     "pages": [
                       "api-reference/apis/image-generation/a1111-scheduler/overview",
-                      "api-reference/apis/image-generation/a1111-scheduler/a1111schedulers"
+                      "api-reference/apis/image-generation/a1111-scheduler/a1111-schedulers"
                     ]
                   },
                   {
@@ -137,100 +137,100 @@
               {
                 "group": "AI Image Editing",
                 "pages": [
-                  "api-reference/apis/image-editing/overview",
-                  "api-reference/apis/image-editing/fashion",
-                  "api-reference/apis/image-editing/face-gen",
-                  "api-reference/apis/image-editing/fetchimage",
-                  "api-reference/apis/image-editing/flux-headshot",
-                  "api-reference/apis/image-editing/head-shot",
-                  "api-reference/apis/image-editing/imagemixer",
-                  "api-reference/apis/image-editing/inpaint",
-                  "api-reference/apis/image-editing/outpaint",
-                  "api-reference/apis/image-editing/mask-creator",
-                  "api-reference/apis/image-editing/object-remover",
-                  "api-reference/apis/image-editing/removebg-createmask",
-                  "api-reference/apis/image-editing/super-resolution",
-                  "api-reference/apis/image-editing/base64-to-url"
+                  "api-reference/image-editing/overview",
+                  "api-reference/image-editing/fashion",
+                  "api-reference/image-editing/face-gen",
+                  "api-reference/image-editing/fetchimage",
+                  "api-reference/image-editing/flux-headshot",
+                  "api-reference/image-editing/head-shot",
+                  "api-reference/image-editing/imagemixer",
+                  "api-reference/image-editing/inpaint",
+                  "api-reference/image-editing/outpaint",
+                  "api-reference/image-editing/mask-creator",
+                  "api-reference/image-editing/object-remover",
+                  "api-reference/image-editing/removebg-createmask",
+                  "api-reference/image-editing/super-resolution",
+                  "api-reference/image-editing/base64-to-url"
                 ]
               },
               {
                 "group": "AI Speech & Audio",
                 "pages": [
-                  "api-reference/apis/voice-cloning/overview",
-                  "api-reference/apis/voice-cloning/voice-cloning",
-                  "api-reference/apis/voice-cloning/text-to-speech",
-                  "api-reference/apis/voice-cloning/speech-to-text",
-                  "api-reference/apis/voice-cloning/voice-to-voice",
-                  "api-reference/apis/voice-cloning/music-gen",
-                  "api-reference/apis/voice-cloning/sfx",
-                  "api-reference/apis/voice-cloning/voice-cover",
-                  "api-reference/apis/voice-cloning/create-dubbing",
-                  "api-reference/apis/voice-cloning/vocal-isolator",
-                  "api-reference/apis/voice-cloning/lyrics-generator",
-                  "api-reference/apis/voice-cloning/song-generator",
-                  "api-reference/apis/voice-cloning/voice-list",
-                  "api-reference/apis/voice-cloning/fetchvoice",
-                  "api-reference/apis/voice-cloning/upload-voice",
-                  "api-reference/apis/voice-cloning/base64-to-url"
+                  "api-reference/voice-cloning/overview",
+                  "api-reference/voice-cloning/voice-cloning",
+                  "api-reference/voice-cloning/text-to-speech",
+                  "api-reference/voice-cloning/speech-to-text",
+                  "api-reference/voice-cloning/voice-to-voice",
+                  "api-reference/voice-cloning/music-gen",
+                  "api-reference/voice-cloning/sfx",
+                  "api-reference/voice-cloning/voice-cover",
+                  "api-reference/voice-cloning/create-dubbing",
+                  "api-reference/voice-cloning/vocal-isolator",
+                  "api-reference/voice-cloning/lyrics-generator",
+                  "api-reference/voice-cloning/song-generator",
+                  "api-reference/voice-cloning/voice-list",
+                  "api-reference/voice-cloning/fetchvoice",
+                  "api-reference/voice-cloning/upload-voice",
+                  "api-reference/voice-cloning/base64-to-url"
                 ]
               },
               {
                 "group": "AI Deepfake",
                 "pages": [
-                  "api-reference/apis/deepfake-api/overview",
-                  "api-reference/apis/deepfake-api/specific-face-swap",
-                  "api-reference/apis/deepfake-api/multiple-face-swap",
-                  "api-reference/apis/deepfake-api/single-video-swap",
-                  "api-reference/apis/deepfake-api/specific-video-swap",
-                  "api-reference/apis/deepfake-api/fetch"
+                  "api-reference/deepfake-api/overview",
+                  "api-reference/deepfake-api/specific-face-swap",
+                  "api-reference/deepfake-api/multiple-face-swap",
+                  "api-reference/deepfake-api/single-video-swap",
+                  "api-reference/deepfake-api/specific-video-swap",
+                  "api-reference/deepfake-api/fetch"
                 ]
               },
               {
                 "group": "AI 3D",
                 "pages": [
-                  "api-reference/apis/3d-api/overview",
-                  "api-reference/apis/3d-api/text-to-3d",
-                  "api-reference/apis/3d-api/image-to-3d",
-                  "api-reference/apis/3d-api/fetch",
-                  "api-reference/apis/3d-api/base64-to-url"
+                  "api-reference/3d-api/overview",
+                  "api-reference/3d-api/text-to-3d",
+                  "api-reference/3d-api/image-to-3d",
+                  "api-reference/3d-api/fetch",
+                  "api-reference/3d-api/base64-to-url"
                 ]
               },
               {
                 "group": "Uncensored Chat",
                 "pages": [
-                  "api-reference/apis/uncensored-chat-api/overview",
-                  "api-reference/apis/uncensored-chat-api/completions",
-                  "api-reference/apis/uncensored-chat-api/chat-completions",
-                  "api-reference/apis/uncensored-chat-api/uncensored-chat"
+                  "api-reference/uncensored-chat-api/overview",
+                  "api-reference/uncensored-chat-api/completions",
+                  "api-reference/uncensored-chat-api/chat-completions",
+                  "api-reference/uncensored-chat-api/uncensored-chat"
                 ]
               },
               {
                 "group": "AI Interior",
                 "pages": [
-                  "api-reference/apis/interior-api/overview",
-                  "api-reference/apis/interior-api/interior",
-                  "api-reference/apis/interior-api/exterior-restorer",
-                  "api-reference/apis/interior-api/floor-planning",
-                  "api-reference/apis/interior-api/room-decorator",
-                  "api-reference/apis/interior-api/scenario-changer",
-                  "api-reference/apis/interior-api/sketch-rendering",
-                  "api-reference/apis/interior-api/fetch"
+                  "api-reference/interior-api/overview",
+                  "api-reference/interior-api/interior",
+                  "api-reference/interior-api/exterior-restorer",
+                  "api-reference/interior-api/floor-planning",
+                  "api-reference/interior-api/room-decorator",
+                  "api-reference/interior-api/scenario-changer",
+                  "api-reference/interior-api/sketch-rendering",
+                  "api-reference/interior-api/fetch"
                 ]
               },
               {
                 "group": "General APIs",
                 "pages": [
-                  "api-reference/apis/general-api/overview",
-                  "api-reference/apis/general-api/base64-crop",
-                  "api-reference/apis/general-api/base64-to-url",
-                  "api-reference/apis/general-api/buy-model",
-                  "api-reference/apis/general-api/buy-subscription",
-                  "api-reference/apis/general-api/cancel-subscription",
-                  "api-reference/apis/general-api/clear-cache",
-                  "api-reference/apis/general-api/delete-image",
-                  "api-reference/apis/general-api/nsfw-image-check",
-                  "api-reference/apis/general-api/nsfw-prompt-check",
-                  "api-reference/apis/general-api/subscribed-product"
+                  "api-reference/general-api/overview",
+                  "api-reference/general-api/base64-crop",
+                  "api-reference/general-api/base64-to-url",
+                  "api-reference/general-api/buy-model",
+                  "api-reference/general-api/buy-subscription",
+                  "api-reference/general-api/cancel-subscription",
+                  "api-reference/general-api/clear-cache",
+                  "api-reference/general-api/delete-image",
+                  "api-reference/general-api/nsfw-image-check",
+                  "api-reference/general-api/nsfw-prompt-check",
+                  "api-reference/general-api/subscribed-product"
                 ]
               }
             ]
