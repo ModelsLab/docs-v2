@@ -1,0 +1,436 @@
+---
+title: "ControlNet Main Endpoint"
+openapi: 'POST /controlnet'
+description: 'Control Stable Diffusion generations with ControlNet.' 
+---
+
+<Check>
+The ControlNet [models](#models) are available in this API.
+</Check>
+<Info>
+  You can also use this endpoint to inpaint images with ControlNet. Just make sure to pass the link to the `mask_image` in the request body and use the `controlnet_model` parameter with "inpaint" value.
+</Info>
+![Contonet image](/images/image-generation/controlnet/assets/images/Controlnet-000f7389fbf619b2021f072eb38a68c5.jpg)
+
+## Request
+Send a `POST` request to below endpoint.
+```curl curl
+--request POST 'https://modelslab.com/api/v5/controlnet' \
+```
+
+## Models
+ControlNet API using ControlNet 1.1 as the default: Supported ControlNet Models:
+<Info>
+  For Flux ControlNet, use 
+  ```json 
+  `model_id`: `fluxdev`
+  ``` 
+  which supports following controlnet types:
+
+   `canny`, `tile`, `depth` , `blur`, `pose`, `gray` and `low_quality`.
+  
+</Info>
+
+
+| **ControlNet Model/Type** | **SDXL** | **SD1.5** | **FluxDev** |
+| ------------------------- | -------- | --------- | ----------- |
+| **Canny**                 | Yes      | Yes       | Yes         |
+| **Tile**                  | Yes      | Yes       | Yes         |
+| **Depth**                 | Yes      | Yes       | Yes         |
+| **Blur**                  | Yes      | Yes       | Yes         |
+| **Pose**                  | Yes      | Yes       | Yes         |
+| **MLSD**                  | Yes      | Yes       | No          |
+| **Lineart**               | Yes      | Yes       | No          |
+| **HED**                   | Yes      | Yes       | No          |
+| **Normal**                | Yes      | Yes       | No          |
+| **OpenPose**              | Yes      | Yes       | No          |
+| **Segmentation**          | Yes      | Yes       | No          |
+| **Inpaint**               | Yes      | Yes       | No          |
+| **SoftEdge**              | Yes      | Yes       | No          |
+| **Shuffle**               | Yes      | Yes       | No          |
+| **QRCode**                | Yes      | Yes       | No          |
+| **Low Quality**           | No       | No        | Yes         |
+| **Gray**                  | No       | No        | Yes         |
+
+
+### Schedulers
+This endpoint also supports schedulers. Use the `scheduler` parameter in the request body to pass a specific scheduler from the list below:
+
+* DDPMScheduler
+* DDIMScheduler
+* PNDMScheduler
+* LMSDiscreteScheduler
+* EulerDiscreteScheduler
+* EulerAncestralDiscreteScheduler
+* DPMSolverMultistepScheduler
+* HeunDiscreteScheduler
+* KDPM2DiscreteScheduler
+* DPMSolverSinglestepScheduler
+* KDPM2AncestralDiscreteScheduler
+* UniPCMultistepScheduler
+* DDIMInverseScheduler
+* DEISMultistepScheduler
+* IPNDMScheduler
+* KarrasVeScheduler
+* ScoreSdeVeScheduler
+* LCMScheduler
+
+### ControlNet Types Overview
+
+| Type | Description | Best For |
+|------|-------------|----------|
+| **Canny** | Edge detection | Line art, outlines, structural control |
+| **Depth** | Depth map control | 3D structure, perspective control |
+| **HED** | Advanced edge detection | Detailed edge preservation |
+| **MLSD** | Line segment detection | Architecture, geometric structures |
+| **Normal** | Surface normal maps | 3D lighting, surface details |
+| **Scribble** | Sketch to image | Converting drawings to realistic images |
+| **In-Paint** | Fill masked areas | Removing or replacing objects |
+| **Soft Edge** | Smooth edge detection | Natural, organic shapes |
+| **Line Art** | Clean line art | Anime, cartoon, illustration styles |
+
+### Key Parameters
+
+- **controlnet_type** & **controlnet_model**: Must match the desired control method
+- **auto_hint**: Set to "yes" to automatically process input images
+- **controlnet_conditioning_scale**: Controls strength (0.1-2.0, default 0.5-1.0)
+- **init_image**: Source image for control guidance
+- **mask_image**: Required only for inpainting
+
+## Body 
+<Check>
+  You can also use multi ControlNet. Just make sure to pass comma separated controlnet models to the `controlnet_model` as `canny,depth` and `init_image` in the request body.
+</Check>
+
+# ControlNet API Examples
+
+<Tabs>
+  <Tab title="SD1.5">
+    <Tabs>
+      <Tab title="Canny">
+        ```json
+        {
+          "key": "",
+          "controlnet_model": "canny",
+          "controlnet_type": "canny",
+          "model_id": "realistic-vision-51",
+          "auto_hint": "yes",
+          "guess_mode": "no",
+          "prompt": "(a frog wearing blue jean), full-body, Ghibli style, Anime, vibrant colors",
+          "negative_prompt": "human, unstructure, (black object, white object), colorful background, nsfw",
+          "init_image": "https://example.com/input-image.jpg",
+          "mask_image": null,
+          "width": "512",
+          "height": "512",
+          "samples": "1",
+          "scheduler": "UniPCMultistepScheduler",
+          "num_inference_steps": "30",
+          "safety_checker": "no",
+          "enhance_prompt": "yes",
+          "guidance_scale": 7.5,
+          "strength": 0.55,
+          "seed": null,
+          "webhook": null,
+          "track_id": null
+        }
+        ```
+      </Tab>
+      
+      <Tab title="Depth">
+        ```json
+        {
+          "key": "",
+          "controlnet_model": "depth",
+          "controlnet_type": "depth",
+          "model_id": "realistic-vision-51",
+          "auto_hint": "yes",
+          "guess_mode": "no",
+          "prompt": "baby, smiling",
+          "negative_prompt": null,
+          "init_image": "https://img.freepik.com/free-photo/adorable-baby-boy-smiling-camera-blurred-background_132075-10819.jpg",
+          "mask_image": null,
+          "width": "512",
+          "height": "512",
+          "samples": "1",
+          "scheduler": "UniPCMultistepScheduler",
+          "num_inference_steps": "30",
+          "safety_checker": "no",
+          "enhance_prompt": "yes",
+          "guidance_scale": 7.5,
+          "strength": 0.55,
+          "seed": null,
+          "webhook": null,
+          "track_id": null
+        }
+        ```
+      </Tab>
+      
+      <Tab title="Hed">
+        ```json
+        {
+          "key": "",
+          "controlnet_model": "hed",
+          "controlnet_type": "hed",
+          "model_id": "realistic-vision-51",
+          "auto_hint": "yes",
+          "guess_mode": "no",
+          "prompt": "baby, smiling",
+          "negative_prompt": null,
+          "init_image": "https://images-ext-1.discordapp.net/external/XM1tvX0cyqZOqfpRdT2BnzhaZo-Z525hXaSAD46gHJY/https/i.pinimg.com/736x/b0/a6/49/b0a649108926efec22c2fd055208955a.jpg",
+          "mask_image": null,
+          "width": "512",
+          "height": "512",
+          "samples": "1",
+          "scheduler": "UniPCMultistepScheduler",
+          "num_inference_steps": "30",
+          "safety_checker": "no",
+          "enhance_prompt": "yes",
+          "guidance_scale": 7.5,
+          "strength": 0.55,
+          "seed": null,
+          "webhook": null,
+          "track_id": null
+        }
+        ```
+      </Tab>
+      
+      <Tab title="MLSD">
+        ```json
+        {
+          "key": "",
+          "controlnet_model": "mlsd",
+          "controlnet_type": "mlsd",
+          "model_id": "realistic-vision-51",
+          "auto_hint": "yes",
+          "guess_mode": "no",
+          "prompt": "ROOM INTERIOR, OLD SCHOOL, VINTAGE",
+          "negative_prompt": null,
+          "init_image": "https://images-ext-1.discordapp.net/external/f_MuFioFIYcAuhbGrCXkiDfRJq1nZd-L0z_DibDpMc0/https/i.pinimg.com/736x/8a/2b/1e/8a2b1e6ca4779d787ae3c98b7b1100b2.jpg",
+          "mask_image": null,
+          "width": "512",
+          "height": "512",
+          "samples": "1",
+          "scheduler": "UniPCMultistepScheduler",
+          "num_inference_steps": "30",
+          "safety_checker": "no",
+          "enhance_prompt": "yes",
+          "guidance_scale": 7.5,
+          "strength": 0.55,
+          "seed": null,
+          "webhook": null,
+          "track_id": null
+        }
+        ```
+      </Tab>
+      
+      <Tab title="Normal">
+        ```json
+        {
+          "key": "",
+          "controlnet_model": "normal",
+          "controlnet_type": "normal",
+          "model_id": "realistic-vision-51",
+          "auto_hint": "yes",
+          "guess_mode": "no",
+          "prompt": "a woman, posing",
+          "negative_prompt": null,
+          "init_image": "https://images-ext-1.discordapp.net/external/ZOjUvfZxcvlnt84xav_fDdIzXPuuMXcW9fA46OaZSTs/https/i.pinimg.com/736x/9d/09/ff/9d09ff904e082395f71aa12f5c83ea77.jpg",
+          "mask_image": null,
+          "width": "512",
+          "height": "512",
+          "samples": "1",
+          "scheduler": "UniPCMultistepScheduler",
+          "num_inference_steps": "30",
+          "safety_checker": "no",
+          "enhance_prompt": "yes",
+          "guidance_scale": 7.5,
+          "strength": 0.55,
+          "seed": null,
+          "webhook": null,
+          "track_id": null
+        }
+        ```
+      </Tab>
+      
+      <Tab title="Scribble">
+        ```json
+        {
+          "key": "",
+          "controlnet_model": "scribble",
+          "controlnet_type": "scribble",
+          "model_id": "realistic-vision-51",
+          "auto_hint": "yes",
+          "guess_mode": "no",
+          "prompt": "a woman, posing",
+          "negative_prompt": null,
+          "init_image": "https://images-ext-1.discordapp.net/external/2p2KWmaWToQXVSKJnVDbmjaHJHr1-Cx4F84O8l7mhEE/https/i.pinimg.com/736x/30/0c/20/300c209d4a1396c89bf7ea32eefcce95.jpg",
+          "mask_image": null,
+          "width": "512",
+          "height": "512",
+          "samples": "1",
+          "scheduler": "UniPCMultistepScheduler",
+          "num_inference_steps": "30",
+          "safety_checker": "no",
+          "enhance_prompt": "yes",
+          "guidance_scale": 7.5,
+          "strength": 0.55,
+          "seed": null,
+          "webhook": null,
+          "track_id": null
+        }
+        ```
+      </Tab>
+      
+      <Tab title="In-Paint">
+        ```json
+        {
+          "key": "",
+          "controlnet_model": "inpaint",
+          "controlnet_type": "inpaint",
+          "model_id": "realistic-vision-51",
+          "auto_hint": "yes",
+          "guess_mode": "no",
+          "prompt": "bearded man",
+          "negative_prompt": null,
+          "init_image": "https://images-ext-1.discordapp.net/external/oo7VfGo6xDAXQIRP_k3RB5c7l4oEv4grWgkeG4xdUvc/https/i.pinimg.com/736x/0e/04/e0/0e04e00081774f01efd980f1c99ba69a.jpg",
+          "mask_image": "https://images-ext-1.discordapp.net/external/fn7yNKSonZwSLzvprcJR5pCiacxwsaEIHQO54dK3Y7E/https/i.pinimg.com/736x/98/23/64/98236482e403a18695caaac6aac733ba.jpg",
+          "width": "512",
+          "height": "512",
+          "samples": "1",
+          "scheduler": "UniPCMultistepScheduler",
+          "num_inference_steps": "30",
+          "safety_checker": "no",
+          "enhance_prompt": "yes",
+          "guidance_scale": 7.5,
+          "strength": 0.55,
+          "seed": null,
+          "webhook": null,
+          "track_id": null
+        }
+        ```
+      </Tab>
+      
+      <Tab title="Soft Edge">
+        ```json
+        {
+          "key": "",
+          "controlnet_model": "softedge",
+          "controlnet_type": "softedge",
+          "model_id": "realistic-vision-51",
+          "auto_hint": "yes",
+          "guess_mode": "no",
+          "prompt": "man",
+          "negative_prompt": null,
+          "init_image": "https://images-ext-1.discordapp.net/external/XGH2QUbobf3UWY6ldA9hOp9lhV8FZvCpZfmbZAvceeY/https/i.pinimg.com/736x/49/cc/b4/49ccb461e72b11f5d5f297eb267365c9.jpg",
+          "mask_image": "",
+          "width": "512",
+          "height": "512",
+          "samples": "1",
+          "scheduler": "UniPCMultistepScheduler",
+          "num_inference_steps": "30",
+          "safety_checker": "no",
+          "enhance_prompt": "yes",
+          "guidance_scale": 7.5,
+          "strength": 0.55,
+          "seed": null,
+          "webhook": null,
+          "track_id": null
+        }
+        ```
+      </Tab>
+      
+      <Tab title="Line Art">
+        ```json
+        {
+          "key": "",
+          "controlnet_model": "lineart",
+          "controlnet_type": "lineart",
+          "model_id": "realistic-vision-51",
+          "auto_hint": "yes",
+          "guess_mode": "no",
+          "prompt": "beautiful girl",
+          "negative_prompt": null,
+          "init_image": "https://www.shutterstock.com/image-illustration/beautiful-anima-samurai-girl-katana-600nw-2111398124.jpg",
+          "mask_image": "",
+          "width": "512",
+          "height": "512",
+          "samples": "1",
+          "scheduler": "UniPCMultistepScheduler",
+          "num_inference_steps": "30",
+          "safety_checker": "no",
+          "enhance_prompt": "yes",
+          "guidance_scale": 7.5,
+          "strength": 0.55,
+          "seed": null,
+          "webhook": null,
+          "track_id": null
+        }
+        ```
+      </Tab>
+    </Tabs>
+  </Tab>
+  
+  <Tab title="SDXL">
+    <Tabs>
+      <Tab title="Canny">
+        ```json
+        {
+          "key": "",
+          "model_id": "boziorealvisxlv4",
+          "init_image": "https://i.pinimg.com/736x/03/a0/4d/03a04d738c9aba3c4b84caa3a5b912ae.jpg",
+          "prompt": "hot girl wearing, pink dress, high quality, 4k",
+          "negative_prompt": "(normal quality), (low quality), (worst quality), Scandinavian Living Room paintings, sketches, fog, signature, soft, blurry, drawing, sketch, poor quality, ugly text, type, word, logo, pixelated, low resolution, saturated, high contrast, oversharpened, dirt",
+          "auto_hint": "yes",
+          "guess_mode": "no",
+          "strength": 1,
+          "controlnet_conditioning_scale": "0.5",
+          "guidance_scale": 5,
+          "tomesd": "yes",
+          "seed": null,
+          "samples": 1,
+          "num_inference_steps": 21,
+          "webhook": null,
+          "track_id": null,
+          "scheduler": "DPMSolverMultistepScheduler",
+          "use_karras_sigmas": "yes",
+          "base64": null,
+          "clip_skip": 2,
+          "controlnet_type": "canny",
+          "controlnet_model": "canny",
+          "upscale": "no"
+        }
+        ```
+      </Tab>
+      
+      <Tab title="Depth">
+        ```json
+        {
+          "key": "",
+          "model_id": "boziorealvisxlv4",
+          "init_image": "https://i.pinimg.com/736x/03/a0/4d/03a04d738c9aba3c4b84caa3a5b912ae.jpg",
+          "prompt": "hot girl wearing, pink dress, high quality, 4k",
+          "negative_prompt": "(normal quality), (low quality), (worst quality), Scandinavian Living Room paintings, sketches, fog, signature, soft, blurry, drawing, sketch, poor quality, ugly text, type, word, logo, pixelated, low resolution, saturated, high contrast, oversharpened, dirt",
+          "auto_hint": "yes",
+          "guess_mode": "no",
+          "strength": 1,
+          "controlnet_conditioning_scale": "0.5",
+          "guidance_scale": 5,
+          "tomesd": "yes",
+          "seed": null,
+          "samples": 1,
+          "num_inference_steps": 21,
+          "webhook": null,
+          "track_id": null,
+          "scheduler": "DPMSolverMultistepScheduler",
+          "use_karras_sigmas": "yes",
+          "base64": null,
+          "clip_skip": 2,
+          "controlnet_type": "depth",
+          "controlnet_model": "depth",
+          "upscale": "no"
+        }
+        ```
+      </Tab>
+    </Tabs>
+  </Tab>
+</Tabs>

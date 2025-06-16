@@ -1,0 +1,22 @@
+---
+title: "Get Training Status"
+openapi: 'POST /fine_tune_status/{training_id}'
+description: "This endpoint returns the model's current training status and estimated time remaining, if still in progress."
+---
+<Note>
+ This endpoint only returns information for an already initiated model training.
+</Note>
+
+## Request
+Make a `POST` request to belowendpoint. 
+Where `{training_id}` is returned in the response upon initiating the model training using the Create Dreambooth Request endpoint.
+```curl curl
+--request POST 'https://modelslab.com/api/v3/fine_tune_status/{training_id}' \
+```
+
+## Body
+```json json
+{ 
+    "key": ""
+}
+```

@@ -629,7 +629,7 @@
           "portrait": {
             "type": "boolean",
             "default": false,
-            "description": "Portrait mode output"
+            "description": "Portrait mode gives output in 9:16 aspect ratio."
           },
           "sample_shift": {
             "type": "integer",
@@ -810,7 +810,7 @@
           "portrait": {
             "type": "boolean",
             "default": false,
-            "description": "Portrait mode"
+            "description": "Portrait mode gives output in 9:16 aspect ratio."
           },
           "sample_shift": {
             "type": "integer",

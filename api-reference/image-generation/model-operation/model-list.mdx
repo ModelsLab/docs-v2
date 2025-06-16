@@ -1,0 +1,19 @@
+---
+title: "Get Public Models List"
+openapi: 'POST /model_list'
+description: 'This endpoint returns a list of all the public models available.'
+---
+
+## Request
+Send a `POST` request to below endpoint to obtain a list with the available public models and their IDs.
+```curl curl
+--request POST 'https://modelslab.com/api/v4/dreambooth/model_list' \
+```
+
+
+## Body
+```json json
+{ 
+    "key": ""
+}
+```

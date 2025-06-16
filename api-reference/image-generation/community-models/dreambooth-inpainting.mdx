@@ -1,0 +1,63 @@
+---
+title: "Inpainting Endpoint"
+openapi: 'POST /inpaint'
+description: 'Inapint some part in a given image.'
+---
+
+![Inpainting endpoint result](/images/image-generation/community-models/assets/images/inpainting-8bb5f9bb4dc5d5307f0fd83248dfc296.jpg)
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v6/images/inpaint' \
+```
+## Schedulers
+This endpoint also supports schedulers. Use the "scheduler" parameter in the request body to pass a specific scheduler from the list below:
+
+* DDPMScheduler
+* DDIMScheduler
+* PNDMScheduler
+* LMSDiscreteScheduler
+* EulerDiscreteScheduler
+* EulerAncestralDiscreteScheduler
+* DPMSolverMultistepScheduler
+* HeunDiscreteScheduler
+* KDPM2DiscreteScheduler
+* DPMSolverSinglestepScheduler
+* KDPM2AncestralDiscreteScheduler
+* UniPCMultistepScheduler
+* DDIMInverseScheduler
+* DEISMultistepScheduler
+* IPNDMScheduler
+* KarrasVeScheduler
+* ScoreSdeVeScheduler
+* LCMScheduler
+
+## Body
+```json json
+{  
+    "key": "",  
+    "model_id": "your_model_id",  
+    "prompt": "a cat sitting on a bench",  
+    "negative_prompt": null,  
+    "init_image": "https://raw.githubusercontent.com/CompVis/stable-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png",  
+    "mask_image": "https://raw.githubusercontent.com/CompVis/stable-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo_mask.png",  
+    "width": "512",  
+    "height": "512",  
+    "samples": "1",  
+    "steps": "21",  
+    "safety_checker": "no",  
+    "enhance_prompt": "yes",  
+    "guidance_scale": 7.5,  
+    "strength": 0.7,  
+    "scheduler": "UniPCMultistepScheduler",  
+    "lora_model": null,  
+    "tomesd": "yes",  
+    "use_karras_sigmas": "yes",  
+    "vae": null,  
+    "lora_strength": null,  
+    "seed": null,  
+    "webhook": null,  
+    "track_id": null
+} 
+```

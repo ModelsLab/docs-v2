@@ -1,0 +1,117 @@
+---
+title: "Train a Lora Model with Custom Images"
+openapi: 'POST /lora_fine_tune'
+description: 'Train a Lora model any object or person with your own images.'
+---
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v3/lora_fine_tune' \
+```
+<Note>
+For now, you can only train a model on normal lora models and sdxl and get its style.
+</Note>
+
+
+### Training Types
+
+The table below lists all the possible values for the `training_type` parameter.
+
+| Value      | Description                                                                                                        |
+| :--------- | :----------------------------------------------------------------------------------------------------------------- |
+| **men**    | Train on faces of men.                                                                                             |
+| **female** | Train on faces of females.                                                                                         |
+| **couple** | Train on couples of male and female; in images array pass images of couples, instead of images of a single person. |
+| **null**   | Train on object or anything.                                                                                       |
+
+
+### Training Status Values
+    
+The table below describes all possible training statuses.
+    
+| Status                      | Description                        |
+| :-------------------------- | :--------------------------------- |
+| deploying\_gpu              | Deploying GPU                      |
+| training\_started           | Training started                   |
+| training\_success           | Training completed successfully    |
+| trained\_model\_compressing | Compressing the trained model      |
+| trained\_model\_uploading   | Uploading the trained model        |
+| trained\_model\_uploaded    | Trained model uploaded             |
+| deploying\_model            | Deploying the trained model        |
+| model\_ready                | The trained model is ready for use |
+
+## Body
+
+```json json
+{    
+    "key":"",    
+    "instance_prompt": "photo of ambika0 man",    
+    "class_prompt": "photo of a man",    
+    "base_model_type": "sdxl",    
+    "negative_prompt":" lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry",    
+    "images": [    
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/1.png",    
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/2.png",    
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/3.png",    
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/4.png",    
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/5.png",    
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/6.png",    
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/7.png",    
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/8.png",    
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/9.png"  
+    ],    
+    "seed": "0",    
+    "training_type": "men",    
+    "max_train_steps": "18",    
+    "lora_type":"lora",    
+    "webhook": null
+}
+```
+### Webhook 
+This is an example webhook post call in JSON format.
+
+```json json
+{ 
+    "status": "success", 
+    "training_status": "deploying_gpu", 
+    "logs": "it will take upto 25 minutes", 
+    "model_id": "F5jvdzGnYi"
+}
+```
+
+
+
+### Request[​](#request-1 "Direct link to Request")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({    "key":"",    "instance_prompt": "photo of ambika0 man",    "class_prompt": "photo of a man",    "base_model_type": "sdxl",    "negative_prompt":" lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry",    "images": [    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/1.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/2.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/3.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/4.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/5.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/6.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/7.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/8.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/9.png"  ],    "seed": "0",    "training_type": "men",    "max_train_steps": "18",    "lora_type":"lora",    "webhook": null});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v3/lora_fine_tune", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [  "key" => "",   "instance_prompt" => "photo of ambika0 man",   "class_prompt" => "photo of person",   "base_model_type" => "sdxl",  "negative_prompt" => " lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry",  "images" => [    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/1.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/2.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/3.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/4.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/5.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/6.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/7.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/8.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/9.png"  ],   "seed" => "0",   "training_type" => "men",   "lora_type":"lora",  "max_train_steps" => "18",   "webhook" => "" ];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v3/lora_fine_tune',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v3/lora_fine_tune',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key":"",    "instance_prompt": "photo of ambika0 man",    "class_prompt": "photo of a man",    "base_model_type": "sdxl",    "negative_prompt":" lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry",    "images": [    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/1.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/2.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/3.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/4.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/5.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/6.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/7.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/8.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/9.png"  ],    "seed": "0",    "training_type": "men",    "max_train_steps": "18",    "lora_type":"lora",    "webhook": null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v3/lora_fine_tune"payload = json.dumps({    "key":"",    "instance_prompt": "photo of ambika0 man",    "class_prompt": "photo of a man",    "base_model_type": "sdxl",    "negative_prompt":" lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry",    "images": [    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/1.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/2.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/3.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/4.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/5.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/6.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/7.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/8.png",    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/9.png"    ],    "seed": "0",    "training_type": "men",    "max_train_steps": "18",    "lora_type":"lora",    "webhook": "",})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\":\"\",\n    \"instance_prompt\": \"photo of ambika0 man\",\n    \"class_prompt\": \"photo of a man\",\n    \"base_model_type\": \"normal\",\n    \"negative_prompt\":\" lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry\",\n    \"images\": [\n    \"https://raw.githubusercontent.com/pnavitha/sampleImages/master/1.png\",\n    \"https://raw.githubusercontent.com/pnavitha/sampleImages/master/2.png\",\n    \"https://raw.githubusercontent.com/pnavitha/sampleImages/master/3.png\",\n    \"https://raw.githubusercontent.com/pnavitha/sampleImages/master/4.png\",\n    \"https://raw.githubusercontent.com/pnavitha/sampleImages/master/5.png\",\n    \"https://raw.githubusercontent.com/pnavitha/sampleImages/master/6.png\",\n    \"https://raw.githubusercontent.com/pnavitha/sampleImages/master/7.png\",\n    \"https://raw.githubusercontent.com/pnavitha/sampleImages/master/8.png\",\n    \"https://raw.githubusercontent.com/pnavitha/sampleImages/master/9.png\"\n  ],\n    \"seed\": \"0\",\n    \"training_type\": \"men\",\n    \"max_train_steps\": \"18\",\n    \"lora_type\":\"lora\",\n    \"webhook\": null\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v3/lora_fine_tune")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
+```
+
+### Response[​](#response "Direct link to Response")
+
+```
+{  "status": "success",  "messege": "deploying_gpu",  "data": "it will take upto 30 minutes.",  "training_id": "F5jvdzGnYi"}
+```

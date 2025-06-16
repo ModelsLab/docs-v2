@@ -1,0 +1,37 @@
+---
+title: "Inpainting Endpoint"
+openapi: 'POST /inpaint'
+description: 'Generates and returns an image from an image and a mask.'
+---
+
+![Inpainting endpoint result](/images/image-generation/realtime-stable-diffusion/assets/images/Realtime-inpainting-620336ac69c1ce8e66904c1d1942eebc.jpg)
+
+<Note>
+    This API currently supports the following image formats: **`PNG`** and **`JPG`**.
+</Note>
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v6/realtime/inpaint' \
+```
+
+## Body
+```json json
+{  
+    "key": "",  
+    "prompt": "a cat sitting on a bench",  
+    "negative_prompt": "bad quality",  
+    "init_image": "https://raw.githubusercontent.com/CompVis/stable-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png",  
+    "mask_image": "https://raw.githubusercontent.com/CompVis/stable-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo_mask.png",  
+    "width": "512",  
+    "height": "512",  
+    "samples": 1,  
+    "safety_checker": false,  
+    "strength": 0.7,  
+    "base64": false,  
+    "seed": null,  
+    "webhook": null,  
+    "track_id": null
+}
+```

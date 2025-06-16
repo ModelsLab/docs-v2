@@ -1,0 +1,20 @@
+---
+title: "Delete Training"
+openapi: 'POST /delete/{training_id}'
+description: 'Delete a created dreambooth training request.'
+---
+
+## Request
+Send a `POST` request to below endpoint. 
+Where `{training_id}` is the one returned in the response upon initiating the model training using the Create training endpoint.
+
+```curl curl
+--request POST 'https://modelslab.com/api/v3/finetune/delete/{training_id}' \
+```
+
+## Body 
+```json json
+{ 
+    "key": ""
+}
+```

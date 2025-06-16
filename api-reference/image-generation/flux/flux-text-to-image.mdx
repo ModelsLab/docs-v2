@@ -1,0 +1,35 @@
+---
+title: "Text to Image Endpoint"
+openapi: 'POST /text2img'
+description: 'Create high quality image from text using FLUX model.'
+---
+
+![Text to image endpoint result](/images/image-generation/flux/assets/images/Text-to-image-1-a226305d52e197b14c4cc0b1534ea06c.jpg)
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v6/images/text2img' \
+```
+
+## Body
+```json json
+{  
+    "key": "",  
+    "model_id": "flux",  
+    "prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner)), blue eyes, shaved side haircut, hyper detail, cinematic lighting, magic neon, dark red city, Canon EOS R3, nikon, f/1.4, ISO 200, 1/160s, 8K, RAW, unedited, symmetrical balance, in-frame, 8K",  
+    "width": "512",  
+    "height": "512",  
+    "samples": "1",  
+    "num_inference_steps": "31",  
+    "safety_checker": "no",  
+    "enhance_prompt": "yes",  
+    "seed": null,  
+    "guidance_scale": 7.5,  
+    "tomesd": "yes",  
+    "clip_skip": "2",  
+    "vae": null,  
+    "webhook": null,  
+    "track_id": null
+}
+```

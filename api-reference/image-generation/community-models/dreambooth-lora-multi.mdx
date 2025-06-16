@@ -1,0 +1,63 @@
+---
+title: "Multi LoRA"
+openapi: 'POST /text2img'
+description: 'Create images from text using a variety of LoRA models.'
+---
+<Check>
+  You can find a list of the public and LoRA models available and their IDs **[here](https://modelslab.com/models)**.
+</Check>
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v6/images/text2img' \
+```
+
+## Body
+## Schedulers
+This endpoint also supports schedulers. Use the "scheduler" parameter in the request body to pass a specific scheduler from the list below:
+
+* DDPMScheduler
+* DDIMScheduler
+* PNDMScheduler
+* LMSDiscreteScheduler
+* EulerDiscreteScheduler
+* EulerAncestralDiscreteScheduler
+* DPMSolverMultistepScheduler
+* HeunDiscreteScheduler
+* KDPM2DiscreteScheduler
+* DPMSolverSinglestepScheduler
+* KDPM2AncestralDiscreteScheduler
+* UniPCMultistepScheduler
+* DDIMInverseScheduler
+* DEISMultistepScheduler
+* IPNDMScheduler
+* KarrasVeScheduler
+* ScoreSdeVeScheduler
+* LCMScheduler
+
+## Body
+```json json
+{  
+  "key": "",  
+  "model_id": "f222-diffusion",  
+  "prompt": "a female model doing photoshoot, ultra realistic face, ultra high resolution, 4K image",  
+  "negative_prompt": "painting, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, deformed, ugly, blurry, bad anatomy, bad proportions, extra limbs, cloned face, skinny, glitchy, double torso, extra arms, extra hands, mangled fingers, missing lips, ugly face, distorted face, extra legs, anime",  
+  "width": "512",  
+  "height": "512",  
+  "samples": "1",  
+  "num_inference_steps": "31",  
+  "safety_checker": "yes",  
+  "enhance_prompt": "yes",  
+  "seed": null,  
+  "guidance_scale": 7.5,  
+  "panorama": "no",  
+  "self_attention": "no",  
+  "upscale": "no",  
+  "lora_model": "ganyu-lora,more_details",  
+  "lora_strength": "0.45,0.55",  
+  "scheduler": "UniPCMultistepScheduler",  
+  "webhook": null,  
+  "track_id": null
+}
+```

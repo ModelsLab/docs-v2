@@ -1,0 +1,358 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+      "title": "ModelsLab Flux Text to Image API",
+      "description": "A dedicated API for creating images from text using the Flux model, emphasizing speed and quality with specific Flux-related parameters.",
+      "license": {
+        "name": "MIT"
+      },
+      "version": "6.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://modelslab.com/api/v6/images",
+        "description": "Base URL for Flux Text to Image endpoint"
+      }
+    ],
+    "paths": {
+      "/text2img": {
+        "post": {
+          "summary": "Generate image from text prompt (Flux Model)",
+          "description": "The Text to Image API is used to create images from text using the Flux model. This endpoint generates and returns an image from a text passed in the request body, offering high-quality Full HD image generation in 4-5 seconds.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FluxTextToImageRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Flux Text to Image generation response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "oneOf": [
+                      { "$ref": "#/components/schemas/FluxImageGenerationSuccessResponse" },
+                      { "$ref": "#/components/schemas/FluxImageGenerationProcessingResponse" },
+                      { "$ref": "#/components/schemas/FluxImageGenerationErrorResponse" }
+                    ]
+                  }
+                }
+              }
+            },
+            "400": { "$ref": "#/components/responses/StandardErrorResponse" },
+            "401": { "$ref": "#/components/responses/StandardErrorResponse" },
+            "500": { "$ref": "#/components/responses/StandardErrorResponse" }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "SafetyCheckerTypeEnum": {
+          "type": "string",
+          "enum": ["blur", "sensitive_content_text", "pixelate", "black"],
+          "default": "sensitive_content_text",
+          "description": "How to modify the image if NSFW content is found."
+        },
+        "FluxTextToImageRequest": {
+          "type": "object",
+          "required": ["key", "model_id", "prompt"],
+          "properties": {
+            "key": {
+              "type": "string",
+              "description": "Your API Key used for request authorization."
+            },
+            "model_id": {
+              "type": "string",
+              "description": "The ID of the model. Must be 'flux' or a compatible Flux model ID."
+            },
+            "prompt": {
+              "type": "string",
+              "description": "A text description of the things you want in the generated image."
+            },
+            "negative_prompt": {
+              "type": "string",
+              "nullable": true,
+              "description": "Items you don't want in the image. Note: 'flux' model does not support this parameter."
+            },
+            "width": {
+              "type": "integer",
+              "maximum": 1024,
+              "description": "The width of the image in pixels. Maximum value is 1024."
+            },
+            "height": {
+              "type": "integer",
+              "maximum": 1024,
+              "description": "The height of the image in pixels. Maximum value is 1024."
+            },
+            "samples": {
+              "type": "integer",
+              "maximum": 4,
+              "description": "The number of images to be returned in response. Maximum value is 4."
+            },
+            "num_inference_steps": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "description": "The number of denoising steps. Values typically range from 1 to 50."
+            },
+            "safety_checker": {
+              "type": "boolean",
+              "default": true,
+              "description": "A checker for NSFW images. If detected, such images will be replaced by a blank image. Note: 'flux' model does not support this parameter directly, but can be set for general API compatibility."
+            },
+            "safety_checker_type": {
+              "$ref": "#/components/schemas/SafetyCheckerTypeEnum",
+              "description": "How to modify the image if NSFW content is found. Note: 'flux' model does not support this parameter."
+            },
+            "seed": {
+              "oneOf": [
+                {"type": "integer"},
+                {"type": "null"}
+              ],
+              "description": "Used to reproduce results. The same seed will generate the same image again. Pass null for a random number."
+            },
+            "guidance_scale": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 20,
+              "description": "Scale for classifier-free guidance."
+            },
+            "injected_noise_alpha": {
+              "type": "number",
+              "format": "float",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "default": 0.75,
+              "description": "Controls the amount of noise injected into the image generation process. Affects balance between original structure and randomness."
+            },
+            "sigma_threshold": {
+              "type": "number",
+              "format": "float",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "default": 0.45,
+              "description": "Determines the noise level threshold at which the image generation process changes its behavior. Affects how the model handles different noise levels during sampling."
+            },
+            "true_cfg_scale": {
+              "type": "number",
+              "format": "float",
+              "minimum": 0.0,
+              "maximum": 10.0,
+              "default": 1.0,
+              "description": "Modifies the effective classifier-free guidance scale. Allows for fine-tuning of how strongly the model adheres to the provided prompts."
+            },
+            "use_cfg_zero_star": {
+              "type": "boolean",
+              "default": true,
+              "description": "Enables or disables the use of a zero CFG variant for improved stability. This alternative approach can help reduce certain artifacts."
+            },
+            "use_zero_init": {
+              "type": "boolean",
+              "default": false,
+              "description": "Controls whether to initialize the diffusion process with zeros instead of random noise. Can affect the starting point of the generation process."
+            },
+            "zero_steps": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 50,
+              "default": 0,
+              "description": "Specifies the number of initial steps to use zero noise initialization if `use_zero_init` is enabled. Determines how long the model uses zero initialization before switching to standard noise handling."
+            },
+            "base64": {
+              "type": "boolean",
+              "default": false,
+              "description": "Get response as a base64 string."
+            },
+            "webhook": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL to receive a POST API call once image generation is complete."
+            },
+            "track_id": {
+              "type": "string",
+              "description": "This ID is returned in the response to the webhook API call and is used to identify the webhook request."
+            },
+            "temp": {
+              "type": "boolean",
+              "default": false,
+              "description": "Create a temporary image link valid for 24 hours."
+            },
+            "enhance_prompt": {
+              "type": "boolean",
+              "default": false,
+              "description": "Enhance prompts for better results. Note: 'flux' model does not support this parameter."
+            }
+            ,
+            "enhance_style": {
+              "type": "string",
+              "nullable": true,
+              "description": "Allows you to set the style of the image for better results. Note: 'flux' model does not support this parameter."
+            },
+            "tomesd": {
+              "type": "boolean",
+              "default": true,
+              "description": "Enable tomesd to generate images quickly. Note: 'flux' model does not support this parameter."
+            },
+            "clip_skip": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 8,
+              "nullable": true,
+              "description": "Number of CLIP layers to skip. Note: 'flux' model does not support this parameter."
+            }
+            ,
+            "vae": {
+              "type": "string",
+              "nullable": true,
+              "description": "Use a custom VAE for generating images. Default is null. Note: 'flux' model does not support this parameter."
+            }
+            ,
+            "lora_strength": {
+              "type": "string",
+              "nullable": true,
+              "description": "Strength of the LoRa model(s). If multiple LoRa models, provide comma-separated values (0.1 to 1). Note: 'flux' model does not support this parameter."
+            },
+            "lora_model": {
+              "type": "string",
+              "nullable": true,
+              "description": "LoRa model ID(s). Multiple LoRa models are supported; pass comma-separated values (e.g., 'contrast-fix,yae-miko-genshin'). Note: 'flux' model does not support this parameter."
+            }
+          }
+        },
+        "FluxImageGenerationSuccessResponse": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["success"],
+              "description": "Status of the image generation."
+            },
+            "generationTime": {
+              "type": "number",
+              "description": "Time taken to generate the image in seconds."
+            },
+            "id": {
+              "type": "integer",
+              "description": "Unique identifier for the image generation request."
+            },
+            "output": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uri"
+              },
+              "description": "Array of generated image URLs."
+            },
+            "proxy_links": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uri"
+              },
+              "description": "Array of proxy image URLs."
+            },
+            "meta": {
+              "type": "object",
+              "description": "Metadata about the image generation including all parameters used.",
+              "additionalProperties": true
+            },
+            "nsfw_content_detected": {
+              "type": "boolean",
+              "description": "Indicates if NSFW content was detected in the generated image."
+            }
+          }
+        },
+        "FluxImageGenerationProcessingResponse": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["processing"],
+              "description": "Status of the image generation."
+            },
+            "tip": {
+              "type": "string",
+              "description": "Information about faster processing options."
+            },
+            "eta": {
+              "type": "number",
+              "description": "Estimated time for completion in seconds."
+            },
+            "message": {
+              "type": "string",
+              "description": "Processing status message."
+            },
+            "fetch_result": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL to fetch the result when processing."
+            },
+            "id": {
+              "type": "integer",
+              "description": "Unique identifier for the image generation request."
+            },
+            "output": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Empty array during processing."
+            },
+            "meta": {
+              "type": "object",
+              "description": "Metadata about the image generation including all parameters used.",
+              "additionalProperties": true
+            },
+            "future_links": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uri"
+              },
+              "description": "Array of future image URLs for queued requests."
+            },
+            "proxy_links": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uri"
+              },
+              "description": "Array of proxy image URLs."
+            }
+          }
+        },
+        "FluxImageGenerationErrorResponse": {
+          "type": "object",
+          "required": ["status", "message"],
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["error"]
+            },
+            "message": {
+              "type": "string",
+              "description": "Error message description."
+            }
+          }
+        }
+      },
+      "responses": {
+        "StandardErrorResponse": {
+          "description": "Bad request (invalid parameters), unauthorized (invalid API key), or internal server error.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FluxImageGenerationErrorResponse"
+              }
+            }
+          }
+        }
+      }
+    }
+  }

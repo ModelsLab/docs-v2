@@ -1,0 +1,86 @@
+---
+title: "Upload Model"
+openapi: 'POST /load_model'
+---
+
+## Overview[​](#overview "Direct link to Overview")
+
+This endpoint is used to load a private or public model
+
+## Request[​](#request "Direct link to Request")
+
+```
+--request POST 'https://modelslab.com/api/v3/load_model' \
+```
+
+Send a `POST` request to [https://modelslab.com/api/v3/load\_model](https://modelslab.com/api/v3/load_model) endpoint.
+
+<Note>
+  To load a private model you must have purchased model credit from [private model page.](https://modelslab.com/dashboard/models)
+</Note>
+
+## Attributes[​](#attributes "Direct link to Attributes")
+
+| Parameter             | Description                                                                                   | Values                                                                                                              |
+| --------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| **key**               | Your API Key used for request authorization.                                                  | string                                                                                                              |
+| **url**               | The URL of the Huggingface model, CKPT download link, or Safetensors model.                   | URL                                                                                                                 |
+| **model\_id**         | Choose a name (ID) for your model. The loaded model will be saved under this ID.              | id                                                                                                                  |
+| **force\_load**       | Set this to "yes" if you want to reload automatically once upload fails; otherwise pass "no". | "yes"/"no"                                                                                                          |
+| **model\_format**     | Available options are "diffusers", "safetensors", or "ckpt".                                  | "diffusers", "safetensors", "ckpt"                                                                                  |
+| **revision**          | Specify whether the loaded model is "fp16" or "fp32".                                         | "fp16", "fp32"                                                                                                      |
+| **model\_category**   | The category of the model you want to upload.                                                 | stable\_diffusion, stable\_diffusion\_xl, controlnet, lora, embeddings,flux\_lora,flux\_embeddings,flux\_checkpoint |
+| **model\_visibility** | It accepts "private" or "public".                                                             | "private", "public"                                                                                                 |
+| **model\_name**       | The name you want to give your model.                                                         | id                                                                                                                  |
+| **model\_image**      | A valid image URL to display the model when uploaded.                                         | URL                                                                                                                 |
+| **hf\_upload**        | It accepts "yes" or "no".                                                                     | "yes"/"no"                                                                                                          |
+
+## Examples[​](#examples "Direct link to Examples")
+
+### Load a ckpt or safetensors Model from Civitai[​](#load-a-ckpt-or-safetensors-model-from-civitai "Direct link to Load a ckpt or safetensors Model from Civitai")
+
+Body Raw
+
+```
+{   "key": "api_key",    "url": "https://civitai.com/api/download/models/132760?type=Model&format=SafeTensor&size=pruned&fp=fp16",    "revision": "fp32",    "model_id": "stable-diffusion-1.0-inpainting-0.1",    "force_load": "yes",     "model_category": "stable_diffusion_xl",    "model_format": "safetensors",    "model_visibility": "public",    "model_name": "stable-diffusion-1.0-inpainting-0.1",    "model_image": "https://cdn2.stablediffusionapi.com/generations/1a14cab3-cc79-4cee-ab28-29379bff766b-0.png",    "hf_upload": "no"}
+```
+
+### Load a diffusers[​](#load-a-diffusers "Direct link to Load a diffusers")
+
+Body Raw
+
+```
+{    "key": "api_key",    "url": "diffusers/stable-diffusion-xl-1.0-inpainting-0.1",    "model_id": "stable-diffusion-xl-1.0-inpainting-0.1",    "force_load": "yes",     "revision": "fp16",    "model_category": "stable_diffusion_xl",    "model_format": "diffusers",    "model_visibility": "public",    "model_name": "stable-diffusion-xl-1.0-inpainting-0.1",    "model_image": "https://cdn2.stablediffusionapi.com/generations/1a14cab3-cc79-4cee-ab28-29379bff766b-0.png",    "hf_upload": "no"}
+```
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({    "key": "",    "url": "diffusers/stable-diffusion-xl-1.0-inpainting-0.1",    "model_id": "stable-diffusion-xl-1.0-inpainting-0.1",    "force_load": "yes",     "revision": "fp16",    "model_category": "stable_diffusion_xl",    "model_format": "diffusers",    "model_visibility": "private",    "model_name": "stable-diffusion-xl-1.0-inpainting-0.1",    "model_image": "https://cdn2.stablediffusionapi.com/generations/1a14cab3-cc79-4cee-ab28-29379bff766b-0.png",    "hf_upload": "no"});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};model_reload("https://modelslab.com/api/v3/load_model", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [    "key" => "",     "url" => "diffusers/stable-diffusion-xl-1.0-inpainting-0.1",    "model_id" => "stable-diffusion-xl-1.0-inpainting-0.1",    "force_load" => "yes",     "revision" => "fp16",    "model_category" => "stable_diffusion_xl",    "model_format" => "diffusers",    "model_visibility" =>  "private",    "model_name" =>  "stable-diffusion-xl-1.0-inpainting-0.1",    "model_image" =>  "https://cdn2.stablediffusionapi.com/generations/1a14cab3-cc79-4cee-ab28-29379bff766b-0.png",    "hf_upload" =>  "no"];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v3/load_model',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS =>  json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v3/load_model',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key": "",    "url": "diffusers/stable-diffusion-xl-1.0-inpainting-0.1",    "model_id": "stable-diffusion-xl-1.0-inpainting-0.1",    "force_load": "yes",     "revision": "fp16",    "model_category": "stable_diffusion_xl",    "model_format": "diffusers",    "model_visibility": "private",    "model_name": "stable-diffusion-xl-1.0-inpainting-0.1",    "model_image": "https://cdn2.stablediffusionapi.com/generations/1a14cab3-cc79-4cee-ab28-29379bff766b-0.png",    "hf_upload": "no"  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v3/load_model"payload = json.dumps({    "key": "",    "url": "diffusers/stable-diffusion-xl-1.0-inpainting-0.1",    "model_id": "stable-diffusion-xl-1.0-inpainting-0.1",    "force_load": "yes",     "revision": "fp16",    "model_category": "stable_diffusion_xl",    "model_format": "diffusers",    "model_visibility": "private",    "model_name": "stable-diffusion-xl-1.0-inpainting-0.1",    "model_image": "https://cdn2.stablediffusionapi.com/generations/1a14cab3-cc79-4cee-ab28-29379bff766b-0.png",    "hf_upload": "no"})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\": \"\",\n    \"url\": \"diffusers/stable-diffusion-xl-1.0-inpainting-0.1\",\n    \"model_id\": \"stable-diffusion-xl-1.0-inpainting-0.1\",\n    \"force_load\": \"yes\", \n    \"revision\": \"fp16\",\n    \"model_category\": \"stable_diffusion_xl\",\n    \"model_subcategory\": null,\n    \"model_format\": \"diffusers\",\n    \"model_visibility\": \"private\",\n    \"model_name\": \"stable-diffusion-xl-1.0-inpainting-0.1\",\n    \"model_image\": \"https://cdn2.stablediffusionapi.com/generations/1a14cab3-cc79-4cee-ab28-29379bff766b-0.png\",\n    \"hf_upload\": \"no\"\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v3/load_model")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
+```
+
+### Response[​](#response "Direct link to Response")
+
+```
+{  "status": "success",  "message": "model load started",}
+```

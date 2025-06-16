@@ -1,0 +1,482 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+      "title": "ModelsLab Real-Time Stable Diffusion API",
+      "description": "A comprehensive API for real-time AI-driven image generation, including text-to-image, image-to-image, inpainting, and fetching queued results.",
+      "license": {
+        "name": "MIT"
+      },
+      "version": "6.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://modelslab.com/api/v6/realtime/",
+        "description": "Real-Time Stable Diffusion API v6 server"
+      }
+    ],
+    "paths": {
+      "/inpaint": {
+        "post": {
+          "summary": "Inpaint parts of an image (Real-Time)",
+          "description": "Generates and returns an image from an initial image and a mask, based on provided URLs. You can also add a text description (prompt) and negative prompt to guide the generation.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RealtimeInpaintRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Inpainting generation response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "oneOf": [
+                      { "$ref": "#/components/schemas/RealtimeImageGenerationSuccessResponse" },
+                      { "$ref": "#/components/schemas/RealtimeImageGenerationProcessingResponse" },
+                      { "$ref": "#/components/schemas/RealtimeImageGenerationErrorResponse" }
+                    ]
+                  }
+                }
+              }
+            },
+            "400": { "$ref": "#/components/responses/StandardErrorResponse" },
+            "401": { "$ref": "#/components/responses/StandardErrorResponse" },
+            "500": { "$ref": "#/components/responses/StandardErrorResponse" }
+          }
+        }
+      },
+      "/img2img": {
+        "post": {
+          "summary": "Generate image from image (Real-Time)",
+          "description": "Generates an image from an initial image. You can also add a text description (prompt) and negative prompt to guide the generation.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RealtimeImageToImageRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Image-to-image generation response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "oneOf": [
+                      { "$ref": "#/components/schemas/RealtimeImageGenerationSuccessResponse" },
+                      { "$ref": "#/components/schemas/RealtimeImageGenerationProcessingResponse" },
+                      { "$ref": "#/components/schemas/RealtimeImageGenerationErrorResponse" }
+                    ]
+                  }
+                }
+              }
+            },
+            "400": { "$ref": "#/components/responses/StandardErrorResponse" },
+            "401": { "$ref": "#/components/responses/StandardErrorResponse" },
+            "500": { "$ref": "#/components/responses/StandardErrorResponse" }
+          }
+        }
+      },
+      "/fetch/{id}": {
+        "post": {
+          "summary": "Fetch queued images (Real-Time)",
+          "description": "Fetches queued images from real-time stable diffusion processing. Usually, more complex image generation requests take more time and are queued. This endpoint allows retrieving results for already processed or currently processing requests.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "description": "The ID returned with the image URL in the response upon its generation."
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RealtimeFetchRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Fetched image response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "oneOf": [
+                      { "$ref": "#/components/schemas/RealtimeImageGenerationSuccessResponse" },
+                      { "$ref": "#/components/schemas/RealtimeImageGenerationProcessingResponse" },
+                      { "$ref": "#/components/schemas/RealtimeImageGenerationErrorResponse" }
+                    ]
+                  }
+                }
+              }
+            },
+            "400": { "$ref": "#/components/responses/StandardErrorResponse" },
+            "401": { "$ref": "#/components/responses/StandardErrorResponse" },
+            "404": { "$ref": "#/components/responses/StandardErrorResponse" },
+            "500": { "$ref": "#/components/responses/StandardErrorResponse" }
+          }
+        }
+      },
+      "/text2img": {
+        "post": {
+          "summary": "Generate image from text prompt (Real-Time)",
+          "description": "Rapid image generation with standard quality from a text prompt. Ideal for applications where speed is more critical than high resolution.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RealtimeTextToImageRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Text-to-image generation response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "oneOf": [
+                      { "$ref": "#/components/schemas/RealtimeImageGenerationSuccessResponse" },
+                      { "$ref": "#/components/schemas/RealtimeImageGenerationProcessingResponse" },
+                      { "$ref": "#/components/schemas/RealtimeImageGenerationErrorResponse" }
+                    ]
+                  }
+                }
+              }
+            },
+            "400": { "$ref": "#/components/responses/StandardErrorResponse" },
+            "401": { "$ref": "#/components/responses/StandardErrorResponse" },
+            "500": { "$ref": "#/components/responses/StandardErrorResponse" }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "RealtimeCommonImageGenerationParams": {
+          "type": "object",
+          "properties": {
+            "key": {
+              "type": "string",
+              "description": "Your API Key used for request authorization."
+            },
+            "prompt": {
+              "type": "string",
+              "description": "Text prompt with description of the things you want in the image to be generated."
+            },
+            "negative_prompt": {
+              "type": "string",
+              "description": "Items you don't want in the image."
+            },
+            "width": {
+              "type": "integer",
+              "maximum": 1024,
+              "description": "Width of the generated image in pixels. Max: 1024."
+            },
+            "height": {
+              "type": "integer",
+              "maximum": 1024,
+              "description": "Height of the generated image in pixels. Max: 1024."
+            },
+            "samples": {
+              "type": "integer",
+              "maximum": 4,
+              "description": "Number of images to be returned in response. Maximum value is 4."
+            },
+            "safety_checker": {
+              "type": "boolean",
+              "default": true,
+              "description": "A checker for NSFW images. If such an image is detected, it will be replaced by a blank image."
+            },
+            "seed": {
+              "oneOf": [
+                { "type": "integer" },
+                { "type": "null" }
+              ],
+              "description": "Seed is used to reproduce results; the same seed will give you the same image in return. Pass 'null' for a random number."
+            },
+            "instant_response": {
+              "type": "boolean",
+              "default": false,
+              "description": "Queue response instantly before processing finishes instead of waiting a minimum amount of time."
+            },
+            "base64": {
+              "type": "boolean",
+              "default": false,
+              "description": "Get response as base64 string."
+            },
+            "webhook": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL to get a POST API call once the image generation is complete."
+            },
+            "track_id": {
+              "type": "string",
+              "description": "This ID is returned in the response to the webhook API call and is used to identify the webhook request."
+            },
+            "enhance_prompt": {
+              "type": "boolean",
+              "default": false,
+              "description": "Enhance prompts for better results."
+            },
+            "enhance_style": {
+              "type": "string",
+              "enum": [
+                "enhance", "cinematic-diva", "nude", "nsfw", "sex", "abstract-expressionism",
+                "academia", "action-figure", "adorable-3d-character", "adorable-kawaii",
+                "art-deco", "art-nouveau", "astral-aura", "avant-garde", "baroque",
+                "bauhaus-style-poster", "blueprint-schematic-drawing", "caricature",
+                "cel-shaded-art", "character-design-sheet", "classicism-art",
+                "color-field-painting", "colored-pencil-art", "conceptual-art",
+                "constructivism", "cubism", "dadaism", "dark-fantasy",
+                "dark-moody-atmosphere", "dmt-art", "doodle-art", "double-exposure",
+                "dripping-paint-splatter", "expressionism", "faded-polaroid-photo",
+                "fauvism", "flat-2d", "fortnite-style", "futurism", "glitchcore",
+                "glo-fi", "googie-style", "graffiti-art", "harlem-renaissance-art",
+                "high-fashion", "idyllic", "impressionism", "infographic-drawing",
+                "ink-dripping-drawing", "japanese-ink-drawing", "knolling-photography",
+                "light-cheery-atmosphere", "logo-design", "luxurious-elegance",
+                "macro-photography", "mandola-art", "marker-drawing", "medievalism",
+                "minimalism", "neo-baroque", "neo-byzantine", "neo-futurism",
+                "neo-impressionism", "neo-rococo", "neoclassicism", "op-art",
+                "ornate-and-intricate", "pencil-sketch-drawing", "pop-art-2", "rococo",
+                "silhouette-art", "simple-vector-art", "sketchup", "steampunk-2",
+                "surrealism", "suprematism", "terragen", "tranquil-relaxing-atmosphere",
+                "sticker-designs", "vibrant-rim-light", "volumetric-lighting", "watercolor",
+                "whimsical-and-playful", "sharp", "masterpiece", "photograph", "negative",
+                "cinematic", "ads-advertising", "ads-automotive", "ads-corporate",
+                "ads-fashion-editorial", "ads-food-photography",
+                "ads-gourmet-food-photography", "ads-luxury", "ads-real-estate",
+                "ads-retail", "abstract", "constructivist", "cubist", "expressionist",
+                "graffiti", "hyperrealism", "impressionist", "pointillism", "pop-art",
+                "psychedelic", "renaissance", "steampunk", "surrealist", "typography",
+                "futuristic-biomechanical", "futuristic-biomechanical-cyberpunk",
+                "futuristic-cybernetic", "futuristic-cybernetic-robot",
+                "futuristic-cyberpunk-cityscape", "futuristic-futuristic",
+                "futuristic-retro-cyberpunk", "futuristic-retro", "futuristic-sci-fi",
+                "futuristic-vaporwave", "game-bubble", "game-cyberpunk", "game-fighting",
+                "game-gta", "game-mario", "game-minecraft", "game-pokemon",
+                "game-retro-arcade", "game-retro", "game-rpg-fantasy", "game-strategy",
+                "game-streetfighter", "game-zelda", "misc-architectural", "misc-disco",
+                "misc-dreamscape", "misc-dystopian", "misc-fairy-tale", "misc-gothic",
+                "misc-grunge", "misc-horror", "misc-kawaii", "misc-lovecraftian",
+                "misc-macabre", "misc-manga", "misc-metropolis", "misc-minimalist",
+                "misc-monochrome", "misc-nautical", "misc-space", "misc-stained-glass",
+                "misc-techwear-fashion", "misc-tribal", "misc-zentangle",
+                "papercraft-collage", "papercraft-flat-papercut", "papercraft-kirigami",
+                "papercraft-paper-mache", "papercraft-paper-quilling",
+                "papercraft-papercut-collage", "papercraft-papercut-shadow-box",
+                "papercraft-stacked-papercut", "papercraft-thick-layered-papercut",
+                "photo-alien", "photo-film-noir", "photo-glamour", "photo-hdr",
+                "photo-iphone-photographic", "photo-long-exposure", "photo-neon-noir",
+                "photo-silhouette", "photo-tilt-shift", "3d-model", "analog-film", "anime",
+                "cinematic", "comic-book", "craft-clay", "digital-art", "fantasy-art",
+                "isometric", "line-art", "lowpoly", "neonpunk", "origami", "photographic",
+                "pixel-art", "texture"
+              ],
+              "description": "Allows you to set the style of the image for better results."
+            }
+          }
+        },
+        "RealtimeInpaintRequest": {
+          "type": "object",
+          "allOf": [
+            { "$ref": "#/components/schemas/RealtimeCommonImageGenerationParams" }
+          ],
+          "required": ["key", "prompt", "init_image", "mask_image"],
+          "properties": {
+            "init_image": {
+              "type": "string",
+              "format": "uri",
+              "description": "Link to the initial image."
+            },
+            "mask_image": {
+              "type": "string",
+              "format": "uri",
+              "description": "Link to the mask image for inpainting."
+            },
+            "strength": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Prompt strength when using the initial image. 1.0 corresponds to full destruction of information in the init image."
+            }
+          }
+        },
+        "RealtimeImageToImageRequest": {
+          "type": "object",
+          "allOf": [
+            { "$ref": "#/components/schemas/RealtimeCommonImageGenerationParams" }
+          ],
+          "required": ["key", "prompt", "init_image"],
+          "properties": {
+            "init_image": {
+              "type": "string",
+              "format": "uri",
+              "description": "Link to the initial image."
+            },
+            "strength": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Prompt strength when using the initial image. 1.0 corresponds to full destruction of information in the init image."
+            }
+          }
+        },
+        "RealtimeFetchRequest": {
+          "type": "object",
+          "required": ["key"],
+          "properties": {
+            "key": {
+              "type": "string",
+              "description": "Your API Key used for request authorization."
+            }
+          }
+        },
+        "RealtimeTextToImageRequest": {
+          "type": "object",
+          "allOf": [
+            { "$ref": "#/components/schemas/RealtimeCommonImageGenerationParams" }
+          ],
+          "required": ["key", "prompt"]
+        },
+        "RealtimeImageGenerationSuccessResponse": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["success"],
+              "description": "Status of the image generation."
+            },
+            "generationTime": {
+              "type": "number",
+              "description": "Time taken to generate the image in seconds."
+            },
+            "id": {
+              "type": "integer",
+              "description": "Unique identifier for the image generation request."
+            },
+            "output": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uri"
+              },
+              "description": "Array of generated image URLs."
+            },
+            "proxy_links": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uri"
+              },
+              "description": "Array of proxy image URLs."
+            },
+            "meta": {
+              "type": "object",
+              "description": "Metadata about the image generation including all parameters used.",
+              "additionalProperties": true
+            },
+            "nsfw_content_detected": {
+              "type": "boolean",
+              "description": "Indicates if NSFW content was detected in the generated image."
+            }
+          }
+        },
+        "RealtimeImageGenerationProcessingResponse": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["processing"],
+              "description": "Status of the image generation."
+            },
+            "tip": {
+              "type": "string",
+              "description": "Information about faster processing options."
+            },
+            "eta": {
+              "type": "number",
+              "description": "Estimated time for completion in seconds."
+            },
+            "message": {
+              "type": "string",
+              "description": "Processing status message."
+            },
+            "fetch_result": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL to fetch the result when processing."
+            },
+            "id": {
+              "type": "integer",
+              "description": "Unique identifier for the image generation request."
+            },
+            "output": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Empty array during processing."
+            },
+            "meta": {
+              "type": "object",
+              "description": "Metadata about the image generation including all parameters used.",
+              "additionalProperties": true
+            },
+            "future_links": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uri"
+              },
+              "description": "Array of future image URLs for queued requests."
+            }
+          }
+        },
+        "RealtimeImageGenerationErrorResponse": {
+          "type": "object",
+          "required": ["status", "message"],
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["error"]
+            },
+            "message": {
+              "type": "string",
+              "description": "Error message description."
+            }
+          }
+        }
+      },
+      "responses": {
+        "StandardErrorResponse": {
+          "description": "Bad request (invalid parameters), unauthorized (invalid API key), or internal server error.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RealtimeImageGenerationErrorResponse"
+              }
+            }
+          }
+        }
+      }
+    }
+  }

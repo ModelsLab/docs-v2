@@ -1,0 +1,83 @@
+---
+title: "Text to Image Endpoint"
+openapi: 'POST /text2img'
+description: 'The Dreambooth Text to Image API is used to create image from text based on trained or on public models.'
+---
+
+<Info>
+You can make an API call to your trained models as well as to any public model.
+</Info>
+
+<Check>
+You can find a list of the public models available and their IDs [here](https://modelslab.com/models)
+</Check>
+
+![Text to image endpoint result](/images/image-generation/community-models/assets/images/Text-to-image-1-a226305d52e197b14c4cc0b1534ea06c.jpg)
+
+## Request
+Make a `POST` request to endpoint and pass the required parameters as a request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v6/images/text2img' \
+```
+
+## Body
+
+<Info>
+  **The model\_id:"flux" does not support the following parameters `negative_prompt`, `enhance_prompt`,`enhance_style`, `lora trained on SD models`, `ip_adaptors`, `upscale` and `highres_fix` .**
+</Info>
+
+<Check>
+  You can also use multi Lora. Just make sure to pass comma saparated lora model ids to the `lora_model` as `"more_details,animie"` in the request body.
+</Check>
+
+### Schedulers
+This endpoint also supports schedulers. Use the "scheduler" parameter in the request body to pass a specific scheduler from the list below:
+
+* DDPMScheduler
+* DDIMScheduler
+* PNDMScheduler
+* LMSDiscreteScheduler
+* EulerDiscreteScheduler
+* EulerAncestralDiscreteScheduler
+* DPMSolverMultistepScheduler
+* HeunDiscreteScheduler
+* KDPM2DiscreteScheduler
+* DPMSolverSinglestepScheduler
+* KDPM2AncestralDiscreteScheduler
+* UniPCMultistepScheduler
+* DDIMInverseScheduler
+* DEISMultistepScheduler
+* IPNDMScheduler
+* KarrasVeScheduler
+* ScoreSdeVeScheduler
+* LCMScheduler
+
+## Body
+```json json
+{  
+  "key": "",  
+  "model_id": "your_model_id",  
+  "prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner)), blue eyes, shaved side haircut, hyper detail, cinematic lighting, magic neon, dark red city, Canon EOS R3, nikon, f/1.4, ISO 200, 1/160s, 8K, RAW, unedited, symmetrical balance, in-frame, 8K",  
+  "negative_prompt": "",  
+  "width": "512",  
+  "height": "512",  
+  "samples": "1",  
+  "num_inference_steps": "31",  
+  "safety_checker": "no",  
+  "enhance_prompt": "yes",  
+  "seed": null,  
+  "guidance_scale": 7.5, 
+  "panorama": "no",  
+  "self_attention": "no",  
+  "upscale": "no",  
+  "lora_model": null,  
+  "tomesd": "yes",  
+  "clip_skip": "2",  
+  "use_karras_sigmas": "yes",  
+  "vae": null,  
+  "lora_strength": null,  
+  "scheduler": "UniPCMultistepScheduler",  
+  "webhook": null,  
+  "track_id": null
+}
+```

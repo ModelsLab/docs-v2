@@ -1,0 +1,22 @@
+---
+title: "Fetch Queued Images Endpoint"
+openapi: 'POST /fetch'
+description: 'Fetch Queued Images API fetches queued images.'
+---
+
+<Note>
+This endpoint does not generate new images, it returns already generated/queued images.
+</Note>
+## Request
+Send a `POST` request to below endpoint to return the corresponding queued images,specified by the **request\_id** parameter in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v6/images/fetch' \
+```
+
+## Body
+```json json
+{ 
+    "key": "", 
+    "request_id": "your_request_id"
+}
+```

@@ -1,0 +1,63 @@
+---
+title: "Image to Image Endpoint"
+openapi: 'POST /img2img'
+description: 'Dreambooth Image to Image API is used to generate an image from an image based on trained or on public models.'
+---
+<Note>
+The dimensions of the generated image will be the same as the dimensions of the init\_image.
+</Note>
+
+![Image to image endpoint result](/images/image-generation/community-models/assets/images/Image-to-image-0130f41cb14826b399834cb780856e8a.jpg)
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body to the endpoint.
+```curl curl
+--request POST 'https://modelslab.com/api/v6/images/img2img' \
+```
+## Schedulers
+This endpoint also supports schedulers. Use the "scheduler" parameter in the request body to pass a specific scheduler from the list below:
+
+* DDPMScheduler
+* DDIMScheduler
+* PNDMScheduler
+* LMSDiscreteScheduler
+* EulerDiscreteScheduler
+* EulerAncestralDiscreteScheduler
+* DPMSolverMultistepScheduler
+* HeunDiscreteScheduler
+* KDPM2DiscreteScheduler
+* DPMSolverSinglestepScheduler
+* KDPM2AncestralDiscreteScheduler
+* UniPCMultistepScheduler
+* DDIMInverseScheduler
+* DEISMultistepScheduler
+* IPNDMScheduler
+* KarrasVeScheduler
+* ScoreSdeVeScheduler
+* LCMScheduler
+
+## Body
+```json json
+{  
+    "key": "",  
+    "model_id": "realistic-vision-51",  
+    "prompt": "women playing tennis",  
+    "negative_prompt": null,  
+    "init_image": "https://i.pinimg.com/736x/20/ab/3d/20ab3df5c180e1cae812020bcfeb3093.jpg",  
+    "samples": "1",  
+    "num_inference_steps": "31",  
+    "safety_checker": "yes",  
+    "enhance_prompt": "yes",  
+    "guidance_scale": 7.5,  
+    "strength": 0.7,  
+    "scheduler": "UniPCMultistepScheduler",  
+    "seed": null,  
+    "lora_model": null,  
+    "tomesd": "yes",  
+    "use_karras_sigmas": "yes",  
+    "vae": null,  
+    "lora_strength": null,  
+    "webhook": null,  
+    "track_id": null
+}
+```

@@ -1,0 +1,100 @@
+---
+title: "ControlNet Multi Endpoint"
+openapi: 'POST /controlnet'
+description: 'Control Stable Diffusion generations with Multi ControlNet.'
+---
+
+<Check>
+The ControlNet [models](#models) are available in this API.
+</Check>
+<Info>
+  You can also use this endpoint to inpaint images with ControlNet. Just make sure to pass the link to the `mask_image` in the request body and use the `controlnet_model` parameter with "inpaint" value.
+</Info>
+
+## Request
+Send a `POST` request to below endpoint.
+```curl curl
+--request POST 'https://modelslab.com/api/v5/controlnet' \
+```
+
+## Body
+<Check>
+  You can also use multi ControlNet. Just make sure to pass comma separated ControlNet models to the `controlnet_model` as `canny,depth` and `init_image` in the request body.
+</Check>
+
+### Models
+ControlNet API using Controlnet 1.1 as default: Suported controlnet\_model:
+
+* canny
+* depth
+* hed
+* mlsd
+* normal
+* openpose
+* scribble
+* segmentation
+* inpaint
+* softedge
+* lineart
+* shuffle
+* tile
+* face_detector
+* qrcode
+
+### Schedulers
+This endpoint also supports schedulers. Use the `scheduler` parameter in the request body to pass a specific scheduler from the list below:
+
+* DDPMScheduler
+* DDIMScheduler
+* PNDMScheduler
+* LMSDiscreteScheduler
+* EulerDiscreteScheduler
+* EulerAncestralDiscreteScheduler
+* DPMSolverMultistepScheduler
+* HeunDiscreteScheduler
+* KDPM2DiscreteScheduler
+* DPMSolverSinglestepScheduler
+* KDPM2AncestralDiscreteScheduler
+* UniPCMultistepScheduler
+* DDIMInverseScheduler
+* DEISMultistepScheduler
+* IPNDMScheduler
+* KarrasVeScheduler
+* ScoreSdeVeScheduler
+* LCMScheduler
+
+## Body
+
+```json json
+{  
+  "key": "",  
+  "controlnet_model": "openpose,canny,face_detector",  
+  "controlnet_type" :"openpose",  
+  "model_id": "midjourney",  
+  "auto_hint": "yes",  
+  "guess_mode" : "yes",  
+  "prompt": "human model doing photoshoot, ultra realistic face, ultra high resolution, 4K image",  
+  "negative_prompt": null,  
+  "control_image":"https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/rVV5jY824zGbYbsAIXDCg5pCkf4EQr-metaZ2VuX2NvbXBhcmVfY29udHJvbF9pbWFnZXNfY29udmVydGVkX2NvbnRyb2xfaHVtYW5fb3BlbnBvc2UgKDMpLnBuZw==-.png",  
+  "init_image": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/4BJiQzb87q78JHGFyz5MaSRzdvzIEU-metaMDAwNS5wbmc=-.png",  
+  "mask_image": null,  
+  "width": "512",  
+  "height": "512",  
+  "samples": "1",  
+  "scheduler": "UniPCMultistepScheduler",  
+  "num_inference_steps": "30",  
+  "safety_checker": "no",  
+  "enhance_prompt": "yes",  
+  "guidance_scale": 7.5,  
+  "controlnet_conditioning_scale": 0.7,  
+  "strength": 0.55,  
+  "lora_model": "yae-miko-genshin,more_details",  
+  "clip_skip": "2",  
+  "tomesd": "yes",  
+  "use_karras_sigmas": "yes",  
+  "lora_strength": null,  
+  "seed": null,  
+  "webhook": null,  
+  "track_id": null
+}
+```

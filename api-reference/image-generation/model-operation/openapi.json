@@ -1,0 +1,405 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "ModelsLab API",
+    "description": "API endpoints for managing and browsing Stable Diffusion models - includes public model discovery, custom model uploads, and trained model management.",
+    "version": "4.0.0",
+    "contact": {
+      "name": "ModelsLab Support",
+      "url": "https://modelslab.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://modelslab.com/api/v3",
+      "description": "V3 API Endpoints"
+    },
+    {
+      "url": "https://modelslab.com/api/v4",
+      "description": "V4 API Endpoints"
+    }
+  ],
+  "paths": {
+    "/model_list": {
+      "post": {
+        "operationId": "getPublicModelList",
+        "summary": "Get Public Models List",
+        "description": "Returns a list of all the public models available with their IDs and information including status, name, description, etc.",
+        "tags": ["Public Models"],
+        "servers": [
+          {
+            "url": "https://modelslab.com/api/v4/dreambooth"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiKeyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with list of public models",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PublicModel"
+                  }
+                },
+                "example": [
+                  {
+                    "model_id": "midjourney",
+                    "status": "model_ready",
+                    "created_at": null,
+                    "instance_prompt": "mdjrny-v4 style",
+                    "model_name": "MidJourney V4",
+                    "description": "Openjourney is an open source Stable Diffusion fine tuned model on Midjourney images, by PromptHero",
+                    "screenshots": "https://d1okzptojspljx.cloudfront.net/generations/14853540911669470514.png"
+                  },
+                  {
+                    "model_id": "anything-v3",
+                    "status": "model_ready",
+                    "created_at": null,
+                    "instance_prompt": null,
+                    "model_name": "Anything V3",
+                    "description": "This model is intended to produce high-quality, highly detailed anime style with just a few prompts.",
+                    "screenshots": "https://d1okzptojspljx.cloudfront.net/generations/8589140601669473451.png"
+                  },
+                  {
+                    "model_id": "wifu-diffusion",
+                    "status": "model_ready",
+                    "created_at": null,
+                    "instance_prompt": null,
+                    "model_name": "Wifu Diffusion",
+                    "description": "waifu-diffusion is a latent text-to-image diffusion model that has been conditioned on high-quality anime images through fine-tuning.",
+                    "screenshots": "https://d1okzptojspljx.cloudfront.net/generations/21468819471669474933.png"
+                  }
+                ]
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/load_model": {
+      "post": {
+        "operationId": "loadModel",
+        "summary": "Upload Model",
+        "description": "This endpoint is used to load a private or public model. To load a private model you must have purchased model credit from private model page.",
+        "tags": ["Model Management"],
+        "servers": [
+          {
+            "url": "https://modelslab.com/api/v3"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModelUploadRequest"
+              },
+              "examples": {
+                "civitai_example": {
+                  "summary": "Load a ckpt or safetensors Model from Civitai",
+                  "value": {
+                    "key": "api_key",
+                    "url": "https://civitai.com/api/download/models/132760?type=Model&format=SafeTensor&size=pruned&fp=fp16",
+                    "revision": "fp32",
+                    "model_id": "stable-diffusion-1.0-inpainting-0.1",
+                    "force_load": "yes",
+                    "model_category": "stable_diffusion_xl",
+                    "model_format": "safetensors",
+                    "model_visibility": "public",
+                    "model_name": "stable-diffusion-1.0-inpainting-0.1",
+                    "model_image": "https://cdn2.stablediffusionapi.com/generations/1a14cab3-cc79-4cee-ab28-29379bff766b-0.png",
+                    "hf_upload": "no"
+                  }
+                },
+                "diffusers_example": {
+                  "summary": "Load a diffusers",
+                  "value": {
+                    "key": "api_key",
+                    "url": "diffusers/stable-diffusion-xl-1.0-inpainting-0.1",
+                    "model_id": "stable-diffusion-xl-1.0-inpainting-0.1",
+                    "force_load": "yes",
+                    "revision": "fp16",
+                    "model_category": "stable_diffusion_xl",
+                    "model_format": "diffusers",
+                    "model_visibility": "public",
+                    "model_name": "stable-diffusion-xl-1.0-inpainting-0.1",
+                    "model_image": "https://cdn2.stablediffusionapi.com/generations/1a14cab3-cc79-4cee-ab28-29379bff766b-0.png",
+                    "hf_upload": "no"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Model load started successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelUploadResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/finetune_list": {
+      "post": {
+        "operationId": "getTrainedModelList",
+        "summary": "Get Trained Models List",
+        "description": "Returns a list with all the models that you have created. This endpoint returns an array with the IDs of the models.",
+        "tags": ["Model Management"],
+        "servers": [
+          {
+            "url": "https://modelslab.com/api/v3"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiKeyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with list of trained models",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainedModelListResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiKeyRequest": {
+        "type": "object",
+        "required": ["key"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization",
+            "example": ""
+          }
+        }
+      },
+      "ModelUploadRequest": {
+        "type": "object",
+        "required": ["key", "url", "model_id", "model_format", "model_category", "model_visibility", "model_name"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "url": {
+            "type": "string",
+            "description": "The URL of the Huggingface model, CKPT download link, or Safetensors model"
+          },
+          "model_id": {
+            "type": "string",
+            "description": "Choose a name (ID) for your model. The loaded model will be saved under this ID"
+          },
+          "force_load": {
+            "type": "string",
+            "enum": ["yes", "no"],
+            "description": "Set this to \"yes\" if you want to reload automatically once upload fails; otherwise pass \"no\""
+          },
+          "model_format": {
+            "type": "string",
+            "enum": ["diffusers", "safetensors", "ckpt"],
+            "description": "Available options are \"diffusers\", \"safetensors\", or \"ckpt\""
+          },
+          "revision": {
+            "type": "string",
+            "enum": ["fp16", "fp32"],
+            "description": "Specify whether the loaded model is \"fp16\" or \"fp32\""
+          },
+          "model_category": {
+            "type": "string",
+            "enum": ["stable_diffusion", "stable_diffusion_xl", "controlnet", "lora", "embeddings", "flux_lora", "flux_embeddings", "flux_checkpoint"],
+            "description": "The category of the model you want to upload"
+          },
+          "model_visibility": {
+            "type": "string",
+            "enum": ["private", "public"],
+            "description": "It accepts \"private\" or \"public\""
+          },
+          "model_name": {
+            "type": "string",
+            "description": "The name you want to give your model"
+          },
+          "model_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "A valid image URL to display the model when uploaded"
+          },
+          "hf_upload": {
+            "type": "string",
+            "enum": ["yes", "no"],
+            "description": "It accepts \"yes\" or \"no\""
+          }
+        }
+      },
+      "PublicModel": {
+        "type": "object",
+        "properties": {
+          "model_id": {
+            "type": "string",
+            "description": "Unique identifier for the model",
+            "example": "midjourney"
+          },
+          "status": {
+            "type": "string",
+            "description": "Current status of the model",
+            "example": "model_ready"
+          },
+          "created_at": {
+            "type": "string",
+            "nullable": true,
+            "description": "Creation timestamp of the model",
+            "example": null
+          },
+          "instance_prompt": {
+            "type": "string",
+            "nullable": true,
+            "description": "Prompt to use this model effectively",
+            "example": "mdjrny-v4 style"
+          },
+          "model_name": {
+            "type": "string",
+            "description": "Display name of the model",
+            "example": "MidJourney V4"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the model's capabilities",
+            "example": "Openjourney is an open source Stable Diffusion fine tuned model on Midjourney images, by PromptHero"
+          },
+          "screenshots": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to preview image showcasing the model's output",
+            "example": "https://d1okzptojspljx.cloudfront.net/generations/14853540911669470514.png"
+          }
+        }
+      },
+      "TrainedModelListResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "messege": {
+            "type": "string",
+            "example": "model list"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of trained model IDs",
+            "example": []
+          }
+        }
+      },
+      "ModelUploadResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "example": "model load started"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "error"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error description"
+          },
+          "code": {
+            "type": "integer",
+            "description": "Error code"
+          }
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Bad request - Invalid parameters",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized - Invalid API key",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Public Models",
+      "description": "Browse and discover publicly available pre-trained models"
+    },
+    {
+      "name": "Model Management",
+      "description": "Upload custom models and manage your trained model collection"
+    }
+  ]
+}
