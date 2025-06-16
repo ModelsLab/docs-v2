@@ -67,7 +67,7 @@
               {
                 "group": "AI Image generation",
                 "pages": [
-                  "api-reference/image-generation/image-generation",
+                  "api-reference/image-generation/overview",
                   {
                     "group": "Realtime Stable Diffusion",
                     "pages": [
