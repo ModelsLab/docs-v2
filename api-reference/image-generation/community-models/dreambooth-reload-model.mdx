@@ -1,0 +1,26 @@
+---
+title: "Reload Model Endpoint"
+openapi: 'POST /model_reload'
+description: 'Reload Model API is used to reload an idle model that has not been used for more than 7 days.'
+---
+<Info>
+  After 7 days of inactivity, a model will be removed from the inference server.
+  To use it again, make an API call to the Reload Model endpoint to reload the model.
+</Info>
+<Info>
+  It will take **2 minutes** to reload a model.
+</Info>
+
+## Request
+Send a `POST` request to below endpoint to reload a specific model specified by the **model\_id** parameter in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v6/images/model_reload' \
+```
+
+## Body
+```json json
+{ 
+  "key": "", 
+  "model_id": "model_id"
+}
+```

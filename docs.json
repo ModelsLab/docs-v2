@@ -67,72 +67,72 @@
               {
                 "group": "AI Image generation",
                 "pages": [
-                  "api-reference/apis/image-generation/image-generation",
+                  "api-reference/image-generation/image-generation",
                   {
                     "group": "Realtime Stable Diffusion",
                     "pages": [
-                      "api-reference/apis/image-generation/realtime-stable-diffusion/overview",
-                      "api-reference/apis/image-generation/realtime-stable-diffusion/text-to-image",
-                      "api-reference/apis/image-generation/realtime-stable-diffusion/image-to-image",
-                      "api-reference/apis/image-generation/realtime-stable-diffusion/inpaint",
-                      "api-reference/apis/image-generation/realtime-stable-diffusion/fetchimage"
+                      "api-reference/image-generation/realtime-stable-diffusion/overview",
+                      "api-reference/image-generation/realtime-stable-diffusion/text-to-image",
+                      "api-reference/image-generation/realtime-stable-diffusion/image-to-image",
+                      "api-reference/image-generation/realtime-stable-diffusion/inpaint",
+                      "api-reference/image-generation/realtime-stable-diffusion/fetchimage"
                     ]
                   },
                   {
                     "group": "Flux",
                     "pages": [
-                      "api-reference/apis/image-generation/flux/overview",
-                      "api-reference/apis/image-generation/flux/flux-text-to-image"
+                      "api-reference/image-generation/flux/overview",
+                      "api-reference/image-generation/flux/flux-text-to-image"
 
                     ]
                   },
                   {
                     "group": "Community Models",
                     "pages": [
-                      "api-reference/apis/image-generation/community-models/overview",
-                      "api-reference/apis/image-generation/community-models/dreambooth-text-to-image",
-                      "api-reference/apis/image-generation/community-models/dreambooth-image-to-image",
-                      "api-reference/apis/image-generation/community-models/dreambooth-inpainting",
-                      "api-reference/apis/image-generation/community-models/dreambooth-lora",
-                      "api-reference/apis/image-generation/community-models/dreambooth-lora-multi",
-                      "api-reference/apis/image-generation/community-models/dreambooth-reload-model",
-                      "api-reference/apis/image-generation/community-models/dreambooth-fetch-queue-image"
+                      "api-reference/image-generation/community-models/overview",
+                      "api-reference/image-generation/community-models/dreambooth-text-to-image",
+                      "api-reference/image-generation/community-models/dreambooth-image-to-image",
+                      "api-reference/image-generation/community-models/dreambooth-inpainting",
+                      "api-reference/image-generation/community-models/dreambooth-lora",
+                      "api-reference/image-generation/community-models/dreambooth-lora-multi",
+                      "api-reference/image-generation/community-models/dreambooth-reload-model",
+                      "api-reference/image-generation/community-models/dreambooth-fetch-queue-image"
                     ]
                   },
                   {
                     "group": "ControlNet",
                     "pages": [
-                      "api-reference/apis/image-generation/controlnet/overview",
-                      "api-reference/apis/image-generation/controlnet/controlnet-main",
-                      "api-reference/apis/image-generation/controlnet/controlnet-multi"
+                      "api-reference/image-generation/controlnet/overview",
+                      "api-reference/image-generation/controlnet/controlnet-main",
+                      "api-reference/image-generation/controlnet/controlnet-multi"
                     ]
                   },
                   {
                     "group": "A1111 Schedulers",
                     "pages": [
-                      "api-reference/apis/image-generation/a1111-scheduler/overview",
-                      "api-reference/apis/image-generation/a1111-scheduler/a1111-schedulers"
+                      "api-reference/image-generation/a1111-scheduler/overview",
+                      "api-reference/image-generation/a1111-scheduler/a1111-schedulers"
                     ]
                   },
                   {
                     "group": "Train Model",
                     "pages": [
-                      "api-reference/apis/image-generation/train-model/overview",
-                      "api-reference/apis/image-generation/train-model/lora-finetune",
-                      "api-reference/apis/image-generation/train-model/finetune-list",
-                      "api-reference/apis/image-generation/train-model/finetune-status",
-                      "api-reference/apis/image-generation/train-model/finetune-delete",
-                      "api-reference/apis/image-generation/train-model/cancel-training",
-                      "api-reference/apis/image-generation/train-model/base64-crop"
+                      "api-reference/image-generation/train-model/overview",
+                      "api-reference/image-generation/train-model/lora-finetune",
+                      "api-reference/image-generation/train-model/finetune-list",
+                      "api-reference/image-generation/train-model/finetune-status",
+                      "api-reference/image-generation/train-model/finetune-delete",
+                      "api-reference/image-generation/train-model/cancel-training",
+                      "api-reference/image-generation/train-model/base64-crop"
                     ]
                   },
                   {
                     "group": "Model Operations",
                     "pages": [
-                      "api-reference/apis/image-generation/model-operation/overview",
-                      "api-reference/apis/image-generation/model-operation/model-list",
-                      "api-reference/apis/image-generation/model-operation/upload-model",
-                      "api-reference/apis/image-generation/model-operation/finetune-list"
+                      "api-reference/image-generation/model-operation/overview",
+                      "api-reference/image-generation/model-operation/model-list",
+                      "api-reference/image-generation/model-operation/upload-model",
+                      "api-reference/image-generation/model-operation/finetune-list"
                     ]
                   }
                 ]

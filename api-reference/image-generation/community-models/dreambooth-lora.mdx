@@ -1,0 +1,67 @@
+---
+title: "LoRA"
+openapi: 'POST /text2img'
+description: 'The LoRA is used to create image from text, using LoRA models, based on trained or on public models.'
+---
+
+<Tip>
+  To apply multiple LoRA models, provide a comma-separated list in the `lora_model` field, e.g., `"more_details,anime"`.
+</Tip>
+
+<Check>
+  You can find a list of the public and LoRA models available and their IDs **[here](https://modelslab.com/models)**.
+</Check>
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v6/images/text2img' \
+```
+
+## Schedulers
+This endpoint also supports schedulers. Use the "scheduler" parameter in the request body to pass a specific scheduler from the list below:
+
+* DDPMScheduler
+* DDIMScheduler
+* PNDMScheduler
+* LMSDiscreteScheduler
+* EulerDiscreteScheduler
+* EulerAncestralDiscreteScheduler
+* DPMSolverMultistepScheduler
+* HeunDiscreteScheduler
+* KDPM2DiscreteScheduler
+* DPMSolverSinglestepScheduler
+* KDPM2AncestralDiscreteScheduler
+* UniPCMultistepScheduler
+* DDIMInverseScheduler
+* DEISMultistepScheduler
+* IPNDMScheduler
+* KarrasVeScheduler
+* ScoreSdeVeScheduler
+* LCMScheduler
+
+## Body 
+```json json
+{  
+  "key": "",  
+  "model_id": "tamarin-xl-v1",  
+  "prompt": "actual 8K portrait photo of gareth person, portrait, happy colors, bright eyes, clear eyes, warm smile, smooth soft skin, big dreamy eyes, beautiful intricate colored hair, symmetrical, anime wide eyes, soft lighting, detailed face, by makoto shinkai, stanley artgerm lau, wlop, rossdraws, concept art, digital painting, looking into camera",  
+  "negative_prompt": "painting, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, deformed, ugly, blurry, bad anatomy, bad proportions, extra limbs, cloned face, skinny, glitchy, double torso, extra arms, extra hands, mangled fingers, missing lips, ugly face, distorted face, extra legs, anime",  
+  "width": "512",  
+  "height": "512",  
+  "samples": "1",  
+  "num_inference_steps": "31",  
+  "safety_checker": "no",  
+  "enhance_prompt": "yes",  
+  "seed": null,  
+  "guidance_scale": 7.5,  
+  "panorama": "no",  
+  "self_attention": "no",  
+  "upscale": "no",  
+  "lora_strength": "0.45",  
+  "lora_model": "xl-realistic-cake-art-sty", 
+  "scheduler": "UniPCMultistepScheduler",  
+  "webhook": null,  
+  "track_id": null
+}
+```
