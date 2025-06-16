@@ -1,618 +1,616 @@
 {
-    "openapi": "3.0.3",
-    "info": {
-      "title": "ModelsLab Stable Diffusion V3 API",
-      "description": "Comprehensive API for training, managing, and deploying custom Stable Diffusion models using Dreambooth and LoRA fine-tuning techniques.",
-      "version": "3.0.0",
-      "contact": {
-        "name": "ModelsLab Support",
-        "url": "https://modelslab.com"
-      }
-    },
-    "servers": [
-      {
-        "url": "https://modelslab.com/api/v3",
-        "description": "Production server"
-      }
-    ],
-    "security": [
-      {
-        "ApiKeyAuth": []
-      }
-    ],
-    "paths": {
-      "/lora_fine_tune": {
-        "post": {
-          "tags": ["Training"],
-          "summary": "Train a LoRA Model with Custom Images",
-          "description": "Train a custom LoRA model using your own images. Supports training on people, objects, or couples with both normal and SDXL base models.",
-          "operationId": "trainLoraModel",
-          "requestBody": {
-            "required": true,
+  "openapi": "3.0.3",
+  "info": {
+    "title": "ModelsLab Training API",
+    "description": "API endpoints for training LoRA models, managing training processes, and handling training-related operations.",
+    "version": "3.0.0",
+    "contact": {
+      "name": "ModelsLab Support",
+      "url": "https://modelslab.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://modelslab.com/api/v3",
+      "description": "V3 API Endpoints"
+    }
+  ],
+  "paths": {
+    "/lora_fine_tune": {
+      "post": {
+        "operationId": "trainLoraModel",
+        "summary": "Train a Lora Model with Custom Images",
+        "description": "Using this endpoint you can train a Lora model with your own images. You can train a model on any object or person.",
+        "tags": ["Training"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoraTrainingRequest"
+              },
+              "example": {
+                "key": "",
+                "instance_prompt": "photo of ambika0 man",
+                "class_prompt": "photo of a man",
+                "base_model_type": "sdxl",
+                "negative_prompt": "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry",
+                "images": [
+                  "https://raw.githubusercontent.com/pnavitha/sampleImages/master/1.png",
+                  "https://raw.githubusercontent.com/pnavitha/sampleImages/master/2.png",
+                  "https://raw.githubusercontent.com/pnavitha/sampleImages/master/3.png",
+                  "https://raw.githubusercontent.com/pnavitha/sampleImages/master/4.png",
+                  "https://raw.githubusercontent.com/pnavitha/sampleImages/master/5.png",
+                  "https://raw.githubusercontent.com/pnavitha/sampleImages/master/6.png",
+                  "https://raw.githubusercontent.com/pnavitha/sampleImages/master/7.png",
+                  "https://raw.githubusercontent.com/pnavitha/sampleImages/master/8.png",
+                  "https://raw.githubusercontent.com/pnavitha/sampleImages/master/9.png"
+                ],
+                "seed": "0",
+                "training_type": "men",
+                "max_train_steps": "18",
+                "lora_type": "lora",
+                "webhook": null
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Training initiated successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoraTrainingRequest"
+                  "$ref": "#/components/schemas/TrainingResponse"
                 },
                 "example": {
-                  "key": "your_api_key_here",
-                  "instance_prompt": "photo of ambika0 man",
-                  "class_prompt": "photo of a man",
-                  "base_model_type": "sdxl",
-                  "negative_prompt": "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry",
-                  "images": [
-                    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/1.png",
-                    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/2.png",
-                    "https://raw.githubusercontent.com/pnavitha/sampleImages/master/3.png"
-                  ],
-                  "seed": "0",
-                  "training_type": "men",
-                  "max_train_steps": "18",
-                  "lora_type": "lora",
-                  "webhook": null
+                  "status": "success",
+                  "messege": "deploying_gpu",
+                  "data": "it will take upto 30 minutes.",
+                  "training_id": "F5jvdzGnYi"
                 }
               }
             }
           },
-          "responses": {
-            "200": {
-              "description": "Training initiated successfully",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/TrainingResponse"
-                  },
-                  "example": {
-                    "status": "success",
-                    "messege": "deploying_gpu",
-                    "data": "it will take upto 30 minutes.",
-                    "training_id": "F5jvdzGnYi"
-                  }
-                }
-              }
-            },
-            "400": {
-              "$ref": "#/components/responses/BadRequest"
-            },
-            "401": {
-              "$ref": "#/components/responses/Unauthorized"
-            }
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
           }
         }
-      },
-      "/fine_tune_status/{training_id}": {
-        "post": {
-          "tags": ["Training"],
-          "summary": "Get Training Status",
-          "description": "Check the current status of a model training process, including progress updates and estimated completion time.",
-          "operationId": "getTrainingStatus",
-          "parameters": [
-            {
-              "name": "training_id",
-              "in": "path",
-              "required": true,
-              "description": "The unique identifier for the training job",
+      }
+    },
+    "/fine_tune_status/{training_id}": {
+      "post": {
+        "operationId": "getTrainingStatus",
+        "summary": "Get Training Status",
+        "description": "Get the status of a training model initiated by the Create Training endpoint. This endpoint allows to check the current status of the model training and the estimated time remaining for its completion if not completed yet.",
+        "tags": ["Training"],
+        "parameters": [
+          {
+            "name": "training_id",
+            "in": "path",
+            "required": true,
+            "description": "The unique identifier for the training job returned from the create training endpoint",
+            "schema": {
+              "type": "string",
+              "example": "F5jvdzGnYi"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
               "schema": {
-                "type": "string",
-                "example": "F5jvdzGnYi"
+                "$ref": "#/components/schemas/ApiKeyRequest"
               }
-            }
-          ],
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiKeyRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Training status retrieved successfully",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/TrainingStatusResponse"
-                  },
-                  "example": {
-                    "status": "success",
-                    "messege": "model_ready",
-                    "data": "Step:1 Training Started, 5 Steps to go : ETA : 30 minutes\nStep:2 Training Done, 4 Steps to go : ETA : 15 minutes\nStep:3 Model Uploading, 3 Steps to go : ETA : 10 minutes\nStep:4 Model Uploaded, 2 Steps to go : ETA : 5 minutes\nModel loaded successfully"
-                  }
-                }
-              }
-            },
-            "404": {
-              "$ref": "#/components/responses/NotFound"
             }
           }
-        }
-      },
-      "/finetune_list": {
-        "post": {
-          "tags": ["Management"],
-          "summary": "Get Trained Model List",
-          "description": "Retrieve a list of all models you have created and trained using the API.",
-          "operationId": "getTrainedModelList",
-          "requestBody": {
-            "required": true,
+        },
+        "responses": {
+          "200": {
+            "description": "Training status retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiKeyRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Model list retrieved successfully",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ModelListResponse"
-                  },
-                  "example": {
-                    "status": "success",
-                    "messege": "model list",
-                    "data": []
-                  }
-                }
-              }
-            },
-            "401": {
-              "$ref": "#/components/responses/Unauthorized"
-            }
-          }
-        }
-      },
-      "/cancle_training/{training_id}": {
-        "post": {
-          "tags": ["Training"],
-          "summary": "Cancel Training Request",
-          "description": "Cancel an ongoing Dreambooth training process. Note: This action cannot be undone.",
-          "operationId": "cancelTraining",
-          "parameters": [
-            {
-              "name": "training_id",
-              "in": "path",
-              "required": true,
-              "description": "The unique identifier for the training job to cancel",
-              "schema": {
-                "type": "string",
-                "example": "F5jvdzGnYi"
-              }
-            }
-          ],
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiKeyRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Training cancelled successfully",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/BasicResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "$ref": "#/components/responses/NotFound"
-            }
-          }
-        }
-      },
-      "/finetune/delete/{training_id}": {
-        "post": {
-          "tags": ["Management"],
-          "summary": "Delete Training Model",
-          "description": "Permanently delete a created Dreambooth model. This action cannot be undone.",
-          "operationId": "deleteTraining",
-          "parameters": [
-            {
-              "name": "training_id",
-              "in": "path",
-              "required": true,
-              "description": "The unique identifier for the training model to delete",
-              "schema": {
-                "type": "string",
-                "example": "F5jvdzGnYi"
-              }
-            }
-          ],
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiKeyRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Model deleted successfully",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/BasicResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "$ref": "#/components/responses/NotFound"
-            }
-          }
-        }
-      },
-      "/base64_crop": {
-        "post": {
-          "tags": ["Utilities"],
-          "summary": "Upload Base64 Image and Crop",
-          "description": "Upload an image in base64 format and optionally crop it for training purposes.",
-          "operationId": "uploadAndCropImage",
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Base64CropRequest"
+                  "$ref": "#/components/schemas/TrainingStatusResponse"
                 },
                 "example": {
-                  "key": "your_api_key_here",
-                  "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==",
-                  "crop": "true"
+                  "status": "success",
+                  "messege": "model_ready",
+                  "data": "Step:1 Training Started, 5 Steps to go : ETA : 30 minutes\nStep:2 Training Done, 4 Steps to go : ETA : 15 minutes\nStep:3 Model Uploading, 3 Steps to go : ETA : 10 minutes\nStep:4 Model Uploaded, 2 Steps to go : ETA : 5 minutes\nModel loaded successfully"
                 }
               }
             }
           },
-          "responses": {
-            "200": {
-              "description": "Image uploaded and processed successfully",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ImageUploadResponse"
-                  },
-                  "example": {
-                    "status": "success",
-                    "messege": "image uploaded",
-                    "link": "https://pub-8b49af329fae499aa563997f5d4068a4.r2.dev/generations/2789658481681896990.png"
-                  }
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/cancel_training/{training_id}": {
+      "post": {
+        "operationId": "cancelTraining",
+        "summary": "Cancel Training Request",
+        "description": "Cancel a Dreambooth request. Where {training_id} is the one returned in the response upon initiating the model training using the create training endpoint.",
+        "tags": ["Training"],
+        "parameters": [
+          {
+            "name": "training_id",
+            "in": "path",
+            "required": true,
+            "description": "The unique identifier for the training job to cancel",
+            "schema": {
+              "type": "string",
+              "example": "F5jvdzGnYi"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiKeyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Training cancelled successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasicResponse"
                 }
               }
-            },
-            "400": {
-              "$ref": "#/components/responses/BadRequest"
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           }
         }
       }
     },
-    "components": {
-      "securitySchemes": {
-        "ApiKeyAuth": {
-          "type": "apiKey",
-          "in": "header",
-          "name": "Authorization",
-          "description": "API key for authentication. Include your API key in the request body as 'key' parameter."
-        }
-      },
-      "schemas": {
-        "ApiKeyRequest": {
-          "type": "object",
-          "required": ["key"],
-          "properties": {
-            "key": {
+    "/delete/{training_id}": {
+      "post": {
+        "operationId": "deleteTraining",
+        "summary": "Delete Training",
+        "description": "Delete a created Dreambooth request. Where {training_id} is the one returned in the response upon initiating the model training using the Create training endpoint.",
+        "tags": ["Model Management"],
+        "servers": [
+          {
+            "url": "https://modelslab.com/api/v3/finetune"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "training_id",
+            "in": "path",
+            "required": true,
+            "description": "The unique identifier for the training model to delete",
+            "schema": {
               "type": "string",
-              "description": "Your API key for authentication",
-              "example": "your_api_key_here"
+              "example": "F5jvdzGnYi"
             }
           }
-        },
-        "LoraTrainingRequest": {
-          "type": "object",
-          "required": ["key", "instance_prompt", "class_prompt", "images", "training_type", "max_train_steps"],
-          "properties": {
-            "key": {
-              "type": "string",
-              "description": "Your API key for authentication"
-            },
-            "instance_prompt": {
-              "type": "string",
-              "description": "Text prompt describing how you want to call your trained person/object",
-              "example": "photo of ambika0 man"
-            },
-            "class_prompt": {
-              "type": "string",
-              "description": "Classification of the trained person/object",
-              "example": "photo of a man"
-            },
-            "base_model_type": {
-              "type": "string",
-              "enum": ["normal", "sdxl"],
-              "description": "The type of LoRA base model to train on",
-              "default": "normal"
-            },
-            "negative_prompt": {
-              "type": "string",
-              "description": "Items you don't want in the generated images",
-              "example": "lowres, bad anatomy, bad hands, text, error"
-            },
-            "images": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "format": "uri"
-              },
-              "description": "Accessible direct links to training images, cropped to 512x512 pixels. Recommended: 7-8 images",
-              "minItems": 1,
-              "maxItems": 20
-            },
-            "training_type": {
-              "type": "string",
-              "enum": ["men", "women", "couple", "null"],
-              "description": "The type of object/person you are training on"
-            },
-            "lora_type": {
-              "type": "string",
-              "enum": ["lora", "lycoris"],
-              "description": "Type of LoRA model",
-              "default": "lora"
-            },
-            "max_train_steps": {
-              "type": "string",
-              "description": "Training steps (set at 2x number of images). Min: 10, Max: 50",
-              "pattern": "^([1-4][0-9]|50|[1-9])$"
-            },
-            "wandb_key": {
-              "type": "string",
-              "description": "Weights & Biases key to monitor training process"
-            },
-            "seed": {
-              "type": "string",
-              "description": "Random seed for reproducible results",
-              "default": "0"
-            },
-            "webhook": {
-              "type": "string",
-              "format": "uri",
-              "nullable": true,
-              "description": "URL to receive POST notification when training completes"
-            }
-          }
-        },
-        "Base64CropRequest": {
-          "type": "object",
-          "required": ["key", "image"],
-          "properties": {
-            "key": {
-              "type": "string",
-              "description": "Your API key for authentication"
-            },
-            "image": {
-              "type": "string",
-              "description": "Base64 encoded image data with data URI prefix",
-              "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
-            },
-            "crop": {
-              "type": "string",
-              "enum": ["true", "false"],
-              "description": "Whether to crop the image upon upload",
-              "default": "false"
-            }
-          }
-        },
-        "TrainingResponse": {
-          "type": "object",
-          "properties": {
-            "status": {
-              "type": "string",
-              "example": "success"
-            },
-            "messege": {
-              "type": "string",
-              "description": "Current training status",
-              "enum": [
-                "deploying_gpu",
-                "training_started", 
-                "training_success",
-                "trained_model_compressing",
-                "trained_model_uploading",
-                "trained_model_uploaded",
-                "deploying_model",
-                "model_ready"
-              ]
-            },
-            "data": {
-              "type": "string",
-              "description": "Additional information about the training process"
-            },
-            "training_id": {
-              "type": "string",
-              "description": "Unique identifier for the training job"
-            }
-          }
-        },
-        "TrainingStatusResponse": {
-          "type": "object",
-          "properties": {
-            "status": {
-              "type": "string",
-              "example": "success"
-            },
-            "messege": {
-              "type": "string",
-              "description": "Current training status"
-            },
-            "data": {
-              "type": "string",
-              "description": "Detailed training progress with step-by-step information"
-            }
-          }
-        },
-        "ModelListResponse": {
-          "type": "object",
-          "properties": {
-            "status": {
-              "type": "string",
-              "example": "success"
-            },
-            "messege": {
-              "type": "string",
-              "example": "model list"
-            },
-            "data": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Array of model IDs"
-            }
-          }
-        },
-        "ImageUploadResponse": {
-          "type": "object",
-          "properties": {
-            "status": {
-              "type": "string",
-              "example": "success"
-            },
-            "messege": {
-              "type": "string",
-              "example": "image uploaded"
-            },
-            "link": {
-              "type": "string",
-              "format": "uri",
-              "description": "Direct link to the uploaded/processed image"
-            }
-          }
-        },
-        "BasicResponse": {
-          "type": "object",
-          "properties": {
-            "status": {
-              "type": "string",
-              "enum": ["success", "error"]
-            },
-            "messege": {
-              "type": "string",
-              "description": "Response message"
-            },
-            "data": {
-              "type": "string",
-              "description": "Additional response data"
-            }
-          }
-        },
-        "WebhookPayload": {
-          "type": "object",
-          "description": "Payload sent to webhook URL when training completes",
-          "properties": {
-            "status": {
-              "type": "string",
-              "example": "success"
-            },
-            "training_status": {
-              "type": "string",
-              "enum": [
-                "deploying_gpu",
-                "training_started",
-                "training_success", 
-                "trained_model_compressing",
-                "trained_model_uploading",
-                "trained_model_uploaded",
-                "deploying_model",
-                "model_ready"
-              ]
-            },
-            "logs": {
-              "type": "string",
-              "description": "Training logs and estimated completion time"
-            },
-            "model_id": {
-              "type": "string",
-              "description": "Unique identifier for the completed model"
-            }
-          }
-        },
-        "Error": {
-          "type": "object",
-          "properties": {
-            "status": {
-              "type": "string",
-              "example": "error"
-            },
-            "messege": {
-              "type": "string",
-              "description": "Error description"
-            },
-            "code": {
-              "type": "integer",
-              "description": "Error code"
-            }
-          }
-        }
-      },
-      "responses": {
-        "BadRequest": {
-          "description": "Bad request - Invalid parameters",
+        ],
+        "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Error"
+                "$ref": "#/components/schemas/ApiKeyRequest"
               }
             }
           }
         },
-        "Unauthorized": {
-          "description": "Unauthorized - Invalid API key",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Error"
+        "responses": {
+          "200": {
+            "description": "Model deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasicResponse"
+                }
               }
             }
-          }
-        },
-        "NotFound": {
-          "description": "Not found - Training ID does not exist",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Error"
-              }
-            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           }
         }
       }
     },
-    "tags": [
-      {
-        "name": "Training",
-        "description": "Operations for training and managing AI models"
-      },
-      {
-        "name": "Management", 
-        "description": "Operations for managing trained models"
-      },
-      {
-        "name": "Utilities",
-        "description": "Utility operations for image processing"
+    "/finetune_list": {
+      "post": {
+        "operationId": "getTrainedModelList",
+        "summary": "Get Trained Model List",
+        "description": "Returns a list with all the models that you have created. This endpoint returns an array with the IDs of the models.",
+        "tags": ["Model Management"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiKeyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Trained models list retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainedModelListResponse"
+                },
+                "example": {
+                  "status": "success",
+                  "messege": "model list",
+                  "data": []
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
       }
-    ]
-  }
+    },
+    "/base64_crop": {
+      "post": {
+        "operationId": "uploadBase64Image",
+        "summary": "Upload Base64 Image and Crop",
+        "description": "Upload an image and crop it. Pass the appropriate request parameters to the endpoint. Make sure you are passing the image in base64 format.",
+        "tags": ["Utilities"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Base64CropRequest"
+              },
+              "example": {
+                "key": "",
+                "image": "data:image/png;base64,your_base_64_string",
+                "crop": "true"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Image uploaded and processed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImageUploadResponse"
+                },
+                "example": {
+                  "status": "success",
+                  "messege": "image uploaded",
+                  "link": "https://pub-8b49af329fae499aa563997f5d4068a4.r2.dev/generations/2789658481681896990.png"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiKeyRequest": {
+        "type": "object",
+        "required": ["key"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization",
+            "example": ""
+          }
+        }
+      },
+      "LoraTrainingRequest": {
+        "type": "object",
+        "required": ["key", "instance_prompt", "class_prompt", "images", "training_type", "max_train_steps"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "instance_prompt": {
+            "type": "string",
+            "description": "Text prompt with how you want to call your trained person/object",
+            "example": "photo of ambika0 man"
+          },
+          "wandb_key": {
+            "type": "string",
+            "description": "Key to the wandb platform to monitor your training process"
+          },
+          "class_prompt": {
+            "type": "string",
+            "description": "Classification of the trained person/object",
+            "example": "photo of a man"
+          },
+          "base_model_type": {
+            "type": "string",
+            "enum": ["normal", "sdxl"],
+            "description": "The type of LoRA base model you want to train on",
+            "default": "normal"
+          },
+          "negative_prompt": {
+            "type": "string",
+            "description": "Items you don't want in the image",
+            "example": "lowres, bad anatomy, bad hands, text, error"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Accessible direct links to images, cropped to 512x512 pixels. A good number is about 7-8 images",
+            "minItems": 1
+          },
+          "training_type": {
+            "type": "string",
+            "enum": ["men", "women", "couple", "null"],
+            "description": "The type of the object you are training on"
+          },
+          "lora_type": {
+            "type": "string",
+            "enum": ["lora", "lycoris"],
+            "description": "Type of LoRA model",
+            "default": "lora"
+          },
+          "max_train_steps": {
+            "type": "string",
+            "description": "Set at 2 times the number of images (Ni*2); minimum value is 10 and maximum value is 50",
+            "example": "18"
+          },
+          "seed": {
+            "type": "string",
+            "description": "Random seed for reproducible results",
+            "default": "0"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "description": "Set a URL to receive a POST call when training is complete"
+          }
+        }
+      },
+      "Base64CropRequest": {
+        "type": "object",
+        "required": ["key", "image"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "image": {
+            "type": "string",
+            "description": "The image to be uploaded, converted to base64 format",
+            "example": "data:image/png;base64,your_base_64_string"
+          },
+          "crop": {
+            "type": "string",
+            "enum": ["true", "false"],
+            "description": "A flag indicating whether to crop the image upon uploading",
+            "default": "false"
+          }
+        }
+      },
+      "TrainingResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "messege": {
+            "type": "string",
+            "description": "Current training status",
+            "enum": [
+              "deploying_gpu",
+              "training_started",
+              "training_success",
+              "trained_model_compressing",
+              "trained_model_uploading",
+              "trained_model_uploaded",
+              "deploying_model",
+              "model_ready"
+            ]
+          },
+          "data": {
+            "type": "string",
+            "description": "Additional information about the training process"
+          },
+          "training_id": {
+            "type": "string",
+            "description": "Unique identifier for the training job"
+          }
+        }
+      },
+      "TrainingStatusResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "messege": {
+            "type": "string",
+            "description": "Current training status"
+          },
+          "data": {
+            "type": "string",
+            "description": "Detailed training progress with step-by-step information"
+          }
+        }
+      },
+      "TrainedModelListResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "messege": {
+            "type": "string",
+            "example": "model list"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of trained model IDs",
+            "example": []
+          }
+        }
+      },
+      "ImageUploadResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "messege": {
+            "type": "string",
+            "example": "image uploaded"
+          },
+          "link": {
+            "type": "string",
+            "format": "uri",
+            "description": "Direct link to the uploaded/processed image"
+          }
+        }
+      },
+      "BasicResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success", "error"]
+          },
+          "messege": {
+            "type": "string",
+            "description": "Response message"
+          },
+          "data": {
+            "type": "string",
+            "description": "Additional response data"
+          }
+        }
+      },
+      "WebhookPayload": {
+        "type": "object",
+        "description": "Payload sent to webhook URL when training completes",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "training_status": {
+            "type": "string",
+            "enum": [
+              "deploying_gpu",
+              "training_started",
+              "training_success",
+              "trained_model_compressing",
+              "trained_model_uploading",
+              "trained_model_uploaded",
+              "deploying_model",
+              "model_ready"
+            ]
+          },
+          "logs": {
+            "type": "string",
+            "description": "Training logs and estimated completion time"
+          },
+          "model_id": {
+            "type": "string",
+            "description": "Unique identifier for the completed model"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "error"
+          },
+          "messege": {
+            "type": "string",
+            "description": "Error description"
+          },
+          "code": {
+            "type": "integer",
+            "description": "Error code"
+          }
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Bad request - Invalid parameters",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized - Invalid API key",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not found - Training ID does not exist",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Training",
+      "description": "Operations for training LoRA models and managing training processes"
+    },
+    {
+      "name": "Model Management",
+      "description": "Operations for managing trained models"
+    },
+    {
+      "name": "Utilities",
+      "description": "Utility operations for image processing and preparation"
+    }
+  ]
+}
