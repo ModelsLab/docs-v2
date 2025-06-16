@@ -1,0 +1,464 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ModelsLab ControlNet API",
+    "description": "A comprehensive API for AI-driven image generation using ControlNet models with Stable Diffusion. Control image generation with various ControlNet models including canny, depth, pose, and more.",
+    "license": {
+      "name": "MIT"
+    },
+    "version": "5.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://modelslab.com/api/v5"
+    }
+  ],
+  "paths": {
+    "/controlnet": {
+      "post": {
+        "summary": "Generate images using ControlNet",
+        "description": "Generate images using ControlNet models to control Stable Diffusion. Supports single and multi-ControlNet configurations, inpainting, and various image modification techniques.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ControlNetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ControlNet generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ControlNetResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/images/fetch/{id}": {
+      "get": {
+        "summary": "Fetch generated image by ID",
+        "description": "Retrieves generated images that are currently queued or have been processed",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the image generation to fetch",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Fetched image response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ControlNetResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ControlNetRequest": {
+        "type": "object",
+        "required": ["key"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "model_id": {
+            "type": "string",
+            "description": "The ID of the model to be used. It can be public or your trained model. Note: Multi ControlNet does not apply when using model with 'flux'"
+          },
+          "controlnet_model": {
+            "type": "string",
+            "description": "ControlNet model ID. Can be single model or comma-separated for multi-ControlNet (e.g., 'canny,depth,openpose')",
+            "enum": [
+              "canny", "depth", "hed", "mlsd", "normal", "openpose", "scribble", 
+              "segmentation", "inpaint", "softedge", "lineart", "shuffle", "tile", 
+              "face_detector", "qrcode", "blur", "pose", "gray", "low_quality"
+            ]
+          },
+          "controlnet_type": {
+            "type": "string",
+            "description": "ControlNet model type. Should match one of the controlnet_model values",
+            "enum": [
+              "canny", "depth", "hed", "mlsd", "normal", "openpose", "scribble", 
+              "segmentation", "inpaint", "softedge", "lineart", "shuffle", "tile", 
+              "face_detector", "qrcode", "blur", "pose", "gray", "low_quality"
+            ]
+          },
+          "auto_hint": {
+            "type": "string",
+            "enum": ["yes", "no"],
+            "default": "yes",
+            "description": "Auto hint image generation"
+          },
+          "guess_mode": {
+            "type": "string",
+            "enum": ["yes", "no"],
+            "description": "Set to 'yes' if you don't pass any prompt. The model will try to guess what's in the init_image and create best variations"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Text prompt with description of required image modifications. Make it as detailed as possible for best results"
+          },
+          "negative_prompt": {
+            "type": "string",
+            "description": "Items you don't want in the image"
+          },
+          "init_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "Link to the initial image to be used as a reference"
+          },
+          "control_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "Link to the ControlNet image"
+          },
+          "mask_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "Link to the mask image for inpainting"
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 64,
+            "maximum": 1024,
+            "default": 512,
+            "description": "Width of the generated image. Maximum 1024x1024"
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 64,
+            "maximum": 1024,
+            "default": 512,
+            "description": "Height of the generated image. Maximum 1024x1024"
+          },
+          "samples": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4,
+            "default": 1,
+            "description": "Number of images to be returned in response. Maximum value is 4"
+          },
+          "scheduler": {
+            "type": "string",
+            "enum": [
+              "DDPMScheduler", "DDIMScheduler", "PNDMScheduler", "LMSDiscreteScheduler",
+              "EulerDiscreteScheduler", "EulerAncestralDiscreteScheduler", "DPMSolverMultistepScheduler",
+              "HeunDiscreteScheduler", "KDPM2DiscreteScheduler", "DPMSolverSinglestepScheduler",
+              "KDPM2AncestralDiscreteScheduler", "UniPCMultistepScheduler", "DDIMInverseScheduler",
+              "DEISMultistepScheduler", "IPNDMScheduler", "KarrasVeScheduler", "ScoreSdeVeScheduler",
+              "LCMScheduler"
+            ],
+            "description": "Scheduler to use for image generation"
+          },
+          "tomesd": {
+            "type": "string",
+            "enum": ["yes", "no"],
+            "default": "yes",
+            "description": "Enable tomesd to generate images with fast results"
+          },
+          "use_karras_sigmas": {
+            "type": "string",
+            "enum": ["yes", "no"],
+            "default": "yes",
+            "description": "Use Karras sigmas to generate images with nice results"
+          },
+          "algorithm_type": {
+            "type": "string",
+            "enum": ["dpmsolver+++", "none"],
+            "default": "none",
+            "description": "Algorithm type used in DPMSolverMultistepScheduler"
+          },
+          "vae": {
+            "type": "string",
+            "description": "Use custom VAE in generating images"
+          },
+          "lora_strength": {
+            "type": "string",
+            "description": "Specify the strength of the LoRa model. If using multiple LoRa, provide comma-separated values. Range: 0.1 to 1"
+          },
+          "lora_model": {
+            "type": "string",
+            "description": "Multi LoRa supported, pass comma-separated values. Example: 'contrast-fix,yae-miko-genshin'"
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "enum": [21, 31],
+            "description": "Number of denoising steps"
+          },
+          "safety_checker": {
+            "type": "string",
+            "enum": ["yes", "no"],
+            "default": "yes",
+            "description": "A checker for NSFW images. If detected, replaces with blank image"
+          },
+          "ip_adapter_id": {
+            "type": "string",
+            "enum": ["ip-adapter_sdxl", "ip-adapter_sd15", "ip-adapter-plus-face_sd15"],
+            "description": "IP adapter ID for additional image conditioning"
+          },
+          "ip_adapter_scale": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Scale for IP adapter, should be between 0 and 1"
+          },
+          "ip_adapter_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "Valid image URL for IP adapter"
+          },
+          "enhance_prompt": {
+            "type": "string",
+            "enum": ["yes", "no"],
+            "default": "yes",
+            "description": "Enhance prompts for better results"
+          },
+          "controlnet_conditioning_scale": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 5.0,
+            "description": "Scale for ControlNet guidance. Accepts floating values from 0.1 to 5"
+          },
+          "strength": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Prompt strength when using init_image. 1.0 corresponds to full destruction of information in the init image"
+          },
+          "guidance_scale": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 20,
+            "default": 7.5,
+            "description": "Guidance scale for generation"
+          },
+          "seed": {
+            "type": "integer",
+            "description": "Seed for reproducible results. Pass null for random number"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST notification when image generation is complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID returned in webhook response for request identification"
+          },
+          "upscale": {
+            "type": "string",
+            "enum": ["yes", "no"],
+            "description": "Upscale image resolution 2x (e.g., 512x512 becomes 1024x1024)"
+          },
+          "clip_skip": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8,
+            "description": "Clip skip value"
+          },
+          "base64": {
+            "type": "string",
+            "enum": ["yes", "no"],
+            "default": "no",
+            "description": "Get response as base64 string, pass init_image, mask_image, control_image as base64"
+          },
+          "temp": {
+            "type": "string",
+            "enum": ["yes", "no"],
+            "default": "no",
+            "description": "Create temporary image link valid for 24 hours"
+          }
+        }
+      },
+      "ControlNetResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success", "processing", "error"],
+            "description": "Status of the image generation"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the image generation"
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of generated image URLs"
+          },
+          "future_links": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of future image URLs for queued requests"
+          },
+          "meta": {
+            "type": "object",
+            "description": "Metadata about the image generation including all parameters used",
+            "properties": {
+              "prompt": {
+                "type": "string",
+                "description": "The processed prompt used for generation"
+              },
+              "model_id": {
+                "type": "string",
+                "description": "Model ID used for generation"
+              },
+              "controlnet_model": {
+                "type": "string",
+                "description": "ControlNet model(s) used"
+              },
+              "controlnet_type": {
+                "type": "string",
+                "description": "ControlNet type used"
+              },
+              "negative_prompt": {
+                "type": "string",
+                "description": "Negative prompt used"
+              },
+              "scheduler": {
+                "type": "string",
+                "description": "Scheduler used"
+              },
+              "safety_checker": {
+                "type": "string",
+                "description": "Safety checker setting"
+              },
+              "auto_hint": {
+                "type": "string",
+                "description": "Auto hint setting"
+              },
+              "guess_mode": {
+                "type": "string",
+                "description": "Guess mode setting"
+              },
+              "strength": {
+                "type": "number",
+                "description": "Strength value used"
+              },
+              "W": {
+                "type": "integer",
+                "description": "Width of generated image"
+              },
+              "H": {
+                "type": "integer",
+                "description": "Height of generated image"
+              },
+              "guidance_scale": {
+                "type": "number",
+                "description": "Guidance scale used"
+              },
+              "controlnet_conditioning_scale": {
+                "type": "string",
+                "description": "ControlNet conditioning scale used"
+              },
+              "seed": {
+                "type": "integer",
+                "description": "Seed used for generation"
+              },
+              "steps": {
+                "type": "integer",
+                "description": "Number of inference steps used"
+              },
+              "n_samples": {
+                "type": "integer",
+                "description": "Number of samples generated"
+              },
+              "clip_skip": {
+                "type": "integer",
+                "description": "Clip skip value used"
+              }
+            }
+          },
+          "eta": {
+            "type": "number",
+            "description": "Estimated time for completion in seconds (for processing status)"
+          },
+          "message": {
+            "type": "string",
+            "description": "Status message or additional information"
+          },
+          "messege": {
+            "type": "string",
+            "description": "Status message (alternative spelling used in API)"
+          },
+          "tip": {
+            "type": "string",
+            "description": "Additional tips or information"
+          },
+          "tip_1": {
+            "type": "string",
+            "description": "Additional tips or information"
+          },
+          "fetch_result": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to fetch the result when processing"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["status", "messege"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["error"]
+          },
+          "messege": {
+            "type": "string",
+            "description": "Error message description"
+          }
+        }
+      }
+    }
+  }
+}

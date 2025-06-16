@@ -1,31 +1,25 @@
 ---
 title: "Text to Image Endpoint"
-openapi: 'POST /images/text2img'
+openapi: 'POST /text2img'
+description: 'The Dreambooth Text to Image API is used to create image from text based on trained or on public models.'
 ---
 
-## Overview[​](#overview "Direct link to Overview")
+<Tip>
+You can find a list of the public models available and their IDs [here](https://modelslab.com/models)
+</Tip>
+<Note>
+You can make an API call to your trained models as well as to any public model.
+</Note>
 
-The Dreambooth Text to Image API is used to create image from text based on trained or on public models.
+![Text to image endpoint result](/images/image-generation/community-models/assets/images/Text-to-image-1-a226305d52e197b14c4cc0b1534ea06c.jpg)
 
-You can make an API call to your trained models as well as to any public model. You can find a list of the public models available and their IDs [here](https://modelslab.com/models).
-
-This endpoint generates and returns an image from a text passed in the request body.
-
-[Open in Playground 🚀](https://imagen.playground.modelslab.com/community-text-to-image)
-
-``
-
-![Text to image endpoint result](\images\image-generation\community-models\assets\images\Text-to-image-1-a226305d52e197b14c4cc0b1534ea06c.jpg)
-
-## Request[​](#request "Direct link to Request")
-
-```
+## Request
+```curl curl
 --request POST 'https://modelslab.com/api/v6/images/text2img' \
 ```
 
-Make a `POST` request to [https://modelslab.com/api/v6/images/text2img](https://modelslab.com/api/v6/images/text2img) endpoint and pass the required parameters as a request body.
+Make a `POST` request to endpoint and pass the required parameters as a request body.
 
-Watch the how-to video to see it in action.
 
 ## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
 

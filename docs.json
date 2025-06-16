@@ -81,7 +81,9 @@
                   {
                     "group": "Flux",
                     "pages": [
+                      "api-reference/apis/image-generation/flux/overview",
                       "api-reference/apis/image-generation/flux/flux-text-to-image"
+
                     ]
                   },
                   {
