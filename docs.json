@@ -258,13 +258,13 @@
                 "group": "3D API",
                 "pages": [
                   "api-guide/apis/enterprise-api/3d-api/overview",
+                  "api-guide/apis/enterprise-api/3d-api/image-to-3d",
+                  "api-guide/apis/enterprise-api/3d-api/text-to-3d",
+                  "api-guide/apis/enterprise-api/3d-api/system-details",
+                  "api-guide/apis/enterprise-api/3d-api/restart-server",
                   "api-guide/apis/enterprise-api/3d-api/clear-cache",
                   "api-guide/apis/enterprise-api/3d-api/clear-queue",
                   "api-guide/apis/enterprise-api/3d-api/fetch",
-                  "api-guide/apis/enterprise-api/3d-api/image-to-3d",
-                  "api-guide/apis/enterprise-api/3d-api/restart-server",
-                  "api-guide/apis/enterprise-api/3d-api/system-details",
-                  "api-guide/apis/enterprise-api/3d-api/text-to-3d",
                   "api-guide/apis/enterprise-api/3d-api/update-server"
                 ]
               },

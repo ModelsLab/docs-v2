@@ -1,85 +1,86 @@
 ---
-title: "Enterprise: Image to 3D Endpoint"
+title: "Image to 3D"
+description: 'The Image to 3D API generates an 3D character from an image.'
 ---
-
-## Overview[​](#overview "Direct link to Overview")
-
-The Image to 3D API generates an 3D character from an image.
 
 <Warning>
   Make sure you add your [s3 details](/enterprise-api/general/update-s3-details) for `realtime` server, so you can receive image generated in your bucket. Images generated without s3 details being added will be delete after **24hours**
 </Warning>
 
-## Request[​](#request "Direct link to Request")
-
-```
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body to the endpoint.
+```curl curl
 --request POST 'https://modelslab.com/api/v1/enterprise/3d/image_to_3d' \
 ```
 
-Make a `POST` request to [https://modelslab.com/api/v1/enterprise/3d/image\_to\_3d](https://modelslab.com/api/v1/enterprise/3d/image_to_3d) endpoint and pass the required parameters as a request body to the endpoint.
-
-## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
-
-| Parameter                                                                                                   | Description                                                                                      |
-| :---------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------- |
-| **key** (required)                                                                                          | Your API Key used for request authorization.                                                     |
-| **image** (required)                                                                                        | The input image for 3D conversion.                                                               |
-| **render** (optional, default=`false`)                                                                      | Whether to render a NeRF video of the 3D model.                                                  |
-| **output\_format** (optional, `glb`,`obj`,`stl`,`ply` default=`obj` )                                       | The format of the output 3d object                                                               |
-| **resolution** (optional, default=`256`, max=`512`)                                                         | Specifies the resolution of the generated 3D model.                                              |
-| **multi\_image** (optional bool, default: `false`)                                                          | Determines whether multiple images are processed together.                                       |
-| When multimage is set to true, image should be containing multiple povs of the subject in a transparent png |                                                                                                  |
-| **ss\_guidance\_strength** (optional, float, default: 7.5)                                                  | Controls the strength of style-space guidance.                                                   |
-| **ss\_sampling\_steps** (optional, int, default: 12)                                                        | Number of sampling steps for style-space guidance. Range: 1 to 50                                |
-| **slat\_guidance\_strength** (optional, float, default: 3.0)                                                | Controls the strength of slat guidance. Range: 0.0 to 10.0                                       |
-| **slat\_sampling\_steps** (optional, int, default: 12)                                                      | Number of sampling steps for slat guidance. Range: 1 to 50.                                      |
-| **mesh\_simplify** (optional, float, default: 0.90)                                                         | number of triangles to randomly skip render. Degree of mesh simplification. Range: 0.90 to 0.98. |
-| **chunk\_size** (optional, default=`8192`, max=`12000`)                                                     | Size of chunks used in the process (affects VRAM usage).                                         |
-| **seed** (optional, default=`0`)                                                                            | Random seed for reproducibility. If set to 0, a random seed will be generated.                   |
-| **temp** (optional, default=`"no"`)                                                                         | If set to `"yes"`, the output files will be saved in a temporary directory.                      |
-
-## Example[​](#example "Direct link to Example")
-
-### Body[​](#body "Direct link to Body")
-
-Body
-
-```
-{   "key": "",    "image": "https://i.pinimg.com/736x/7c/83/64/7c83645c903677dd93ef50fe953dceea.jpg",    "ss_sampling_steps" : 50,    "slat_sampling_steps" : 50,    "output_format":"glb",    "webhook": null,    "track_id": null,    "temp": "no"}
+## Body
+```json json
+{   
+  "key": "",    
+  "image": "https://i.pinimg.com/736x/7c/83/64/7c83645c903677dd93ef50fe953dceea.jpg",    
+  "ss_sampling_steps" : 50,    
+  "slat_sampling_steps" : 50,    
+  "output_format":"glb",    
+  "webhook": null,    
+  "track_id": null,    
+  "temp": "no"
+}
 ```
 
-### Request[​](#request-1 "Direct link to Request")
+## Body Attributes
 
-* JS
-* PHP
-* NODE
-* PYTHON
-* JAVA
+<ParamField query="key" type="string" required initialValue="">
+  Your API Key used for request authorization.
+</ParamField>
 
-```
-var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({     "key": "",    "image": "https://i.pinimg.com/736x/7c/83/64/7c83645c903677dd93ef50fe953dceea.jpg",    "ss_sampling_steps" : 50,    "slat_sampling_steps" : 50,    "output_format":"glb",    "webhook": null,    "track_id": null,    "temp": "no"});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v1/enterprise/3d/image_to_3d", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
-```
+<ParamField query="image" type="string" required>
+  The input image for 3D conversion.
+</ParamField>
 
-```
-<?php$payload = [    "key" => "",    "image" => "https://i.pinimg.com/736x/7c/83/64/7c83645c903677dd93ef50fe953dceea.jpg",    "ss_sampling_steps" => 50,    "slat_sampling_steps" => 50,    "output_format" => "glb",    "webhook" => null,    "track_id" => null,    "temp" => "no"];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v1/enterprise/3d/image_to_3d',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
-```
+<ParamField query="render" type="bool" default="false">
+  Whether to render a NeRF video of the 3D model.
+</ParamField>
 
-```
-var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v1/enterprise/3d/image_to_3d',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({     "key": "",    "image": "https://i.pinimg.com/736x/7c/83/64/7c83645c903677dd93ef50fe953dceea.jpg",    "ss_sampling_steps" : 50,    "slat_sampling_steps" : 50,    "output_format":"glb",    "webhook": null,    "track_id": null,    "temp": "no"  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
-```
+<ParamField query="output_format" type="string" default="obj">
+  The format of the output 3D object (`glb`, `obj`, `stl`, `ply`).
+</ParamField>
 
-```
-import requestsimport jsonurl = "https://modelslab.com/api/v1/enterprise/3d/image_to_3d"payload = json.dumps({    "key": "",    "image": "https://i.pinimg.com/736x/7c/83/64/7c83645c903677dd93ef50fe953dceea.jpg",    "ss_sampling_steps" : 50,    "slat_sampling_steps" : 50,    "output_format":"glb",    "webhook": None,    "track_id": None,    "temp": "no"})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
-```
+<ParamField query="resolution" type="number" default="256">
+  Specifies the resolution of the generated 3D model. Max: 512.
+</ParamField>
 
-```
-OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\r\n    \"key\" : \"\",\r\n    \"init_image\": \"https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/0335d02b-958a-4a7f-b7e4-a5f1e61efbf1-0.png\",\r\n    \"foreground_ratio\": 0.85,\r\n    \"remove_bg\": false,\r\n    \"resolution\": 256,\r\n    \"chunk_size\": 8192,\r\n    \"webhook\": null,\r\n    \"track_id\": null\r\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v1/enterprise/3d/image_to_3d")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .addHeader("X-API-Key", "{{token}}")  .build();Response response = client.newCall(request).execute();
-```
+<ParamField query="multi_image" type="bool" default="false">
+  Determines whether multiple images are processed together. When set to true, image should contain multiple POVs of the subject in a transparent PNG.
+</ParamField>
 
-### Response[​](#response "Direct link to Response")
+<ParamField query="ss_guidance_strength" type="number" default="7.5">
+  Controls the strength of style-space guidance.
+</ParamField>
 
-Example Response
+<ParamField query="ss_sampling_steps" type="number" default="12">
+  Number of sampling steps for style-space guidance. Range: 1 to 50.
+</ParamField>
 
-```
-{    "status": "success",    "warning": "",    "id": null,    "generationTime": 10.97,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/out/924a461e-87dd-421a-936a-6d789f283d7e.obj"    ],    "proxy_links": [        "https://cdn2.stablediffusionapi.com/out/924a461e-87dd-421a-936a-6d789f283d7e.obj"    ],    "nsfw_content_detected": false,    "webhook_status": "",    "meta": {        "chunk_size": 8192,        "file_prefix": "924a461e-87dd-421a-936a-6d789f283d7e",        "foreground_ratio": ".85",        "image": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/0335d02b-958a-4a7f-b7e4-a5f1e61efbf1-0.png",        "remove_bg": true,        "render": false,        "resolution": 256,        "seed": 294618177,        "temp": "no"    }}
-```
+<ParamField query="slat_guidance_strength" type="number" default="3.0">
+  Controls the strength of slat guidance. Range: 0.0 to 10.0.
+</ParamField>
+
+<ParamField query="slat_sampling_steps" type="number" default="12">
+  Number of sampling steps for slat guidance. Range: 1 to 50.
+</ParamField>
+
+<ParamField query="mesh_simplify" type="number" default="0.90">
+  Degree of mesh simplification. Range: 0.90 to 0.98.
+</ParamField>
+
+<ParamField query="chunk_size" type="number" default="8192">
+  Size of chunks used in the process (affects VRAM usage). Max: 12000.
+</ParamField>
+
+<ParamField query="seed" type="number" default="0">
+  Random seed for reproducibility. If set to 0, a random seed will be generated.
+</ParamField>
+
+<ParamField query="temp" type="string" default="no">
+  If set to `"yes"`, the output files will be saved in a temporary directory.
+</ParamField>
