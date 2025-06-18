@@ -272,16 +272,16 @@
                 "group": "Deepfake",
                 "pages": [
                   "api-guide/apis/enterprise-api/deepfake/overview",
+                  "api-guide/apis/enterprise-api/deepfake/specific-face-swap",
+                  "api-guide/apis/enterprise-api/deepfake/multiple-face-swap",
+                  "api-guide/apis/enterprise-api/deepfake/single-video-swap",
+                  "api-guide/apis/enterprise-api/deepfake/specific-video-swap",
                   "api-guide/apis/enterprise-api/deepfake/clear-cache",
                   "api-guide/apis/enterprise-api/deepfake/clear-queue",
-                  "api-guide/apis/enterprise-api/deepfake/fetch",
-                  "api-guide/apis/enterprise-api/deepfake/multiple-face-swap",
                   "api-guide/apis/enterprise-api/deepfake/restart-server",
-                  "api-guide/apis/enterprise-api/deepfake/single-video-swap",
-                  "api-guide/apis/enterprise-api/deepfake/specific-face-swap",
-                  "api-guide/apis/enterprise-api/deepfake/specific-video-swap",
                   "api-guide/apis/enterprise-api/deepfake/system-details",
-                  "api-guide/apis/enterprise-api/deepfake/update-server"
+                  "api-guide/apis/enterprise-api/deepfake/update-server",
+                  "api-guide/apis/enterprise-api/deepfake/fetch"
                 ]
               },
               {
