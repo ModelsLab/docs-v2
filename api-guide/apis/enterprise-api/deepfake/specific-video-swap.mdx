@@ -1,0 +1,57 @@
+---
+title: "Specific Video Swap"
+description: "Specific Video Swap endpoint allows swapping specific faces according to reference face."
+---
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/deepfake/specific_video_swap' \
+```
+
+## Body
+```json json
+{    
+    "key": "enterprise_api_key",    
+    "init_video": "https://tawk.link/6332cd5154f06e12d8971855/vc/66d997a6a2bc5fe2b627a250/v/4239c555189b772d5ca1bd5aa4bf872c4c12a07e/sdfsdfsdf.mp4",    
+    "init_image" :"https://images-ext-1.discordapp.net/external/rJOvGZHIWsIijkfvCn5dByZNh_RfZZxUIiyyo7yOFIY/https/images.hindustantimes.com/rf/image_size_630x354/HT/p2/2017/12/27/Pictures/_1e5bc084-ead1-11e7-ad70-11504944e689.jpg?format=webp&width=984&height=553",    
+    "reference_image": "https://images-ext-1.discordapp.net/external/Z8sBOyxEy9tsqkd9gsNK2dHZh-Em6LDqrmyjcDeMXII/https/i.ibb.co/2PGZ3p7/lmao.png?format=webp&quality=lossless&width=412&height=662",    
+    "output_format": "mp4",    
+    "webhook": null,    
+    "track_id": null
+}
+```
+
+## Body Attributes
+
+<ParamField query="key" type="string" required>
+  Your API Key used for request authorization.
+</ParamField>
+
+<ParamField query="init_image" type="string" required>
+  The image containing multiple faces to be swapped. (URL string)
+</ParamField>
+
+<ParamField query="init_video" type="string" required>
+  The video containing the face(s) to replace the faces in the image. (URL string)
+</ParamField>
+
+<ParamField query="reference_image" type="string" required>
+  The reference image of the particular face you want to swap from the init image. (URL string)
+</ParamField>
+
+<ParamField query="output_format" type="string">
+  The output format of the video. Available options: `mp4`
+</ParamField>
+
+<ParamField query="watermark" type="bool" default="true">
+  Whether the generated result should have a watermark. Available options: `true`, `false`
+</ParamField>
+
+<ParamField query="webhook" type="string">
+  Set a URL to receive a POST API call once the generation is complete.
+</ParamField>
+
+<ParamField query="track_id" type="string">
+  This ID is returned in the webhook API call to identify the request.
+</ParamField>

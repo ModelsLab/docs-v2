@@ -1,0 +1,52 @@
+---
+title: "Specific Face Swap"
+description: "Specific Face Swap endpoint allows swapping faces in a single image."
+---
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/deepfake/single_face_swap' \
+```
+
+## Body
+```json json
+{    
+    "key":"enterprise_api_key",    
+    "init_image":" https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/DTs2zg3HELltVoQElpO3ec0f9BsAtS-metaNzExMTY5My1zYWxtYW4ta2hhbi1zaGFocnVraC1raGFuLTJbMV0ucG5n-.png",    
+    "target_image":"https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/jznUIJy6FoM1nUkXZBCvhyrlbetau1-metabGljZW5zZWQtaW1hZ2UuanBn-.jpg",    
+    "reference_image":"https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/9Mhbi9i0r9ADMfTpwTOqmyEQQyb6AK-metaSEQtd2FsbHBhcGVyLXNoYWhydWtoLWtoYW4tc3JrLWFjdG9yLWhlcm9bMV0uanBn-.jpg",    
+    "webhook": null,    
+    "track_id": null
+}
+```
+
+## Body Attributes
+
+<ParamField query="key" type="string" required>
+  Your API Key used for request authorization.
+</ParamField>
+
+<ParamField query="init_image" type="string" required>
+  The first image containing the face to be swapped. (URL string)
+</ParamField>
+
+<ParamField query="target_image" type="string" required>
+  The second image containing the face to replace the face in the initial image. (URL string)
+</ParamField>
+
+<ParamField query="reference_image" type="string" required>
+  The reference image of the particular face you want to swap from the init image. (URL string)
+</ParamField>
+
+<ParamField query="watermark" type="bool" default="true">
+  Whether the generated result should have a watermark. Available options: `true`, `false`
+</ParamField>
+
+<ParamField query="webhook" type="string">
+  Provide a URL to receive a POST API call once the image generation is complete.
+</ParamField>
+
+<ParamField query="track_id" type="string">
+  This ID is included in the webhook API call to identify the request.
+</ParamField>

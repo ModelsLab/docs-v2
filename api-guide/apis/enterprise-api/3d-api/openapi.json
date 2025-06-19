@@ -1,0 +1,403 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "ModelsLab Enterprise 3D API",
+    "description": "API endpoints for managing 3D generation services on ModelsLab Enterprise",
+    "version": "1.0.0",
+    "contact": {
+      "name": "ModelsLab Support",
+      "url": "https://modelslab.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://modelslab.com/api/v1/enterprise/3d",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/fetch/{id}": {
+      "post": {
+        "summary": "Fetch 3D Response",
+        "description": "Fetch queued generated response. This endpoint returns already generated/queued images and does not generate new images.",
+        "operationId": "fetch3DResponse",
+        "tags": ["3D Generation"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID returned with the image URL upon generation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiKeyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FetchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/restart_server": {
+      "post": {
+        "summary": "Restart Server",
+        "description": "Restart your dedicated server",
+        "operationId": "restartServer",
+        "tags": ["Server Management"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiKeyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Server restart initiated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerActionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/system_details": {
+      "post": {
+        "summary": "Get System Details",
+        "description": "Returns information about your server including model count and queue status",
+        "operationId": "getSystemDetails",
+        "tags": ["Server Management"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiKeyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "System details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SystemDetailsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/update_server": {
+      "post": {
+        "summary": "Update Server",
+        "description": "Update your dedicated server",
+        "operationId": "updateServer",
+        "tags": ["Server Management"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiKeyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Server update initiated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerActionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/clear_cache": {
+      "post": {
+        "summary": "Clear API Cache",
+        "description": "Clear the API's cache",
+        "operationId": "clearCache",
+        "tags": ["Server Management"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiKeyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cache cleared successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClearActionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/clear_queue": {
+      "post": {
+        "summary": "Clear API Queue",
+        "description": "Clear the API's queue",
+        "operationId": "clearQueue",
+        "tags": ["Server Management"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiKeyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Queue cleared successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClearActionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiKeyRequest": {
+        "type": "object",
+        "required": ["key"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your enterprise API key used for request authorization",
+            "example": "enterprise_api_key"
+          }
+        }
+      },
+      "FetchResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success", "error"],
+            "description": "Status of the request"
+          },
+          "id": {
+            "type": "integer",
+            "description": "The ID of the generated content",
+            "example": 12202888
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of URLs for the generated content",
+            "example": ["https://pub-8b49af329fae499aa563997f5d4068a4.r2.dev/generations/e5cd86d3-7305-47fc-82c1-7d1a3b130fa4-0.png"]
+          }
+        },
+        "required": ["status"]
+      },
+      "ServerActionResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Action message"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["success", "error"],
+            "description": "Status of the action"
+          }
+        },
+        "required": ["status", "message"]
+      },
+      "SystemDetailsResponse": {
+        "type": "object",
+        "properties": {
+          "model_count": {
+            "type": "integer",
+            "description": "Number of models currently loaded",
+            "example": 0
+          },
+          "queue_time": {
+            "type": "integer",
+            "description": "Current queue processing time",
+            "example": 0
+          },
+          "status": {
+            "type": "string",
+            "description": "Server status",
+            "example": "ok"
+          }
+        },
+        "required": ["model_count", "queue_time", "status"]
+      },
+      "ClearActionResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success", "error"],
+            "description": "Status of the clear action"
+          },
+          "message": {
+            "type": "string",
+            "description": "Result message",
+            "example": "Cache cleared successfully"
+          }
+        },
+        "required": ["status", "message"]
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["error"],
+            "example": "error"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message explaining what went wrong"
+          },
+          "error_code": {
+            "type": "string",
+            "description": "Specific error code for debugging"
+          }
+        },
+        "required": ["status", "message"]
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Bad request - Invalid parameters",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized - Invalid or missing API key",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not found - Resource does not exist",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "3D Generation",
+      "description": "Endpoints for managing 3D content generation"
+    },
+    {
+      "name": "Management",
+      "description": "Endpoints for managing your dedicated server"
+    }
+  ]
+}

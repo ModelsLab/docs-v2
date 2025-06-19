@@ -1,0 +1,18 @@
+---
+title: "Clear API Queue"
+description: "This endpoint is used to clear the API's queue."
+openapi: "POST /flux/clear_queue"
+---
+
+## Request
+Send a `POST` request to below endpoint to clear the API's cache.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/flux/clear_queue' \
+```
+
+## Body
+```json json
+{ 
+    "key": "enterprise_api_key"
+}
+```

@@ -1,0 +1,111 @@
+---
+title: "Text to 3D"
+description: 'This endpoint generates an 3d object from a text prompt.'
+---
+
+<Warning>
+  Make sure you add your [s3 details](/enterprise-api/general/update-s3-details) for `3d` server, so you can receive image generated in your bucket. Images generated without s3 details being added will be delete after **24hours**
+</Warning>
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/3d/text_to_3d' \
+```
+
+## Body
+```json json
+{    
+  "key": "enterprise_api_key",    
+  "foreground_ratio": "0.85",    
+  "prompt": "a ghost wearing white bedsheet",    
+  "num_inference_steps": "30",    
+  "resolution": 512,    
+  "guidance_scale": "3",    
+  "ss_sampling_steps": 50,    
+  "slat_sampling_steps": 50,    
+  "output_format":"glb",    
+  "seed": 0,    
+  "temp": "no",    
+  "webhook": null,    
+  "track_id": null
+}
+```
+
+## Body Attributes
+
+<ParamField query="key" type="string" required initialValue="">
+  Your API Key used for request authorization.
+</ParamField>
+
+<ParamField query="model_id" type="string" default="instantmesh">
+  Specifies the model to be used for the 3D generation.
+</ParamField>
+
+<ParamField query="prompt" type="string" required default="A full body mesh of a dog">
+  Text prompt for generating the 3D model.
+</ParamField>
+
+<ParamField query="render" type="bool" default="false">
+  Whether to render a NeRF video of the 3D model.
+</ParamField>
+
+<ParamField query="output_format" type="string" default="obj">
+  The format of the output 3D object (`glb`, `obj`, `stl`, `ply`).
+</ParamField>
+
+<ParamField query="negative_prompt" type="string" default="">
+  Negative prompt to exclude certain elements.
+</ParamField>
+
+<ParamField query="guidance_scale" type="number" default="1">
+  Controls the guidance between the prompt and the generated model.
+</ParamField>
+
+<ParamField query="num_inference_steps" type="number" required default="10">
+  The number of inference steps to generate the 3D model.
+</ParamField>
+
+<ParamField query="ss_guidance_strength" type="number" default="7.5">
+  Controls the strength of style-space guidance.
+</ParamField>
+
+<ParamField query="ss_sampling_steps" type="number" default="12">
+  Number of sampling steps for style-space guidance. Range: 1 to 50.
+</ParamField>
+
+<ParamField query="slat_guidance_strength" type="number" default="3.0">
+  Controls the strength of slat guidance. Range: 0.0 to 10.0.
+</ParamField>
+
+<ParamField query="slat_sampling_steps" type="number" default="12">
+  Number of sampling steps for slat guidance. Range: 1 to 50.
+</ParamField>
+
+<ParamField query="mesh_simplify" type="number" default="0.90">
+  Degree of mesh simplification. Range: 0.90 to 0.98.
+</ParamField>
+
+<ParamField query="foreground_ratio" type="number" required default="0.85">
+  Ratio of the foreground size to the image size. Only used when `remove_bg` is enabled.
+</ParamField>
+
+<ParamField query="remove_bg" type="bool" default="false">
+  If true, removes the background from the generated 3D model.
+</ParamField>
+
+<ParamField query="resolution" type="number" required default="256">
+  Specifies the resolution of the generated 3D model. Max: 512.
+</ParamField>
+
+<ParamField query="chunk_size" type="number" default="8192">
+  Size of chunks used in the process (affects VRAM usage). Max: 12000.
+</ParamField>
+
+<ParamField query="seed" type="number" default="0">
+  Random seed for reproducibility. If set to 0, a random seed will be generated.
+</ParamField>
+
+<ParamField query="temp" type="string" default="no">
+  If set to `"yes"`, the output files will be saved in a temporary directory.
+</ParamField>

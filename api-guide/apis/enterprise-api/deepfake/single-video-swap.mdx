@@ -1,0 +1,52 @@
+---
+title: "Single Video Swap"
+description: "Single Video Swap endpoint allows swapping faces in all detected faces within a single video."
+---
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/deepfake/single_video_swap' \
+```
+
+## Body
+```json json
+{     
+    "key": "enterprise_api_key",    
+    "init_image":"https://plus.unsplash.com/premium_photo-1661508557554-e3d96f2fdde5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YmVhdXRpZnVsJTIwZ2lybHxlbnwwfHwwfHx8MA%3D%3D",    
+    "init_video":"https://tawk.link/6332cd5154f06e12d8971855/vc/66d997a6a2bc5fe2b627a250/v/4239c555189b772d5ca1bd5aa4bf872c4c12a07e/sdfsdfsdf.mp4",    
+    "output_format":"mp4",    
+    "webhook":null,    
+    "track_id": null
+}
+```
+
+## Body Attributes
+
+<ParamField query="key" type="string" required>
+  Your API Key used for request authorization.
+</ParamField>
+
+<ParamField query="init_image" type="string" required>
+  The image containing multiple faces to be swapped. (URL string)
+</ParamField>
+
+<ParamField query="init_video" type="string" required>
+  The video containing the face(s) to replace the faces in the image. Only videos less than 1 minute are accepted. If using YouTube, ensure the video is not made for kids or classified as adult content. (URL string)
+</ParamField>
+
+<ParamField query="output_format" type="string" default="mp4">
+  The output format of the video. Available options: `mp4`
+</ParamField>
+
+<ParamField query="watermark" type="bool" default="true">
+  Whether the generated result should have a watermark. Available options: `true`, `false`
+</ParamField>
+
+<ParamField query="webhook" type="string">
+  Set a URL to receive a POST API call once the image generation is complete.
+</ParamField>
+
+<ParamField query="track_id" type="string">
+  This ID is returned in the response to the webhook API call. Used to identify the webhook request.
+</ParamField>
