@@ -288,36 +288,36 @@
                 "group": "Deepseek Chat",
                 "pages": [
                   "api-guide/apis/enterprise-api/deepseek-chat/overview",
-                  "api-guide/apis/enterprise-api/deepseek-chat/clear-cache",
+                  "api-guide/apis/enterprise-api/deepseek-chat/start",
                   "api-guide/apis/enterprise-api/deepseek-chat/restart-server",
-                  "api-guide/apis/enterprise-api/deepseek-chat/start"
+                  "api-guide/apis/enterprise-api/deepseek-chat/clear-cache"
                 ]
               },
               {
                 "group": "Face Gen",
                 "pages": [
                   "api-guide/apis/enterprise-api/face-gen/overview",
+                  "api-guide/apis/enterprise-api/face-gen/make-gen",
+                  "api-guide/apis/enterprise-api/face-gen/update-server",
+                  "api-guide/apis/enterprise-api/face-gen/system-details",
+                  "api-guide/apis/enterprise-api/face-gen/restart-server",
                   "api-guide/apis/enterprise-api/face-gen/clear-cache",
                   "api-guide/apis/enterprise-api/face-gen/clear-queue",
-                  "api-guide/apis/enterprise-api/face-gen/fetch",
-                  "api-guide/apis/enterprise-api/face-gen/make-gen",
-                  "api-guide/apis/enterprise-api/face-gen/restart-server",
-                  "api-guide/apis/enterprise-api/face-gen/system-details",
-                  "api-guide/apis/enterprise-api/face-gen/update-server"
+                  "api-guide/apis/enterprise-api/face-gen/fetch"
                 ]
               },
               {
                 "group": "Flux",
                 "pages": [
                   "api-guide/apis/enterprise-api/flux/overview",
-                  "api-guide/apis/enterprise-api/flux/clear-cache",
-                  "api-guide/apis/enterprise-api/flux/clear-queue",
-                  "api-guide/apis/enterprise-api/flux/fetchimage",
+                  "api-guide/apis/enterprise-api/flux/text2img",
                   "api-guide/apis/enterprise-api/flux/img2img",
                   "api-guide/apis/enterprise-api/flux/restart-server",
                   "api-guide/apis/enterprise-api/flux/system-details",
-                  "api-guide/apis/enterprise-api/flux/text2img",
-                  "api-guide/apis/enterprise-api/flux/update-server"
+                  "api-guide/apis/enterprise-api/flux/update-server",
+                  "api-guide/apis/enterprise-api/flux/clear-cache",
+                  "api-guide/apis/enterprise-api/flux/clear-queue",
+                  "api-guide/apis/enterprise-api/flux/fetch"
                 ]
               },
               {

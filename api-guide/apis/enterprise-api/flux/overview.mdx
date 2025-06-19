@@ -1,45 +1,43 @@
 ---
-title: "Enterprise: Flux API"
+title: "Flux"
+description: "Generate images with FLUX."
 ---
 
-## Overview[​](#overview "Direct link to Overview")
+<Tip>
+    Not on Enterprise yet? Get your enterprise plan at [ModelsLab](https://modelslab.com/enterprise)
+</Tip>
 
-Generate image in seconds
+## Available Endpoints
+<CardGroup>
+  <Card title="Text to Image" href="/enterprise-api/flux/text2img">
+    This endpoint generates and returns an image from a text prompt using the Flux model.
+  </Card>
 
-You can also specify the number of images to be generated and set their height and width.
+  <Card title="Image to Image" href="/enterprise-api/flux/img2img">
+    This endpoint generates and returns an image from an input image using the Flux model.
+  </Card>
 
-Currently the API supports the following image formats: **PNG** and **JPG**.
+  <Card title="Fetch Queued Images" href="/enterprise-api/flux/fetchimage">
+    This endpoint fetches already generated or queued images by ID.
+  </Card>
 
-## Available Endpoints[​](#available-endpoints "Direct link to Available Endpoints")
+  <Card title="Clear Server Cache" href="/enterprise-api/flux/clear-cache">
+    This endpoint clears the server cache.
+  </Card>
 
-* [text2img](/enterprise-api/flux/text2img)
-* [img2img](/enterprise-api/flux/img2img)
-* [fetch](/enterprise-api/flux/fetchimage)
-* [clear cache](/enterprise-api/flux/clear-cache)
-* [restart server](/enterprise-api/flux/restart-server)
-* [system details](/enterprise-api/flux/system-details)
-* [update server](/enterprise-api/flux/update-server)
+  <Card title="Clear Server Queue" href="/enterprise-api/flux/clear-queue">
+    This endpoint clears the server queue.
+  </Card>
 
-### Text to Image Endpoint[​](#text-to-image-endpoint "Direct link to Text to Image Endpoint")
+  <Card title="Restart Server" href="/enterprise-api/flux/restart-server">
+    This endpoint restarts the server.
+  </Card>
 
-This endpoint generates and returns an image from a text passed in the request using flux model.
+  <Card title="System Details" href="/enterprise-api/flux/system-details">
+    This endpoint retrieves system and server details.
+  </Card>
 
-### Image to Image Endpoint[​](#image-to-image-endpoint "Direct link to Image to Image Endpoint")
-
-This endpoint generates and returns an image from a from passed in the request using flux model.
-
-### Fetch Queued Images Endpoint[​](#fetch-queued-images-endpoint "Direct link to Fetch Queued Images Endpoint")
-
-This endpoint returns an already generated image by passing its **ID** with the endpoint location.
-
-### Clear Server Cache Endpoint[​](#clear-server-cache-endpoint "Direct link to Clear Server Cache Endpoint")
-
-This endpoint clear server cache
-
-### Restart Server Endpoint[​](#restart-server-endpoint "Direct link to Restart Server Endpoint")
-
-This endpoint restart the server
-
-## Playground[​](#playground "Direct link to Playground")
-
-You can try the available endpoints in our [Playground](https://modelslab.com/playground/text-to-image?tab=1\&model_id=midjourney) section, just make sure to [sign up](https://modelslab.com/register) first.
+  <Card title="Update Server" href="/enterprise-api/flux/update-server">
+    This endpoint updates the server to the latest version.
+  </Card>
+</CardGroup>

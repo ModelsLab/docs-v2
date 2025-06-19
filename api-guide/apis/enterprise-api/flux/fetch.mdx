@@ -1,13 +1,13 @@
 ---
 title: "Fetch Queued Images"
-description: "This endpoint is used to fetch your queued generations."
-openapi: "POST /face_gen/fetch/{id}"
+description: "Fetch Queued Images API fetches queued images for flux."
+openapi: "POST /flux/fetch"
 ---
 
 ## Request
 Send a `POST` request to below endpoint to return the corresponding queued images.
 ```curl curl
---request POST 'https://modelslab.com/api/v1/enterprise/face_gen/fetch/{id}' \
+--request POST 'https://modelslab.com/api/v1/enterprise/flux/fetch/{id}' \
 ```
 
 ## Body
