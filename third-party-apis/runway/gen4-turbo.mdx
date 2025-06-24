@@ -1,0 +1,89 @@
+---
+title: "Runway ML Gen4 Turbo API"
+description: "Generate high-quality videos quickly using Runway ML's Gen4 Turbo model for fast video generation."
+---
+
+<Tip>
+  **Third-Party Model**: This is a Runway ML model accessed through ModelsLab's API. Use your ModelsLab API key for authentication.
+</Tip>
+
+<Warning>
+  **Credit Usage**: Each 5s video generation costs 127 credits (Basic Plan) or 75 credits (Standard Plan). Monitor your usage carefully.
+</Warning>
+
+## Model Information
+
+| Property | Details |
+|----------|---------|
+| Model ID | `gen4_turbo` |
+| Credit Usage | 127 credits (Basic Plan) / 75 credits (Standard Plan) per 5s video |
+| Type | Video Generation (Turbo) |
+| Provider | Runway ML |
+
+## Authentication
+
+<Info>
+  Include your API key in the `key` header of the request. Get your API key from your account settings.
+</Info>
+
+```curl curl
+--request POST 'https://modelslab.com/api/v7/video-fusion/text-to-video' \
+--header 'Content-Type: application/json' \
+--header 'key: YOUR_API_KEY' \
+```
+
+Generate high-quality videos quickly from text prompts using Runway ML's Gen4 Turbo model.
+
+### Body Parameters
+
+<ParamField body="model_id" type="string" required>
+  The model identifier. Use `gen4_turbo` for Runway ML Gen4 Turbo.
+</ParamField>
+
+<ParamField body="prompt" type="string" required>
+  Detailed text description of the video you want to generate. Be specific and descriptive for best results.
+</ParamField>
+
+<ParamField body="portrait" type="boolean" optional>
+  Set to `true` to generate portrait video. Default is landscape.
+</ParamField>
+
+### Example Request
+
+```json
+{
+  "model_id": "gen4_turbo",
+  "prompt": "A serene mountain lake at dawn with mist rising from the water, birds flying overhead, cinematic camera movement, 4k quality",
+  "portrait": false
+}
+```
+
+### Response
+
+The API returns a JSON response containing the generated video URL and metadata.
+
+```json
+{
+  "status": "success",
+  "generationTime": 45.2,
+  "id": "87654321",
+  "output": [
+    "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/video.mp4"
+  ],
+  "meta": {
+    "model_id": "gen4_turbo",
+    "prompt": "A serene mountain lake at dawn...",
+    "duration": 5,
+    "fps": 24,
+    "resolution": "1280x720",
+    "portrait": false
+  }
+}
+```
+
+### Features
+
+- **Fast Generation**: Optimized for quick video creation
+- **High Quality**: Maintains excellent visual fidelity
+- **Flexible Aspect Ratios**: Support for both landscape and portrait videos
+- **Cinematic Output**: Professional-grade video generation
