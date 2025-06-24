@@ -1,0 +1,53 @@
+---
+title: "Google Imagen 3 API"
+description: "Google Imagen 3 generates high-quality artistic images from detailed text prompts."
+---
+
+<Tip>
+  **Third-Party Model**: This is a Google model accessed through ModelsLab's API. Use your ModelsLab API key for authentication.
+</Tip>
+
+<Warning>
+  **Credit Usage**: Each image generation costs 19 credits (Basic Plan) or 11 credits (Standard Plan). Plan your usage accordingly.
+</Warning>
+
+## Model Information
+
+| Property | Details |
+|----------|---------|
+| Model ID | `imagen-3` |
+| Credit Usage | 19 credits (Basic Plan) / 11 credits (Standard Plan) per image |
+| Type | Image Generation |
+| Provider | Google |
+
+## Authentication
+
+<Info>
+  Include your API key in the `key` header of the request. Get your API key from your account settings.
+</Info>
+
+```curl curl
+--request POST 'https://modelslab.com/api/v7/images/text-to-image' \
+--header 'Content-Type: application/json' \
+--header 'key: YOUR_API_KEY' \
+```
+
+Generate high-quality artistic images from text prompts using Google Imagen 3.
+
+### Body Parameters
+
+<ParamField body="model_id" type="string" required>
+  The model identifier. Use `imagen-3` for Google Imagen 3
+</ParamField>
+
+<ParamField body="prompt" type="string" required>
+  Detailed text description of the image you want to generate. Be specific and descriptive for best results.
+</ParamField>
+
+
+```json
+{
+  "model_id": "imagen-3",
+  "prompt": "masterpiece, best quality, amazing quality, very aesthetic, absurdres, newest extreme close up, upper body, side view mysterious shaman warrior, wearing an ornate animal skull mask with large black horns, intricate engravings on the bone dark blue hood draped over shoulders, heavy fur cloak dusted with snow, cold breath visible in the air, holding staff icy fjord, snow covered mountains, overcast sky, freezing atmosphere, glitch shapes, surreal moody and diffused, soft cold highlights, subtle shadows, atmospheric depth wtfisthis, 748cmstyle"
+}
+```

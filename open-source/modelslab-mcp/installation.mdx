@@ -1,0 +1,144 @@
+---
+title: "Installation Guide"
+description: "Step-by-step guide to install and configure the ModelsLab MCP Server with Claude Desktop."
+---
+
+## Prerequisites
+
+Before installing the ModelsLab MCP Server, ensure you have:
+
+- **Python 3.7+** installed on your system
+- **Claude Desktop** application installed
+- **ModelsLab account** with API access
+- **Git** for cloning the repository
+
+## Step 1: Clone the Repository
+
+First, clone the ModelsLab MCP Server repository to your local machine:
+
+```bash
+git clone https://github.com/ModelsLab/modelslab-mcp.git
+```
+
+Navigate to the cloned directory:
+
+```bash
+cd modelslab-mcp
+```
+
+## Step 2: Get Your API Key
+
+1. Visit the [ModelsLab Portal](https://modelslab.com/dashboard/api-keys)
+2. Log in to your account
+3. Navigate to the API Keys section
+4. Generate a new API key or copy your existing one
+5. Keep this key secure - you'll need it for configuration
+
+## Step 3: Create Configuration File
+
+Create the Claude Desktop configuration file in the appropriate location:
+
+### For macOS:
+```bash
+# Navigate to Claude's config directory
+cd ~/Library/Application\ Support/Claude/
+
+# Create the config file
+touch claude_desktop_config.json
+```
+
+### For Windows:
+```cmd
+# Navigate to Claude's config directory
+cd %APPDATA%\Claude\
+
+# Create the config file (if it doesn't exist)
+type nul > claude_desktop_config.json
+```
+
+## Step 4: Configure the MCP Server
+
+Add the following configuration to your `claude_desktop_config.json` file:
+
+```json
+{
+  "mcpServers": {
+    "ModelsLab-MCP": {
+      "command": "python",
+      "args": [
+        "/path/to/modelslab-mcp"
+      ],
+      "env": {
+        "IMAGE_STORAGE_DIRECTORY": "/path/to/your/images",
+        "MODELSLAB_API_KEY": "your_api_key_here"
+      }
+    }
+  }
+}
+```
+
+### Configuration Parameters:
+
+| Parameter | Description | Example |
+|-----------|-------------|---------|
+| `command` | Python executable path | `"python"` or `"python3"` |
+| `args` | Path to the cloned repository | `"/Users/username/modelslab-mcp"` |
+| `IMAGE_STORAGE_DIRECTORY` | Where to save generated images | `"/Users/username/Pictures/ModelsLab"` |
+| `MODELSLAB_API_KEY` | Your ModelsLab API key | `"ml-abc123..."` |
+
+## Step 5: Update Paths
+
+Replace the placeholder paths with your actual paths:
+
+### Example for macOS:
+```json
+{
+  "mcpServers": {
+    "ModelsLab-MCP": {
+      "command": "/usr/bin/python3",
+      "args": [
+        "/Users/johndoe/modelslab-mcp"
+      ],
+      "env": {
+        "IMAGE_STORAGE_DIRECTORY": "/Users/johndoe/Pictures/ModelsLab",
+        "MODELSLAB_API_KEY": "ml-your-actual-api-key"
+      }
+    }
+  }
+}
+```
+
+### Example for Windows:
+```json
+{
+  "mcpServers": {
+    "ModelsLab-MCP": {
+      "command": "C:\\Python39\\python.exe",
+      "args": [
+        "C:\\Users\\JohnDoe\\modelslab-mcp"
+      ],
+      "env": {
+        "IMAGE_STORAGE_DIRECTORY": "C:\\Users\\JohnDoe\\Pictures\\ModelsLab",
+        "MODELSLAB_API_KEY": "ml-your-actual-api-key"
+      }
+    }
+  }
+}
+```
+
+## Step 6: Restart Claude Desktop
+
+1. **Completely quit** Claude Desktop (not just minimize)
+2. **Reopen** Claude Desktop
+3. The MCP server should now be available
+
+## Verification
+
+To verify the installation worked:
+
+1. Open a new conversation in Claude Desktop
+2. Try generating an image with a command like:
+   ```
+   Generate an image of a cat sitting on a tree
+   ```
+3. If successful, you should see the generated image and it will be saved to your specified directory
