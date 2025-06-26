@@ -1,83 +1,77 @@
 ---
 title: "Enterprise: Background Removal and Create mask Endpoint"
+description: "This endpoint removes background from image and create mask."
 ---
 
-## Overview[​](#overview "Direct link to Overview")
 
-This endpoint removes background from image and create mask.
-
-![removebg-createmask endpoint result](\images\enterprise-api\image-editing\assets\images\Background-Removal-b950c09956614c3e222247b679b7b1c0.jpg)
+![removebg-createmask endpoint result](/images/enterprise-api/image-editing/assets/images/Background-Removal-b950c09956614c3e222247b679b7b1c0.jpg)
 
 <Warning>
   Make sure you add your [s3 details](/enterprise-api/general/update-s3-details) for `image_editing` server, so you can receive image generated in your bucket. Images generated without s3 details being added will be delete after **24hours**
 </Warning>
 
-## Request[​](#request "Direct link to Request")
-
-```
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body to the endpoint.
+```curl curl
 --request POST 'https://modelslab.com/api/v1/enterprise/image_editing/removebg_mask' \
 ```
 
-Make a `POST` request to [https://modelslab.com/api/v1/enterprise/image\_editing/removebg\_mask](https://modelslab.com/api/v1/enterprise/image_editing/removebg_mask) endpoint and pass the required parameters as a request body to the endpoint.
-
-## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
-
-| Parameter                                 | Description                                                                                                             |
-| :---------------------------------------- | :---------------------------------------------------------------------------------------------------------------------- |
-| **key**                                   | Your API Key used for request authorization                                                                             |
-| **image**                                 | url of the image you want to remove and create its mask                                                                 |
-| **alpha\_matting**                        | Whether to perform alpha matting. It accepts `true` or `false`. Default is `false`                                      |
-| **post\_process\_mask**                   | To post process the mask image. It accepts `true` or `false`. Default is `false`                                        |
-| **only\_mask**                            | Whether to return only mask image or not. It accept `true` or `false`. Default is `false`                               |
-| **seed**                                  | Seed is used to reproduce results, same seed will give you same image in return again. Pass *null* for a random number. |
-| **alpha\_matting\_foreground\_threshold** | Optional. Threshold for alpha matting foreground. Default is 240                                                        |
-| **alpha\_matting\_background\_threshold** | Optional. Threshold for alpha matting foreground. Default is 20                                                         |
-| **alpha\_matting\_erode\_size**           | Optional. Erode size for alpha matting. Default is 5.                                                                   |
-| **webhook**                               | Set an URL to get a POST API call once the image generation is complete.                                                |
-| **track\_id**                             | This ID is returned in the response to the webhook API call. This will be used to identify the webhook request.         |
-
-## Example[​](#example "Direct link to Example")
-
-### Body[​](#body "Direct link to Body")
-
-Body
-
-```
-{    "key":"",    "seed":12345,    "image":"https://huggingface.co/datasets/diffusers/test-arrays/resolve/main/stable_diffusion_inpaint/boy.png",    "post_process_mask": false,    "only_mask": false,    "alpha_matting":false,    "webhook": null,    "track_id": null  }
+## Body
+```json json
+{    
+  "key":"",    
+  "seed":12345,    
+  "image":"https://huggingface.co/datasets/diffusers/test-arrays/resolve/main/stable_diffusion_inpaint/boy.png",    
+  "post_process_mask": false,    
+  "only_mask": false,    
+  "alpha_matting":false,    
+  "webhook": null,    
+  "track_id": null  
+}
 ```
 
-### Request[​](#request-1 "Direct link to Request")
+## Body Attributes
 
-* JS
-* PHP
-* NODE
-* PYTHON
-* JAVA
+<ParamField body="key" type="string" required>
+  Your API Key used for request authorization
+</ParamField>
 
-```
-var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({    "key":"",    "seed":12345,    "image":"https://huggingface.co/datasets/diffusers/test-arrays/resolve/main/stable_diffusion_inpaint/boy.png",    "post_process_mask": false,    "only_mask": false,    "alpha_matting":false,    "webhook": null,    "track_id": null   });var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v1/enterprise/image_editing/removebg_mask", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
-```
+<ParamField body="image" type="string" required>
+  URL of the image you want to remove and create its mask
+</ParamField>
 
-```
-<?php$payload = [    "key" =>"",    "seed" =>12345,    "image" => "https://huggingface.co/datasets/diffusers/test-arrays/resolve/main/stable_diffusion_inpaint/boy.png",    "post_process_mask" => false,    "only_mask" => false,    "alpha_matting" =>false,    "webhook" => null,    "track_id" => null  ];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v1/enterprise/image_editing/removebg_mask',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
-```
+<ParamField body="alpha_matting" type="boolean" default="false">
+  Whether to perform alpha matting. Accepts `true` or `false`
+</ParamField>
 
-```
-var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v1/enterprise/image_editing/removebg_mask',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key":"",    "seed":12345,    "image":"https://huggingface.co/datasets/diffusers/test-arrays/resolve/main/stable_diffusion_inpaint/boy.png",    "post_process_mask": false,    "only_mask": false,    "alpha_matting":false,    "webhook": null,    "track_id": null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
-```
+<ParamField body="post_process_mask" type="boolean" default="false">
+  To post process the mask image. Accepts `true` or `false`
+</ParamField>
 
-```
-import requestsimport jsonurl = "https://modelslab.com/api/v1/enterprise/image_editing/removebg_mask"payload = json.dumps({    "key":"",    "seed":12345,    "image":"https://img.freepik.com/premium-photo/red-roses-rose-petals-white-backgroundvalentines-day-concept_167862-5720.jpg,https://huggingface.co/datasets/diffusers/test-arrays/resolve/main/stable_diffusion_inpaint/boy.png",    "post_process_mask": false,    "only_mask": false,    "alpha_matting":false,    "seed": None,    "webhook": None,    "track_id": None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
-```
+<ParamField body="only_mask" type="boolean" default="false">
+  Whether to return only mask image or not. Accepts `true` or `false`
+</ParamField>
 
-```
-    OkHttpClient client = new OkHttpClient().newBuilder()      .build();    MediaType mediaType = MediaType.parse("application/json");    RequestBody body = RequestBody.create(mediaType, "{\n     \"key\":\"\",\n    \"seed\":12345,\n    \"image\":\"https://huggingface.co/datasets/diffusers/test-arrays/resolve/main/stable_diffusion_inpaint/boy.png\",\n    \"post_process_mask\": false,\n    \"only_mask\": false,\n    \"alpha_matting\":false,\n    \"webhook\": null,\n    \"track_id\": null\n}");    Request request = new Request.Builder()      .url("https://modelslab.com/api/v1/enterprise/image_editing/removebg_mask")      .method("POST", body)      .addHeader("Content-Type", "application/json")      .build();    Response response = client.newCall(request).execute();
-```
+<ParamField body="seed" type="integer">
+  Seed is used to reproduce results. Same seed will give same image. Pass `null` for a random number
+</ParamField>
 
-### Response[​](#response "Direct link to Response")
+<ParamField body="alpha_matting_foreground_threshold" type="integer" default="240">
+  Threshold for alpha matting foreground
+</ParamField>
 
-Example Response
+<ParamField body="alpha_matting_background_threshold" type="integer" default="20">
+  Threshold for alpha matting background
+</ParamField>
 
-```
-{    "status": "success",    "generationTime": 4.726040601730347,    "id": 558,    "output": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/2a231897-80f8-4cdd-82bf-e0d43e82462d.png.png"    ],    "meta": {        "alpha_matting": "0",        "alpha_matting_background_threshold": 20,        "alpha_matting_erode_size": 5,        "alpha_matting_foreground_threshold": 240,        "base64": "no",        "file_prefix": "2a231897-80f8-4cdd-82bf-e0d43e82462d.png",        "image_url": "https://huggingface.co/datasets/diffusers/test-arrays/resolve/main/stable_diffusion_inpaint/boy.png",        "instant_response": "no",        "only_mask": false,        "outdir": "out",        "post_process_mask": "0",        "seed": 1,        "temp": "no"    }}
-```
+<ParamField body="alpha_matting_erode_size" type="integer" default="5">
+  Erode size for alpha matting
+</ParamField>
+
+<ParamField body="webhook" type="string">
+  Set a URL to get a POST API call once the image generation is complete
+</ParamField>
+
+<ParamField body="track_id" type="string">
+  This ID is returned in the response to the webhook API call. This will be used to identify the webhook request
+</ParamField>
