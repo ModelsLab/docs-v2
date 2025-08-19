@@ -32,11 +32,12 @@
         "groups": [
           {
             "group": "Using the APIs",
-            "pages": [
-              "/overview",
-              "/using-the-api/rate-limiters",
-              "/using-the-api/errors"
-            ]
+            "pages": ["/overview"]
+          },
+          {
+            "group": "Advanced API Usage",
+            "hidden": true,
+            "pages": ["/using-the-api/rate-limiters", "/using-the-api/errors"]
           },
           {
             "group": "3rd Party Models",
