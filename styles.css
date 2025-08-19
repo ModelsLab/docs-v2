@@ -70,6 +70,6 @@ pre {
   margin-bottom: 0;
 }
 
-select {
-  background-color: red!;
+.dark select option {
+  background-color: #131313 !important;
 }

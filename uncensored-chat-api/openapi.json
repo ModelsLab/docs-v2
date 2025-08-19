@@ -190,7 +190,7 @@
           },
           "max_tokens": {
             "type": "integer",
-            "default": 128,
+            "default": 1000,
             "minimum": 1,
             "maximum": 44000,
             "description": "Maximum number of tokens allowed in the response"
@@ -266,8 +266,8 @@
           },
           "prompt": {
             "oneOf": [
-              {"type": "string"},
-              {"type": "array", "items": {"type": "string"}}
+              { "type": "string" },
+              { "type": "array", "items": { "type": "string" } }
             ],
             "description": "Prompt(s) to generate completions for"
           },
@@ -313,8 +313,8 @@
           },
           "stop": {
             "oneOf": [
-              {"type": "string"},
-              {"type": "array", "items": {"type": "string"}, "maxItems": 4}
+              { "type": "string" },
+              { "type": "array", "items": { "type": "string" }, "maxItems": 4 }
             ],
             "description": "Stop sequences to end generation"
           }

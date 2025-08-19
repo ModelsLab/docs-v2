@@ -40,6 +40,7 @@
           },
           {
             "group": "3rd Party Models",
+            "hidden": true,
             "pages": [
               {
                 "group": "Google",
@@ -517,15 +518,7 @@
           }
         ]
       },
-      {
-        "tab": "Release Notes",
-        "groups": [
-          {
-            "group": "Release Notes",
-            "pages": ["release-notes/api"]
-          }
-        ]
-      },
+
       {
         "tab": "Open Source",
         "groups": [

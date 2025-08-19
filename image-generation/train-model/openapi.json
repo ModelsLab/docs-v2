@@ -323,7 +323,14 @@
       },
       "LoraTrainingRequest": {
         "type": "object",
-        "required": ["key", "instance_prompt", "class_prompt", "images", "training_type", "max_train_steps"],
+        "required": [
+          "key",
+          "instance_prompt",
+          "class_prompt",
+          "images",
+          "training_type",
+          "max_train_steps"
+        ],
         "properties": {
           "key": {
             "type": "string",
@@ -347,11 +354,12 @@
             "type": "string",
             "enum": ["normal", "sdxl"],
             "description": "The type of LoRA base model you want to train on",
-            "default": "normal"
+            "default": "sdxl"
           },
           "negative_prompt": {
             "type": "string",
             "description": "Items you don't want in the image",
+            "default": " lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry",
             "example": "lowres, bad anatomy, bad hands, text, error"
           },
           "images": {
@@ -366,6 +374,7 @@
           "training_type": {
             "type": "string",
             "enum": ["men", "women", "couple", "null"],
+            "default": "men",
             "description": "The type of the object you are training on"
           },
           "lora_type": {
@@ -377,6 +386,7 @@
           "max_train_steps": {
             "type": "string",
             "description": "Set at 2 times the number of images (Ni*2); minimum value is 10 and maximum value is 50",
+            "default": "18",
             "example": "18"
           },
           "seed": {
@@ -409,7 +419,7 @@
             "type": "string",
             "enum": ["true", "false"],
             "description": "A flag indicating whether to crop the image upon uploading",
-            "default": "false"
+            "default": "true"
           }
         }
       },

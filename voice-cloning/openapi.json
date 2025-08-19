@@ -804,7 +804,17 @@
           },
           "language": {
             "type": "string",
-            "enum": ["american english", "british english", "spanish", "japanese", "mandarin chinese", "french", "brazilian portuguese", "hindi", "italian"],
+            "enum": [
+              "american english",
+              "british english",
+              "spanish",
+              "japanese",
+              "mandarin chinese",
+              "french",
+              "brazilian portuguese",
+              "hindi",
+              "italian"
+            ],
             "default": "english",
             "description": "Language for the voice"
           },
@@ -858,7 +868,25 @@
           },
           "language": {
             "type": "string",
-            "enum": ["english", "arabic", "spanish", "german", "czech", "brazilian portuguese", "chinese", "dutch", "french", "hindi", "hungarian", "italian", "japanese", "korean", "polish", "russian", "turkish"],
+            "enum": [
+              "english",
+              "arabic",
+              "spanish",
+              "german",
+              "czech",
+              "brazilian portuguese",
+              "chinese",
+              "dutch",
+              "french",
+              "hindi",
+              "hungarian",
+              "italian",
+              "japanese",
+              "korean",
+              "polish",
+              "russian",
+              "turkish"
+            ],
             "description": "Language of the voice"
           },
           "gender": {
@@ -934,7 +962,25 @@
           },
           "language": {
             "type": "string",
-            "enum": ["english", "arabic", "spanish", "brazilian portuguese", "german", "czech", "chinese", "dutch", "french", "hindi", "hungarian", "italian", "japanese", "korean", "polish", "russian", "turkish"],
+            "enum": [
+              "english",
+              "arabic",
+              "spanish",
+              "brazilian portuguese",
+              "german",
+              "czech",
+              "chinese",
+              "dutch",
+              "french",
+              "hindi",
+              "hungarian",
+              "italian",
+              "japanese",
+              "korean",
+              "polish",
+              "russian",
+              "turkish"
+            ],
             "default": "english",
             "description": "Language for the voice"
           },
@@ -1195,17 +1241,27 @@
           },
           "source_lang": {
             "type": "string",
-            "default": "en",
+            "default": "hi",
             "description": "Source language code of the video"
           },
           "output_lang": {
             "type": "string",
-            "enum": ["es", "fr", "hi", "it", "pt-br", "en-us", "en-gb", "ja", "zh"],
+            "enum": [
+              "es",
+              "fr",
+              "hi",
+              "it",
+              "pt-br",
+              "en-us",
+              "en-gb",
+              "ja",
+              "zh"
+            ],
             "description": "Target language code for dubbing"
           },
           "file_prefix": {
             "type": "string",
-            "default": "10",
+            "default": "spanish_dub",
             "description": "Prefix for output file name"
           },
           "voice_id": {
@@ -1216,6 +1272,11 @@
             "type": "string",
             "default": "kokoro",
             "description": "Voice model to use"
+          },
+          "speed": {
+            "type": "number",
+            "default": 1.0,
+            "description": "Playback speed for dubbing"
           },
           "base64": {
             "type": "boolean",

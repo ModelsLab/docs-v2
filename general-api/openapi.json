@@ -18,7 +18,7 @@
       "description": "API v3 server"
     },
     {
-      "url": "https://modelslab.com/api/v5", 
+      "url": "https://modelslab.com/api/v5",
       "description": "API v5 server"
     },
     {
@@ -31,7 +31,7 @@
       "post": {
         "summary": "Cancel subscription plan",
         "description": "This endpoint allows you to cancel subscription for a particular api key automatically",
-        "servers": [{"url": "https://modelslab.com/api/v3"}],
+        "servers": [{ "url": "https://modelslab.com/api/v3" }],
         "requestBody": {
           "required": true,
           "content": {
@@ -70,7 +70,7 @@
       "get": {
         "summary": "Clear user cache",
         "description": "This endpoint is used to clear the user's cache",
-        "servers": [{"url": "https://modelslab.com/api/v5"}],
+        "servers": [{ "url": "https://modelslab.com/api/v5" }],
         "requestBody": {
           "required": true,
           "content": {
@@ -109,7 +109,7 @@
       "post": {
         "summary": "Delete image",
         "description": "This endpoint is used to delete an image using the image name",
-        "servers": [{"url": "https://modelslab.com/api/v3"}],
+        "servers": [{ "url": "https://modelslab.com/api/v3" }],
         "requestBody": {
           "required": true,
           "content": {
@@ -148,7 +148,7 @@
       "post": {
         "summary": "NSFW image check",
         "description": "This endpoint is useful to check if an image is nsfw or not",
-        "servers": [{"url": "https://modelslab.com/api/v3"}],
+        "servers": [{ "url": "https://modelslab.com/api/v3" }],
         "requestBody": {
           "required": true,
           "content": {
@@ -187,7 +187,7 @@
       "post": {
         "summary": "NSFW prompt check",
         "description": "This endpoint is useful to check if a prompt has cp or nsfw content",
-        "servers": [{"url": "https://modelslab.com/api"}],
+        "servers": [{ "url": "https://modelslab.com/api" }],
         "requestBody": {
           "required": true,
           "content": {
@@ -226,7 +226,7 @@
       "get": {
         "summary": "Get subscribed products",
         "description": "This endpoint allows you to see the list of all modelslab product you have subscribed to",
-        "servers": [{"url": "https://modelslab.com/api"}],
+        "servers": [{ "url": "https://modelslab.com/api" }],
         "requestBody": {
           "required": true,
           "content": {
@@ -265,7 +265,7 @@
       "post": {
         "summary": "Upload base64 image and crop",
         "description": "Upload an image and crop it. Pass the appropriate request parameters to the endpoint. Note that the maximum file size for upload is 5MB",
-        "servers": [{"url": "https://modelslab.com/api/v3"}],
+        "servers": [{ "url": "https://modelslab.com/api/v3" }],
         "requestBody": {
           "required": true,
           "content": {
@@ -304,7 +304,7 @@
       "post": {
         "summary": "Upload base64 to URL",
         "description": "This endpoint allows you to convert base64 strings of image, audio, video and 3d object file to a valid URL. The url expires after 24 hours of creation. Note that the maximum file size for upload is 5MB",
-        "servers": [{"url": "https://modelslab.com/api/v6"}],
+        "servers": [{ "url": "https://modelslab.com/api/v6" }],
         "requestBody": {
           "required": true,
           "content": {
@@ -343,7 +343,7 @@
       "post": {
         "summary": "Buy Lora model",
         "description": "This endpoint allows you to buy a Lora model automatically",
-        "servers": [{"url": "https://modelslab.com/api/v3"}],
+        "servers": [{ "url": "https://modelslab.com/api/v3" }],
         "requestBody": {
           "required": true,
           "content": {
@@ -382,7 +382,7 @@
       "post": {
         "summary": "Buy subscription plan",
         "description": "This endpoint allows you to buy an API key with a subscription plan automatically",
-        "servers": [{"url": "https://modelslab.com/api/v3"}],
+        "servers": [{ "url": "https://modelslab.com/api/v3" }],
         "requestBody": {
           "required": true,
           "content": {
@@ -629,6 +629,7 @@
           "crop": {
             "type": "string",
             "enum": ["true", "false"],
+            "default": "true",
             "description": "A (true/false) flag for cropping the image upon uploading"
           }
         }
@@ -739,7 +740,14 @@
           },
           "plan_name": {
             "type": "string",
-            "enum": ["basic_monthly", "basic_yearly", "standard_monthly", "standard_yearly", "premium_monthly", "premium_yearly"],
+            "enum": [
+              "basic_monthly",
+              "basic_yearly",
+              "standard_monthly",
+              "standard_yearly",
+              "premium_monthly",
+              "premium_yearly"
+            ],
             "description": "The name of the plan you want to buy"
           }
         }
