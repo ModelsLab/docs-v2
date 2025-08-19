@@ -15,24 +15,15 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": [
-              "index"
-            ]
+            "pages": ["index"]
           },
           {
             "group": "Client SDKs",
-            "pages": [
-              "sdk/python",
-              "sdk/dart",
-              "sdk/php"
-            ]
+            "pages": ["sdk/python", "sdk/dart", "sdk/php"]
           },
           {
             "group": "Legal center",
-            "pages": [
-              "modelslab-privacy-policy",
-              "security-and-compliance"
-            ]
+            "pages": []
           }
         ]
       },
@@ -49,6 +40,7 @@
           },
           {
             "group": "3rd Party Models",
+            "hidden": true,
             "pages": [
               {
                 "group": "Google",
@@ -102,7 +94,6 @@
                     "pages": [
                       "/image-generation/flux/overview",
                       "/image-generation/flux/flux-text-to-image"
-
                     ]
                   },
                   {
@@ -523,23 +514,11 @@
         "groups": [
           {
             "group": "Resources",
-            "pages": [
-              "resources/resources"
-            ]
+            "pages": ["resources/resources"]
           }
         ]
       },
-      {
-        "tab": "Release Notes",
-        "groups": [
-          {
-            "group": "Release Notes",
-            "pages": [
-              "release-notes/api"
-            ]
-          }
-        ]
-      },
+
       {
         "tab": "Open Source",
         "groups": [

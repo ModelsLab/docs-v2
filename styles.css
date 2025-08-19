@@ -1,3 +1,41 @@
+/* Import DM Sans font from Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+
+/* Apply DM Sans font to all elements */
+* {
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif !important;
+}
+
+/* Specific font weights for better typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif !important;
+  font-weight: 600 !important;
+}
+
+p,
+span,
+div,
+li,
+a {
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif !important;
+  font-weight: 400 !important;
+}
+
+code,
+pre {
+  font-family: "Fira Code", "Monaco", "Cascadia Code", "Roboto Mono", Consolas,
+    "Courier New", monospace !important;
+}
+
+/* Existing styles */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -14,7 +52,7 @@
 /* custom-button css  */
 
 .custom-button {
-  border: 1px solid #0051FF;
+  border: 1px solid #0051ff;
   padding: 5px 20px;
   border-radius: 20px;
   height: 40px;
@@ -22,7 +60,7 @@
 }
 
 .custom-button:hover {
-  background-color: #0051FF;
+  background-color: #0051ff;
   color: white;
   cursor: pointer;
 }
@@ -30,4 +68,8 @@
 .custom-button p {
   margin-top: 0;
   margin-bottom: 0;
+}
+
+.dark select option {
+  background-color: #131313 !important;
 }

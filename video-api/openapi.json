@@ -467,25 +467,24 @@
             "description": "Items you don't want in the video"
           },
           "seed": {
-            "oneOf": [
-              {"type": "integer"},
-              {"type": "null"}
-            ],
+            "oneOf": [{ "type": "integer" }, { "type": "null" }],
             "description": "Seed for reproducible results. Same seed gives same result. Pass null for random"
           },
           "height": {
             "type": "integer",
+            "default": 512,
             "maximum": 512,
             "description": "Height of the video in pixels"
           },
           "width": {
             "type": "integer",
+            "default": 512,
             "maximum": 512,
             "description": "Width of the video in pixels"
           },
           "num_frames": {
             "type": "integer",
-            "default": 16,
+            "default": 25,
             "maximum": 25,
             "description": "Number of frames in the video"
           },
@@ -497,35 +496,37 @@
           },
           "guidance_scale": {
             "type": "number",
+            "default": 7,
             "minimum": 0,
             "maximum": 8,
             "description": "Scale for classifier-free guidance"
           },
           "clip_skip": {
-            "oneOf": [
-              {"type": "integer", "maximum": 2},
-              {"type": "null"}
-            ],
+            "oneOf": [{ "type": "integer", "maximum": 2 }, { "type": "null" }],
             "description": "Number of CLIP layers to skip. Skipping 2 layers often gives more aesthetic results"
           },
           "upscale_height": {
             "type": "integer",
+            "default": 640,
             "maximum": 1024,
             "description": "The upscaled height for videos generated"
           },
           "upscale_width": {
-            "type": "integer", 
+            "type": "integer",
+            "default": 1024,
             "maximum": 1024,
             "description": "The upscaled width for videos generated"
           },
           "upscale_strength": {
             "type": "number",
+            "default": 0.6,
             "minimum": 0,
             "maximum": 1,
             "description": "Strength of upscaling. Higher values result in more noticeable differences"
           },
           "upscale_guidance_scale": {
             "type": "number",
+            "default": 12,
             "minimum": 0,
             "maximum": 8,
             "description": "Guidance scale for upscaling videos"
@@ -552,6 +553,7 @@
           },
           "output_type": {
             "type": "string",
+            "default": "gif",
             "enum": ["mp4", "gif"],
             "description": "Output format type"
           },
@@ -593,10 +595,7 @@
             "description": "Items you don't want in the video"
           },
           "seed": {
-            "oneOf": [
-              {"type": "integer"},
-              {"type": "null"}
-            ],
+            "oneOf": [{ "type": "integer" }, { "type": "null" }],
             "description": "Seed for reproducible results"
           },
           "resolution": {
@@ -774,10 +773,7 @@
             "description": "Items you don't want in the video"
           },
           "seed": {
-            "oneOf": [
-              {"type": "integer"},
-              {"type": "null"}
-            ],
+            "oneOf": [{ "type": "integer" }, { "type": "null" }],
             "description": "Seed for reproducible results"
           },
           "resolution": {

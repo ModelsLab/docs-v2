@@ -1,683 +1,865 @@
 {
-    "openapi": "3.1.0",
-    "info": {
-      "title": "ModelsLab Dreambooth Image Generation API",
-      "description": "A focused API for AI-driven image generation using Dreambooth models, including text-to-image, image-to-image, inpainting, and model management capabilities.",
-      "license": {
-        "name": "MIT"
-      },
-      "version": "6.0.0"
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ModelsLab Dreambooth Image Generation API",
+    "description": "A focused API for AI-driven image generation using Dreambooth models, including text-to-image, image-to-image, inpainting, and model management capabilities.",
+    "license": {
+      "name": "MIT"
     },
-    "servers": [
-      {
-        "url": "https://modelslab.com/api/v6/images",
-        "description": "Dreambooth Image Generation API v6 server"
-      }
-    ],
-    "paths": {
-      "/fetch": {
-        "post": {
-          "summary": "Fetch queued images",
-          "description": "Retrieves images that are currently queued or have been processed. Usually more complex image generation requests take more time for processing. Such requests are being queued for processing and the output images are retrievable after some time. The estimated processing time is specified by the 'eta' parameter in the response. This endpoint does not generate new images; it returns already generated/queued images.",
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FetchQueuedImagesRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Fetched image response",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "oneOf": [
-                      { "$ref": "#/components/schemas/ImageGenerationSuccessResponse" },
-                      { "$ref": "#/components/schemas/ImageGenerationProcessingResponse" },
-                      { "$ref": "#/components/schemas/ImageGenerationErrorResponse" }
-                    ]
-                  }
-                }
-              }
-            },
-            "400": { "$ref": "#/components/responses/StandardErrorResponse" },
-            "401": { "$ref": "#/components/responses/StandardErrorResponse" },
-            "404": { "$ref": "#/components/responses/StandardErrorResponse" },
-            "500": { "$ref": "#/components/responses/StandardErrorResponse" }
-          }
-        }
-      },
-      "/img2img": {
-        "post": {
-          "summary": "Generate image from image",
-          "description": "Generates an image from an initial image using Dreambooth models. You can also add a text description (prompt) and negative prompt. The dimensions of the generated image will be the same as the dimensions of the initial image.",
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ImageToImageRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Image-to-image generation response",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "oneOf": [
-                      { "$ref": "#/components/schemas/ImageGenerationSuccessResponse" },
-                      { "$ref": "#/components/schemas/ImageGenerationProcessingResponse" },
-                      { "$ref": "#/components/schemas/ImageGenerationErrorResponse" }
-                    ]
-                  }
-                }
-              }
-            },
-            "400": { "$ref": "#/components/responses/StandardErrorResponse" },
-            "401": { "$ref": "#/components/responses/StandardErrorResponse" },
-            "500": { "$ref": "#/components/responses/StandardErrorResponse" }
-          }
-        }
-      },
-      "/inpaint": {
-        "post": {
-          "summary": "Inpaint parts of an image",
-          "description": "Changes (inpaints) a specific part of an image based on provided image, mask, and text prompts using Dreambooth models.",
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InpaintingRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Inpainting generation response",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "oneOf": [
-                      { "$ref": "#/components/schemas/ImageGenerationSuccessResponse" },
-                      { "$ref": "#/components/schemas/ImageGenerationProcessingResponse" },
-                      { "$ref": "#/components/schemas/ImageGenerationErrorResponse" }
-                    ]
-                  }
-                }
-              }
-            },
-            "400": { "$ref": "#/components/responses/StandardErrorResponse" },
-            "401": { "$ref": "#/components/responses/StandardErrorResponse" },
-            "500": { "$ref": "#/components/responses/StandardErrorResponse" }
-          }
-        }
-      },
-      "/text2img": {
-        "post": {
-          "summary": "Generate image from text prompt (Text-to-Image & Multi-LoRA)",
-          "description": "Creates an image from a text prompt using Dreambooth models. This endpoint supports both single and multiple LoRA models for enhanced results.",
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TextToImageRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Text-to-image generation response",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "oneOf": [
-                      { "$ref": "#/components/schemas/ImageGenerationSuccessResponse" },
-                      { "$ref": "#/components/schemas/ImageGenerationProcessingResponse" },
-                      { "$ref": "#/components/schemas/ImageGenerationErrorResponse" }
-                    ]
-                  }
-                }
-              }
-            },
-            "400": { "$ref": "#/components/responses/StandardErrorResponse" },
-            "401": { "$ref": "#/components/responses/StandardErrorResponse" },
-            "500": { "$ref": "#/components/responses/StandardErrorResponse" }
-          }
-        }
-      },
-      "/model_reload": {
-        "post": {
-          "summary": "Reload an idle image model",
-          "description": "Reloads an idle model that has not been used for more than 7 days. After 7 days of inactivity, a model will be deleted from the inference server. Reloading a model typically takes 2 minutes.",
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ReloadModelRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Model reload response",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ReloadModelResponse"
-                  }
-                }
-              }
-            },
-            "400": { "$ref": "#/components/responses/StandardErrorResponse" },
-            "401": { "$ref": "#/components/responses/StandardErrorResponse" },
-            "500": { "$ref": "#/components/responses/StandardErrorResponse" }
-          }
-        }
-      }
-    },
-    "components": {
-      "schemas": {
-        "SchedulerEnum": {
-          "type": "string",
-          "enum": [
-            "DDPMScheduler", "DDIMScheduler", "PNDMScheduler", "LMSDiscreteScheduler",
-            "EulerDiscreteScheduler", "EulerAncestralDiscreteScheduler", "DPMSolverMultistepScheduler",
-            "HeunDiscreteScheduler", "KDPM2DiscreteScheduler", "DPMSolverSinglestepScheduler",
-            "KDPM2AncestralDiscreteScheduler", "UniPCMultistepScheduler", "DDIMInverseScheduler",
-            "DEISMultistepScheduler", "IPNDMScheduler", "KarrasVeScheduler", "ScoreSdeVeScheduler",
-            "LCMScheduler"
-          ],
-          "description": "Available schedulers for image generation."
-        },
-        "SafetyCheckerTypeEnum": {
-          "type": "string",
-          "enum": ["blur", "sensitive_content_text", "pixelate", "black"],
-          "default": "sensitive_content_text",
-          "description": "How to modify the image if NSFW content is found."
-        },
-        "EnhanceStyleEnum": {
-          "type": "string",
-          "enum": [
-            "enhance", "cinematic-diva", "nude", "nsfw", "sex", "abstract-expressionism",
-            "academia", "action-figure", "adorable-3d-character", "adorable-kawaii",
-            "art-deco", "art-nouveau", "astral-aura", "avant-garde", "baroque",
-            "bauhaus-style-poster", "blueprint-schematic-drawing", "caricature",
-            "cel-shaded-art", "character-design-sheet", "classicism-art",
-            "color-field-painting", "colored-pencil-art", "conceptual-art",
-            "constructivism", "cubism", "dadaism", "dark-fantasy",
-            "dark-moody-atmosphere", "dmt-art", "doodle-art", "double-exposure",
-            "dripping-paint-splatter", "expressionism", "faded-polaroid-photo",
-            "fauvism", "flat-2d", "fortnite-style", "futurism", "glitchcore",
-            "glo-fi", "googie-style", "graffiti-art", "harlem-renaissance-art",
-            "high-fashion", "idyllic", "impressionism", "infographic-drawing",
-            "ink-dripping-drawing", "japanese-ink-drawing", "knolling-photography",
-            "light-cheery-atmosphere", "logo-design", "luxurious-elegance",
-            "macro-photography", "mandola-art", "marker-drawing", "medievalism",
-            "minimalism", "neo-baroque", "neo-byzantine", "neo-futurism",
-            "neo-impressionism", "neo-rococo", "neoclassicism", "op-art",
-            "ornate-and-intricate", "pencil-sketch-drawing", "pop-art-2", "rococo",
-            "silhouette-art", "simple-vector-art", "sketchup", "steampunk-2",
-            "surrealism", "suprematism", "terragen", "tranquil-relaxing-atmosphere",
-            "sticker-designs", "vibrant-rim-light", "volumetric-lighting", "watercolor",
-            "whimsical-and-playful", "sharp", "masterpiece", "photograph", "negative",
-            "cinematic", "ads-advertising", "ads-automotive", "ads-corporate",
-            "ads-fashion-editorial", "ads-food-photography",
-            "ads-gourmet-food-photography", "ads-luxury", "ads-real-estate",
-            "ads-retail", "abstract", "constructivist", "cubist", "expressionist",
-            "graffiti", "hyperrealism", "impressionist", "pointillism", "pop-art",
-            "psychedelic", "renaissance", "steampunk", "surrealist", "typography",
-            "futuristic-biomechanical", "futuristic-biomechanical-cyberpunk",
-            "futuristic-cybernetic", "futuristic-cybernetic-robot",
-            "futuristic-cyberpunk-cityscape", "futuristic-futuristic",
-            "futuristic-retro-cyberpunk", "futuristic-retro", "futuristic-sci-fi",
-            "futuristic-vaporwave", "game-bubble", "game-cyberpunk", "game-fighting",
-            "game-gta", "game-mario", "game-minecraft", "game-pokemon",
-            "game-retro-arcade", "game-retro", "game-rpg-fantasy", "game-strategy",
-            "game-streetfighter", "game-zelda", "misc-architectural", "misc-disco",
-            "misc-dreamscape", "misc-dystopian", "misc-fairy-tale", "misc-gothic",
-            "misc-grunge", "misc-horror", "misc-kawaii", "misc-lovecraftian",
-            "misc-macabre", "misc-manga", "misc-metropolis", "misc-minimalist",
-            "misc-monochrome", "misc-nautical", "misc-space", "misc-stained-glass",
-            "misc-techwear-fashion", "misc-tribal", "misc-zentangle",
-            "papercraft-collage", "papercraft-flat-papercut", "papercraft-kirigami",
-            "papercraft-paper-mache", "papercraft-paper-quilling",
-            "papercraft-papercut-collage", "papercraft-papercut-shadow-box",
-            "papercraft-stacked-papercut", "papercraft-thick-layered-papercut",
-            "photo-alien", "photo-film-noir", "photo-glamour", "photo-hdr",
-            "photo-iphone-photographic", "photo-long-exposure", "photo-neon-noir",
-            "photo-silhouette", "photo-tilt-shift", "3d-model", "analog-film", "anime",
-            "cinematic", "comic-book", "craft-clay", "digital-art", "fantasy-art",
-            "isometric", "line-art", "lowpoly", "neonpunk", "origami", "photographic",
-            "pixel-art", "texture"
-          ],
-          "description": "Allows you to set the style of the image for better results."
-        },
-        "IPAdapterIDEnum": {
-          "type": "string",
-          "enum": [
-            "ip-adapter_sdxl", "ip-adapter_sd15", "ip-adapter-plus-face_sd15",
-            "ip-adapter-plus_sdxl_vit-h", "ip-adapter-plus-face_sdxl_vit-h"
-          ],
-          "description": "IP adapter ID."
-        },
-        "CommonImageGenerationParams": {
-          "type": "object",
-          "properties": {
-            "key": {
-              "type": "string",
-              "description": "Your API Key used for request authorization."
-            },
-            "prompt": {
-              "type": "string",
-              "description": "A text description of what you want in the generated image."
-            },
-            "negative_prompt": {
-              "type": "string",
-              "description": "Items you don't want in the image."
-            },
-            "width": {
-              "type": "integer",
-              "maximum": 1024,
-              "description": "The width of the image in pixels."
-            },
-            "height": {
-              "type": "integer",
-              "maximum": 1024,
-              "description": "The height of the image in pixels."
-            },
-            "samples": {
-              "type": "integer",
-              "maximum": 4,
-              "description": "The number of images to be returned in response. Maximum is 4."
-            },
-            "num_inference_steps": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 20,
-              "default": 20,
-              "description": "The number of denoising steps. Values range from 1 to 20, and any value above 20 will be capped at 20."
-            },
-            "safety_checker": {
-              "type": "boolean",
-              "default": true,
-              "description": "A checker for NSFW images. If detected, such images will be replaced by a blank image."
-            },
-            "safety_checker_type": {
-              "$ref": "#/components/schemas/SafetyCheckerTypeEnum"
-            },
-            "enhance_prompt": {
-              "type": "boolean",
-              "default": true,
-              "description": "Enhance prompts for better results."
-            },
-            "enhance_style": {
-              "$ref": "#/components/schemas/EnhanceStyleEnum"
-            },
-            "seed": {
-              "oneOf": [{"type": "integer"}, {"type": "null"}],
-              "description": "Seed for reproducible results. The same seed generates the same image. Pass null for a random number."
-            },
-            "guidance_scale": {
-              "type": "number",
-              "minimum": 1,
-              "maximum": 20,
-              "description": "Scale for classifier-free guidance."
-            },
-            "tomesd": {
-              "type": "boolean",
-              "default": true,
-              "description": "Enable tomesd to generate images quickly."
-            },
-            "use_karras_sigmas": {
-              "type": "boolean",
-              "default": true,
-              "description": "Use Karras sigmas to generate images. Produces nice results."
-            },
-            "algorithm_type": {
-              "type": "string",
-              "enum": ["none", "dpmsolver+++" ],
-              "default": "none",
-              "description": "Used in DPMSolverMultistepScheduler scheduler."
-            },
-            "vae": {
-              "type": "string",
-              "nullable": true,
-              "description": "Use a custom VAE for generating images. Default is null."
-            },
-            "lora_strength": {
-              "type": "string",
-              "description": "Strength of the LoRa model(s). If multiple LoRa models, provide comma-separated values (0.1 to 1)."
-            },
-            "lora_model": {
-              "type": "string",
-              "description": "LoRa model ID(s). Multiple LoRa models are supported; pass comma-separated values (e.g., 'contrast-fix,yae-miko-genshin')."
-            },
-            "clip_skip": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 8,
-              "description": "Number of CLIP layers to skip."
-            },
-            "base64": {
-              "type": "boolean",
-              "default": false,
-              "description": "If true, response output is base64 string. Input images can also be base64."
-            },
-            "temp": {
-              "type": "boolean",
-              "default": false,
-              "description": "If true, stores image in temporary storage (cleaned every 24 hours)."
-            },
-            "webhook": {
-              "type": "string",
-              "format": "uri",
-              "description": "URL to receive a POST API call once image generation is complete."
-            },
-            "track_id": {
-              "type": "string",
-              "description": "Unique ID used in webhook response to identify the request."
-            },
-            "ip_adapter_id": {
-              "$ref": "#/components/schemas/IPAdapterIDEnum"
-            },
-            "ip_adapter_scale": {
-              "type": "number",
-              "minimum": 0,
-              "maximum": 1,
-              "description": "Scale for the IP adapter (0 to 1)."
-            },
-            "ip_adapter_image": {
-              "type": "string",
-              "format": "uri",
-              "description": "Valid image URL for IP adapter."
-            },
-            "scheduler": {
-              "$ref": "#/components/schemas/SchedulerEnum"
-            }
-          }
-        },
-        "FetchQueuedImagesRequest": {
-          "type": "object",
-          "required": ["key", "request_id"],
-          "properties": {
-            "key": {
-              "type": "string",
-              "description": "Your API Key used for request authorization."
-            },
-            "request_id": {
-              "type": "string",
-              "description": "The ID returned by the 'id' parameter in the response upon an image generation request."
-            }
-          }
-        },
-        "ImageToImageRequest": {
-          "type": "object",
-          "allOf": [
-            { "$ref": "#/components/schemas/CommonImageGenerationParams" }
-          ],
-          "required": ["key", "model_id", "init_image"],
-          "properties": {
-            "model_id": {
-              "type": "string",
-              "description": "The ID of the model to be used. It can be a public model or one you have trained."
-            },
-            "init_image": {
-              "type": "string",
-              "format": "uri",
-              "description": "URL of the initial image to be used as a reference."
-            },
-            "strength": {
-              "type": "number",
-              "minimum": 0,
-              "maximum": 1,
-              "description": "Prompt strength when using the initial image. 1.0 corresponds to full destruction of information in the initial image."
-            }
-          }
-        },
-        "InpaintingRequest": {
-          "type": "object",
-          "allOf": [
-            { "$ref": "#/components/schemas/CommonImageGenerationParams" }
-          ],
-          "required": ["key", "model_id", "init_image", "mask_image"],
-          "properties": {
-            "model_id": {
-              "type": "string",
-              "description": "The ID of the model to be used. It can be a public model or one you have trained."
-            },
-            "init_image": {
-              "type": "string",
-              "format": "uri",
-              "description": "URL of the initial image."
-            },
-            "mask_image": {
-              "type": "string",
-              "format": "uri",
-              "description": "URL of the mask image for inpainting."
-            },
-            "strength": {
-              "type": "number",
-              "minimum": 0,
-              "maximum": 1,
-              "description": "Prompt strength when using the initial image. Range from 0 to 1."
-            }
-          }
-        },
-        "TextToImageRequest": {
-          "type": "object",
-          "allOf": [
-            { "$ref": "#/components/schemas/CommonImageGenerationParams" }
-          ],
-          "required": ["key", "model_id", "prompt"],
-          "properties": {
-            "model_id": {
-              "type": "string",
-              "description": "The ID of the model to be used. It can be a public model or one you have trained."
-            },
-            "multi_lingual": {
-              "type": "boolean",
-              "default": false,
-              "description": "Allow multilingual prompts. Set to 'true' if using a language other than English."
-            },
-            "panorama": {
-              "type": "boolean",
-              "default": false,
-              "description": "Set to 'true' to generate a panorama image."
-            },
-            "self_attention": {
-              "type": "boolean",
-              "default": false,
-              "description": "Set to 'true' for higher quality images (may take longer)."
-            },
-            "upscale": {
-              "type": "boolean",
-              "default": false,
-              "description": "Set to 'true' to upscale the image resolution two times (2x)."
-            },
-            "highres_fix": {
-              "type": "boolean",
-              "default": false,
-              "description": "Enable high-resolution fix for generated images."
-            }
-          }
-        },
-        "ReloadModelRequest": {
-          "type": "object",
-          "required": ["key", "model_id"],
-          "properties": {
-            "key": {
-              "type": "string",
-              "description": "Your API Key used for request authorization."
-            },
-            "model_id": {
-              "type": "string",
-              "description": "The ID of the model to be reloaded."
-            }
-          }
-        },
-        "ImageGenerationSuccessResponse": {
-          "type": "object",
-          "properties": {
-            "status": {
-              "type": "string",
-              "enum": ["success"],
-              "description": "Status of the image generation."
-            },
-            "generationTime": {
-              "type": "number",
-              "description": "Time taken to generate the image in seconds."
-            },
-            "id": {
-              "type": "integer",
-              "description": "Unique identifier for the image generation request."
-            },
-            "output": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "format": "uri"
-              },
-              "description": "Array of generated image URLs."
-            },
-            "proxy_links": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "format": "uri"
-              },
-              "description": "Array of proxy image URLs."
-            },
-            "meta": {
-              "type": "object",
-              "description": "Metadata about the image generation including all parameters used.",
-              "additionalProperties": true
-            },
-            "nsfw_content_detected": {
-              "type": "boolean",
-              "description": "Indicates if NSFW content was detected in the generated image."
-            },
-            "webhook_status": {
-              "type": "string",
-              "description": "Status of the webhook notification."
-            },
-            "tip": {
-              "type": "string",
-              "description": "Additional information or tips for the user."
-            }
-          }
-        },
-        "ImageGenerationProcessingResponse": {
-          "type": "object",
-          "properties": {
-            "status": {
-              "type": "string",
-              "enum": ["processing"],
-              "description": "Status of the image generation."
-            },
-            "tip": {
-              "type": "string",
-              "description": "Information about faster processing options."
-            },
-            "tip_1": {
-              "type": "string",
-              "description": "Additional tip, usually pointing to the fetch API."
-            },
-            "eta": {
-              "type": "number",
-              "description": "Estimated time for completion in seconds."
-            },
-            "message": {
-              "type": "string",
-              "description": "Processing status message."
-            },
-            "webhook_status": {
-              "type": "string",
-              "description": "Status of the webhook notification."
-            },
-            "fetch_result": {
-              "type": "string",
-              "format": "uri",
-              "description": "URL to fetch the result when processing."
-            },
-            "id": {
-              "type": "integer",
-              "description": "Unique identifier for the image generation request."
-            },
-            "output": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Empty array during processing."
-            },
-            "meta": {
-              "type": "object",
-              "description": "Metadata about the image generation including all parameters used.",
-              "additionalProperties": true
-            },
-            "future_links": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "format": "uri"
-              },
-              "description": "Array of future image URLs for queued requests."
-            }
-          }
-        },
-        "ImageGenerationErrorResponse": {
-          "type": "object",
-          "required": ["status", "message"],
-          "properties": {
-            "status": {
-              "type": "string",
-              "enum": ["error"]
-            },
-            "message": {
-              "type": "string",
-              "description": "Error message description."
-            }
-          }
-        },
-        "ReloadModelResponse": {
-          "type": "object",
-          "properties": {
-            "status": {
-              "type": "string",
-              "enum": ["success", "error", "processing"],
-              "description": "Status of the model reload operation."
-            },
-            "message": {
-              "type": "string",
-              "description": "Message indicating the result of the reload operation."
-            }
-          }
-        }
-      },
-      "responses": {
-        "StandardErrorResponse": {
-          "description": "Bad request (invalid parameters), unauthorized (invalid API key), or internal server error.",
+    "version": "6.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://modelslab.com/api/v6/images",
+      "description": "Dreambooth Image Generation API v6 server"
+    }
+  ],
+  "paths": {
+    "/fetch": {
+      "post": {
+        "summary": "Fetch queued images",
+        "description": "Retrieves images that are currently queued or have been processed. Usually more complex image generation requests take more time for processing. Such requests are being queued for processing and the output images are retrievable after some time. The estimated processing time is specified by the 'eta' parameter in the response. This endpoint does not generate new images; it returns already generated/queued images.",
+        "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ImageGenerationErrorResponse"
+                "$ref": "#/components/schemas/FetchQueuedImagesRequest"
               }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Fetched image response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ImageGenerationSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageGenerationProcessingResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageGenerationErrorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/StandardErrorResponse" },
+          "401": { "$ref": "#/components/responses/StandardErrorResponse" },
+          "404": { "$ref": "#/components/responses/StandardErrorResponse" },
+          "500": { "$ref": "#/components/responses/StandardErrorResponse" }
+        }
+      }
+    },
+    "/img2img": {
+      "post": {
+        "summary": "Generate image from image",
+        "description": "Generates an image from an initial image using Dreambooth models. You can also add a text description (prompt) and negative prompt. The dimensions of the generated image will be the same as the dimensions of the initial image.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImageToImageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Image-to-image generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ImageGenerationSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageGenerationProcessingResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageGenerationErrorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/StandardErrorResponse" },
+          "401": { "$ref": "#/components/responses/StandardErrorResponse" },
+          "500": { "$ref": "#/components/responses/StandardErrorResponse" }
+        }
+      }
+    },
+    "/inpaint": {
+      "post": {
+        "summary": "Inpaint parts of an image",
+        "description": "Changes (inpaints) a specific part of an image based on provided image, mask, and text prompts using Dreambooth models.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InpaintingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Inpainting generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ImageGenerationSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageGenerationProcessingResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageGenerationErrorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/StandardErrorResponse" },
+          "401": { "$ref": "#/components/responses/StandardErrorResponse" },
+          "500": { "$ref": "#/components/responses/StandardErrorResponse" }
+        }
+      }
+    },
+    "/text2img": {
+      "post": {
+        "summary": "Generate image from text prompt (Text-to-Image & Multi-LoRA)",
+        "description": "Creates an image from a text prompt using Dreambooth models. This endpoint supports both single and multiple LoRA models for enhanced results.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TextToImageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Text-to-image generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ImageGenerationSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageGenerationProcessingResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageGenerationErrorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/StandardErrorResponse" },
+          "401": { "$ref": "#/components/responses/StandardErrorResponse" },
+          "500": { "$ref": "#/components/responses/StandardErrorResponse" }
+        }
+      }
+    },
+    "/model_reload": {
+      "post": {
+        "summary": "Reload an idle image model",
+        "description": "Reloads an idle model that has not been used for more than 7 days. After 7 days of inactivity, a model will be deleted from the inference server. Reloading a model typically takes 2 minutes.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReloadModelRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Model reload response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReloadModelResponse"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/StandardErrorResponse" },
+          "401": { "$ref": "#/components/responses/StandardErrorResponse" },
+          "500": { "$ref": "#/components/responses/StandardErrorResponse" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SchedulerEnum": {
+        "type": "string",
+        "enum": [
+          "DDPMScheduler",
+          "DDIMScheduler",
+          "PNDMScheduler",
+          "LMSDiscreteScheduler",
+          "EulerDiscreteScheduler",
+          "EulerAncestralDiscreteScheduler",
+          "DPMSolverMultistepScheduler",
+          "HeunDiscreteScheduler",
+          "KDPM2DiscreteScheduler",
+          "DPMSolverSinglestepScheduler",
+          "KDPM2AncestralDiscreteScheduler",
+          "UniPCMultistepScheduler",
+          "DDIMInverseScheduler",
+          "DEISMultistepScheduler",
+          "IPNDMScheduler",
+          "KarrasVeScheduler",
+          "ScoreSdeVeScheduler",
+          "LCMScheduler"
+        ],
+        "description": "Available schedulers for image generation."
+      },
+      "SafetyCheckerTypeEnum": {
+        "type": "string",
+        "enum": ["blur", "sensitive_content_text", "pixelate", "black"],
+        "default": "sensitive_content_text",
+        "description": "How to modify the image if NSFW content is found."
+      },
+      "EnhanceStyleEnum": {
+        "type": "string",
+        "enum": [
+          "enhance",
+          "cinematic-diva",
+          "nude",
+          "nsfw",
+          "sex",
+          "abstract-expressionism",
+          "academia",
+          "action-figure",
+          "adorable-3d-character",
+          "adorable-kawaii",
+          "art-deco",
+          "art-nouveau",
+          "astral-aura",
+          "avant-garde",
+          "baroque",
+          "bauhaus-style-poster",
+          "blueprint-schematic-drawing",
+          "caricature",
+          "cel-shaded-art",
+          "character-design-sheet",
+          "classicism-art",
+          "color-field-painting",
+          "colored-pencil-art",
+          "conceptual-art",
+          "constructivism",
+          "cubism",
+          "dadaism",
+          "dark-fantasy",
+          "dark-moody-atmosphere",
+          "dmt-art",
+          "doodle-art",
+          "double-exposure",
+          "dripping-paint-splatter",
+          "expressionism",
+          "faded-polaroid-photo",
+          "fauvism",
+          "flat-2d",
+          "fortnite-style",
+          "futurism",
+          "glitchcore",
+          "glo-fi",
+          "googie-style",
+          "graffiti-art",
+          "harlem-renaissance-art",
+          "high-fashion",
+          "idyllic",
+          "impressionism",
+          "infographic-drawing",
+          "ink-dripping-drawing",
+          "japanese-ink-drawing",
+          "knolling-photography",
+          "light-cheery-atmosphere",
+          "logo-design",
+          "luxurious-elegance",
+          "macro-photography",
+          "mandola-art",
+          "marker-drawing",
+          "medievalism",
+          "minimalism",
+          "neo-baroque",
+          "neo-byzantine",
+          "neo-futurism",
+          "neo-impressionism",
+          "neo-rococo",
+          "neoclassicism",
+          "op-art",
+          "ornate-and-intricate",
+          "pencil-sketch-drawing",
+          "pop-art-2",
+          "rococo",
+          "silhouette-art",
+          "simple-vector-art",
+          "sketchup",
+          "steampunk-2",
+          "surrealism",
+          "suprematism",
+          "terragen",
+          "tranquil-relaxing-atmosphere",
+          "sticker-designs",
+          "vibrant-rim-light",
+          "volumetric-lighting",
+          "watercolor",
+          "whimsical-and-playful",
+          "sharp",
+          "masterpiece",
+          "photograph",
+          "negative",
+          "cinematic",
+          "ads-advertising",
+          "ads-automotive",
+          "ads-corporate",
+          "ads-fashion-editorial",
+          "ads-food-photography",
+          "ads-gourmet-food-photography",
+          "ads-luxury",
+          "ads-real-estate",
+          "ads-retail",
+          "abstract",
+          "constructivist",
+          "cubist",
+          "expressionist",
+          "graffiti",
+          "hyperrealism",
+          "impressionist",
+          "pointillism",
+          "pop-art",
+          "psychedelic",
+          "renaissance",
+          "steampunk",
+          "surrealist",
+          "typography",
+          "futuristic-biomechanical",
+          "futuristic-biomechanical-cyberpunk",
+          "futuristic-cybernetic",
+          "futuristic-cybernetic-robot",
+          "futuristic-cyberpunk-cityscape",
+          "futuristic-futuristic",
+          "futuristic-retro-cyberpunk",
+          "futuristic-retro",
+          "futuristic-sci-fi",
+          "futuristic-vaporwave",
+          "game-bubble",
+          "game-cyberpunk",
+          "game-fighting",
+          "game-gta",
+          "game-mario",
+          "game-minecraft",
+          "game-pokemon",
+          "game-retro-arcade",
+          "game-retro",
+          "game-rpg-fantasy",
+          "game-strategy",
+          "game-streetfighter",
+          "game-zelda",
+          "misc-architectural",
+          "misc-disco",
+          "misc-dreamscape",
+          "misc-dystopian",
+          "misc-fairy-tale",
+          "misc-gothic",
+          "misc-grunge",
+          "misc-horror",
+          "misc-kawaii",
+          "misc-lovecraftian",
+          "misc-macabre",
+          "misc-manga",
+          "misc-metropolis",
+          "misc-minimalist",
+          "misc-monochrome",
+          "misc-nautical",
+          "misc-space",
+          "misc-stained-glass",
+          "misc-techwear-fashion",
+          "misc-tribal",
+          "misc-zentangle",
+          "papercraft-collage",
+          "papercraft-flat-papercut",
+          "papercraft-kirigami",
+          "papercraft-paper-mache",
+          "papercraft-paper-quilling",
+          "papercraft-papercut-collage",
+          "papercraft-papercut-shadow-box",
+          "papercraft-stacked-papercut",
+          "papercraft-thick-layered-papercut",
+          "photo-alien",
+          "photo-film-noir",
+          "photo-glamour",
+          "photo-hdr",
+          "photo-iphone-photographic",
+          "photo-long-exposure",
+          "photo-neon-noir",
+          "photo-silhouette",
+          "photo-tilt-shift",
+          "3d-model",
+          "analog-film",
+          "anime",
+          "cinematic",
+          "comic-book",
+          "craft-clay",
+          "digital-art",
+          "fantasy-art",
+          "isometric",
+          "line-art",
+          "lowpoly",
+          "neonpunk",
+          "origami",
+          "photographic",
+          "pixel-art",
+          "texture"
+        ],
+        "description": "Allows you to set the style of the image for better results."
+      },
+      "IPAdapterIDEnum": {
+        "type": "string",
+        "enum": [
+          "ip-adapter_sdxl",
+          "ip-adapter_sd15",
+          "ip-adapter-plus-face_sd15",
+          "ip-adapter-plus_sdxl_vit-h",
+          "ip-adapter-plus-face_sdxl_vit-h"
+        ],
+        "description": "IP adapter ID."
+      },
+      "CommonImageGenerationParams": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization."
+          },
+          "prompt": {
+            "type": "string",
+            "description": "A text description of what you want in the generated image."
+          },
+          "negative_prompt": {
+            "type": "string",
+            "description": "Items you don't want in the image."
+          },
+          "width": {
+            "type": "integer",
+            "default": 512,
+            "maximum": 1024,
+            "description": "The width of the image in pixels."
+          },
+          "height": {
+            "type": "integer",
+            "default": 512,
+            "maximum": 1024,
+            "description": "The height of the image in pixels."
+          },
+          "samples": {
+            "type": "integer",
+            "default": 1,
+            "maximum": 4,
+            "description": "The number of images to be returned in response. Maximum is 4."
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "default": 31,
+            "minimum": 1,
+            "maximum": 20,
+            "description": "The number of denoising steps. Values range from 1 to 20, and any value above 20 will be capped at 20."
+          },
+          "safety_checker": {
+            "type": "boolean",
+            "default": false,
+            "description": "A checker for NSFW images. If detected, such images will be replaced by a blank image."
+          },
+          "safety_checker_type": {
+            "$ref": "#/components/schemas/SafetyCheckerTypeEnum"
+          },
+          "enhance_prompt": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enhance prompts for better results."
+          },
+          "enhance_style": {
+            "$ref": "#/components/schemas/EnhanceStyleEnum"
+          },
+          "seed": {
+            "oneOf": [{ "type": "integer" }, { "type": "null" }],
+            "description": "Seed for reproducible results. The same seed generates the same image. Pass null for a random number."
+          },
+          "guidance_scale": {
+            "type": "number",
+            "default": 7.5,
+            "minimum": 1,
+            "maximum": 20,
+            "description": "Scale for classifier-free guidance."
+          },
+          "tomesd": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enable tomesd to generate images quickly."
+          },
+          "use_karras_sigmas": {
+            "type": "boolean",
+            "default": true,
+            "description": "Use Karras sigmas to generate images. Produces nice results."
+          },
+          "algorithm_type": {
+            "type": "string",
+            "enum": ["none", "dpmsolver+++"],
+            "default": "none",
+            "description": "Used in DPMSolverMultistepScheduler scheduler."
+          },
+          "vae": {
+            "type": "string",
+            "nullable": true,
+            "description": "Use a custom VAE for generating images. Default is null."
+          },
+          "lora_strength": {
+            "type": "string",
+            "description": "Strength of the LoRa model(s). If multiple LoRa models, provide comma-separated values (0.1 to 1)."
+          },
+          "lora_model": {
+            "type": "string",
+            "description": "LoRa model ID(s). Multiple LoRa models are supported; pass comma-separated values (e.g., 'contrast-fix,yae-miko-genshin')."
+          },
+          "clip_skip": {
+            "type": "integer",
+            "default": 2,
+            "minimum": 1,
+            "maximum": 8,
+            "description": "Number of CLIP layers to skip."
+          },
+          "base64": {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, response output is base64 string. Input images can also be base64."
+          },
+          "temp": {
+            "type": "boolean",
+            "default": false,
+            "description": "If true, stores image in temporary storage (cleaned every 24 hours)."
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive a POST API call once image generation is complete."
+          },
+          "track_id": {
+            "type": "string",
+            "description": "Unique ID used in webhook response to identify the request."
+          },
+          "ip_adapter_id": {
+            "$ref": "#/components/schemas/IPAdapterIDEnum"
+          },
+          "ip_adapter_scale": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Scale for the IP adapter (0 to 1)."
+          },
+          "ip_adapter_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "Valid image URL for IP adapter."
+          },
+          "scheduler": {
+            "$ref": "#/components/schemas/SchedulerEnum"
+          }
+        }
+      },
+      "FetchQueuedImagesRequest": {
+        "type": "object",
+        "required": ["key", "request_id"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization."
+          },
+          "request_id": {
+            "type": "string",
+            "description": "The ID returned by the 'id' parameter in the response upon an image generation request."
+          }
+        }
+      },
+      "ImageToImageRequest": {
+        "type": "object",
+        "allOf": [
+          { "$ref": "#/components/schemas/CommonImageGenerationParams" }
+        ],
+        "required": ["key", "model_id", "init_image"],
+        "properties": {
+          "model_id": {
+            "type": "string",
+            "description": "The ID of the model to be used. It can be a public model or one you have trained."
+          },
+          "init_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL of the initial image to be used as a reference."
+          },
+          "strength": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Prompt strength when using the initial image. 1.0 corresponds to full destruction of information in the initial image."
+          }
+        }
+      },
+      "InpaintingRequest": {
+        "type": "object",
+        "allOf": [
+          { "$ref": "#/components/schemas/CommonImageGenerationParams" }
+        ],
+        "required": ["key", "model_id", "init_image", "mask_image"],
+        "properties": {
+          "model_id": {
+            "type": "string",
+            "description": "The ID of the model to be used. It can be a public model or one you have trained."
+          },
+          "init_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL of the initial image."
+          },
+          "mask_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL of the mask image for inpainting."
+          },
+          "strength": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Prompt strength when using the initial image. Range from 0 to 1."
+          }
+        }
+      },
+      "TextToImageRequest": {
+        "type": "object",
+        "allOf": [
+          { "$ref": "#/components/schemas/CommonImageGenerationParams" }
+        ],
+        "required": ["key", "model_id", "prompt"],
+        "properties": {
+          "model_id": {
+            "type": "string",
+            "description": "The ID of the model to be used. It can be a public model or one you have trained."
+          },
+          "multi_lingual": {
+            "type": "boolean",
+            "default": false,
+            "description": "Allow multilingual prompts. Set to 'true' if using a language other than English."
+          },
+          "panorama": {
+            "type": "boolean",
+            "default": false,
+            "description": "Set to 'true' to generate a panorama image."
+          },
+          "self_attention": {
+            "type": "boolean",
+            "default": false,
+            "description": "Set to 'true' for higher quality images (may take longer)."
+          },
+          "upscale": {
+            "type": "boolean",
+            "default": false,
+            "description": "Set to 'true' to upscale the image resolution two times (2x)."
+          },
+          "highres_fix": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enable high-resolution fix for generated images."
+          }
+        }
+      },
+      "ReloadModelRequest": {
+        "type": "object",
+        "required": ["key", "model_id"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization."
+          },
+          "model_id": {
+            "type": "string",
+            "description": "The ID of the model to be reloaded."
+          }
+        }
+      },
+      "ImageGenerationSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"],
+            "description": "Status of the image generation."
+          },
+          "generationTime": {
+            "type": "number",
+            "description": "Time taken to generate the image in seconds."
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the image generation request."
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of generated image URLs."
+          },
+          "proxy_links": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of proxy image URLs."
+          },
+          "meta": {
+            "type": "object",
+            "description": "Metadata about the image generation including all parameters used.",
+            "additionalProperties": true
+          },
+          "nsfw_content_detected": {
+            "type": "boolean",
+            "description": "Indicates if NSFW content was detected in the generated image."
+          },
+          "webhook_status": {
+            "type": "string",
+            "description": "Status of the webhook notification."
+          },
+          "tip": {
+            "type": "string",
+            "description": "Additional information or tips for the user."
+          }
+        }
+      },
+      "ImageGenerationProcessingResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["processing"],
+            "description": "Status of the image generation."
+          },
+          "tip": {
+            "type": "string",
+            "description": "Information about faster processing options."
+          },
+          "tip_1": {
+            "type": "string",
+            "description": "Additional tip, usually pointing to the fetch API."
+          },
+          "eta": {
+            "type": "number",
+            "description": "Estimated time for completion in seconds."
+          },
+          "message": {
+            "type": "string",
+            "description": "Processing status message."
+          },
+          "webhook_status": {
+            "type": "string",
+            "description": "Status of the webhook notification."
+          },
+          "fetch_result": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to fetch the result when processing."
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the image generation request."
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Empty array during processing."
+          },
+          "meta": {
+            "type": "object",
+            "description": "Metadata about the image generation including all parameters used.",
+            "additionalProperties": true
+          },
+          "future_links": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of future image URLs for queued requests."
+          }
+        }
+      },
+      "ImageGenerationErrorResponse": {
+        "type": "object",
+        "required": ["status", "message"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["error"]
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message description."
+          }
+        }
+      },
+      "ReloadModelResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success", "error", "processing"],
+            "description": "Status of the model reload operation."
+          },
+          "message": {
+            "type": "string",
+            "description": "Message indicating the result of the reload operation."
+          }
+        }
+      }
+    },
+    "responses": {
+      "StandardErrorResponse": {
+        "description": "Bad request (invalid parameters), unauthorized (invalid API key), or internal server error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ImageGenerationErrorResponse"
             }
           }
         }
       }
     }
   }
+}
