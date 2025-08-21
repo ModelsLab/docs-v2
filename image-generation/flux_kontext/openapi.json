@@ -15,7 +15,7 @@
     }
   ],
   "paths": {
-    "/v6/images/img2img": {
+    "/img2img": {
       "post": {
         "summary": "Generate image from text and reference images (Flux Kontext Model)",
         "description": "The Image to Image API is used to create high-quality images from text prompts combined with reference images using the Flux Kontext model. This endpoint allows you to blend elements from multiple input images guided by text descriptions.",
