@@ -15,7 +15,7 @@
     }
   ],
   "paths": {
-    "/img2img": {
+    "/v6/images/img2img": {
       "post": {
         "summary": "Generate image from text and reference images (Flux Kontext Model)",
         "description": "The Image to Image API is used to create high-quality images from text prompts combined with reference images using the Flux Kontext model. This endpoint allows you to blend elements from multiple input images guided by text descriptions.",
@@ -70,7 +70,6 @@
           "model_id": {
             "type": "string",
             "description": "The ID of the model. Must be 'flux-kontext-dev' for Flux Kontext model.",
-            "enum": ["flux-kontext-dev"],
             "default": "flux-kontext-dev"
           },
           "prompt": {
@@ -79,7 +78,6 @@
           },
           "negative_prompt": {
             "type": "string",
-            "nullable": true,
             "description": "Items you don't want in the image. Helps exclude unwanted elements, artifacts, or styles from the generation."
           },
           "init_image": {
@@ -90,7 +88,6 @@
           "init_image_2": {
             "type": "string",
             "format": "uri",
-            "nullable": true,
             "description": "URL of the secondary reference image to incorporate elements from. Optional for single-image workflows."
           },
           "num_inference_steps": {
