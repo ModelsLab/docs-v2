@@ -98,6 +98,13 @@
                     ]
                   },
                   {
+                    "group": "Flux Kontext Dev",
+                    "pages": [
+                       "/image-generation/flux_kontext/overview",
+                      "/image-generation/flux_kontext/flux-kontext-img-to-image"
+                    ]
+                  },
+                  {
                     "group": "Community Models",
                     "pages": [
                       "image-generation/community-models/overview",

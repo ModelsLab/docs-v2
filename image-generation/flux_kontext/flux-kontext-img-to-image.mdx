@@ -1,0 +1,29 @@
+---
+title: "Flux kontext Image to Image Endpoint"
+openapi: 'POST /img2img'
+description: 'Create high quality image from text using FLUX Kontext model.'
+---
+
+![Text to image endpoint result](/images/image-generation/flux/assets/images/Text-to-image-1-a226305d52e197b14c4cc0b1534ea06c.jpg)
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v6/images/img2img' \
+```
+
+## Body
+```json json
+{
+  "key": "",
+  "init_image": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/SwogScBP0DtW8M90EDCMAjTYXdHFW4-metaMjhlNjgxMWE3MjY0NmY5ZmJjYTcyNGFjNWU3NTZlZGQuanBn-.jpg",
+  "init_image_2": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/CGuHsNAUtB4Uif4J0tVTbAlEaICbB7-metaMzg4ZTdmZGRiNmQyZmYxY2JiMzk4ZTZkM2VjZDBmNTEuanBn-.jpg",
+  "prompt": "a girl from image one holding the can from image two",
+  "negative_prompt": "(worst quality:2), (low quality:2), (normal quality:2), (jpeg artifacts), (blurry), (duplicate), (morbid), (mutilated), (out of frame), (extra limbs), (bad anatomy), (disfigured), (deformed), (cross-eye), (glitch), (oversaturated), (overexposed), (underexposed), (bad proportions), (bad hands), (bad feet), (cloned face), (long neck), (missing arms), (missing legs), (extra fingers), (fused fingers), (poorly drawn hands), (poorly drawn face), (mutation), (deformed eyes), watermark, text, logo, signature, grainy, tiling, censored, nsfw, ugly, blurry eyes, noisy image, bad lighting, unnatural skin, asymmetry",
+  "model_id": "flux-kontext-dev",
+  "num_inference_steps": "28",
+  "strength": "0.5",
+  "guidance": "2.5",
+  "enhance_prompt": null
+}
+```
