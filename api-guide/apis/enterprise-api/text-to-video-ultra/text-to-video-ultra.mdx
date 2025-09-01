@@ -1,0 +1,95 @@
+---
+title: "Enterprise Text to Video Ultra Endpoint"
+description: "This endpoint is used to generate HD video from a given text prompt."
+---
+
+<video
+  controls
+  className="w-full aspect-video rounded-xl"
+  src="https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/R1RcY49EKLk600eJMDDQaKU3ZM0rc7-metaZTllYWIyOTYtNGM1Yy00NzgyLWI2OTctZGVlNWY3ODhkYmFmLm1wNA==-.mp4"
+></video>
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/ultra_video/text2video' \
+```
+
+## Body
+<Note>
+When the model\_id is `Wan2.2`, the request json looks like so,
+</Note>
+
+```json json
+{     
+    "key":"enterprise_api_key",    
+    "prompt":"Space Station in space",    
+    "negative_prompt":"low quality",    
+    "resolution":480,    
+    "num_frames":81,    
+    "num_inference_steps":30,    
+    "guidance_scale": 5.0,    
+    "shift_sample":3,    
+    "fps":16,    
+    "webhook": null,    
+    "track_id":null
+}
+```
+
+## Body Attributes
+
+<ParamField query="key" type="string" required>
+  Your API Key used for request authorization.
+</ParamField>
+
+<ParamField query="prompt" type="string" required>
+  Text prompt with a description of the things you want in the video to be generated.
+</ParamField>
+
+<ParamField query="negative_prompt" type="string">
+  Items you don't want in the video.
+</ParamField>
+
+<ParamField query="seed" type="integer">
+  Seed is used to reproduce results. The same seed will give you the same video again. Pass null for a random number.
+</ParamField>
+
+<ParamField query="resolution" type="integer" max="480" default="480">
+  The resolution of the generated output. Maximum is 480.
+</ParamField>
+
+<ParamField query="num_frames" type="integer" default="81">
+  The number of frames in the generated video. Default is 81.
+</ParamField>
+
+<ParamField query="num_inference_steps" type="integer" min="1" max="50" default="20">
+  Number of denoising steps. Default is 20. Maximum is 50.
+</ParamField>
+
+<ParamField query="guidance_scale" type="number" min="0" max="8" default="7.5">
+  Scale for classifier-free guidance. Minimum is 0, maximum is 8.
+</ParamField>
+
+<ParamField query="fps" type="integer" min="1" max="16" default="8">
+  Frames per second rate of the generated video. Must be less than num_frames. Maximum is 16.
+</ParamField>
+
+<ParamField query="portrait" type="boolean" default="false">
+  Indicates whether the output should be in portrait mode. Options: true/false.
+</ParamField>
+
+<ParamField query="sample_shift" type="integer" default="3">
+  Controls the sampling shift in the generation process. Default is 3.
+</ParamField>
+
+<ParamField query="temp" type="boolean" default="false">
+  If true, stores the video in temporary storage (cleaned every 24 hours). Default is false.
+</ParamField>
+
+<ParamField query="webhook" type="string" format="url">
+  A URL to receive a POST API call once the video generation is complete.
+</ParamField>
+
+<ParamField query="track_id" type="string">
+  A unique ID used in the webhook response to identify the request.
+</ParamField>

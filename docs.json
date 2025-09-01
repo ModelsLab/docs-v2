@@ -13,7 +13,6 @@
       "view",
       "chatgpt",
       "claude",
-      "perplexity",
       {
         "title": "feature request",
         "description": "Join the discord to request a new feature.",
@@ -454,16 +453,16 @@
                 ]
               },
               {
-                "group": "Ultra Video",
+                "group": "Text to Video Ultra",
                 "pages": [
-                  "api-guide/apis/enterprise-api/ultra-video/overview",
-                  "api-guide/apis/enterprise-api/ultra-video/clear-cache",
-                  "api-guide/apis/enterprise-api/ultra-video/clear-queue",
-                  "api-guide/apis/enterprise-api/ultra-video/fetchvideo",
-                  "api-guide/apis/enterprise-api/ultra-video/restart-server",
-                  "api-guide/apis/enterprise-api/ultra-video/system-details",
-                  "api-guide/apis/enterprise-api/ultra-video/texttovideo",
-                  "api-guide/apis/enterprise-api/ultra-video/update-server"
+                  "api-guide/apis/enterprise-api/text-to-video-ultra/overview",
+                  "api-guide/apis/enterprise-api/text-to-video-ultra/clear-cache",
+                  "api-guide/apis/enterprise-api/text-to-video-ultra/clear-queue",
+                  "api-guide/apis/enterprise-api/text-to-video-ultra/fetch-video",
+                  "api-guide/apis/enterprise-api/text-to-video-ultra/restart-server",
+                  "api-guide/apis/enterprise-api/text-to-video-ultra/system-details",
+                  "api-guide/apis/enterprise-api/text-to-video-ultra/text-to-video-ultra",
+                  "api-guide/apis/enterprise-api/text-to-video-ultra/update-server"
                 ]
               },
               {

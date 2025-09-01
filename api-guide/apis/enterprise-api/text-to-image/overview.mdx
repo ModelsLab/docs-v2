@@ -1,118 +1,92 @@
 ---
 title: "Enterprise: Text to Image API"
+description: "Comprehensive endpoints for managing models, generating images/videos, and controlling your dedicated server."
 ---
 
-## Overview[​](#overview "Direct link to Overview")
+## Endpoints
 
-The Enterprise API is packed with a nice collection of endpoints. Some of them cover the interaction with your server which is the main advantage of the Enterprise plan. Others cover common model, image and video related processes.
+<CardGroup cols={2}>
+  <Card title="System Details" icon="server" href="/enterprise-api/text-to-image/system-details">
+    Get detailed information about your dedicated server
+  </Card>
 
-Also, there are Image Editing, Voice Cloning and LLM enterprise endpoints suits
+  <Card title="Restart Server" icon="refresh" href="/enterprise-api/text-to-image/restart-server">
+    Restart your dedicated server
+  </Card>
 
-<Info>
-  The Enterprise API is accessible only with a special **enterprise API key**, which you will receive upon **[purchasing](https://modelslab.com/enterprise#plan)** an enterprise plan.
-</Info>
+  <Card title="Update Server" icon="arrow-up" href="/enterprise-api/text-to-image/update-server">
+    Update your dedicated server to the latest version
+  </Card>
 
-You can view our Enterprise plans **[here](https://modelslab.com/enterprise#plan)**.
+  <Card title="Clear Cache" icon="trash" href="/enterprise-api/text-to-image/clear-cache">
+    Clear the API’s cache for fresh processing
+  </Card>
 
-## Available Endpoints[​](#available-endpoints "Direct link to Available Endpoints")
+  <Card title="List Schedulers" icon="list" href="/enterprise-api/text-to-image/list-schedulers">
+    Retrieve a list of all available schedulers
+  </Card>
 
-* [enterprise/system\_details](/enterprise-api/text-to-image/system-details)
-* [enterprise/restart\_server](/enterprise-api/text-to-image/restart-server)
-* [enterprise/update\_server](/enterprise-api/text-to-image/update-server)
-* [enterprise/clear\_cache](/enterprise-api/text-to-image/clear-cache)
-* [enterprise/schedulers\_list](/enterprise-api/text-to-image/list-schedulers)
-* [enterprise/load\_model](/enterprise-api/text-to-image/load-model)
-* [enterprise/load\_model\_v2](/enterprise-api/text-to-image/load-model-v2)
-* [enterprise/verify\_model](/enterprise-api/text-to-image/verify-model)
-* [enterprise/get\_all\_models](/enterprise-api/text-to-image/get-all-models)
-* [enterprise/delete\_model](/enterprise-api/text-to-image/delete-model)
-* [enterprise/controlnet](/enterprise-api/text-to-image/controlnet-ep)
-* [enterprise/text2img](/enterprise-api/text-to-image/text2img)
-* [enterprise/img2img](/enterprise-api/text-to-image/img2img)
-* [enterprise/inpaint](/enterprise-api/text-to-image/inpainting)
-* [enterprise/super\_resolution](/enterprise-api/text-to-image/super-resolution)
-* [enterprise/upload\_image](/enterprise-api/text-to-image/upload-image)
-* [enterprise/sync\_image](/enterprise-api/text-to-image/sync-model)
-* [enterprise/load\_vae](/enterprise-api/text-to-image/load-vae)
-* [enterprise/nsfw\_image\_check](/enterprise-api/text-to-image/nsfw-image-check)
-* [enterprise/fetch\_queue\_image](/enterprise-api/text-to-image/fetch-queue-image)
+  <Card title="Load Model" icon="upload" href="/enterprise-api/text-to-image/load-model">
+    Load a model onto your server
+  </Card>
 
-### System Details[​](#system-details "Direct link to System Details")
+  <Card title="Load Model v2" icon="upload-cloud" href="/enterprise-api/text-to-image/load-model-v2">
+    Load a model using the v2 loader for enhanced control
+  </Card>
 
-This endpoint returns information about your server.
+  <Card title="Verify Model" icon="check" href="/enterprise-api/text-to-image/verify-model">
+    Check if a specific model exists on your server
+  </Card>
 
-### Restart Server[​](#restart-server "Direct link to Restart Server")
+  <Card title="Get All Models" icon="database" href="/enterprise-api/text-to-image/get-all-models">
+    List all models available on your server
+  </Card>
 
-This endpoint is used to restart your dedicated server. As a response you will receive information about the result of the restart command.
+  <Card title="Delete Model" icon="trash-2" href="/enterprise-api/text-to-image/delete-model">
+    Delete a model from your server
+  </Card>
 
-### Update Server[​](#update-server "Direct link to Update Server")
+  <Card title="ControlNet" icon="command" href="/enterprise-api/text-to-image/controlnet-ep">
+    Generate ControlNet-based images
+  </Card>
 
-This endpoint is used to update your dedicated server. As a response you will receive information about the result of the update command.
+  <Card title="Text to Image" icon="file-text" href="/enterprise-api/text-to-image/text2img">
+    Generate an image from a text prompt
+  </Card>
 
-### Update S3 Details[​](#update-s3-details "Direct link to Update S3 Details")
+  <Card title="Image to Image" icon="image" href="/enterprise-api/text-to-image/img2img">
+    Transform an existing image with prompts
+  </Card>
 
-This endpoint is used to update the S3 details on your dedicated server.
+  <Card title="Inpainting" icon="brush" href="/enterprise-api/text-to-image/inpainting">
+    Modify specific parts of an image using inpainting
+  </Card>
 
-### Clear Cache[​](#clear-cache "Direct link to Clear Cache")
+  <Card title="Super Resolution" icon="maximize" href="/enterprise-api/text-to-image/super-resolution">
+    Upscale images with super resolution
+  </Card>
 
-This endpoint is used to clear the API's cache.
+  <Card title="Upload Image" icon="upload" href="/enterprise-api/text-to-image/upload-image">
+    Upload an image to your S3 bucket
+  </Card>
 
-### List Schedulers[​](#list-schedulers "Direct link to List Schedulers")
+  <Card title="Sync Models" icon="shuffle" href="/enterprise-api/text-to-image/sync-model">
+    Sync models between multiple servers
+  </Card>
 
-This endpoint is used to get a list of all the available schedulers.
+  <Card title="Load VAE" icon="layers" href="/enterprise-api/text-to-image/load-vae">
+    Load a VAE onto your server
+  </Card>
 
-### Load Model[​](#load-model "Direct link to Load Model")
+  <Card title="NSFW Image Check" icon="shield" href="/enterprise-api/text-to-image/nsfw-image-check">
+    Detect NSFW content in an image
+  </Card>
 
-This endpoint is used to load a model to your dedicated server.
+  <Card title="Fetch Queue Image" icon="download" href="/enterprise-api/text-to-image/fetch-queue-image">
+    Retrieve queued or processing image generation requests
+  </Card>
+</CardGroup>
 
-### Verify Model[​](#verify-model "Direct link to Verify Model")
-
-This endpoint is used to check if a particular model exists.
-
-### Get All Models[​](#get-all-models "Direct link to Get All Models")
-
-This endpoint returns a list of all the models available on your dedicated server.
-
-### Delete Model[​](#delete-model "Direct link to Delete Model")
-
-This endpoint is used to delete a model from your dedicated server.
-
-### Controlnet Endpoint[​](#controlnet-endpoint "Direct link to Controlnet Endpoint")
-
-This endpoint is used to generate ControlNet images.
-
-### Text to Image[​](#text-to-image "Direct link to Text to Image")
-
-This endpoint is used to create an image from a text prompt based on trained or on public models.
-
-### Text to Video[​](#text-to-video "Direct link to Text to Video")
-
-This endpoint is used to create video from a text prompt based on trained or on public models.
-
-### Inpainting[​](#inpainting "Direct link to Inpainting")
-
-This endpoint is used to change (inpaint) some part of an image according to specific requirements, based on trained or on public models.
-
-### Super Resolution[​](#super-resolution "Direct link to Super Resolution")
-
-This endpoint returns a super resolution version of an image.
-
-### Upload Image[​](#upload-image "Direct link to Upload Image")
-
-This endpoint id used to upload an image to your S3 bucket.
-
-### Sync Models[​](#sync-models "Direct link to Sync Models")
-
-This endpoint is important for users with multiple servers and want to sync models between two servers
-
-### Load Vae[​](#load-vae "Direct link to Load Vae")
-
-This endpoint is helps to load vae
-
-### NSFW Image Check[​](#nsfw-image-check "Direct link to NSFW Image Check")
-
-This endpoint allows you to check if an image is nsfw image
-
-## Playground[​](#playground "Direct link to Playground")
+## Playground
 
 You can test the available endpoints in our dedicated **[Playground Section](https://modelslab.com/playground?channel=enterprise)**.
