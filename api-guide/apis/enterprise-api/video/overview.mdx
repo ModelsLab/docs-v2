@@ -1,47 +1,36 @@
 ---
-title: "Enterprise: Text to Video API"
+title: "Enterprise: Video API"
+description: "Endpoints to generate videos from text or images and manage your video generation server."
 ---
 
-## Overview[​](#overview "Direct link to Overview")
+## Endpoints
 
-The Video Endpoints brings a collection of interesting endpoints that allows you generates video.
+<CardGroup cols={2}>
+  <Card title="Text to Video" icon="film" href="/enterprise-api/video/texttovideo">
+    Generate a video from a text prompt using trained or public models
+  </Card>
 
-## Available Endpoints[​](#available-endpoints "Direct link to Available Endpoints")
+  <Card title="Image to Video" icon="image" href="/enterprise-api/video/imgtovideo">
+    Generate a video from an image input
+  </Card>
 
-* [text2video](/enterprise-api/video/texttovideo)
-* [image2video](/enterprise-api/video/imgtovideo)
-* [fetchvideo](/enterprise-api/video/fetchvideo)
-* [clear\_cache](/enterprise-api/video/clear-cache)
-* [restart\_server](/enterprise-api/video/restart-server)
-* [system details](/enterprise-api/video/system-details)
-* [update server](/enterprise-api/video/update-server)
+  <Card title="Fetch Video" icon="download" href="/enterprise-api/video/fetchvideo">
+    Retrieve queued or processing video generation requests
+  </Card>
 
-### Text to Video[​](#text-to-video "Direct link to Text to Video")
+  <Card title="Clear Cache" icon="trash" href="/enterprise-api/video/clear-cache">
+    Clear the API’s server cache for fresh processing
+  </Card>
 
-This endpoint is used to create video from a text prompt based on trained or on public models.
+  <Card title="Restart Server" icon="refresh" href="/enterprise-api/video/restart-server">
+    Restart your dedicated video generation server
+  </Card>
 
-##### Endpoint in Action[​](#endpoint-in-action "Direct link to Endpoint in Action")
+  <Card title="System Details" icon="server" href="/enterprise-api/video/system-details">
+    Get information about your server status and performance
+  </Card>
 
-![Text to video endpoint result](\images\enterprise-api\video\assets\images\Text-to-video-059ae4e254324cdd6b271d791167cb35.jpg)
-
-### Image to Video[​](#image--to-video "Direct link to Image  to Video")
-
-This endpoint generates and returns a video based on image.
-
-##### Endpoint in Action[​](#endpoint-in-action-1 "Direct link to Endpoint in Action")
-
-![Text to video endpoint result](\images\enterprise-api\video\assets\images\Image-to-video-06907dcc4363b727c589be0243af41f4.jpg)
-
-### Fetch Video[​](#fetch-video "Direct link to Fetch Video")
-
-This endpoint to fetch queued and processing video rrequest
-
-![Fetch Queued Videos endpoint result](\images\enterprise-api\video\assets\images\Queue-Videos-051286175cdd986d42f37614a67d4b2a.jpg)
-
-### Clear Server Cache Endpoint[​](#clear-server-cache-endpoint "Direct link to Clear Server Cache Endpoint")
-
-This endpoint clear server cache
-
-### Restart Server Endpoint[​](#restart-server-endpoint "Direct link to Restart Server Endpoint")
-
-This endpoint restart the server
+  <Card title="Update Server" icon="arrow-up" href="/enterprise-api/video/update-server">
+    Update your dedicated server to the latest version
+  </Card>
+</CardGroup>

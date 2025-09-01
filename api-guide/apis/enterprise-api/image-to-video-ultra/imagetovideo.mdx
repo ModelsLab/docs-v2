@@ -1,123 +1,93 @@
 ---
 title: "Image to Video Ultra Endpoint"
+description: "Generate high-definition videos from images using the Image to Video Ultra API."
 ---
 
-## Overview[​](#overview "Direct link to Overview")
 
-Image to Video Ultra endpoint helps generate HD video, with high quality and high resolution, from a given init\_image.
-
-Experience the next level of AI-driven video creation with Image-to-Video Ultra today! 🚀
-
-[Open in Playground 🚀](https://videofusion.playground.modelslab.com/)
-
-### Example Video Generation[​](#example-video-generation "Direct link to Example Video Generation")
-
-Previous
-
-[Video 3](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/HYR1qkH9ON3GwkqhSSxKdoBpQ97ILV-metaMzRhNGM1MTUtNGU5MC00ODU0LTljYzMtNmExNzY2MGI1NGZjLm1wNA==-.mp4)
-
-[Video 1](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/3r08lltLwOhhqeITNKijRv7ITx7fGC-metaNjRhYTlmMDQtOGJhNC00ZmRmLWFjNzgtMTRjZjJiOWVhOWU4Lm1wNA==-.mp4)
-
-[Video 2](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/rhHHiN2goIdORzJ3YKuOq8gPvLkgRX-metaMzkyOTgwN2UtOTFkYS00OTJhLWJlZWQtYjQzY2IyNTMxZjQ0Lm1wNA==-.mp4)
-
-[Video 3](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/HYR1qkH9ON3GwkqhSSxKdoBpQ97ILV-metaMzRhNGM1MTUtNGU5MC00ODU0LTljYzMtNmExNzY2MGI1NGZjLm1wNA==-.mp4)
-
-[Video 1](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/3r08lltLwOhhqeITNKijRv7ITx7fGC-metaNjRhYTlmMDQtOGJhNC00ZmRmLWFjNzgtMTRjZjJiOWVhOWU4Lm1wNA==-.mp4)
-
-[Video 2](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/rhHHiN2goIdORzJ3YKuOq8gPvLkgRX-metaMzkyOTgwN2UtOTFkYS00OTJhLWJlZWQtYjQzY2IyNTMxZjQ0Lm1wNA==-.mp4)
-
-[Video 3](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/HYR1qkH9ON3GwkqhSSxKdoBpQ97ILV-metaMzRhNGM1MTUtNGU5MC00ODU0LTljYzMtNmExNzY2MGI1NGZjLm1wNA==-.mp4)
-
-Next
-
-* 1
-* 2
-* 3
-
-## Request[​](#request "Direct link to Request")
-
-```
+## Request
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+```curl curl
 --request POST 'https://modelslab.com/api/v1/enterprise/image_to_video_ultra/img2video' \
 ```
 
-Make a `POST` request to [https://modelslab.com/api/v1/enterprise/image\_to\_video\_ultra/img2video](https://modelslab.com/api/v1/enterprise/image_to_video_ultra/img2video) endpoint and pass the required parameters in the request body.
+## Body
+<Note>
+When the `model_id` is `cogvideox`, the request json looks like so,
+</Note>
 
-## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
-
-| Parameter                 | Description                                                                                                         | Values                                      |
-| :------------------------ | :------------------------------------------------------------------------------------------------------------------ | :------------------------------------------ |
-| **key**                   | Your API Key used for request authorization.                                                                        | key                                         |
-| **prompt**                | Text prompt with a description of the things you want in the video to be generated.                                 | String                                      |
-| **init\_image**           | Link equivalent of a valid PNG, JPEG, or other valid image format file to use as initial image conditioning.        | URL                                         |
-| **negative\_prompt**      | Items you don't want in the video.                                                                                  | String                                      |
-| **seed**                  | Seed is used to reproduce results. The same seed will give you the same image again. Pass null for a random number. | Integer or `null`                           |
-| **resolution**            | the resolution of the generated output                                                                              | The maximum is 480 .                        |
-| **num\_frames**           | The number of frames in the generated video. Default is 81                                                          | Integer                                     |
-| **num\_inference\_steps** | Number of denoising steps. Default is 20. Maximum is 31.                                                            | Integer (Default: 20, Max: 31).             |
-| **guidance\_scale**       | Scale for classifier-free guidance. Minimum is 0, maximum is 8.                                                     | min: 0, max: 8                              |
-| **fps**                   | Frames per second rate of the generated video. Should be less than `num_frames`                                     | Max 16                                      |
-| **portrait**              | Indicates whether the output should be in portrait mode. It accepts `true` or `false`. Default `false`              | Boolean                                     |
-| **sample\_shift**         | Controls the sampling shift in the generation process. Default value is 3                                           | `mp4` or `gif`                              |
-| **temp**                  | If `true`, stores the video in temporary storage (cleaned every 24 hours). Default is `false`.                      | The default is `false`. (`TRUE` or `FALSE`) |
-| **webhook**               | A URL to receive a POST API call once the video generation is complete.                                             | URL                                         |
-| **track\_id**             | A unique ID used in the webhook response to identify the request.                                                   | string                                      |
-
-[Open in Playground 🚀](https://videofusion.playground.modelslab.com/)
-
-## Example[​](#example "Direct link to Example")
-
-### Body[​](#body "Direct link to Body")
-
-When the model\_id is `cogvideox`, the request json looks like so,
-
-Body
-
-```
-{    "key":"",    "init_image":"https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/Vil4dkFzgFw0xyU7YsF4YqzJQXuGmr-metaNTliM2VmYTNmODE2NjdiMzljYjYzOTdlOGU5Nzg1OTAud2VicA==-.webp",    "prompt":"moving character",    "negative_prompt":"low quality",    "resolution":320,    "num_frames":16,    "num_inference_steps":31,    "guidance_scale":7,    "webhook": null,    "track_id":null}
+```json json
+{    
+    "key":"",    
+    "init_image":"https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/Vil4dkFzgFw0xyU7YsF4YqzJQXuGmr-metaNTliM2VmYTNmODE2NjdiMzljYjYzOTdlOGU5Nzg1OTAud2VicA==-.webp",    
+    "prompt":"moving character",    
+    "negative_prompt":"low quality",    
+    "resolution":320,    
+    "num_frames":16,    
+    "num_inference_steps":31,    
+    "guidance_scale":7,    
+    "webhook": null,    
+    "track_id":null
+}
 ```
 
-### Request[​](#request-1 "Direct link to Request")
+## Body Attributes
 
-* JS
-* PHP
-* NODE
-* PYTHON
-* JAVA
+<ParamField query="key" type="string" required placeholder="Your API Key">
+  Your API Key used for request authorization.
+</ParamField>
 
-```
-var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({    "key":"",    "init_image":"https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/Vil4dkFzgFw0xyU7YsF4YqzJQXuGmr-metaNTliM2VmYTNmODE2NjdiMzljYjYzOTdlOGU5Nzg1OTAud2VicA==-.webp",    "prompt":"moving character",    "negative_prompt":"low quality",    "resolution":480,    "num_frames":81,    "num_inference_steps":30,    "guidance_scale": 5.0,    "shift_sample":3,    "fps":16,    "webhook": null,    "track_id":null});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v1/enterprise/image_to_video_ultra/img2video", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
-```
+<ParamField query="prompt" type="string" required placeholder="Description of video">
+  Text prompt with a description of the things you want in the video to be generated.
+</ParamField>
 
-```
-<?php$payload = [    "key" => "",   "init_image" => "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/Vil4dkFzgFw0xyU7YsF4YqzJQXuGmr-metaNTliM2VmYTNmODE2NjdiMzljYjYzOTdlOGU5Nzg1OTAud2VicA==-.webp",    "prompt" => "moving character",    "negative_prompt" => "low quality",    "resolution" => 480,    "num_frames" => 81,    "num_inference_steps" => 30,    "guidance_scale" => 5.0,    "shift_sample" => 3,    "fps" => 16,    "webhook" =>  null,    "track_id" => null ];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v1/enterprise/image_to_video_ultra/img2video',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
-```
+<ParamField query="init_image" type="string" placeholder="URL to initial image">
+  Link equivalent of a valid PNG, JPEG, or other image format file to use as initial image conditioning.
+</ParamField>
 
-```
-var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v1/enterprise/image_to_video_ultra/img2video',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key":"",     "init_image":"https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/Vil4dkFzgFw0xyU7YsF4YqzJQXuGmr-metaNTliM2VmYTNmODE2NjdiMzljYjYzOTdlOGU5Nzg1OTAud2VicA==-.webp",    "prompt":"moving character",    "negative_prompt":"low quality",    "resolution":480,    "num_frames":81,    "num_inference_steps":30,    "guidance_scale": 5.0,    "shift_sample":3,    "fps":16,    "webhook": null,    "track_id":null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
-```
+<ParamField query="negative_prompt" type="string" placeholder="Unwanted elements">
+  Items you don't want in the video.
+</ParamField>
 
-```
-import requestsimport jsonurl = "https://modelslab.com/api/v1/enterprise/image_to_video_ultra/img2video"payload = json.dumps({    "key":"",  "init_image":"https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/Vil4dkFzgFw0xyU7YsF4YqzJQXuGmr-metaNTliM2VmYTNmODE2NjdiMzljYjYzOTdlOGU5Nzg1OTAud2VicA==-.webp",    "prompt":"moving character",    "negative_prompt":"low quality",    "resolution":480,    "num_frames":81,    "num_inference_steps":30,    "guidance_scale": 5.0,    "shift_sample":3,    "fps":16,    "webhook":None,    "track_id":None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
-```
+<ParamField query="seed" type="integer" placeholder="Random seed">
+  Seed is used to reproduce results. The same seed will give you the same output again. Pass null for random.
+</ParamField>
 
-```
-OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\":\"\",\n    \"init_image\":\"https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/Vil4dkFzgFw0xyU7YsF4YqzJQXuGmr-metaNTliM2VmYTNmODE2NjdiMzljYjYzOTdlOGU5Nzg1OTAud2VicA==-.webp\",\n    \"prompt\":\"An astronaut riding a horse\",\n    \"negative_prompt\":\"low quality\",\n    \"resolution\":320,\n    \"num_frames\":16,\n    \"num_inference_steps\":31,\n    \"guidance_scale\":7,\n    \"webhook\": null,\n    \"track_id\":null\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v1/enterprise/image_to_video_ultra/img2video")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .addHeader("X-API-Key", "{{token}}")  .build();Response response = client.newCall(request).execute();
-```
+<ParamField query="resolution" type="number" max="480">
+  Resolution of the generated output. Maximum is 480.
+</ParamField>
 
-### Response[​](#response "Direct link to Response")
+<ParamField query="num_frames" type="integer" default="81">
+  The number of frames in the generated video. Default is 81.
+</ParamField>
 
-* Success
-* Processing
-* Error
+<ParamField query="num_inference_steps" type="integer" default="20" max="31">
+  Number of denoising steps. Default is 20. Maximum is 31.
+</ParamField>
 
-```
-{    "status": "success",    "generationTime": 4.49,    "id": 147,    "output": [        "https://modelslab-bom.s3.amazonaws.com/generations/9faea114-b3e5-4960-b0de-cc27b8f2efa0.mp4"    ],    "proxy_links": [        "https://modelslab-bom.s3.amazonaws.com/generations/9faea114-b3e5-4960-b0de-cc27b8f2efa0.mp4"    ],    "meta": {        "base64": "no",        "file_prefix": "a51498bf-0eee-44c5-a473-81cc867b288a",        "fps": 16,        "guidance_scale": 5,        "id": null,        "instant_response": "no",        "negative_prompt": "low quality",        "num_frames": 81,        "num_inference_steps": 30,        "opacity": 0.8,        "output_type": "mp4",        "padding_down": 10,        "padding_right": 10,        "portrait": "no",        "prompt": "Space Station in space",        "rescale": "yes",        "resolution": 480,        "sample_shift": 3,        "scale_down": 6,        "seed": 3644269522,        "temp": "no",        "track_id": null,        "watermark": "no",        "webhook": null    },    "future_links": [        "https://modelslab-bom.s3.amazonaws.com/generations/09e6f35f-2a47-4271-82a5-9cfff8bbc43a.mp4"    ]}
-```
+<ParamField query="guidance_scale" type="number" min="0" max="8">
+  Scale for classifier-free guidance. Min is 0, Max is 8.
+</ParamField>
 
-```
-{    "status": "processing",    "tip": "Your video is processing in background, you can get this video using fetch API",    "eta": 960,    "message": "Try to fetch request after seconds estimated",    "fetch_result": "https://modelslab.com/api/v6/video/fetch/147",    "id": 147,    "output": [],    "meta": {        "base64": "no",        "file_prefix": "a51498bf-0eee-44c5-a473-81cc867b288a",        "fps": 16,        "guidance_scale": 5,        "id": null,        "instant_response": "no",        "negative_prompt": "low quality",        "num_frames": 81,        "num_inference_steps": 30,        "opacity": 0.8,        "output_type": "mp4",        "padding_down": 10,        "padding_right": 10,        "portrait": "no",        "prompt": "Space Station in space",        "rescale": "yes",        "resolution": 480,        "sample_shift": 3,        "scale_down": 6,        "seed": 3644269522,        "temp": "no",        "track_id": null,        "watermark": "no",        "webhook": null    },    "future_links": [        "https://modelslab-bom.s3.amazonaws.com/generations/9faea114-b3e5-4960-b0de-cc27b8f2efa0.mp4"    ]}
-```
+<ParamField query="fps" type="integer" max="16">
+  Frames per second of the generated video. Should be less than num_frames. Maximum is 16.
+</ParamField>
 
-```
-{    "status": "error",    "message": "Error message"}
-```
+<ParamField query="portrait" type="boolean" default="false">
+  Indicates whether the output should be in portrait mode. Accepts true or false. Default is false.
+</ParamField>
+
+<ParamField query="sample_shift" type="string" default="3">
+  Controls the sampling shift in the generation process. Default is 3.
+</ParamField>
+
+<ParamField query="temp" type="boolean" default="false">
+  If true, stores the video in temporary storage (cleaned every 24 hours). Default is false.
+</ParamField>
+
+<ParamField query="webhook" type="string" placeholder="https://your.webhook.url">
+  A URL to receive a POST API call once the video generation is complete.
+</ParamField>
+
+<ParamField query="track_id" type="string" placeholder="Unique ID for webhook">
+  A unique ID used in the webhook response to identify the request.
+</ParamField>

@@ -7,6 +7,20 @@
     "light": "#FAF9F6",
     "dark": "#28282B"
   },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      {
+        "title": "feature request",
+        "description": "Join the discord to request a new feature.",
+        "icon": "discord",
+        "href":"https://discord.com/invite/ujtGyjY2"
+      }
+    ]
+  },
   "favicon": "/favicon.png",
   "navigation": {
     "tabs": [
@@ -38,27 +52,6 @@
             "group": "Advanced API Usage",
             "hidden": true,
             "pages": ["/using-the-api/rate-limiters", "/using-the-api/errors"]
-          },
-          {
-            "group": "3rd Party Models",
-            "hidden": true,
-            "pages": [
-              {
-                "group": "Google",
-                "pages": [
-                  "/third-party-apis/google/veo2",
-                  "/third-party-apis/google/imagen-3",
-                  "/third-party-apis/google/imagen-4"
-                ]
-              },
-              {
-                "group": "Runway ML",
-                "pages": [
-                  "/third-party-apis/runway/gen4-image",
-                  "/third-party-apis/runway/gen4-turbo"
-                ]
-              }
-            ]
           },
           {
             "group": "Our AI APIs",
@@ -458,16 +451,16 @@
                 ]
               },
               {
-                "group": "Ultra Video",
+                "group": "Text to Video Ultra",
                 "pages": [
-                  "api-guide/apis/enterprise-api/ultra-video/overview",
-                  "api-guide/apis/enterprise-api/ultra-video/clear-cache",
-                  "api-guide/apis/enterprise-api/ultra-video/clear-queue",
-                  "api-guide/apis/enterprise-api/ultra-video/fetchvideo",
-                  "api-guide/apis/enterprise-api/ultra-video/restart-server",
-                  "api-guide/apis/enterprise-api/ultra-video/system-details",
-                  "api-guide/apis/enterprise-api/ultra-video/texttovideo",
-                  "api-guide/apis/enterprise-api/ultra-video/update-server"
+                  "api-guide/apis/enterprise-api/text-to-video-ultra/overview",
+                  "api-guide/apis/enterprise-api/text-to-video-ultra/clear-cache",
+                  "api-guide/apis/enterprise-api/text-to-video-ultra/clear-queue",
+                  "api-guide/apis/enterprise-api/text-to-video-ultra/fetch-video",
+                  "api-guide/apis/enterprise-api/text-to-video-ultra/restart-server",
+                  "api-guide/apis/enterprise-api/text-to-video-ultra/system-details",
+                  "api-guide/apis/enterprise-api/text-to-video-ultra/text-to-video-ultra",
+                  "api-guide/apis/enterprise-api/text-to-video-ultra/update-server"
                 ]
               },
               {
@@ -486,11 +479,11 @@
                   "api-guide/apis/enterprise-api/video/overview",
                   "api-guide/apis/enterprise-api/video/clear-cache",
                   "api-guide/apis/enterprise-api/video/clear-queue",
-                  "api-guide/apis/enterprise-api/video/fetchvideo",
-                  "api-guide/apis/enterprise-api/video/imgtovideo",
+                  "api-guide/apis/enterprise-api/video/fetch-video",
+                  "api-guide/apis/enterprise-api/video/img-to-video",
                   "api-guide/apis/enterprise-api/video/restart-server",
                   "api-guide/apis/enterprise-api/video/system-details",
-                  "api-guide/apis/enterprise-api/video/texttovideo",
+                  "api-guide/apis/enterprise-api/video/text-to-video",
                   "api-guide/apis/enterprise-api/video/update-server"
                 ]
               },
