@@ -36,8 +36,12 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    { "$ref": "#/components/schemas/ImageEditingSuccessResponse" },
-                    { "$ref": "#/components/schemas/ImageEditingProcessingResponse" },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingProcessingResponse"
+                    },
                     { "$ref": "#/components/schemas/ImageEditingErrorResponse" }
                   ]
                 }
@@ -68,8 +72,12 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    { "$ref": "#/components/schemas/ImageEditingSuccessResponse" },
-                    { "$ref": "#/components/schemas/ImageEditingProcessingResponse" },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingProcessingResponse"
+                    },
                     { "$ref": "#/components/schemas/ImageEditingErrorResponse" }
                   ]
                 }
@@ -128,8 +136,12 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    { "$ref": "#/components/schemas/ImageEditingSuccessResponse" },
-                    { "$ref": "#/components/schemas/ImageEditingProcessingResponse" },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingProcessingResponse"
+                    },
                     { "$ref": "#/components/schemas/ImageEditingErrorResponse" }
                   ]
                 }
@@ -160,8 +172,12 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    { "$ref": "#/components/schemas/ImageEditingSuccessResponse" },
-                    { "$ref": "#/components/schemas/ImageEditingProcessingResponse" },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingProcessingResponse"
+                    },
                     { "$ref": "#/components/schemas/ImageEditingErrorResponse" }
                   ]
                 }
@@ -235,8 +251,12 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    { "$ref": "#/components/schemas/ImageEditingSuccessResponse" },
-                    { "$ref": "#/components/schemas/ImageEditingProcessingResponse" },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingProcessingResponse"
+                    },
                     { "$ref": "#/components/schemas/ImageEditingErrorResponse" }
                   ]
                 }
@@ -267,8 +287,12 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    { "$ref": "#/components/schemas/ImageEditingSuccessResponse" },
-                    { "$ref": "#/components/schemas/ImageEditingProcessingResponse" },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingProcessingResponse"
+                    },
                     { "$ref": "#/components/schemas/ImageEditingErrorResponse" }
                   ]
                 }
@@ -299,8 +323,12 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    { "$ref": "#/components/schemas/ImageEditingSuccessResponse" },
-                    { "$ref": "#/components/schemas/ImageEditingProcessingResponse" },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingProcessingResponse"
+                    },
                     { "$ref": "#/components/schemas/ImageEditingErrorResponse" }
                   ]
                 }
@@ -331,8 +359,12 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    { "$ref": "#/components/schemas/ImageEditingSuccessResponse" },
-                    { "$ref": "#/components/schemas/ImageEditingProcessingResponse" },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingProcessingResponse"
+                    },
                     { "$ref": "#/components/schemas/ImageEditingErrorResponse" }
                   ]
                 }
@@ -363,8 +395,12 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    { "$ref": "#/components/schemas/ImageEditingSuccessResponse" },
-                    { "$ref": "#/components/schemas/ImageEditingProcessingResponse" },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingProcessingResponse"
+                    },
                     { "$ref": "#/components/schemas/ImageEditingErrorResponse" }
                   ]
                 }
@@ -395,8 +431,12 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    { "$ref": "#/components/schemas/ImageEditingSuccessResponse" },
-                    { "$ref": "#/components/schemas/ImageEditingProcessingResponse" },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingProcessingResponse"
+                    },
                     { "$ref": "#/components/schemas/ImageEditingErrorResponse" }
                   ]
                 }
@@ -427,8 +467,12 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    { "$ref": "#/components/schemas/ImageEditingSuccessResponse" },
-                    { "$ref": "#/components/schemas/ImageEditingProcessingResponse" },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingProcessingResponse"
+                    },
                     { "$ref": "#/components/schemas/ImageEditingErrorResponse" }
                   ]
                 }
@@ -445,262 +489,834 @@
         "type": "object",
         "required": ["key", "image"],
         "properties": {
-          "key": { "type": "string", "description": "Your API Key used for request authorization" },
-          "image": { "type": "string", "description": "Link or valid base64 data for the image" },
-          "alpha_matting": { "type": "boolean", "default": false, "description": "Whether to perform alpha matting" },
-          "post_process_mask": { "type": "boolean", "default": false, "description": "Whether to post-process the mask image" },
-          "only_mask": { "type": "boolean", "default": false, "description": "Whether to return only the mask image" },
-          "inverse_mask": { "type": "boolean", "default": false, "description": "This will inverse the generated mask" },
-          "seed": { "type": "integer", "description": "Seed for reproducible results" },
-          "base64": { "type": "boolean", "default": false, "description": "Get response as base64 string" },
-          "alpha_matting_foreground_threshold": { "type": "integer", "minimum": 0, "maximum": 240, "default": 240 },
-          "alpha_matting_background_threshold": { "type": "integer", "minimum": 0, "maximum": 20, "default": 20 },
-          "alpha_matting_erode_size": { "type": "integer", "minimum": 0, "maximum": 5, "default": 5 },
-          "webhook": { "type": "string", "format": "uri", "description": "URL to receive POST API call when complete" },
-          "track_id": { "type": "integer", "description": "ID for webhook identification" }
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "image": {
+            "type": "string",
+            "description": "Link or valid base64 data for the image"
+          },
+          "alpha_matting": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to perform alpha matting"
+          },
+          "post_process_mask": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to post-process the mask image"
+          },
+          "only_mask": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether to return only the mask image"
+          },
+          "inverse_mask": {
+            "type": "boolean",
+            "default": false,
+            "description": "This will inverse the generated mask"
+          },
+          "seed": {
+            "type": "integer",
+            "description": "Seed for reproducible results"
+          },
+          "base64": {
+            "type": "boolean",
+            "default": false,
+            "description": "Get response as base64 string"
+          },
+          "alpha_matting_foreground_threshold": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 240,
+            "default": 240
+          },
+          "alpha_matting_background_threshold": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 20,
+            "default": 20
+          },
+          "alpha_matting_erode_size": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5,
+            "default": 5
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST API call when complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
         }
       },
       "SuperResolutionRequest": {
         "type": "object",
         "required": ["key", "init_image"],
         "properties": {
-          "key": { "type": "string", "description": "Your API Key used for request authorization" },
-          "init_image": { "type": "string", "format": "uri", "description": "The URL of the image that you want to upscale" },
-          "model_id": { "type": "string", "default": "realesr-general-x4v3", "enum": ["RealESRGAN_x4plus", "RealESRGAN_x4plus_anime_6B", "RealESRGAN_x2plus", "realesr-general-x4v3", "ultra_resolution"] },
-          "scale": { "type": "integer", "description": "A number for scaling the image" },
-          "face_enhance": { "type": "boolean", "description": "A boolean flag for face enhancement feature" },
-          "webhook": { "type": "string", "format": "uri", "description": "URL to receive POST API call when complete" },
-          "track_id": { "type": "integer", "description": "ID for webhook identification" }
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "init_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "The URL of the image that you want to upscale"
+          },
+          "model_id": {
+            "type": "string",
+            "default": "realesr-general-x4v3",
+            "enum": [
+              "RealESRGAN_x4plus",
+              "RealESRGAN_x4plus_anime_6B",
+              "RealESRGAN_x2plus",
+              "realesr-general-x4v3",
+              "ultra_resolution"
+            ]
+          },
+          "scale": {
+            "type": "integer",
+            "default": 3,
+            "description": "A number for scaling the image"
+          },
+          "face_enhance": {
+            "type": "boolean",
+            "default": false,
+            "description": "A boolean flag for face enhancement feature"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST API call when complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
         }
       },
       "Base64ToUrlRequest": {
         "type": "object",
         "required": ["key", "init_image"],
         "properties": {
-          "key": { "type": "string", "description": "Your API Key used for request authorization" },
-          "init_image": { "type": "string", "description": "Base64 format of the image file" }
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "init_image": {
+            "type": "string",
+            "description": "Base64 format of the image file"
+          }
         }
       },
       "Base64ToUrlResponse": {
         "type": "object",
         "properties": {
           "status": { "type": "string", "enum": ["success"] },
-          "id": { "type": "integer", "description": "Unique identifier for the upload" },
-          "output": { "type": "array", "items": { "type": "string", "format": "uri" }, "description": "Array of URLs to the uploaded files" }
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the upload"
+          },
+          "output": {
+            "type": "array",
+            "items": { "type": "string", "format": "uri" },
+            "description": "Array of URLs to the uploaded files"
+          }
         }
       },
       "FaceGenRequest": {
         "type": "object",
         "required": ["key", "prompt", "face_image"],
         "properties": {
-          "key": { "type": "string", "description": "Your API Key used for request authorization" },
-          "prompt": { "type": "string", "description": "The text prompt describing the content you want in the generated image" },
-          "face_image": { "type": "string", "description": "Link or valid base64 data of the face you want your generations to resemble" },
-          "width": { "type": "integer", "maximum": 512, "description": "The width of the generated image" },
-          "height": { "type": "integer", "maximum": 768, "description": "The height of the generated image" },
-          "num_inference_steps": { "type": "integer", "enum": [21, 31, 41], "description": "The number of denoising steps" },
-          "guidance_scale": { "type": "number", "minimum": 1, "maximum": 20, "description": "The scale for classifier-free guidance" },
-          "s_scale": { "type": "number", "minimum": 0.0, "maximum": 2.0, "default": 1.0, "description": "Adjust the weight of the face structure" },
-          "samples": { "type": "integer", "maximum": 2, "description": "The number of images to be returned in response" },
-          "safety_checker": { "type": "boolean", "description": "Whether to run the safety checker" },
-          "safety_checker_type": { "type": "string", "enum": ["black", "blur", "sensitive_content_text", "pixelate"] },
-          "base64": { "type": "boolean", "default": false, "description": "Set to true for base64 response" },
-          "style": { "type": "string", "enum": ["comic", "chibi", "3d", "anime", "realistic"], "default": "realistic" },
-          "webhook": { "type": "string", "format": "uri", "description": "URL to receive POST API call when complete" },
-          "track_id": { "type": "integer", "description": "ID for webhook identification" }
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "The text prompt describing the content you want in the generated image"
+          },
+          "face_image": {
+            "type": "string",
+            "description": "Link or valid base64 data of the face you want your generations to resemble"
+          },
+          "width": {
+            "type": "integer",
+            "maximum": 512,
+            "description": "The width of the generated image"
+          },
+          "height": {
+            "type": "integer",
+            "maximum": 768,
+            "description": "The height of the generated image"
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "enum": [21, 31, 41],
+            "description": "The number of denoising steps"
+          },
+          "guidance_scale": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 20,
+            "description": "The scale for classifier-free guidance"
+          },
+          "s_scale": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 2.0,
+            "default": 1.0,
+            "description": "Adjust the weight of the face structure"
+          },
+          "samples": {
+            "type": "integer",
+            "maximum": 2,
+            "description": "The number of images to be returned in response"
+          },
+          "safety_checker": {
+            "type": "boolean",
+            "description": "Whether to run the safety checker"
+          },
+          "safety_checker_type": {
+            "type": "string",
+            "enum": ["black", "blur", "sensitive_content_text", "pixelate"]
+          },
+          "base64": {
+            "type": "boolean",
+            "default": false,
+            "description": "Set to true for base64 response"
+          },
+          "style": {
+            "type": "string",
+            "enum": ["comic", "chibi", "3d", "anime", "realistic"],
+            "default": "realistic"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST API call when complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
         }
       },
       "FashionRequest": {
         "type": "object",
         "required": ["key", "init_image", "cloth_image", "cloth_type"],
         "properties": {
-          "key": { "type": "string", "description": "Your API Key used for request authorization" },
-          "init_image": { "type": "string", "format": "uri", "description": "The URL of the image of the model to try the dress on" },
-          "cloth_image": { "type": "string", "format": "uri", "description": "The URL of the cloth/dress to try on" },
-          "cloth_type": { "type": "string", "enum": ["upper_body", "lower_body", "dresses"], "description": "Type of garment" },
-          "prompt": { "type": "string", "description": "The text prompt describing the things you want in the image" },
-          "negative_prompt": { "type": "string", "description": "Items you do not want in the image" },
-          "num_inference_steps": { "type": "integer", "enum": [21, 31, 41], "description": "The number of denoising steps" },
-          "temp": { "type": "string", "enum": ["yes", "no"], "default": "no", "description": "Set to yes for proxy links" },
-          "guidance_scale": { "type": "integer", "minimum": 1, "maximum": 20, "description": "The scale for classifier-free guidance" },
-          "webhook": { "type": "string", "format": "uri", "description": "URL to receive POST API call when complete" },
-          "track_id": { "type": "integer", "description": "ID for webhook identification" }
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "init_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "The URL of the image of the model to try the dress on"
+          },
+          "cloth_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "The URL of the cloth/dress to try on"
+          },
+          "cloth_type": {
+            "type": "string",
+            "enum": ["upper_body", "lower_body", "dresses"],
+            "description": "Type of garment"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "The text prompt describing the things you want in the image"
+          },
+          "negative_prompt": {
+            "type": "string",
+            "description": "Items you do not want in the image"
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "enum": [21, 31, 41],
+            "description": "The number of denoising steps"
+          },
+          "temp": {
+            "type": "string",
+            "enum": ["yes", "no"],
+            "default": "no",
+            "description": "Set to yes for proxy links"
+          },
+          "guidance_scale": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20,
+            "description": "The scale for classifier-free guidance"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST API call when complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
         }
       },
       "FetchRequest": {
         "type": "object",
         "required": ["key"],
         "properties": {
-          "key": { "type": "string", "description": "Your API Key used for request authorization" }
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          }
         }
       },
       "FluxHeadshotRequest": {
         "type": "object",
         "required": ["key", "prompt", "face_image", "seed"],
         "properties": {
-          "key": { "type": "string", "description": "Your API Key used for request authorization" },
-          "prompt": { "type": "string", "description": "Text prompt with description of the things you want in the image" },
-          "face_image": { "type": "string", "description": "Link or valid base64 string image for the face" },
-          "width": { "type": "integer", "maximum": 1024, "description": "Width of your generated image" },
-          "height": { "type": "integer", "maximum": 1024, "description": "Height of your generated image" },
-          "num_inference_steps": { "type": "integer", "maximum": 26, "description": "Number of denoising steps" },
-          "guidance_scale": { "type": "number", "minimum": 1.0, "maximum": 10.0, "description": "Scale for classifier-free guidance" },
-          "seed": { "type": "integer", "description": "Seed is used to reproduce results" },
-          "webhook": { "type": "string", "format": "uri", "description": "URL to receive POST API call when complete" },
-          "track_id": { "type": "integer", "description": "ID for webhook identification" }
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Text prompt with description of the things you want in the image"
+          },
+          "face_image": {
+            "type": "string",
+            "description": "Link or valid base64 string image for the face"
+          },
+          "width": {
+            "type": "integer",
+            "maximum": 1024,
+            "description": "Width of your generated image"
+          },
+          "height": {
+            "type": "integer",
+            "maximum": 1024,
+            "description": "Height of your generated image"
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "maximum": 26,
+            "description": "Number of denoising steps"
+          },
+          "guidance_scale": {
+            "type": "number",
+            "minimum": 1.0,
+            "maximum": 10.0,
+            "description": "Scale for classifier-free guidance"
+          },
+          "seed": {
+            "type": "integer",
+            "description": "Seed is used to reproduce results"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST API call when complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
         }
       },
       "HeadShotRequest": {
         "type": "object",
         "required": ["key", "prompt", "face_image"],
         "properties": {
-          "key": { "type": "string", "description": "Your API Key used for request authorization" },
-          "prompt": { "type": "string", "description": "Text prompt describing the content you want in the generated image" },
-          "face_image": { "type": "string", "description": "Link or valid base64 data of the face you want your generations to resemble" },
-          "width": { "type": "integer", "maximum": 512, "description": "Width of your generated image" },
-          "height": { "type": "integer", "maximum": 768, "description": "Height of your generated image" },
-          "num_inference_steps": { "type": "integer", "enum": [21, 31, 41], "description": "Number of denoising steps" },
-          "guidance_scale": { "type": "integer", "minimum": 1, "maximum": 5, "description": "Scale for classifier-free guidance" },
-          "s_scale": { "type": "number", "minimum": 0.0, "maximum": 2.0, "default": 1.0, "description": "Adjust the weight of the face structure" },
-          "samples": { "type": "integer", "maximum": 2, "description": "The number of images to be returned in response" },
-          "safety_checker": { "type": "boolean", "description": "Whether to run the safety checker" },
-          "safety_checker_type": { "type": "string", "enum": ["black", "blur", "sensitive_content_text", "pixelate"] },
-          "base64": { "type": "boolean", "default": false, "description": "Set to true for base64 response" },
-          "webhook": { "type": "string", "format": "uri", "description": "URL to receive POST API call when complete" },
-          "track_id": { "type": "integer", "description": "ID for webhook identification" }
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Text prompt describing the content you want in the generated image"
+          },
+          "face_image": {
+            "type": "string",
+            "description": "Link or valid base64 data of the face you want your generations to resemble"
+          },
+          "width": {
+            "type": "integer",
+            "maximum": 512,
+            "description": "Width of your generated image"
+          },
+          "height": {
+            "type": "integer",
+            "maximum": 768,
+            "description": "Height of your generated image"
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "enum": [21, 31, 41],
+            "description": "Number of denoising steps"
+          },
+          "guidance_scale": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5,
+            "description": "Scale for classifier-free guidance"
+          },
+          "s_scale": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 2.0,
+            "default": 1.0,
+            "description": "Adjust the weight of the face structure"
+          },
+          "samples": {
+            "type": "integer",
+            "maximum": 2,
+            "description": "The number of images to be returned in response"
+          },
+          "safety_checker": {
+            "type": "boolean",
+            "description": "Whether to run the safety checker"
+          },
+          "safety_checker_type": {
+            "type": "string",
+            "enum": ["black", "blur", "sensitive_content_text", "pixelate"]
+          },
+          "base64": {
+            "type": "boolean",
+            "default": false,
+            "description": "Set to true for base64 response"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST API call when complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
         }
       },
       "ImageMixerRequest": {
         "type": "object",
         "required": ["key", "prompt", "init_image"],
         "properties": {
-          "key": { "type": "string", "description": "Your API Key used for request authorization" },
-          "prompt": { "type": "string", "description": "Text prompt with description of the things you want in the image" },
-          "negative_prompt": { "type": "string", "description": "Items you don't want in the image" },
-          "init_image": { "type": "array", "items": { "type": "string", "format": "uri" }, "maxItems": 4, "description": "An array of image URLs to mix" },
-          "width": { "type": "integer", "maximum": 1024, "description": "The width of the image" },
-          "height": { "type": "integer", "maximum": 1024, "description": "The height of the image" },
-          "steps": { "type": "integer", "minimum": 1, "maximum": 50, "description": "Number of denoising steps" },
-          "guidance_scale": { "type": "number", "minimum": 1, "maximum": 20, "description": "Scale for classifier-free guidance" },
-          "seed": { "type": "integer", "description": "Seed used to reproduce results" },
-          "samples": { "type": "integer", "maximum": 1, "description": "Number of images to be returned in response" },
-          "webhook": { "type": "string", "format": "uri", "description": "URL to receive POST API call when complete" },
-          "track_id": { "type": "integer", "description": "ID for webhook identification" }
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Text prompt with description of the things you want in the image"
+          },
+          "negative_prompt": {
+            "type": "string",
+            "description": "Items you don't want in the image"
+          },
+          "init_image": {
+            "type": "array",
+            "items": { "type": "string", "format": "uri" },
+            "maxItems": 4,
+            "description": "An array of image URLs to mix"
+          },
+          "width": {
+            "type": "integer",
+            "maximum": 1024,
+            "description": "The width of the image"
+          },
+          "height": {
+            "type": "integer",
+            "maximum": 1024,
+            "description": "The height of the image"
+          },
+          "steps": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "description": "Number of denoising steps"
+          },
+          "guidance_scale": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 20,
+            "description": "Scale for classifier-free guidance"
+          },
+          "seed": {
+            "type": "integer",
+            "description": "Seed used to reproduce results"
+          },
+          "samples": {
+            "type": "integer",
+            "maximum": 1,
+            "description": "Number of images to be returned in response"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST API call when complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
         }
       },
       "InpaintRequest": {
         "type": "object",
         "required": ["key", "prompt", "init_image", "mask_image"],
         "properties": {
-          "key": { "type": "string", "description": "Your API Key used for request authorization" },
-          "prompt": { "type": "string", "description": "Text prompt describing the content you want in the generated image" },
-          "negative_prompt": { "type": "string", "description": "Items you do not want in the image" },
-          "init_image": { "type": "string", "format": "uri", "description": "Link to the initial image" },
-          "mask_image": { "type": "string", "format": "uri", "description": "Link to the mask image for inpainting" },
-          "width": { "type": "integer", "maximum": 1024, "description": "The width of the generated images" },
-          "height": { "type": "integer", "maximum": 1024, "description": "The height of the generated images" },
-          "samples": { "type": "integer", "maximum": 4, "description": "Number of images to be returned in response" },
-          "safety_checker": { "type": "string", "enum": ["yes", "no"], "description": "A checker for NSFW images" },
-          "enhance_prompt": { "type": "string", "enum": ["yes", "no"], "default": "yes", "description": "Enhance prompts for better results" },
-          "guidance_scale": { "type": "integer", "minimum": 1, "maximum": 5, "description": "Scale for classifier-free guidance" },
-          "strength": { "type": "number", "minimum": 0.0, "maximum": 1.0, "description": "Prompt strength when using the initial image" },
-          "instant_response": { "type": "string", "enum": ["true", "false"], "default": "false", "description": "Set to true for instant queue response" },
-          "base64": { "type": "string", "enum": ["true", "false"], "default": "false", "description": "Set to true to get response as base64 string" },
-          "seed": { "type": "integer", "description": "Seed used to reproduce results" },
-          "webhook": { "type": "string", "format": "uri", "description": "URL to receive POST API call when complete" },
-          "track_id": { "type": "integer", "description": "ID for webhook identification" }
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Text prompt describing the content you want in the generated image"
+          },
+          "negative_prompt": {
+            "type": "string",
+            "description": "Items you do not want in the image"
+          },
+          "init_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "Link to the initial image"
+          },
+          "mask_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "Link to the mask image for inpainting"
+          },
+          "width": {
+            "type": "integer",
+            "default": 512,
+            "maximum": 1024,
+            "description": "The width of the generated images"
+          },
+          "height": {
+            "type": "integer",
+            "default": 512,
+            "maximum": 1024,
+            "description": "The height of the generated images"
+          },
+          "samples": {
+            "type": "integer",
+            "default": 1,
+            "maximum": 4,
+            "description": "Number of images to be returned in response"
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "default": 30,
+            "description": "Number of denoising steps"
+          },
+          "safety_checker": {
+            "type": "string",
+            "default": "no",
+            "enum": ["yes", "no"],
+            "description": "A checker for NSFW images"
+          },
+          "enhance_prompt": {
+            "type": "string",
+            "enum": ["yes", "no"],
+            "default": "yes",
+            "description": "Enhance prompts for better results"
+          },
+          "guidance_scale": {
+            "type": "integer",
+            "default": 5,
+            "minimum": 1,
+            "maximum": 5,
+            "description": "Scale for classifier-free guidance"
+          },
+          "strength": {
+            "type": "number",
+            "default": 0.7,
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "description": "Prompt strength when using the initial image"
+          },
+          "instant_response": {
+            "type": "string",
+            "enum": ["true", "false"],
+            "default": "false",
+            "description": "Set to true for instant queue response"
+          },
+          "base64": {
+            "type": "string",
+            "enum": ["true", "false"],
+            "default": "false",
+            "description": "Set to true to get response as base64 string"
+          },
+          "seed": {
+            "type": "integer",
+            "description": "Seed used to reproduce results"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST API call when complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
         }
       },
       "MaskCreatorRequest": {
         "type": "object",
         "required": ["key", "specific_object"],
         "properties": {
-          "key": { "type": "string", "description": "Your API Key used for request authorization" },
-          "specific_object": { "type": "string", "description": "Description of the object to mask" },
-          "base64": { "type": "boolean", "description": "True or false for base64 response" },
-          "webhook": { "type": "string", "format": "uri", "description": "URL to receive POST API call when complete" },
-          "track_id": { "type": "integer", "description": "ID for webhook identification" }
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "specific_object": {
+            "type": "string",
+            "description": "Description of the object to mask"
+          },
+          "base64": {
+            "type": "boolean",
+            "description": "True or false for base64 response"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST API call when complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
         }
       },
       "ObjectRemovalRequest": {
         "type": "object",
         "required": ["key", "init_image", "mask_image"],
         "properties": {
-          "key": { "type": "string", "description": "Your API Key used for request authorization" },
-          "init_image": { "type": "string", "format": "uri", "description": "Link to the actual image" },
-          "mask_image": { "type": "string", "format": "uri", "description": "Link to the mask area you want to remove" },
-          "webhook": { "type": "string", "format": "uri", "description": "URL to receive POST API call when complete" },
-          "track_id": { "type": "integer", "description": "ID for webhook identification" }
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "init_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "Link to the actual image"
+          },
+          "mask_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "Link to the mask area you want to remove"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST API call when complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
         }
       },
       "OutpaintRequest": {
         "type": "object",
         "required": ["key", "image"],
         "properties": {
-          "key": { "type": "string", "description": "Your API Key used for request authorization" },
-          "prompt": { "type": "string", "default": "high quality", "description": "The text prompt to guide image generation" },
-          "negative_prompt": { "type": "string", "default": "low quality", "description": "Aspects to avoid in the generated image" },
-          "image": { "type": "string", "format": "uri", "description": "URL of the initial image to outpaint" },
-          "width": { "type": "integer", "maximum": 1440, "default": 1280, "description": "Width of the output image" },
-          "height": { "type": "integer", "maximum": 1440, "default": 720, "description": "Height of the output image" },
-          "overlap_width": { "type": "integer", "maximum": 42, "default": 10, "description": "Width of the mask overlap area" },
-          "num_inference_steps": { "type": "integer", "maximum": 30, "default": 10, "description": "Number of denoising steps" },
-          "guidance_scale": { "type": "number", "default": 8.0, "description": "How closely to follow the prompt" },
-          "seed": { "type": "integer", "description": "Seed for reproducible results" },
-          "temp": { "type": "boolean", "default": true, "description": "Whether to save output temporarily" },
-          "base64": { "type": "boolean", "default": false, "description": "Whether the image is base64 encoded" },
-          "webhook": { "type": "string", "format": "uri", "description": "URL to receive POST API call when complete" },
-          "track_id": { "type": "integer", "description": "ID for webhook identification" }
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "prompt": {
+            "type": "string",
+            "default": "high quality",
+            "description": "The text prompt to guide image generation"
+          },
+          "negative_prompt": {
+            "type": "string",
+            "default": "low quality",
+            "description": "Aspects to avoid in the generated image"
+          },
+          "image": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL of the initial image to outpaint"
+          },
+          "width": {
+            "type": "integer",
+            "maximum": 1440,
+            "default": 1280,
+            "description": "Width of the output image"
+          },
+          "height": {
+            "type": "integer",
+            "maximum": 1440,
+            "default": 720,
+            "description": "Height of the output image"
+          },
+          "overlap_width": {
+            "type": "integer",
+            "maximum": 42,
+            "default": 10,
+            "description": "Width of the mask overlap area"
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "maximum": 30,
+            "default": 10,
+            "description": "Number of denoising steps"
+          },
+          "guidance_scale": {
+            "type": "number",
+            "default": 8.0,
+            "description": "How closely to follow the prompt"
+          },
+          "seed": {
+            "type": "integer",
+            "description": "Seed for reproducible results"
+          },
+          "temp": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to save output temporarily"
+          },
+          "base64": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether the image is base64 encoded"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST API call when complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
         }
       },
       "ImageEditingSuccessResponse": {
         "type": "object",
         "properties": {
           "status": { "type": "string", "enum": ["success"] },
-          "generationTime": { "type": "number", "description": "Time taken to generate the image in seconds" },
-          "id": { "type": "integer", "description": "Unique identifier for the generation request" },
-          "output": { "type": "array", "items": { "type": "string", "format": "uri" }, "description": "Array of generated image URLs" },
-          "proxy_links": { "type": "array", "items": { "type": "string", "format": "uri" }, "description": "Array of proxy image URLs" },
-          "meta": { "type": "object", "description": "Metadata about the generation process", "additionalProperties": true }
+          "generationTime": {
+            "type": "number",
+            "description": "Time taken to generate the image in seconds"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the generation request"
+          },
+          "output": {
+            "type": "array",
+            "items": { "type": "string", "format": "uri" },
+            "description": "Array of generated image URLs"
+          },
+          "proxy_links": {
+            "type": "array",
+            "items": { "type": "string", "format": "uri" },
+            "description": "Array of proxy image URLs"
+          },
+          "meta": {
+            "type": "object",
+            "description": "Metadata about the generation process",
+            "additionalProperties": true
+          }
         }
       },
       "ImageEditingProcessingResponse": {
         "type": "object",
         "properties": {
           "status": { "type": "string", "enum": ["processing"] },
-          "tip": { "type": "string", "description": "Information about the processing status" },
-          "eta": { "type": "integer", "description": "Estimated time remaining in seconds" },
-          "message": { "type": "string", "description": "Processing status message" },
-          "fetch_result": { "type": "string", "format": "uri", "description": "URL to fetch the result when ready" },
-          "id": { "type": "integer", "description": "Unique identifier for the generation request" },
-          "output": { "type": "array", "items": { "type": "string" }, "description": "Empty array during processing" },
-          "future_links": { "type": "array", "items": { "type": "string", "format": "uri" }, "description": "Array of future image URLs" },
-          "proxy_links": { "type": "array", "items": { "type": "string", "format": "uri" }, "description": "Array of proxy image URLs" },
-          "meta": { "type": "object", "description": "Metadata about the generation process", "additionalProperties": true }
+          "tip": {
+            "type": "string",
+            "description": "Information about the processing status"
+          },
+          "eta": {
+            "type": "integer",
+            "description": "Estimated time remaining in seconds"
+          },
+          "message": {
+            "type": "string",
+            "description": "Processing status message"
+          },
+          "fetch_result": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to fetch the result when ready"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the generation request"
+          },
+          "output": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Empty array during processing"
+          },
+          "future_links": {
+            "type": "array",
+            "items": { "type": "string", "format": "uri" },
+            "description": "Array of future image URLs"
+          },
+          "proxy_links": {
+            "type": "array",
+            "items": { "type": "string", "format": "uri" },
+            "description": "Array of proxy image URLs"
+          },
+          "meta": {
+            "type": "object",
+            "description": "Metadata about the generation process",
+            "additionalProperties": true
+          }
         }
       },
       "ImageEditingErrorResponse": {
         "type": "object",
         "properties": {
           "status": { "type": "string", "enum": ["error"] },
-          "message": { "type": "string", "description": "Error message describing what went wrong" }
+          "message": {
+            "type": "string",
+            "description": "Error message describing what went wrong"
+          }
         }
       },
       "FetchSuccessResponse": {
         "type": "object",
         "properties": {
           "status": { "type": "string", "enum": ["success"] },
-          "id": { "type": "integer", "description": "Unique identifier for the generation request" },
-          "output": { "type": "array", "items": { "type": "string", "format": "uri" }, "description": "Array of generated image URLs" }
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the generation request"
+          },
+          "output": {
+            "type": "array",
+            "items": { "type": "string", "format": "uri" },
+            "description": "Array of generated image URLs"
+          }
         }
       },
       "FetchProcessingResponse": {
         "type": "object",
         "properties": {
           "status": { "type": "string", "enum": ["processing"] },
-          "message": { "type": "string", "description": "Processing status message" },
-          "output": { "type": "string", "description": "Empty string during processing" },
-          "tip": { "type": "string", "description": "Information about faster processing options" }
+          "message": {
+            "type": "string",
+            "description": "Processing status message"
+          },
+          "output": {
+            "type": "string",
+            "description": "Empty string during processing"
+          },
+          "tip": {
+            "type": "string",
+            "description": "Information about faster processing options"
+          }
         }
       }
     }

@@ -219,7 +219,15 @@
       },
       "ModelUploadRequest": {
         "type": "object",
-        "required": ["key", "url", "model_id", "model_format", "model_category", "model_visibility", "model_name"],
+        "required": [
+          "key",
+          "url",
+          "model_id",
+          "model_format",
+          "model_category",
+          "model_visibility",
+          "model_name"
+        ],
         "properties": {
           "key": {
             "type": "string",
@@ -236,6 +244,7 @@
           "force_load": {
             "type": "string",
             "enum": ["yes", "no"],
+            "default": "yes",
             "description": "Set this to \"yes\" if you want to reload automatically once upload fails; otherwise pass \"no\""
           },
           "model_format": {
@@ -246,16 +255,27 @@
           "revision": {
             "type": "string",
             "enum": ["fp16", "fp32"],
+            "default": "fp16",
             "description": "Specify whether the loaded model is \"fp16\" or \"fp32\""
           },
           "model_category": {
             "type": "string",
-            "enum": ["stable_diffusion", "stable_diffusion_xl", "controlnet", "lora", "embeddings", "flux_lora", "flux_embeddings", "flux_checkpoint"],
+            "enum": [
+              "stable_diffusion",
+              "stable_diffusion_xl",
+              "controlnet",
+              "lora",
+              "embeddings",
+              "flux_lora",
+              "flux_embeddings",
+              "flux_checkpoint"
+            ],
             "description": "The category of the model you want to upload"
           },
           "model_visibility": {
             "type": "string",
             "enum": ["private", "public"],
+            "default": "public",
             "description": "It accepts \"private\" or \"public\""
           },
           "model_name": {
@@ -270,6 +290,7 @@
           "hf_upload": {
             "type": "string",
             "enum": ["yes", "no"],
+            "default": "no",
             "description": "It accepts \"yes\" or \"no\""
           }
         }

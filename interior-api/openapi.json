@@ -36,8 +36,10 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    {"$ref": "#/components/schemas/SuccessInteriorResponse"},
-                    {"$ref": "#/components/schemas/ProcessingInteriorResponse"}
+                    { "$ref": "#/components/schemas/SuccessInteriorResponse" },
+                    {
+                      "$ref": "#/components/schemas/ProcessingInteriorResponse"
+                    }
                   ]
                 }
               }
@@ -77,8 +79,10 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    {"$ref": "#/components/schemas/SuccessInteriorResponse"},
-                    {"$ref": "#/components/schemas/ProcessingInteriorResponse"}
+                    { "$ref": "#/components/schemas/SuccessInteriorResponse" },
+                    {
+                      "$ref": "#/components/schemas/ProcessingInteriorResponse"
+                    }
                   ]
                 }
               }
@@ -118,8 +122,10 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    {"$ref": "#/components/schemas/SuccessInteriorResponse"},
-                    {"$ref": "#/components/schemas/ProcessingInteriorResponse"}
+                    { "$ref": "#/components/schemas/SuccessInteriorResponse" },
+                    {
+                      "$ref": "#/components/schemas/ProcessingInteriorResponse"
+                    }
                   ]
                 }
               }
@@ -159,8 +165,10 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    {"$ref": "#/components/schemas/SuccessInteriorResponse"},
-                    {"$ref": "#/components/schemas/ProcessingInteriorResponse"}
+                    { "$ref": "#/components/schemas/SuccessInteriorResponse" },
+                    {
+                      "$ref": "#/components/schemas/ProcessingInteriorResponse"
+                    }
                   ]
                 }
               }
@@ -200,8 +208,10 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    {"$ref": "#/components/schemas/SuccessInteriorResponse"},
-                    {"$ref": "#/components/schemas/ProcessingInteriorResponse"}
+                    { "$ref": "#/components/schemas/SuccessInteriorResponse" },
+                    {
+                      "$ref": "#/components/schemas/ProcessingInteriorResponse"
+                    }
                   ]
                 }
               }
@@ -241,8 +251,10 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    {"$ref": "#/components/schemas/SuccessInteriorResponse"},
-                    {"$ref": "#/components/schemas/ProcessingInteriorResponse"}
+                    { "$ref": "#/components/schemas/SuccessInteriorResponse" },
+                    {
+                      "$ref": "#/components/schemas/ProcessingInteriorResponse"
+                    }
                   ]
                 }
               }
@@ -293,8 +305,10 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    {"$ref": "#/components/schemas/SuccessInteriorResponse"},
-                    {"$ref": "#/components/schemas/ProcessingInteriorResponse"}
+                    { "$ref": "#/components/schemas/SuccessInteriorResponse" },
+                    {
+                      "$ref": "#/components/schemas/ProcessingInteriorResponse"
+                    }
                   ]
                 }
               }
@@ -339,6 +353,7 @@
           },
           "strength": {
             "type": "number",
+            "default": 0.99,
             "description": "The degree to which the prompt influences the initial image. 1.0 corresponds to full destruction of the initial image details"
           },
           "base64": {
@@ -348,10 +363,12 @@
           },
           "num_inference_steps": {
             "type": "integer",
+            "default": 51,
             "description": "The number of denoising steps. Acceptable values are 21, 31, or 41"
           },
           "guidance_scale": {
             "type": "integer",
+            "default": 8,
             "description": "The scale for classifier-free guidance. Minimum is 1, and maximum is 20"
           },
           "temp": {
@@ -361,8 +378,14 @@
           },
           "seed": {
             "type": "integer",
+            "default": 0,
             "nullable": true,
             "description": "Seed for reproducibility. The same seed generates the same image. Use null for a random seed"
+          },
+          "scale_down": {
+            "type": "integer",
+            "default": 6,
+            "description": "Scale down parameter for image processing"
           },
           "webhook": {
             "type": "string",

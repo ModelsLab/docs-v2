@@ -36,8 +36,8 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    {"$ref": "#/components/schemas/Success3DResponse"},
-                    {"$ref": "#/components/schemas/Processing3DResponse"}
+                    { "$ref": "#/components/schemas/Success3DResponse" },
+                    { "$ref": "#/components/schemas/Processing3DResponse" }
                   ]
                 }
               }
@@ -77,8 +77,8 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    {"$ref": "#/components/schemas/Success3DResponse"},
-                    {"$ref": "#/components/schemas/Processing3DResponse"}
+                    { "$ref": "#/components/schemas/Success3DResponse" },
+                    { "$ref": "#/components/schemas/Processing3DResponse" }
                   ]
                 }
               }
@@ -167,8 +167,8 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    {"$ref": "#/components/schemas/Success3DResponse"},
-                    {"$ref": "#/components/schemas/Processing3DResponse"}
+                    { "$ref": "#/components/schemas/Success3DResponse" },
+                    { "$ref": "#/components/schemas/Processing3DResponse" }
                   ]
                 }
               }
@@ -252,9 +252,9 @@
           },
           "mesh_simplify": {
             "type": "number",
-            "minimum": 0.90,
+            "minimum": 0.9,
             "maximum": 0.98,
-            "default": 0.90,
+            "default": 0.9,
             "description": "Controls the degree of mesh simplification to optimize the output"
           },
           "chunk_size": {
@@ -302,7 +302,7 @@
           "resolution": {
             "type": "integer",
             "maximum": 512,
-            "default": 256,
+            "default": 512,
             "description": "Resolution of the generated 3D model"
           },
           "output_format": {
@@ -323,12 +323,12 @@
           },
           "guidance_scale": {
             "type": "number",
-            "default": 1.0,
+            "default": 3.0,
             "description": "Balances the adherence to the prompt versus creativity in the generation"
           },
           "num_inference_steps": {
             "type": "integer",
-            "default": 10,
+            "default": 30,
             "description": "Number of steps for generating the 3D model"
           },
           "ss_guidance_strength": {
@@ -340,7 +340,7 @@
             "type": "integer",
             "minimum": 1,
             "maximum": 50,
-            "default": 12,
+            "default": 50,
             "description": "Number of steps for style-space sampling"
           },
           "slat_guidance_strength": {
@@ -354,14 +354,14 @@
             "type": "integer",
             "minimum": 1,
             "maximum": 50,
-            "default": 12,
+            "default": 50,
             "description": "Number of steps for slat guidance sampling"
           },
           "mesh_simplify": {
             "type": "number",
-            "minimum": 0.90,
+            "minimum": 0.9,
             "maximum": 0.98,
-            "default": 0.90,
+            "default": 0.9,
             "description": "Degree of mesh simplification to optimize the output model"
           },
           "foreground_ratio": {
