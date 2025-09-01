@@ -1,0 +1,131 @@
+---
+title: "Enterprise: Text to Video Endpoint"
+description: "This endpoint is used to generate a video from a text description."
+---
+
+<Warning>
+  Make sure you add your [s3 details](/enterprise-api/general/update-s3-details) for `video` server, so you can receive video generated in your bucket. videos generated without s3 details being added will be delete after **24 hours**
+</Warning>
+
+## Request
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/video/text2video' \
+```
+
+## Body Attributes
+## Attributes
+
+<ParamField query="key" type="string" required>
+  Your unique API key used for authorization.
+</ParamField>
+
+<ParamField query="model_id" type="string" enum='["cogvideox"]' required>
+  The ID of the model to use. Allowed values: cogvideox.
+</ParamField>
+
+<ParamField query="prompt" type="string" required>
+  The text prompt describing the content you want in the generated video.
+</ParamField>
+
+<ParamField query="negative_prompt" type="string">
+  Items you do not want in the video.
+</ParamField>
+
+<ParamField query="seed" type="integer">
+  The seed used to reproduce results. Pass null for a random number.
+</ParamField>
+
+<ParamField query="height" type="integer" max="512" default="512">
+  The height of the video. Maximum: 512 pixels.
+</ParamField>
+
+<ParamField query="width" type="integer" max="512" default="512">
+  The width of the video. Maximum: 512 pixels.
+</ParamField>
+
+<ParamField query="num_frames" type="integer" min="1" max="25" default="16">
+  The number of frames in the generated video. Default: 16, Maximum: 25.
+</ParamField>
+
+<ParamField query="num_inference_steps" type="integer" min="1" max="50" default="20">
+  The number of denoising steps. Default: 20, Maximum: 50.
+</ParamField>
+
+<ParamField query="guidance_scale" type="number" min="0" max="8" default="7.5">
+  The scale for classifier-free guidance. Range: 0–8.
+</ParamField>
+
+<ParamField query="clip_skip" type="integer" max="2">
+  The number of CLIP layers to skip. A value of 2 leads to more aesthetic results. Default: null.
+</ParamField>
+
+<ParamField query="upscale_height" type="integer" default="1024">
+  The height to upscale the video to when using the zeroscope model. Default: 1024.
+</ParamField>
+
+<ParamField query="upscale_width" type="integer" default="1024">
+  The width to upscale the video to when using the zeroscope model. Default: 1024.
+</ParamField>
+
+<ParamField query="upscale_strength" type="number" min="0" max="1" default="0.5">
+  The strength for upscaling. Higher strength can lead to more differences between the generated and upscaled video.
+</ParamField>
+
+<ParamField query="upscale_guidance_scale" type="number" min="0" max="8" default="7.5">
+  The guidance scale for upscaling the video when using the zeroscope model.
+</ParamField>
+
+<ParamField query="upscale_num_inference_steps" type="integer" min="1" max="50" default="20">
+  The number of denoising steps for upscaling the video when using the zeroscope model. Default: 20.
+</ParamField>
+
+<ParamField query="use_improved_sampling" type="boolean" default="false">
+  Whether to use an improved sampling technique. Leads to better results with higher temporal consistency at the cost of slower performance.
+</ParamField>
+
+<ParamField query="improved_sampling_seed" type="integer">
+  The seed for consistent video generation when using the improved sampling technique.
+</ParamField>
+
+<ParamField query="fps" type="integer" min="1" max="16" default="8">
+  The frames per second rate of the generated video. Maximum: 16.
+</ParamField>
+
+<ParamField query="output_type" type="string" enum='["mp4", "gif"]' default="mp4">
+  The output type of the video. Options: mp4 or gif.
+</ParamField>
+
+<ParamField query="instant_response" type="boolean" default="false">
+  If true, returns an instant response with future links for queued requests instead of waiting for processing.
+</ParamField>
+
+<ParamField query="temp" type="boolean" default="false">
+  If true, stores generations in temporary storage. Temporary files are cleaned every 24 hours.
+</ParamField>
+
+<ParamField query="webhook" type="string" format="url">
+  Provide a URL to receive a POST API call once the video generation is complete.
+</ParamField>
+
+## Body
+```json json
+{    
+  "key":"enterprise_api_key",    
+  "model_id":"cogvideox",    
+  "prompt":"Space Station in space.",    
+  "negative_prompt":"low quality",    
+  "height":512,    
+  "width":512,    
+  "num_frames":16,    
+  "num_inference_steps":20,    
+  "guidance_scale":7,    
+  "upscale_height":1024,    
+  "upscale_width":1024,    
+  "upscale_strength":0.6,    
+  "upscale_guidance_scale":8,    
+  "upscale_num_inference_steps":20,    
+  "output_type":"gif",    
+  "webhook":null,    
+  "track_id":null
+}
+```

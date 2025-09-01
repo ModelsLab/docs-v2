@@ -1,101 +1,59 @@
 ---
 title: "Enterprise: Voice to Voice Endpoint"
+description: "This endpoint is used to clone a voice from a target audio file."
 ---
-
-## Overview[​](#overview "Direct link to Overview")
-
-The Voice-to-Voice endpoint lets you clone a voice from a target audio file.
-
-[Open in Playground 🚀](https://audiogen.modelslab.com/)
-
-## **Sample Generation**[​](#sample-generation "Direct link to sample-generation")
-
-***
-
-### **Example 1**[​](#example-1 "Direct link to example-1")
-
-#### **Original Sound Clip**[​](#original-sound-clip "Direct link to original-sound-clip")
-
-[Your browser does not support the audio tag.](https://assets.modelslab.com/tmp/byPtHWIEIjxjWVpUTi2lZxqQ34VbmC-metaYXVkaW8ud2F2-.wav)
-
-***
-
-#### **Target Sound Clip**[​](#target-sound-clip "Direct link to target-sound-clip")
-
-[Your browser does not support the audio tag.](https://tawk.link/6332cd5154f06e12d8971855/vc/66e97adfa2bc5fe2b6904348/v/9edabb242c4cef274c899d4c0e8747359a1f6c12/pt-sample.wav)
-
-***
-
-### **Generated Cloned Voice**[​](#generated-cloned-voice "Direct link to generated-cloned-voice")
-
-[Your browser does not support the audio tag.](https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/26efa6db-2338-47ed-b3c3-8917b971bea4.wav)
-
-***
-
-## Request[​](#request "Direct link to Request")
-
-```
---request POST 'https://modelslab.com/api/v1/enterprise/voice/voice_to_voice' \
-```
-
-Make a `POST` request to [https://modelslab.com/api/v1/enterprise/voice/voice\_to\_voice](https://modelslab.com/api/v1/enterprise/voice/voice_to_voice) endpoint and pass the required parameters as a request body.
 
 <Warning>
   Make sure you add your [s3 details](/enterprise-api/general/update-s3-details) for `voice_cloning` server, so you can receive image generated in your bucket. Images generated without s3 details being added will be delete after **24 hours**
 </Warning>
 
-## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
-
-| Parameter         | Description                                                                                                                                                                 |
-| :---------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **key**           | Your API Key used for request authorization                                                                                                                                 |
-| **init\_audio**   | Souce utterances. Must be a valid URL or base64 data for a wav/mp3 file and The maximum length for init\_audio should be 30 seconds.                                        |
-| **target\_audio** | Target voice which should say the original utterances. Must be a valid URL or base64 data for a wav/mp3 file and The maximum length for target\_audio should be 30 seconds. |
-| **base64**        | Whether the input sound clip is in base64 or not. Should be `true` or `false`. Defaults to `false`.                                                                         |
-| **temp**          | Whether you want temporary links or not. This is useful if your country blocks access to our storage sites. Should be `true` or `false`. Defaults                           |
-| **webhook**       | Set an URL to get a POST API call once the image generation is complete.                                                                                                    |
-| **track\_id**     | This ID is returned in the response to the webhook API call. This will be used to identify the webhook request.                                                             |
-
-## Example[​](#example "Direct link to Example")
-
-### Body[​](#body "Direct link to Body")
-
-Body
-
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/voice/voice_to_voice' \
 ```
-{    "key":"",    "init_audio":"https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",    "target_audio":"https://assets.modelslab.com/tmp/gEJ3RgkrWumjCJpb8hHYD3OsID7ET9-metaSGlyZV92b2ljZV9hY3RvcnNfYW5kX3ZvaWNlX292ZXJfc2VydmljZXNfLV9CdW5ueV9TdHVkaW9fMiAoMSktW0F1ZGlvVHJpbW1lci5jb21dLm1wMw==-.mp3",    "temp":false,    "base64":false,    "webhook":null,    "track_id":null}
+## Body
+```json json
+{    
+  "key":"enterprise_api_key",    
+  "init_audio":"https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",    
+  "target_audio":"https://assets.modelslab.com/tmp/gEJ3RgkrWumjCJpb8hHYD3OsID7ET9-metaSGlyZV92b2ljZV9hY3RvcnNfYW5kX3ZvaWNlX292ZXJfc2VydmljZXNfLV9CdW5ueV9TdHVkaW9fMiAoMSktW0F1ZGlvVHJpbW1lci5jb21dLm1wMw==-.mp3",    
+  "temp":false,    
+  "base64":false,    
+  "webhook":null,    
+  "track_id":null
+}
 ```
 
-### Request[​](#request-1 "Direct link to Request")
+## Body Attributes
 
-* JS
-* PHP
-* NODE
-* PYTHON
-* JAVA
+<ParamField query="key" type="string" required>
+  Your API Key used for request authorization.
+</ParamField>
 
-```
-var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({    "key":"",    "init_audio":"https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",    "target_audio":"https://assets.modelslab.com/tmp/gEJ3RgkrWumjCJpb8hHYD3OsID7ET9-metaSGlyZV92b2ljZV9hY3RvcnNfYW5kX3ZvaWNlX292ZXJfc2VydmljZXNfLV9CdW5ueV9TdHVkaW9fMiAoMSktW0F1ZGlvVHJpbW1lci5jb21dLm1wMw==-.mp3",    "temp":false,    "base64":false,    "webhook":null,    "track_id":null});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v1/enterprise/voice/voice_to_voice", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
-```
+<ParamField query="init_audio" type="string" required>
+  Source utterances. Must be a valid URL or base64 data for a WAV/MP3 file.  
+  Maximum length: 30 seconds.
+</ParamField>
 
-```
-<?php$payload = [   "key" => "",    "init_audio" => "https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",    "target_audio" => "https://assets.modelslab.com/tmp/gEJ3RgkrWumjCJpb8hHYD3OsID7ET9-metaSGlyZV92b2ljZV9hY3RvcnNfYW5kX3ZvaWNlX292ZXJfc2VydmljZXNfLV9CdW5ueV9TdHVkaW9fMiAoMSktW0F1ZGlvVHJpbW1lci5jb21dLm1wMw==-.mp3",    "temp" => false,    "base64" => false,    "webhook" => null,    "track_id" => null];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v1/enterprise/voice/voice_to_voice',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
-```
+<ParamField query="target_audio" type="string" required>
+  Target voice that should say the original utterances. Must be a valid URL or base64 data for a WAV/MP3 file.  
+  Maximum length: 30 seconds.
+</ParamField>
 
-```
-var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v1/enterprise/voice/voice_to_voice',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({     "key":"",    "init_audio":"https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",    "target_audio":"https://assets.modelslab.com/tmp/gEJ3RgkrWumjCJpb8hHYD3OsID7ET9-metaSGlyZV92b2ljZV9hY3RvcnNfYW5kX3ZvaWNlX292ZXJfc2VydmljZXNfLV9CdW5ueV9TdHVkaW9fMiAoMSktW0F1ZGlvVHJpbW1lci5jb21dLm1wMw==-.mp3",    "temp":false,    "base64":false,    "webhook":null,    "track_id":null  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
-```
+<ParamField query="base64" type="boolean" default="false">
+  Whether the input sound clips are provided in base64 format. Default: false.
+</ParamField>
 
-```
-import requestsimport jsonurl = "https://modelslab.com/api/v1/enterprise/voice/voice_to_voice"payload = json.dumps({   "key":"",    "init_audio":"https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav",    "target_audio":"https://assets.modelslab.com/tmp/gEJ3RgkrWumjCJpb8hHYD3OsID7ET9-metaSGlyZV92b2ljZV9hY3RvcnNfYW5kX3ZvaWNlX292ZXJfc2VydmljZXNfLV9CdW5ueV9TdHVkaW9fMiAoMSktW0F1ZGlvVHJpbW1lci5jb21dLm1wMw==-.mp3",    "temp":False,    "base64":False,    "webhook":None,    "track_id":None})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
-```
+<ParamField query="temp" type="boolean" default="false">
+  Whether you want temporary links (useful if your country blocks access to storage sites). Default: false.
+</ParamField>
 
-```
-OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\":\"\",\n    \"init_audio\":\"https://pub-f3505056e06f40d6990886c8e14102b2.r2.dev/audio/tom_hanks_1.wav\",\n    \"target_audio\":\"https://assets.modelslab.com/tmp/gEJ3RgkrWumjCJpb8hHYD3OsID7ET9-metaSGlyZV92b2ljZV9hY3RvcnNfYW5kX3ZvaWNlX292ZXJfc2VydmljZXNfLV9CdW5ueV9TdHVkaW9fMiAoMSktW0F1ZGlvVHJpbW1lci5jb21dLm1wMw==-.mp3\",\n    \"temp\":false,\n    \"base64\":false,\n    \"webhook\":null,\n    \"track_id\":null\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v1/enterprise/voice/voice_to_voice")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
-```
+<ParamField query="webhook" type="string" format="url">
+  Provide a URL to receive a POST API call once the voice cover generation is complete.
+</ParamField>
 
-### Response[​](#response "Direct link to Response")
+<ParamField query="track_id" type="string">
+  This ID is returned in the webhook API call and will be used to identify the request.
+</ParamField>
 
-```
-{    "generationTime": 0.24047088623046875,    "links": [        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/0af632ff-dd1a-4f29-9dcf-8d61dd00e0ad.wav"    ],    "meta": {        "base64": "no",        "filename": "0af632ff-dd1a-4f29-9dcf-8d61dd00e0ad.wav",        "speaker_wav": "tmp/speaker-0af632ff-dd1a-4f29-9dcf-8d61dd00e0ad.wav",        "target_wav": "tmp/target-0af632ff-dd1a-4f29-9dcf-8d61dd00e0ad.wav",        "temp": "no"    },    "proxy_links": [],    "status": "success"}
-```

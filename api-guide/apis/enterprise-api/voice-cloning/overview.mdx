@@ -1,54 +1,56 @@
 ---
 title: "Enterprise: Voice Cloning API"
+description: "Endpoints to generate speech, clone voices, create music, and manage your dedicated voice server."
 ---
 
-## Overview[​](#overview "Direct link to Overview")
+## Endpoints
 
-The Voice cloning API allows you to clone a voice .
+<CardGroup cols={2}>
+  <Card title="Text to Audio" icon="mic" href="/enterprise-api/voice-cloning/text-to-audio">
+    Generate audio from text using a cloned voice or a selected voice model
+  </Card>
 
-## Available Endpoints[​](#available-endpoints "Direct link to Available Endpoints")
+  <Card title="Voice to Voice" icon="mic-2" href="/enterprise-api/voice-cloning/voice-to-voice">
+    Clone a voice from a target audio file
+  </Card>
 
-* [text\_to\_audio](/enterprise-api/voice-cloning/text-to-audio)
-* [voice\_to\_voice](/enterprise-api/voice-cloning/voice-to-voice)
-* [fetch](/enterprise-api/voice-cloning/fetch)
-* [music\_gen](/enterprise-api/voice-cloning/music-gen)
-* [sfx](/enterprise-api/voice-cloning/sfx)
-* [speech\_to\_text](/enterprise-api/voice-cloning/speech-to-text)
-* [voice\_cover](/enterprise-api/voice-cloning/voice-cover)
-* [voice\_upload](/enterprise-api/voice-cloning/voice-upload)
-* [clear cache](/enterprise-api/voice-cloning/clear-cache)
-* [restart server](/enterprise-api/voice-cloning/restart-server)
-* [system details](/enterprise-api/voice-cloning/system-details)
-* [update server](/enterprise-api/voice-cloning/update-server)
+  <Card title="Music Generation" icon="music" href="/enterprise-api/voice-cloning/music-gen">
+    Generate music based on text prompts or conditioning melodies
+  </Card>
 
-### Text To Audio Endpoint[​](#text-to-audio-endpoint "Direct link to Text To Audio Endpoint")
+  <Card title="Sound Effects" icon="radio" href="/enterprise-api/voice-cloning/sfx">
+    Generate sound effects (SFX) from text prompts
+  </Card>
 
-The Text-to-Audio endpoint enables you to generate audio by providing a text input along with a valid audio URL or a pre-created voice using a voice\_id. The output is an audio file that mimics the sound of the provided audio URL or the selected voice.
+  <Card title="Voice Cover" icon="headphones" href="/enterprise-api/voice-cloning/voice-cover">
+    Transform a song or audio file into a different voice using a provided model
+  </Card>
 
-### Voice to Voice Endpoint[​](#voice-to-voice-endpoint "Direct link to Voice to Voice Endpoint")
+  <Card title="Voice Upload" icon="upload" href="/enterprise-api/voice-cloning/voice-upload">
+    Upload a voice recording to use in cloning or synthesis
+  </Card>
 
-The Voice-to-Voice endpoint lets you clone a voice from a target audio file.
+  <Card title="Speech to Text" icon="file-audio" href="/enterprise-api/voice-cloning/speech-to-text">
+    Convert speech from audio into text
+  </Card>
 
-### Music Gen Endpoint[​](#music-gen-endpoint "Direct link to Music Gen Endpoint")
+  <Card title="Fetch Results" icon="download" href="/enterprise-api/voice-cloning/fetch">
+    Retrieve queued or processing voice cloning requests
+  </Card>
 
-The **Music Generation API** allows you to generate music based on textual prompts and optional conditioning melodies. This API is ideal for applications in music composition, sound design, and creative audio projects.
+  <Card title="Clear Cache" icon="trash" href="/enterprise-api/voice-cloning/clear-cache">
+    Clear the API’s server cache for fresh processing
+  </Card>
 
-### Voice Cover Endpoint[​](#voice-cover-endpoint "Direct link to Voice Cover Endpoint")
+  <Card title="Restart Server" icon="refresh" href="/enterprise-api/voice-cloning/restart-server">
+    Restart your dedicated voice cloning server
+  </Card>
 
-The Voice Cover endpoint allows you to transform a song or audio file into a different voice using a provided model. Find all available voice models [HERE](https://modelslab.com/models/category/voice-cloning).
+  <Card title="System Details" icon="server" href="/enterprise-api/voice-cloning/system-details">
+    Get information about your server status and performance
+  </Card>
 
-### SFX Endpoint[​](#sfx-endpoint "Direct link to SFX Endpoint")
-
-The SFX endpoint allows you to generate sound effects (SFX) from text prompts. It takes user input in the form of a text prompt to conditionally generate audio effects.
-
-### Clear Server Cache Endpoint[​](#clear-server-cache-endpoint "Direct link to Clear Server Cache Endpoint")
-
-This endpoint clear server cache.
-
-### Restart Server Endpoint[​](#restart-server-endpoint "Direct link to Restart Server Endpoint")
-
-This endpoint restart the server.
-
-### System Details Endpoint[​](#system-details-endpoint "Direct link to System Details Endpoint")
-
-This endpoint returns information about your server.
+  <Card title="Update Server" icon="arrow-up" href="/enterprise-api/voice-cloning/update-server">
+    Update your dedicated server to the latest version
+  </Card>
+</CardGroup>

@@ -481,11 +481,11 @@
                   "api-guide/apis/enterprise-api/video/overview",
                   "api-guide/apis/enterprise-api/video/clear-cache",
                   "api-guide/apis/enterprise-api/video/clear-queue",
-                  "api-guide/apis/enterprise-api/video/fetchvideo",
-                  "api-guide/apis/enterprise-api/video/imgtovideo",
+                  "api-guide/apis/enterprise-api/video/fetch-video",
+                  "api-guide/apis/enterprise-api/video/img-to-video",
                   "api-guide/apis/enterprise-api/video/restart-server",
                   "api-guide/apis/enterprise-api/video/system-details",
-                  "api-guide/apis/enterprise-api/video/texttovideo",
+                  "api-guide/apis/enterprise-api/video/text-to-video",
                   "api-guide/apis/enterprise-api/video/update-server"
                 ]
               },
