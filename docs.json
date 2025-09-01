@@ -7,6 +7,21 @@
     "light": "#FAF9F6",
     "dark": "#28282B"
   },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      {
+        "title": "feature request",
+        "description": "Join the discord to request a new feature.",
+        "icon": "discord",
+        "href":"https://discord.com/invite/ujtGyjY2"
+      }
+    ]
+  },
   "favicon": "/favicon.png",
   "navigation": {
     "tabs": [
@@ -49,26 +64,6 @@
             ]
           },
           {
-            "group": "3rd Party Models",
-            "pages": [
-              {
-                "group": "Google",
-                "pages": [
-                  "/third-party-apis/google/veo2",
-                  "/third-party-apis/google/imagen-3",
-                  "/third-party-apis/google/imagen-4"
-                ]
-              },
-              {
-                "group": "Runway ML",
-                "pages": [
-                  "/third-party-apis/runway/gen4-image",
-                  "/third-party-apis/runway/gen4-turbo"
-                ]
-              }
-            ]
-          },
-          {
             "group": "Our AI APIs",
             "pages": [
               {
@@ -103,7 +98,6 @@
                     "pages": [
                       "/image-generation/flux/overview",
                       "/image-generation/flux/flux-text-to-image"
-
                     ]
                   },
                   {

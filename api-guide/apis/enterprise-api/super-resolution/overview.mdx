@@ -1,40 +1,32 @@
 ---
 title: "Enterprise: Super Resolution"
+description: "Collection of endpoints to upscale images with face enhancement and resolution control."
 ---
 
-## Overview[​](#overview "Direct link to Overview")
+## Endpoints
 
-Generate image in seconds
+<CardGroup cols={2}>
+  <Card title="Ultra Resolution" icon="maximize" href="/enterprise-api/super-resolution/make">
+    Generate a super-resolution version of an image with optional scaling and face enhancement
+  </Card>
 
-You can also specify the number of images to be generated and set their height and width.
+  <Card title="Fetch Images" icon="download" href="/enterprise-api/super-resolution/fetchimage">
+    Retrieve queued or processing super-resolution requests
+  </Card>
 
-Currently the API supports the following image formats: **PNG** and **JPG**.
+  <Card title="Clear Cache" icon="trash" href="/enterprise-api/super-resolution/clear-cache">
+    Clear the API’s server cache for fresh processing
+  </Card>
 
-## Available Endpoints[​](#available-endpoints "Direct link to Available Endpoints")
+  <Card title="Restart Server" icon="refresh" href="/enterprise-api/super-resolution/restart-server">
+    Restart your dedicated super-resolution server
+  </Card>
 
-* [ultraresolution](/enterprise-api/super-resolution/make)
-* [fetch](/enterprise-api/super-resolution/fetchimage)
-* [clear cache](/enterprise-api/super-resolution/clear-cache)
-* [restart server](/enterprise-api/super-resolution/restart-server)
-* [system details](/enterprise-api/super-resolution/system-details)
-* [update server](/enterprise-api/super-resolution/update-server)
+  <Card title="System Details" icon="server" href="/enterprise-api/super-resolution/system-details">
+    Get information about your server status and performance
+  </Card>
 
-### Super Resolution Endpoint[​](#super-resolution-endpoint "Direct link to Super Resolution Endpoint")
-
-Super Resolution API returns a super resolution version of an image that is passed to the url attribute.
-
-### Fetch Queued Images Endpoint[​](#fetch-queued-images-endpoint "Direct link to Fetch Queued Images Endpoint")
-
-This endpoint returns an already generated image by passing its **ID** with the endpoint location.
-
-### Clear Server Cache Endpoint[​](#clear-server-cache-endpoint "Direct link to Clear Server Cache Endpoint")
-
-This endpoint clear server cache
-
-### Restart Server Endpoint[​](#restart-server-endpoint "Direct link to Restart Server Endpoint")
-
-This endpoint restart the server
-
-## Playground[​](#playground "Direct link to Playground")
-
-You can try the available endpoints in our [Playground](https://modelslab.com/playground/text-to-image?tab=1\&model_id=midjourney) section, just make sure to [sign up](https://modelslab.com/register) first.
+  <Card title="Update Server" icon="arrow-up" href="/enterprise-api/super-resolution/update-server">
+    Update your dedicated server to the latest version
+  </Card>
+</CardGroup>
