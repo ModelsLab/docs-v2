@@ -141,7 +141,7 @@
     },
     "/text2img": {
       "post": {
-        "summary": "Generate image from text prompt (Text-to-Image & Multi-LoRA)",
+        "summary": "Text-to-Image",
         "description": "Creates an image from a text prompt using Dreambooth models. This endpoint supports both single and multiple LoRA models for enhanced results.",
         "requestBody": {
           "required": true,
