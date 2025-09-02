@@ -30,7 +30,7 @@
                 "$ref": "#/components/schemas/LoraTrainingRequest"
               },
               "example": {
-                "key": "",
+                "key": "your_api_key",
                 "instance_prompt": "photo of ambika0 man",
                 "class_prompt": "photo of a man",
                 "base_model_type": "sdxl",
@@ -278,7 +278,7 @@
                 "$ref": "#/components/schemas/Base64CropRequest"
               },
               "example": {
-                "key": "",
+                "key": "your_api_key",
                 "image": "data:image/png;base64,your_base_64_string",
                 "crop": "true"
               }
