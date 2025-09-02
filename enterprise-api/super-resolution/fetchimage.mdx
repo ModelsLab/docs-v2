@@ -1,0 +1,18 @@
+---
+title: "Fetch Image"
+description: "This endpoint is used to fetch images that are queued for super resolution."
+openapi: "POST /super-resolution/fetch/{id}"
+---
+
+## Request
+Send a `POST` request to below endpoint to return the corresponding queued images. Where `{id}` is the ID returned together with the image URL in the response upon its generation. This endpoint does not generate new images, it returns already generated/queued images.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/super_resolution/fetch/{id}' \
+```
+
+## Body
+```json json
+{ 
+    "key": "enterprise_api_key"
+}
+```

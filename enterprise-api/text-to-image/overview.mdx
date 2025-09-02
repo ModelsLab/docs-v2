@@ -1,0 +1,92 @@
+---
+title: "Overview"
+description: "Comprehensive endpoints for managing models, generating images/videos, and controlling your dedicated server."
+---
+
+## Endpoints
+
+<CardGroup cols={2}>
+  <Card title="System Details" icon="server" href="/enterprise-api/text-to-image/system-details">
+    Get detailed information about your dedicated server
+  </Card>
+
+  <Card title="Restart Server" icon="refresh" href="/enterprise-api/text-to-image/restart-server">
+    Restart your dedicated server
+  </Card>
+
+  <Card title="Update Server" icon="arrow-up" href="/enterprise-api/text-to-image/update-server">
+    Update your dedicated server to the latest version
+  </Card>
+
+  <Card title="Clear Cache" icon="trash" href="/enterprise-api/text-to-image/clear-cache">
+    Clear the API’s cache for fresh processing
+  </Card>
+
+  <Card title="List Schedulers" icon="list" href="/enterprise-api/text-to-image/list-schedulers">
+    Retrieve a list of all available schedulers
+  </Card>
+
+  <Card title="Load Model" icon="upload" href="/enterprise-api/text-to-image/load-model">
+    Load a model onto your server
+  </Card>
+
+  <Card title="Load Model v2" icon="upload-cloud" href="/enterprise-api/text-to-image/load-model-v2">
+    Load a model using the v2 loader for enhanced control
+  </Card>
+
+  <Card title="Verify Model" icon="check" href="/enterprise-api/text-to-image/verify-model">
+    Check if a specific model exists on your server
+  </Card>
+
+  <Card title="Get All Models" icon="database" href="/enterprise-api/text-to-image/get-all-models">
+    List all models available on your server
+  </Card>
+
+  <Card title="Delete Model" icon="trash-2" href="/enterprise-api/text-to-image/delete-model">
+    Delete a model from your server
+  </Card>
+
+  <Card title="ControlNet" icon="command" href="/enterprise-api/text-to-image/controlnet-ep">
+    Generate ControlNet-based images
+  </Card>
+
+  <Card title="Text to Image" icon="file-text" href="/enterprise-api/text-to-image/text2img">
+    Generate an image from a text prompt
+  </Card>
+
+  <Card title="Image to Image" icon="image" href="/enterprise-api/text-to-image/img2img">
+    Transform an existing image with prompts
+  </Card>
+
+  <Card title="Inpainting" icon="brush" href="/enterprise-api/text-to-image/inpainting">
+    Modify specific parts of an image using inpainting
+  </Card>
+
+  <Card title="Super Resolution" icon="maximize" href="/enterprise-api/text-to-image/super-resolution">
+    Upscale images with super resolution
+  </Card>
+
+  <Card title="Upload Image" icon="upload" href="/enterprise-api/text-to-image/upload-image">
+    Upload an image to your S3 bucket
+  </Card>
+
+  <Card title="Sync Models" icon="shuffle" href="/enterprise-api/text-to-image/sync-model">
+    Sync models between multiple servers
+  </Card>
+
+  <Card title="Load VAE" icon="layers" href="/enterprise-api/text-to-image/load-vae">
+    Load a VAE onto your server
+  </Card>
+
+  <Card title="NSFW Image Check" icon="shield" href="/enterprise-api/text-to-image/nsfw-image-check">
+    Detect NSFW content in an image
+  </Card>
+
+  <Card title="Fetch Queue Image" icon="download" href="/enterprise-api/text-to-image/fetch-queue-image">
+    Retrieve queued or processing image generation requests
+  </Card>
+</CardGroup>
+
+## Playground
+
+You can test the available endpoints in our dedicated **[Playground Section](https://modelslab.com/playground?channel=enterprise)**.

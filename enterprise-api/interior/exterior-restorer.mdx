@@ -1,0 +1,77 @@
+---
+title: "Exterior Restorer"
+description: "This endpoint allows you to convert bad exterior to good exterior."
+---
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+```
+--request POST 'https://modelslab.com/api/v1/enterprise/interior/exterior_restorer' \
+```
+
+## Body
+```json json
+{  
+    "key":"enterprise_api_key",  
+    "init_image": "https://i.pinimg.com/736x/b2/94/76/b29476a69497bbc870d48a531e0008db.jpg",  
+    "prompt": "rendering floor plan of the apartment layout,top view,white background,masterpiece, kitchen, living room, sofa, chair,bedroom,car best quality, extremely detailed,best illustration, best shadow",  
+    "seed": 0,  
+    "guidance_scale": 8,  
+    "strength": 0.99,  
+    "num_inference_steps": 51,  
+    "base64": false,  
+    "temp": false,  
+    "specific_object": null,  
+    "webhook": null,  
+    "track_id": null
+}
+```
+
+## Body Attributes
+<ParamField query="key" type="string" required placeholder="Your API Key">
+  Your API Key used for authenticating your request.
+</ParamField>
+
+<ParamField query="prompt" type="string" required placeholder="Describe the floor plan">
+  A text prompt describing the content you want in the generated floor plan image.
+</ParamField>
+
+<ParamField query="init_image" type="string" placeholder="URL to room image">
+  A URL to the initial image of the room to base the floor plan on.
+</ParamField>
+
+<ParamField query="negative_prompt" type="string" placeholder="Things to avoid">
+  Descriptions of elements you don't want in the image (e.g., poor quality, distortion, NSFW content).
+</ParamField>
+
+<ParamField query="strength" type="number" min="0.0" max="1.0" step="0.1">
+  Degree to which the prompt influences the initial image. 1.0 corresponds to full destruction of original details.
+</ParamField>
+
+<ParamField query="base64" type="boolean" default="false">
+  Return the image as a base64 string. Default is false.
+</ParamField>
+
+<ParamField query="num_inference_steps" type="integer" enum="[21, 31, 41]">
+  The number of denoising steps to perform. Accepted values: 21, 31, or 41.
+</ParamField>
+
+<ParamField query="guidance_scale" type="integer" min="1" max="20">
+  Scale for classifier-free guidance. Minimum is 1, maximum is 20.
+</ParamField>
+
+<ParamField query="temp" type="boolean" default="false">
+  If true, stores image in temporary storage valid for 24 hours.
+</ParamField>
+
+<ParamField query="seed" type="integer">
+  Seed for reproducibility. Same seed yields same image. Use null for randomness.
+</ParamField>
+
+<ParamField query="webhook" type="string" placeholder="https://your.webhook.url">
+  URL to receive a POST request once the image generation completes.
+</ParamField>
+
+<ParamField query="track_id" type="integer" placeholder="Webhook tracking ID">
+  ID returned in API response to identify the webhook request.
+</ParamField>

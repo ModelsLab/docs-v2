@@ -1,0 +1,166 @@
+---
+title: "Load Model"
+---
+
+## Overview[​](#overview "Direct link to Overview")
+
+This endpoint is used to load a model to your dedicated server.
+
+## Request[​](#request "Direct link to Request")
+
+```
+--request POST 'https://modelslab.com/api/v1/enterprise/load_model' \
+```
+
+Send a `POST` request to [https://modelslab.com/api/v1/enterprise/load\_model](https://modelslab.com/api/v1/enterprise/load_model) endpoint.
+
+<Note>
+  The model selected for loading has to be a **diffusers** model.
+</Note>
+
+Watch the how-to video to see it in action.
+
+## Attributes[​](#attributes "Direct link to Attributes")
+
+| Parameter             | Description                                                                                                                    |
+| :-------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
+| **key**               | Your enterprise API Key used for request authorization.                                                                        |
+| **url**               | The URL of the **huggingface** model, **.ckpt** download link, or **trained** model from our Dreambooth API.                   |
+| **model\_id**         | Choose a name(ID) for your model. The loaded model will be saved under this ID, so you can refer to it when generating images. |
+| **from\_safetensors** | Set this to "yes" if you are loading a **.safetensor** file; otherwise pass "no".                                              |
+| **model\_type**       | Available options: "huggingface", "api\_trained", "custom\_ckpt", "lora", "controlnet".                                        |
+| **revision**          | Specify whether the loaded model is "fp16" or "fp32".                                                                          |
+| **webhook**           | A webhook to receive response on model load events.                                                                            |
+| **upcast\_attention** | Set this to "yes" **only** when you are loading a **stable diffusion 2.1** model; otherwise keep it "no".                      |
+
+### ControlNet Model url and model\_id table[​](#controlnet-model-url-and-model_id-table "Direct link to ControlNet Model url and model_id table")
+
+| url                                       | model\_id |
+| :---------------------------------------- | :-------- |
+| lllyasviel/control\_v11p\_sd15\_inpaint   | inpaint   |
+| lllyasviel/control\_v11e\_sd15\_ip2p      | ip2p      |
+| lllyasviel/control\_v11f1e\_sd15\_tile    | tile      |
+| lllyasviel/control\_v11e\_sd15\_shuffle   | shuffle   |
+| lllyasviel/control\_v11p\_sd15\_softedge  | softedge  |
+| lllyasviel/control\_v11p\_sd15\_scribble  | scribble  |
+| lllyasviel/control\_v11p\_sd15\_lineart   | lineart   |
+| lllyasviel/control\_v11p\_sd15\_normalbae | normalbae |
+| lllyasviel/control\_v11f1p\_sd15\_depth   | depth     |
+| lllyasviel/control\_v11p\_sd15\_mlsd      | mlsd      |
+| lllyasviel/control\_v11p\_sd15\_canny     | canny     |
+
+## Examples[​](#examples "Direct link to Examples")
+
+### Load a .ckpt or .safetensors Model from Civitai[​](#load-a-ckpt-or-safetensors-model-from-civitai "Direct link to Load a .ckpt or .safetensors Model from Civitai")
+
+Body Raw
+
+```
+{  "key": "enterprise_api_key",  "url": "https://civitai.com/api/download/models/94640",  "model_id": "majicmix-realistic",  "model_type": "custom_ckpt",  "from_safetensors": "yes",  "webhook": "https://modelslab.com",  "revision": "fp32",  "upcast_attention": "no"}
+```
+
+### Load a .ckpt Model from Civitai[​](#load-a-ckpt-model-from-civitai "Direct link to Load a .ckpt Model from Civitai")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({  "key": "",  "url": "https://civitai.com/api/download/models/94640",  "model_id": "majicmix-realistic",  "model_type": "custom_ckpt",  "from_safetensors": "yes",  "webhook": "https://modelslab.com",  "revision": "fp32",  "upcast_attention": "no"});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};model_reload("https://modelslab.com/api/v1/enterprise/load_model", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [  "key" => "",   "url": "https://civitai.com/api/download/models/94640",  "model_id": "majicmix-realistic",  "model_type": "custom_ckpt",  "from_safetensors": "yes",  "webhook": "https://modelslab.com",  "revision": "fp32",  "upcast_attention": "no"];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v1/enterprise/load_model',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS =>  json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v1/enterprise/load_model',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key": "",    "url": "https://civitai.com/api/download/models/94640",    "model_id": "majicmix-realistic",    "model_type": "custom_ckpt",    "from_safetensors": "yes",    "webhook": "https://modelslab.com",    "revision": "fp32",    "upcast_attention": "no"  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v1/enterprise/load_model"payload = json.dumps({  "key": "",  "url": "https://civitai.com/api/download/models/94640",  "model_id": "majicmix-realistic",  "model_type": "custom_ckpt",  "from_safetensors": "yes",  "webhook": "https://modelslab.com",  "revision": "fp32",  "upcast_attention": "no"})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\": \"\",\n    \"url\": \"https://civitai.com/api/download/models/94640\",\n    \"model_id\": \"nckpt-model\",\n    \"model_type\": \"custom_ckpt\",\n    \"webhook\": \"https://modelslab.com\",\n    \"revision\": \"fp32\",\n    \"upcast_attention\": \"no\"\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v1/enterprise/load_model")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
+```
+
+### Load a Huggingface Model[​](#load-a-huggingface-model "Direct link to Load a Huggingface Model")
+
+Body Raw
+
+```
+{  "key": "enterprise_api_key",  "url": "wavymulder/Analog-Diffusion",  "model_id": "analog-diffusion",  "model_type": "huggingface",  "from_safetensors": "no",  "webhook": "https://modelslab.com",  "revision": "fp32",  "upcast_attention": "no"}
+```
+
+### Request: Load a Huggingface Model[​](#request-load-a-huggingface-model "Direct link to Request: Load a Huggingface Model")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({  "key": "enterprise_api_key",  "url": "wavymulder/Analog-Diffusion",  "model_id": "analog-diffusion",  "model_type": "huggingface",  "from_safetensors": "no",  "webhook": "https://modelslab.com",  "revision": "fp32",  "upcast_attention": "no"});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};model_reload("https://modelslab.com/api/v1/enterprise/load_model", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [  "key" => "enterprise_api_key",   "url" => "wavymulder/Analog-Diffusion",   "model_id" => "analog-diffusion",   "model_type" => "huggingface",   "from_safetensors": "no",  "webhook" => "https://modelslab.com",   "revision" => "fp32",   "upcast_attention" => "no" ];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v1/enterprise/load_model',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS =>  json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v1/enterprise/load_model',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key": "enterprise_api_key",    "url": "wavymulder/Analog-Diffusion",    "model_id": "analog-diffusion",    "model_type": "huggingface",    "from_safetensors": "no",    "webhook": "https://modelslab.com",    "revision": "fp32",    "upcast_attention": "no"  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v1/enterprise/load_model"payload = json.dumps({  "key": "enterprise_api_key",  "url": "wavymulder/Analog-Diffusion",  "model_id": "analog-diffusion",  "model_type": "huggingface",  "from_safetensors": "no",  "webhook": "https://modelslab.com",  "revision": "fp32",  "upcast_attention": "no"})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\": \"enterprise_api_key\",\n    \"url\": \"wavymulder/Analog-Diffusion\",\n    \"model_id\": \"analog-diffusion\",\n    \"model_type\": \"huggingface\",\n    \"webhook\": \"https://modelslab.com\",\n    \"revision\": \"fp32\",\n    \"upcast_attention\": \"no\"\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v1/enterprise/load_model")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
+```
+
+### Request Body: Load a ControlNet Model[​](#request-body-load-a-controlnet-model "Direct link to Request Body: Load a ControlNet Model")
+
+Body Raw
+
+```
+{  "key": "enterprise_api_key",  "url": "lllyasviel/control_v11p_sd15_canny",  "model_id": "canny",  "model_type": "controlnet",  "webhook": "https://modelslab.com",  "revision": "fp32",  "upcast_attention": "no"}
+```
+
+### Request: Load a ControlNet Model[​](#request-load-a-controlnet-model "Direct link to Request: Load a ControlNet Model")
+
+* JS
+* PHP
+* NODE
+* PYTHON
+* JAVA
+
+```
+var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({  "key": "enterprise_api_key",  "url": "lllyasviel/control_v11p_sd15_canny",  "model_id": "canny",  "model_type": "controlnet",  "webhook": "https://modelslab.com",  "revision": "fp32",  "upcast_attention": "no"});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};model_reload("https://modelslab.com/api/v1/enterprise/load_model", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+```
+
+```
+<?php$payload = [  "key" => "enterprise_api_key",   "url" => "lllyasviel/control_v11p_sd15_canny",   "model_id" => "hed",   "model_type" => "controlnet",   "webhook" => "https://modelslab.com",   "revision" => "fp32",   "upcast_attention" => "no"];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v1/enterprise/load_model',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS =>  json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
+```
+
+```
+var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v1/enterprise/load_model',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key": "enterprise_api_key",    "url": "lllyasviel/control_v11p_sd15_canny",    "model_id": "canny",    "model_type": "controlnet",    "webhook": "https://modelslab.com",    "revision": "fp32",    "upcast_attention": "no"  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
+```
+
+```
+import requestsimport jsonurl = "https://modelslab.com/api/v1/enterprise/load_model"payload = json.dumps({  "key": "enterprise_api_key",  "url": "lllyasviel/control_v11p_sd15_canny",  "model_id": "canny",  "model_type": "controlnet",  "webhook": "https://modelslab.com",  "revision": "fp32",  "upcast_attention": "no"})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
+```
+
+```
+OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\": \"enterprise_api_key\",\n    \"url\": \"lllyasviel/control_v11p_sd15_canny\",\n    \"model_id\": \"hed\",\n    \"model_type\": \"controlnet\",\n    \"webhook\": \"https://modelslab.com\",\n    \"revision\": \"fp32\",\n    \"upcast_attention\": \"no\"\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v1/enterprise/load_model")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
+```
+
+### Response[​](#response "Direct link to Response")
+
+```
+{  "message": "model load started",  "status": "success"}
+```

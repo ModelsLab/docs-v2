@@ -1,0 +1,98 @@
+---
+title: "Face Generator"
+description: "This endpoint allows you to generate image with the face image provided."
+---
+
+![Face gen endpoint result](/images/enterprise-api/image-editing/assets/images/Face-Gen-90cdf5a0be5cc4e52b36cfcc87d9fb29.jpg)
+
+<Warning>
+  Make sure you add your [s3 details](/enterprise-api/general/update-s3-details) for `image_editing` server, so you can receive image generated in your bucket. Images generated without s3 details being added will be delete after **24hours**
+</Warning>
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body to the endpoint.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/image_editing/face_gen' \
+```
+
+## Body
+
+```json json
+{  
+  "key": "your_api_key",  
+  "prompt": "pretty woman",  
+  "negative_prompt": "anime, cartoon, drawing, big nose, long nose, fat, ugly, big lips, big mouth, face proportion mismatch, unrealistic, monochrome, lowres, bad anatomy, worst quality, low quality, blurry",  "face_image":"https://media.allure.com/photos/647f876463cd1ef47aab9c88/3:2/w_2465,h_1643,c_limit/angelina%20jolie%20blonde%20hair%20chloe.jpg",  
+  "width": "512",  
+  "height": "512",  
+  "samples": "1",  
+  "num_inference_steps": "21",  
+  "safety_checker": false,  
+  "base64": false,  
+  "seed": null,  
+  "guidance_scale": 7.5,  
+  "webhook": null,  
+  "track_id": null
+}
+```
+
+
+## Body Attributes
+<ParamField body="key" type="string" required>
+  Your API Key used for request authorization
+</ParamField>
+
+<ParamField body="prompt" type="string" required>
+  Text prompt with description of the things you want in the image to be generated.
+</ParamField>
+
+<ParamField body="face_image" type="string" required>
+  Link or valid base64 data which follows `data:image/jpeg;base64,{your_base64_string}` to the image of the face you want your generations to resemble.
+</ParamField>
+
+<ParamField body="width" type="integer" required>
+  Width of your generated image. Max dimension: 512 x 768
+</ParamField>
+
+<ParamField body="height" type="integer" required>
+  Height of your generated image. Max dimension: 512 x 768
+</ParamField>
+
+<ParamField body="num_inference_steps" type="integer" required>
+  Number of denoising steps. Value accepted are 21, 31, or 41
+</ParamField>
+
+<ParamField body="guidance_scale" type="number" required>
+  Scale for classifier-free guidance.
+</ParamField>
+
+<ParamField body="style" type="string" required>
+  This is required to generate output image in particular style. Default value is `realistic`. Options: `comic`, `chibi`, `3d`, `anime`, `realistic`
+</ParamField>
+
+<ParamField body="s_scale" type="number" required>
+  Adjust the weight of the face structure [float] [0.0 to 2.0] [default 1.0].
+</ParamField>
+
+<ParamField body="samples" type="integer" required>
+  The number of images to be returned in response. The maximum value is 2. **Note:** For resolutions such as 512x768, one sample will be generated.
+</ParamField>
+
+<ParamField body="safety_checker" type="boolean" required>
+  Whether to run the safety checker to prevent NSFW image generation. One of `true` or `false`.
+</ParamField>
+
+<ParamField body="safety_checker_type" type="string" required>
+  Must be one of `black`, `blur`, `sensitive_content_text`, `pixelate`
+</ParamField>
+
+<ParamField body="base64" type="boolean" required>
+  If provided face_image is in base64 format or if you want your generated images as a base64 string, must be set to `true`. Default: `false`.
+</ParamField>
+
+<ParamField body="webhook" type="string" required>
+  Set an URL to get a POST API call once the image generation is complete.
+</ParamField>
+
+<ParamField body="track_id" type="string" required>
+  This ID is returned in the response to the webhook API call. This will be used to identify the webhook request.
+</ParamField>

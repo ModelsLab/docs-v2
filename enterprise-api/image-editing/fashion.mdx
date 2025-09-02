@@ -1,0 +1,78 @@
+---
+title: "Fashion"
+description: "This endpoint allows you to wear a cloth image sample on an existing model body."
+---
+
+![Fashion endpoint result](/images/enterprise-api/image-editing/assets/images/Fashion-ae35005b2e022cc90044d7760c301db9.jpg)
+
+<Warning>
+  Make sure you add your [s3 details](/enterprise-api/general/update-s3-details) for `image_editing` server, so you can receive image generated in your bucket. Images generated without s3 details being added will be delete after **24hours**
+</Warning>
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body to the endpoint.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/image_editing/fashion' \
+```
+
+## Body
+
+```json json
+{
+  "key": "your_api_key",
+  "init_image": "https://example.com/model-image.jpg",
+  "cloth_image": "https://example.com/cloth-image.jpg",
+  "cloth_type": "upper_body",
+  "num_inference_steps": "21",
+  "guidance_scale": 7.5,
+  "seed": null,
+  "webhook": null,
+  "track_id": null
+}
+```
+
+## Body Attributes
+
+<ParamField body="key" type="string" required>
+  Your API Key used for request authorization
+</ParamField>
+
+<ParamField body="init_image" type="string" required>
+  Image URL of the model to try the dress on
+</ParamField>
+
+<ParamField body="cloth_image" type="string" required>
+  Cloth/Dress URL for the garment to try-on
+</ParamField>
+
+<ParamField body="cloth_type" type="string" required>
+  One of `upper_body`, `lower_body` or `dresses` based on where the garment is to be worn
+</ParamField>
+
+<ParamField body="prompt" type="string" required>
+  Text prompt with description of the things you want in the image to be generated
+</ParamField>
+
+<ParamField body="negative_prompt" type="string" required>
+  Items you don't want in the image
+</ParamField>
+
+<ParamField body="num_inference_steps" type="integer" required>
+  Number of denoising steps. Value accepted are 21, 31 or 41
+</ParamField>
+
+<ParamField body="guidance_scale" type="number" required>
+  Scale for classifier-free guidance (minimum: 1; maximum: 20)
+</ParamField>
+
+<ParamField body="seed" type="integer" required>
+  Random seed for reproducible results
+</ParamField>
+
+<ParamField body="webhook" type="string" required>
+  Set an URL to get a POST API call once the image generation is complete
+</ParamField>
+
+<ParamField body="track_id" type="string" required>
+  This ID is returned in the response to the webhook API call. This will be used to identify the webhook request
+</ParamField>

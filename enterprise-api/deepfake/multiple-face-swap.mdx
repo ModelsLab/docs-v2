@@ -1,0 +1,46 @@
+---
+title: "Multiple Face Swap"
+description: "Multiple Face Swap endpoint allows swapping faces in all detected faces within a single image."
+---
+
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/deepfake/multiple_face_swap' \
+```
+
+## Body
+```json json
+{  
+    "key": "enterprise_api_key",  
+    "init_image":"https://i.pinimg.com/564x/4c/6a/d0/4c6ad0f74a3a251344cb115699a9a7c9.jpg",  
+    "target_image":"https://i.pinimg.com/564x/11/ac/0d/11ac0ddaf6962e395f30abc61043393e.jpg",  
+    "webhook": null,  
+    "track_id": null
+}
+```
+
+## Body Attributes 
+
+<ParamField query="key" type="string" required>
+  Your API Key used for request authorization.
+</ParamField>
+
+<ParamField query="init_image" type="string" required>
+  The first image containing a face to be swapped. (URL string)
+</ParamField>
+
+<ParamField query="target_image" type="string" required>
+  The second image containing a face to replace the first image. (URL string)
+</ParamField>
+
+<ParamField query="webhook" type="string">
+  Set a URL to receive a POST API call once the image generation is complete.
+</ParamField>
+
+<ParamField query="track_id" type="string">
+  This ID is returned in the response to the webhook API call. Used to identify the webhook request.
+</ParamField>
+
+

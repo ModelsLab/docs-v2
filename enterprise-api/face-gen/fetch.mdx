@@ -1,0 +1,18 @@
+---
+title: "Fetch Image"
+description: "This endpoint is used to fetch your queued generations."
+openapi: "POST /face_gen/fetch/{id}"
+---
+
+## Request
+Send a `POST` request to below endpoint to return the corresponding queued images.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/face_gen/fetch/{id}' \
+```
+
+## Body
+```json json
+{ 
+    "key": "enterprise_api_key"
+}
+```

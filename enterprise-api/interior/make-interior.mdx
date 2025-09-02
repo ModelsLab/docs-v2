@@ -1,0 +1,79 @@
+---
+title: "Interior"
+description: "This endpoint allows you to generate interior design from an image."
+---
+
+
+## Request
+Send a `POST` request to below endpoint and pass the required parameters in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/interior/make' \
+```
+
+## Body
+```json json
+{  
+    "key":"enterprise_api_key",  
+    "init_image": "https://imagedelivery.net/PP4qZJxMlvGLHJQBm3ErNg/50bc1662-8d41-468e-55d0-9575ad096000/768",  
+    "prompt": "Luxury bedroom with an elegant wooden floor, a stylish table, and a plush red carpet, creating a warm and sophisticated ambiance.",  
+    "negative_prompt": "bad quality",  
+    "seed": 0,  
+    "guidance_scale": 8,  
+    "strength": 0.99,  
+    "num_inference_steps": 51,  
+    "base64": false,  
+    "temp": false,  
+    "scale_down": 6,  
+    "webhook":null,  
+    "track_id":null
+}
+```
+## Body Attributes
+
+<ParamField query="key" type="string" required>
+  Your API Key used for request authorization.
+</ParamField>
+
+<ParamField query="prompt" type="string" required>
+  The text prompt describing the content you want in the generated image.
+</ParamField>
+
+<ParamField query="init_image" type="string">
+  Link to the Initial Image of the room.
+</ParamField>
+
+<ParamField query="negative_prompt" type="string">
+  Descriptions of things you don't want in the image. Examples include NSFW content, extra limbs, distorted faces, or poor quality.
+</ParamField>
+
+<ParamField query="strength" type="number" min="0.0" max="1.0">
+  Prompt strength when using init_image. A value of 1.0 corresponds to full destruction of information in the init image.
+</ParamField>
+
+<ParamField query="base64" type="boolean" default="false">
+  Get the response as a base64 string. Options: `true` or `false`. Default is `false`.
+</ParamField>
+
+<ParamField query="num_inference_steps" type="integer" enum="[21, 31, 41]">
+  The number of denoising steps. Acceptable values are 21, 31, or 41.
+</ParamField>
+
+<ParamField query="guidance_scale" type="integer" min="1" max="20">
+  Scale for classifier-free guidance. Minimum is 1, maximum is 20.
+</ParamField>
+
+<ParamField query="temp" type="boolean" default="false">
+  Create a temporary image link. The link is valid for 24 hours.
+</ParamField>
+
+<ParamField query="seed" type="integer">
+  Seed used to reproduce results. Same seed returns the same image. Pass `null` for a random seed.
+</ParamField>
+
+<ParamField query="webhook" type="string" format="url">
+  Provide a URL to receive a POST API call once the image generation is complete.
+</ParamField>
+
+<ParamField query="track_id" type="integer">
+  This ID is returned in the response and used to identify the webhook request.
+</ParamField>

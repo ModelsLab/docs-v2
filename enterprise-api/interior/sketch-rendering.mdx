@@ -1,0 +1,77 @@
+---
+title: "Sketch Rendering"
+description: "This endpoint allows you to convert exterior house sketch into real world photo as per prompt."
+---
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/interior/sketch_rendering' \
+```
+
+## Body
+```json json
+{  
+    "key":"enterprise_api_key",  
+    "init_image": "https://imagedelivery.net/pp4qzjxmlvglhjqbm3erng/50bc1662-8d41-468e-55d0-9575ad096000/768",  
+    "prompt": "rendering floor plan of the apartment layout,top view,white background,masterpiece, kitchen, living room, sofa, chair,bedroom,car best quality, extremely detailed,best illustration, best shadow",  
+    "seed": 0,  
+    "guidance_scale": 8,  
+    "strength": 0.99,  
+    "num_inference_steps": 51,  
+    "base64": false,  
+    "temp": false,  
+    "specific_object": null,  
+    "webhook": null,  
+    "track_id": null
+}
+```
+
+## Body Attributes
+<ParamField query="key" type="string" required>
+  Your API Key used for authenticating your request.
+</ParamField>
+
+<ParamField query="prompt" type="string" required>
+  A text prompt describing the content you want in the generated floor plan image.
+</ParamField>
+
+<ParamField query="init_image" type="string" format="url">
+  A URL to the initial image of the room to base the floor plan on.
+</ParamField>
+
+<ParamField query="negative_prompt" type="string">
+  Negative prompts are descriptions of things we don't want in our image (e.g., NSFW content, extra limbs, distorted faces, poor quality).
+</ParamField>
+
+<ParamField query="strength" type="number" min="0.0" max="1.0">
+  The degree to which the prompt influences the initial image. `1.0` corresponds to full destruction of the initial image details.
+</ParamField>
+
+<ParamField query="base64" type="boolean" default="false">
+  Specifies whether the response should be returned as a base64 string. Options: `true` or `false`.
+</ParamField>
+
+<ParamField query="num_inference_steps" type="integer" enum="[21, 31, 41]">
+  The number of denoising steps. Acceptable values are `21`, `31`, or `41`.
+</ParamField>
+
+<ParamField query="guidance_scale" type="integer" min="1" max="20">
+  The scale for classifier-free guidance. Minimum is `1`, and maximum is `20`.
+</ParamField>
+
+<ParamField query="temp" type="boolean" default="false">
+  Indicates if temporary links should be used. Valid for 24 hours.
+</ParamField>
+
+<ParamField query="seed" type="integer" nullable="true">
+  Seed is used to reproduce results. Same seed will give you same image in return again. Pass `null` for a random number.
+</ParamField>
+
+<ParamField query="webhook" type="string" format="url">
+  A URL to receive a POST API call once the image generation is complete.
+</ParamField>
+
+<ParamField query="track_id" type="integer">
+  An ID returned in the API response, used to identify the webhook request.
+</ParamField>

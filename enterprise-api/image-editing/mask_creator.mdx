@@ -1,0 +1,42 @@
+---
+title: "Mask Creator"
+description: "This endpoint helps to mask an object on a given image."
+---
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body to the endpoint.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/image_editing/mask_creator' \
+```
+
+## Body
+```json json
+{    
+  "key": "your_api_key",    
+  "init_image": "https://i.ibb.co/kMRK2mg/image2.jpg",    
+  "specific_object": "the ball",    
+  "track_id":null,    
+  "webhook":null
+}
+```
+
+## Body Attributes
+<ParamField body="key" type="string" required>
+  Your API Key used for request authorization
+</ParamField>
+
+<ParamField body="specific_object" type="string" required>
+  Link to the actual image
+</ParamField>
+
+<ParamField body="base64" type="boolean">
+  `true` or `false`
+</ParamField>
+
+<ParamField body="webhook" type="string">
+  Set an URL to get a POST API call once the image generation is complete.
+</ParamField>
+
+<ParamField body="track_id" type="string">
+  This ID is returned in the response to the webhook API call. This will be used to identify the webhook request.
+</ParamField>

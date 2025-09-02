@@ -1,0 +1,18 @@
+---
+title: "Fetch Image"
+description: "This endpoint is used to fetch queued images."
+openapi: "POST /realtime/fetch/{id}"
+---
+
+## Request
+Send a `POST` request to below endpoint to return the corresponding queued images.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/realtime/fetch/{id}' \
+```
+
+## Body
+```json json
+{ 
+    "key": "enterprise_api_key"
+}
+```

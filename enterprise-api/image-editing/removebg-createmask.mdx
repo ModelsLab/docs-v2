@@ -1,0 +1,77 @@
+---
+title: "Background Removal & Create mask"
+description: "This endpoint removes background from image and create mask."
+---
+
+
+![removebg-createmask endpoint result](/images/enterprise-api/image-editing/assets/images/Background-Removal-b950c09956614c3e222247b679b7b1c0.jpg)
+
+<Warning>
+  Make sure you add your [s3 details](/enterprise-api/general/update-s3-details) for `image_editing` server, so you can receive image generated in your bucket. Images generated without s3 details being added will be delete after **24hours**
+</Warning>
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body to the endpoint.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/image_editing/removebg_mask' \
+```
+
+## Body
+```json json
+{    
+  "key":"",    
+  "seed":12345,    
+  "image":"https://huggingface.co/datasets/diffusers/test-arrays/resolve/main/stable_diffusion_inpaint/boy.png",    
+  "post_process_mask": false,    
+  "only_mask": false,    
+  "alpha_matting":false,    
+  "webhook": null,    
+  "track_id": null  
+}
+```
+
+## Body Attributes
+
+<ParamField body="key" type="string" required>
+  Your API Key used for request authorization
+</ParamField>
+
+<ParamField body="image" type="string" required>
+  URL of the image you want to remove and create its mask
+</ParamField>
+
+<ParamField body="alpha_matting" type="boolean" default="false">
+  Whether to perform alpha matting. Accepts `true` or `false`
+</ParamField>
+
+<ParamField body="post_process_mask" type="boolean" default="false">
+  To post process the mask image. Accepts `true` or `false`
+</ParamField>
+
+<ParamField body="only_mask" type="boolean" default="false">
+  Whether to return only mask image or not. Accepts `true` or `false`
+</ParamField>
+
+<ParamField body="seed" type="integer">
+  Seed is used to reproduce results. Same seed will give same image. Pass `null` for a random number
+</ParamField>
+
+<ParamField body="alpha_matting_foreground_threshold" type="integer" default="240">
+  Threshold for alpha matting foreground
+</ParamField>
+
+<ParamField body="alpha_matting_background_threshold" type="integer" default="20">
+  Threshold for alpha matting background
+</ParamField>
+
+<ParamField body="alpha_matting_erode_size" type="integer" default="5">
+  Erode size for alpha matting
+</ParamField>
+
+<ParamField body="webhook" type="string">
+  Set a URL to get a POST API call once the image generation is complete
+</ParamField>
+
+<ParamField body="track_id" type="string">
+  This ID is returned in the response to the webhook API call. This will be used to identify the webhook request
+</ParamField>

@@ -1,0 +1,123 @@
+---
+title: "Image to Video"
+description: "This endpoint is used to convert images into videos."
+---
+<Warning>
+  Make sure you add your [s3 details](/enterprise-api/general/update-s3-details) for `video` server, so you can receive image generated in your bucket. Images generated without s3 details being added will be delete after **24 hours**
+</Warning>
+
+![Text to video endpoint result](\images\enterprise-api\video\assets\images\Image-to-video-06907dcc4363b727c589be0243af41f4.jpg)
+
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/video/img2video' \
+```
+
+
+## Body Attributes
+
+<ParamField query="key" type="string" required>
+  Your unique API key used for authorization.
+</ParamField>
+
+<ParamField query="model_id" type="string" required enum='["svd"]'>
+  The ID of the model to use. Allowed values: svd.
+</ParamField>
+
+<ParamField query="negative_prompt" type="string">
+  Items you do not want in the video.
+</ParamField>
+
+<ParamField query="enhance_prompt" type="string" enum='["yes", "no"]' default="yes">
+  Enhance prompts for better results. Options: yes/no.
+</ParamField>
+
+<ParamField query="init_image" type="string">
+  A link or base64 equivalent of a valid PNG, JPEG, or other image format file to use as initial image conditioning.
+</ParamField>
+
+<ParamField query="height" type="integer" max="512" default="512">
+  The height of the video in pixels. Maximum: 512.
+</ParamField>
+
+<ParamField query="width" type="integer" max="512" default="512">
+  The width of the video in pixels. Maximum: 512.
+</ParamField>
+
+<ParamField query="num_frames" type="integer" min="1" max="25" default="16">
+  The number of frames in the generated video. Default: 16, Maximum: 25.
+</ParamField>
+
+<ParamField query="num_inference_steps" type="integer" min="1" max="50" default="20">
+  The number of denoising steps. Default: 20, Maximum: 50.
+</ParamField>
+
+<ParamField query="min_guidance_scale" type="number" min="0" default="0">
+  The start value of the guidance scale for video generation when using svd as the model.
+</ParamField>
+
+<ParamField query="max_guidance_scale" type="number" max="8" default="8">
+  The end value of the guidance scale for video generation when using svd as the model.
+</ParamField>
+
+<ParamField query="motion_bucket_id" type="integer" default="127">
+  Higher values lead to more motion in generated videos. Default: 127.
+</ParamField>
+
+<ParamField query="noise_aug_strength" type="number" min="0" max="1" default="0.5">
+  The strength for noise initialization when using svd as the model.
+</ParamField>
+
+<ParamField query="fps" type="integer" min="1" max="16" default="8">
+  Frames per second rate of the generated video. Maximum: 16.
+</ParamField>
+
+<ParamField query="output_type" type="string" enum='["mp4", "gif", "base64"]' default="mp4">
+  The output type of the video. Options: mp4, gif, base64.
+</ParamField>
+
+<ParamField query="latent_interpolation_method" type="string" enum='["lerp", "slerp"]' default="lerp">
+  The interpolation method for generating the video. Default: lerp.
+</ParamField>
+
+<ParamField query="clip_skip" type="integer" max="2">
+  The number of CLIP layers to skip. Default: null. Maximum: 2.
+</ParamField>
+
+<ParamField query="instant_response" type="boolean" default="false">
+  If true, returns an instant response with future links for queued requests instead of waiting for processing.
+</ParamField>
+
+<ParamField query="temp" type="boolean" default="false">
+  If true, stores generations in temporary storage. Temporary files are cleaned every 24 hours.
+</ParamField>
+
+<ParamField query="webhook" type="string" format="url">
+  Provide a URL to receive a POST API call once the video generation is complete.
+</ParamField>
+
+<ParamField query="track_id" type="integer">
+  This ID is returned in the response to the webhook API call and will be used to identify the webhook request.
+</ParamField>
+
+
+## Body
+```json json
+{    
+  "key":"enterprise_api_key",    
+  "model_id":"svd",    
+  "init_image": "https://imagedelivery.net/PP4qZJxMlvGLHJQBm3ErNg/e2f9cb8e-cb87-4143-dd81-a9e77e3bb800/768",    
+  "height":512,    
+  "width":512,    
+  "num_frames":16,    
+  "num_inference_steps":20,    
+  "min_guidance_scale":1,    
+  "max_guidance_scale":3,    
+  "motion_bucket_id":20,    
+  "noise_aug_strength":0.02,    
+  "base64":false,    
+  "webhook":null,    
+  "track_id":null}
+```

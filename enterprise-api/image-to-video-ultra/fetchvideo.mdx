@@ -1,0 +1,18 @@
+---
+title: "Fetch Video"
+description: "Fetch Queued Video API fetches queued video."
+openapi: "POST /image_to_video_ultra/fetch/{id}"
+---
+
+## Request
+Send a `POST` request to below endpoint to return the corresponding queued videos. Where `{id}` is the ID returned together with the image URL in the response upon its generation. This endpoint does not generate new video, it returns already generated/queued videos.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/image_to_video_ultra/fetch/{id}' \
+```
+
+## Body
+```json json
+{ 
+    "key": ""
+}
+```
