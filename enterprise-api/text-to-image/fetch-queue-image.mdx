@@ -1,74 +1,22 @@
 ---
 title: "Fetch Image"
+description: "This endpoint is used to fetch images from the processing queue."
+openapi: "POST /text-to-image/fetch"
 ---
 
-## Overview[​](#overview "Direct link to Overview")
-
-Fetch Queued Images API fetches queued images.
-
-![Fetch Queued Images endpoint result](\images\enterprise-api\text-to-image\assets\images\fetch-8942c975610142737a09138cfcd00b3b.jpg)
-
-Usually more complex image generation requests take more time for processing. Such requests are being queued for processing and the output images are retrievable after some time. The estimated processing time is specified by the **eta** parameter in the response returned upon the request execution.
-
-## Request[​](#request "Direct link to Request")
-
-```
+<Note>
+Complex image generation requests are queued, and results can be retrieved later with an estimated processing time provided by the eta parameter.
+</Note>
+## Request
+Send a `POST` request to below endpoint to return the corresponding queued images, specified by the `request_id` parameter in the request body.
+```curl curl
 --request POST 'https://modelslab.com/api/v1/enterprise/fetch' \
 ```
 
-Send a `POST` request to [https://modelslab.com/api/v1/enterprise/fetch](https://modelslab.com/api/v1/enterprise/fetch) endpoint to return the corresponding queued images, specified by the **request\_id** parameter in the request body.
-
-This endpoint does not generate new images, it returns already generated/queued images.
-
-## Attributes[​](#attributes "Direct link to Attributes")
-
-| Parameter       | Description                                                                        |
-| :-------------- | :--------------------------------------------------------------------------------- |
-| **key**         | Your enterprise API Key used for request authorization.                            |
-| **request\_id** | Returned by the **id** parameter in the response upon an image generation request. |
-
-## Example[​](#example "Direct link to Example")
-
-### Body[​](#body "Direct link to Body")
-
-Body Raw
-
-```
-{ "key": "", "request_id": "your_request_id"}
-```
-
-### Request[​](#request-1 "Direct link to Request")
-
-* JS
-* PHP
-* NODE
-* PYTHON
-* JAVA
-
-```
-var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({ "key": "", "request_id": "your_request_id"});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v1/enterprise/fetch", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
-```
-
-```
-<?php$payload = [  "key" => "",  "request_id" => "your_request_id"];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v1/enterprise/fetch',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS =>  json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
-```
-
-```
-var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v1/enterprise/fetch',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key": "",    "request_id": "your_request_id"  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
-```
-
-```
-import requestsimport jsonurl = "https://modelslab.com/api/v1/enterprise/fetch"payload = json.dumps({ "key": "", "request_id": "your_request_id"})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
-```
-
-```
-OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n  \"key\": \"\",\n  \"request_id\": \"your_request_id\"\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v1/enterprise/fetch")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
-```
-
-### Response[​](#response "Direct link to Response")
-
-Example Response
-
-```
-{  "status": "success",  "id": 13443927,  "output": [    "https://pub-8b49af329fae499aa563997f5d4068a4.r2.dev/generations/6ef3f81f-14e1-4835-b07a-e00dbe80b6ff-0.png"  ]}
+## Body
+```json json
+{ 
+    "key": "enterprise_api_key", 
+    "request_id": "your_request_id"
+}
 ```

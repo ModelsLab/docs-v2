@@ -1,33 +1,16 @@
 ---
 title: "Super Resolution"
+description: "This endpoint returns a super resolution version of an image."
 ---
 
-## Overview[​](#overview "Direct link to Overview")
-
-This endpoint returns a super resolution version of an image that is passed to the `url` attribute.
-
-It also includes a parameter for face enhancement if the processed image is a portrait of a person.
-
-![Super Resolution endpoint result](\images\enterprise-api\text-to-image\assets\images\Superresolution-138175764429bf837f39bb8198b1ecd3.jpg)
-
-## Request[​](#request "Direct link to Request")
-
-```
+## Request
+Send a `POST` request to below endpoint to return an upscaled version of the initial image.
+```curl curl
 --request POST 'https://modelslab.com/api/v1/enterprise/super_resolution' \
 ```
-
-Send a `POST` request to [https://modelslab.com/api/v1/enterprise/super\_resolution](https://modelslab.com/api/v1/enterprise/super_resolution) endpoint to return an upscaled version of the initial image.
-
-## Body Attributes[​](#body-attributes "Direct link to Body Attributes")
-
-| Parameter         | Description                                                                            |
-| :---------------- | :------------------------------------------------------------------------------------- |
-| **key**           | Your API Key used for request authorization.                                           |
-| **url**           | URL of the image that you want in super resolution.                                    |
-| **scale**         | A number for scaling the image, for the respective upscaling model ID (min 1 - max 4). |
-| **model\_id**     | upscale model to use, default is realesr-general-x4v3                                  |
-| **webhook**       | Set an URL to get a POST API call once the image generation is complete.               |
-| **face\_enhance** | A boolean flag (*true/false*) for the face enhancement feature.                        |
+<Tip>
+Want more upscale models? Request a custom model by contacting us at our [Discord](https://discord.gg/RjVZfAnhsq) server.
+</Tip>
 
 The following upscale models are supported:
 
@@ -40,48 +23,39 @@ The following upscale models are supported:
 | **realesr-general-x4v3**          | 4x upscaling general model  |
 | **ultra\_resolution**             | 4K+ upscaling general model |
 
-Want more upscale models? Request a custom model by contacting us at our [Discord](https://discord.gg/RjVZfAnhsq) server.
-
-## Example[​](#example "Direct link to Example")
-
-### Body[​](#body "Direct link to Body")
-
-Body Raw
-
-```
-{ "key": "enterprise_api_key", "url": "https://pub-8b49af329fae499aa563997f5d4068a4.r2.dev/generations/e5cd86d3-7305-47fc-82c1-7d1a3b130fa4-0.png", "scale": 3, "webhook": null, "face_enhance": true}
-```
-
-### Request[​](#request-1 "Direct link to Request")
-
-* JS
-* PHP
-* NODE
-* PYTHON
-* JAVA
-
-```
-var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({ "key": "", "url": "https://pub-8b49af329fae499aa563997f5d4068a4.r2.dev/generations/e5cd86d3-7305-47fc-82c1-7d1a3b130fa4-0.png", "scale": 3, "webhook": null, "face_enhance": true});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v1/enterprise/super_resolution", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
+## Body
+```json json
+{ 
+    "key": "enterprise_api_key", 
+    "url": "https://pub-8b49af329fae499aa563997f5d4068a4.r2.dev/generations/e5cd86d3-7305-47fc-82c1-7d1a3b130fa4-0.png", 
+    "scale": 3, 
+    "webhook": null, 
+    "face_enhance": true
+}
 ```
 
-```
-<?php$payload = [  "key" => "",   "url" => "https://pub-8b49af329fae499aa563997f5d4068a4.r2.dev/generations/e5cd86d3-7305-47fc-82c1-7d1a3b130fa4-0.png",   "scale" => 3,   "webhook" => null,   "face_enhance" => true ];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v1/enterprise/super_resolution',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
-```
+## Body Attributes
 
-```
-var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v1/enterprise/super_resolution',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key": "",    "url": "https://pub-8b49af329fae499aa563997f5d4068a4.r2.dev/generations/e5cd86d3-7305-47fc-82c1-7d1a3b130fa4-0.png",    "scale": 3,    "webhook": null,    "face_enhance": true  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
-```
+<ParamField path="key" type="string" required>
+  Your API Key used for request authorization.
+</ParamField>
 
-```
-import requestsimport jsonurl = "https://modelslab.com/api/v1/enterprise/super_resolution"payload = json.dumps({ "key": "", "url": "https://pub-8b49af329fae499aa563997f5d4068a4.r2.dev/generations/e5cd86d3-7305-47fc-82c1-7d1a3b130fa4-0.png", "scale": 3, "webhook": None, "face_enhance": True})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
-```
+<ParamField path="url" type="string" required>
+  The URL of the image you want to upscale to super resolution.
+</ParamField>
 
-```
-OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\": \"\",\n    \"url\": \"https://pub-8b49af329fae499aa563997f5d4068a4.r2.dev/generations/e5cd86d3-7305-47fc-82c1-7d1a3b130fa4-0.png\",\n    \"scale\": 3,\n    \"webhook\": null,\n    \"face_enhance\": true\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v1/enterprise/super_resolution")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
-```
+<ParamField path="scale" type="number" min="1" max="4" required>
+  The scale factor for upscaling. Must be between 1 and 4.
+</ParamField>
 
-### Response[​](#response "Direct link to Response")
+<ParamField path="model_id" type="string" default="realesr-general-x4v3">
+  The upscale model to use. Default: <code>realesr-general-x4v3</code>.
+</ParamField>
 
-```
-{  "status": "success",  "generationTime": 6.90633487701416,  "id": 14938278,  "output": "https://pub-8b49af329fae499aa563997f5d4068a4.r2.dev/generations/1683220732_out.png"}
-```
+<ParamField path="webhook" type="string">
+  A webhook URL to receive a POST callback once the image generation is complete.
+</ParamField>
+
+<ParamField path="face_enhance" type="boolean" default="false">
+  Enable face enhancement in the upscaled image. Default: false.
+</ParamField>

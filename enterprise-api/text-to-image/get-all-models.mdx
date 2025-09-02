@@ -1,69 +1,23 @@
 ---
 title: "Get All Models"
+description: "This endpoint retrieves all available models."
 ---
-
-## Overview[​](#overview "Direct link to Overview")
-
-Enterprise: Get All Models endpoint returns a list of all the models available on your dedicated server.
-
+<Info>
 This endpoint returns models' IDs and the date/time they have been loaded on your server.
-
-## Request[​](#request "Direct link to Request")
-
-```
+</Info>
+## Request
+Send a `POST` request to below endpoint to obtain a list with the available public models and their IDs.
+```curl curl
 --request POST 'https://modelslab.com/api/v1/enterprise/get_all_models' \
 ```
-
-Send a `POST` request to [https://modelslab.com/api/v1/enterprise/get\_all\_models](https://modelslab.com/api/v1/enterprise/get_all_models) endpoint to obtain a list with the available public models and their IDs.
-
-Watch the how-to video to see it in action.
-
-## Attributes[​](#attributes "Direct link to Attributes")
-
-| Parameter | Description                                            |
-| :-------- | :----------------------------------------------------- |
-| **key**   | Your enterprise API Key used for request authorization |
-
-## Example[​](#example "Direct link to Example")
-
-### Body[​](#body "Direct link to Body")
-
-Body Raw
-
+## Body
+```json json
+{ 
+    "key": "enterprise_api_key"
+}
 ```
-{ "key": "enterprise_api_key"}
-```
-
-### Request[​](#request-1 "Direct link to Request")
-
-* JS
-* PHP
-* NODE
-* PYTHON
-* JAVA
-
-```
-var myHeaders = new Headers();myHeaders.append("Content-Type", "application/json");var raw = JSON.stringify({ "key": ""});var requestOptions = {  method: 'POST',  headers: myHeaders,  body: raw,  redirect: 'follow'};fetch("https://modelslab.com/api/v1/enterprise/get_all_models", requestOptions)  .then(response => response.text())  .then(result => console.log(result))  .catch(error => console.log('error', error));
-```
-
-```
-<?php$payload = [  "key" => ""];$curl = curl_init();curl_setopt_array($curl, array(  CURLOPT_URL => 'https://modelslab.com/api/v1/enterprise/get_all_models',  CURLOPT_RETURNTRANSFER => true,  CURLOPT_ENCODING => '',  CURLOPT_MAXREDIRS => 10,  CURLOPT_TIMEOUT => 0,  CURLOPT_FOLLOWLOCATION => true,  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,  CURLOPT_CUSTOMREQUEST => 'POST',  CURLOPT_POSTFIELDS => json_encode($payload),  CURLOPT_HTTPHEADER => array(    'Content-Type: application/json'  ),));$response = curl_exec($curl);curl_close($curl);echo $response;
-```
-
-```
-var request = require('request');var options = {  'method': 'POST',  'url': 'https://modelslab.com/api/v1/enterprise/get_all_models',  'headers': {    'Content-Type': 'application/json'  },  body: JSON.stringify({    "key": ""  })};request(options, function (error, response) {  if (error) throw new Error(error);  console.log(response.body);});
-```
-
-```
-import requestsimport jsonurl = "https://modelslab.com/api/v1/enterprise/get_all_models"payload = json.dumps({ "key": ""})headers = {  'Content-Type': 'application/json'}response = requests.request("POST", url, headers=headers, data=payload)print(response.text)
-```
-
-```
-OkHttpClient client = new OkHttpClient().newBuilder()  .build();MediaType mediaType = MediaType.parse("application/json");RequestBody body = RequestBody.create(mediaType, "{\n    \"key\": \"\"\n}");Request request = new Request.Builder()  .url("https://modelslab.com/api/v1/enterprise/get_all_models")  .method("POST", body)  .addHeader("Content-Type", "application/json")  .build();Response response = client.newCall(request).execute();
-```
-
-### Response[​](#response "Direct link to Response")
-
-```
-{  "models": [    {     "load_data": "01/25/2023 11:52:22",     "model_id": "hf-model"    },    {     "load_data": "01/25/2023 12:34:16",     "model_id": "ckpt-model"    },    {     "load_data": "01/25/2023 12:50:48",     "model_id": "nckpt-model"    }  ],  "status": "success"}
-```
+## Body Attributes
+    
+<ParamField query="key" type="string" required>
+    Your enterprise API Key used for request authorization.
+</ParamField>
