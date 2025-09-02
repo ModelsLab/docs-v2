@@ -546,6 +546,7 @@
           },
           "scenario": {
             "type": "string",
+            "enum": ["beach", "desert", "plain", "taiga"],
             "description": "The scenario to be changed, it includes beach, desert, plain, taiga"
           },
           "negative_prompt": {
