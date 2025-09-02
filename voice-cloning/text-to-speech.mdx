@@ -1,7 +1,7 @@
 ---
 title: "Text to Speech"
 openapi: 'POST /voice/text_to_speech'
-description: 'Generate Speech by providing a text input along with [pre trained voices](https://modelslab.com/trained-voice-lists).'
+description: 'Generate Speech by providing a text input along with a pre trained voice.'
 ---
 ## Request
 Make a `POST` request to below endpoint and pass the required parameters as a request body.
@@ -9,7 +9,9 @@ Make a `POST` request to below endpoint and pass the required parameters as a re
 ```curl curl
 --request POST 'https://modelslab.com/api/v6/voice/text_to_speech' \
 ```
-
+<Tip>
+Here you can find all the [pre trained voices](https://modelslab.com/trained-voice-lists)
+</Tip>
 ## Emotion Support
 
 <Note>

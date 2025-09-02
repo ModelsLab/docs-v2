@@ -10,6 +10,9 @@ Make a `POST` request to below endpoint and pass the required parameters as a re
 ```curl curl
 --request POST 'https://modelslab.com/api/v6/voice/create_dubbing' \
 ```
+<Tip>
+You can find all voice_id [here](https://modelslab.com/trained-voice-lists).
+</Tip>
 
 ## Body
 
@@ -19,6 +22,7 @@ Make a `POST` request to below endpoint and pass the required parameters as a re
   "init_video": "https://cdn.discordapp.com/attachments/1233159947869753381/1349236625896378441/Untitled_video_-_Made_with_Clipchamp_3_1.mp4?ex=6801d407&is=68008287&hm=a4bca8d191613441a10251159356f55b9c9c5b2dbebca85fc0e866f1ba797cb8",
   "source_lang": "hi",
   "output_lang": "en-us",
+  "voice_id":"henry",
   "speed": 1.0,
   "file_prefix": "spanish_dub",
   "base64": false,

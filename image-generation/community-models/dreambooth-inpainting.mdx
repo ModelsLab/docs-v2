@@ -6,11 +6,17 @@ description: 'Inapint some part in a given image.'
 
 ![Inpainting endpoint result](/images/image-generation/community-models/assets/images/inpainting-8bb5f9bb4dc5d5307f0fd83248dfc296.jpg)
 
+<Check>
+You can find a list of the public models available and their IDs [here](https://modelslab.com/models?base_model%5B0%5D=sdxl-10&base_model%5B1%5D=sd-15&base_model%5B2%5D=flux-1-d&base_model%5B3%5D=pony&feature=imagen&model_type%5B0%5D=checkpoint&sort=recommended)
+</Check>
+
 ## Request
 Make a `POST` request to below endpoint and pass the required parameters as a request body.
 ```curl curl
 --request POST 'https://modelslab.com/api/v6/images/inpaint' \
 ```
+
+
 ## Schedulers
 This endpoint also supports schedulers. Use the "scheduler" parameter in the request body to pass a specific scheduler from the list below:
 
