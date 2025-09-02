@@ -580,11 +580,17 @@
       },
       "TextToVideoUltraRequest": {
         "type": "object",
-        "required": ["key", "prompt"],
+        "required": ["key", "prompt", "model_id"],
         "properties": {
           "key": {
             "type": "string",
             "description": "Your API Key used for request authorization"
+          },
+          "model_id": {
+            "type": "string",
+            "enum": ["wan2.2", "wan2.1"],
+            "default": "wan2.1",
+            "description": "The model ID to use for video generation. wan2.2 or wan2.1"
           },
           "prompt": {
             "type": "string",
@@ -753,11 +759,17 @@
       },
       "ImageToVideoUltraRequest": {
         "type": "object",
-        "required": ["key", "init_image", "prompt"],
+        "required": ["key", "init_image", "prompt", "model_id"],
         "properties": {
           "key": {
             "type": "string",
             "description": "Your API Key used for request authorization"
+          },
+          "model_id": {
+            "type": "string",
+            "enum": ["wan2.2", "wan2.1"],
+            "default": "wan2.1",
+            "description": "The model ID to use for video generation. wan2.2 or wan2.1"
           },
           "prompt": {
             "type": "string",
