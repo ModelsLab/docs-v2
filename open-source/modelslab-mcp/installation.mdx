@@ -16,13 +16,13 @@ Before installing the ModelsLab MCP Server, ensure you have:
 
 First, clone the ModelsLab MCP Server repository to your local machine:
 
-```bash
+```bash bash
 git clone https://github.com/ModelsLab/modelslab-mcp.git
 ```
 
 Navigate to the cloned directory:
 
-```bash
+```bash bash
 cd modelslab-mcp
 ```
 
@@ -39,20 +39,16 @@ cd modelslab-mcp
 Create the Claude Desktop configuration file in the appropriate location:
 
 ### For macOS:
-```bash
-# Navigate to Claude's config directory
+```bash bash
 cd ~/Library/Application\ Support/Claude/
 
-# Create the config file
 touch claude_desktop_config.json
 ```
 
 ### For Windows:
-```cmd
-# Navigate to Claude's config directory
+```bash bash
 cd %APPDATA%\Claude\
 
-# Create the config file (if it doesn't exist)
 type nul > claude_desktop_config.json
 ```
 
@@ -60,7 +56,7 @@ type nul > claude_desktop_config.json
 
 Add the following configuration to your `claude_desktop_config.json` file:
 
-```json
+```json claude_desktop_config.json
 {
   "mcpServers": {
     "ModelsLab-MCP": {
@@ -81,7 +77,7 @@ Add the following configuration to your `claude_desktop_config.json` file:
 
 | Parameter | Description | Example |
 |-----------|-------------|---------|
-| `command` | Python executable path | `"python"` or `"python3"` |
+| `command` | Python executable path | `python` or `python3` |
 | `args` | Path to the cloned repository | `"/Users/username/modelslab-mcp"` |
 | `IMAGE_STORAGE_DIRECTORY` | Where to save generated images | `"/Users/username/Pictures/ModelsLab"` |
 | `MODELSLAB_API_KEY` | Your ModelsLab API key | `"ml-abc123..."` |
@@ -91,7 +87,7 @@ Add the following configuration to your `claude_desktop_config.json` file:
 Replace the placeholder paths with your actual paths:
 
 ### Example for macOS:
-```json
+```json claude_desktop_config.json
 {
   "mcpServers": {
     "ModelsLab-MCP": {
@@ -109,7 +105,7 @@ Replace the placeholder paths with your actual paths:
 ```
 
 ### Example for Windows:
-```json
+```json claude_desktop_config.json
 {
   "mcpServers": {
     "ModelsLab-MCP": {
@@ -128,8 +124,8 @@ Replace the placeholder paths with your actual paths:
 
 ## Step 6: Restart Claude Desktop
 
-1. **Completely quit** Claude Desktop (not just minimize)
-2. **Reopen** Claude Desktop
+1. Completely quit Claude Desktop (not just minimize)
+2. Reopen Claude Desktop
 3. The MCP server should now be available
 
 ## Verification

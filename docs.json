@@ -262,8 +262,8 @@
                 "group": "3D API",
                 "pages": [
                   "enterprise-api/3d-api/overview",
-                  "enterprise-api/3d-api/image-to-3d",
                   "enterprise-api/3d-api/text-to-3d",
+                  "enterprise-api/3d-api/image-to-3d",
                   "enterprise-api/3d-api/system-details",
                   "enterprise-api/3d-api/restart-server",
                   "enterprise-api/3d-api/clear-cache",
@@ -280,12 +280,12 @@
                   "enterprise-api/deepfake/multiple-face-swap",
                   "enterprise-api/deepfake/single-video-swap",
                   "enterprise-api/deepfake/specific-video-swap",
+                  "enterprise-api/deepfake/fetch",
                   "enterprise-api/deepfake/clear-cache",
                   "enterprise-api/deepfake/clear-queue",
                   "enterprise-api/deepfake/restart-server",
                   "enterprise-api/deepfake/system-details",
-                  "enterprise-api/deepfake/update-server",
-                  "enterprise-api/deepfake/fetch"
+                  "enterprise-api/deepfake/update-server"
                 ]
               },
               {
@@ -302,12 +302,12 @@
                 "pages": [
                   "enterprise-api/face-gen/overview",
                   "enterprise-api/face-gen/make-gen",
-                  "enterprise-api/face-gen/update-server",
+                  "enterprise-api/face-gen/fetch",
                   "enterprise-api/face-gen/system-details",
                   "enterprise-api/face-gen/restart-server",
                   "enterprise-api/face-gen/clear-cache",
                   "enterprise-api/face-gen/clear-queue",
-                  "enterprise-api/face-gen/fetch"
+                  "enterprise-api/face-gen/update-server"
                 ]
               },
               {
@@ -427,8 +427,8 @@
                 "group": "Text to Image",
                 "pages": [
                   "enterprise-api/text-to-image/overview",
-                  "enterprise-api/text-to-image/img2img",
                   "enterprise-api/text-to-image/text2img",
+                  "enterprise-api/text-to-image/img2img",
                   "enterprise-api/text-to-image/inpainting",
                   "enterprise-api/text-to-image/load-model-v2",
                   "enterprise-api/text-to-image/controlnet-ep",
@@ -477,8 +477,8 @@
                 "group": "Video",
                 "pages": [
                   "enterprise-api/video/overview",
-                  "enterprise-api/video/img-to-video",
                   "enterprise-api/video/text-to-video",
+                  "enterprise-api/video/img-to-video",
                   "enterprise-api/video/clear-cache",
                   "enterprise-api/video/clear-queue",
                   "enterprise-api/video/fetch-video",

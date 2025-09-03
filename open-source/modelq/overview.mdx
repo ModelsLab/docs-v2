@@ -1,18 +1,24 @@
 ---
 title: Overview
-description: "ModelQ is a lightweight, battle-tested Python library for scheduling and queuing machine learning inference tasks. It's designed as a faster and simpler alternative to Celery for ML workloads, using Redis and threading to efficiently run background tasks."
+description: "ModelQ is a fast, lightweight Python library for scheduling ML inference tasks using Redis and threading, serving as a simpler alternative to Celery."
 ---
 
-![ModelQ Banner](/images/modelq/logo.PNG)
+<img 
+  src="/images/modelq/logo.png" 
+  alt="ModelQ"
+  height="300"
+  className="rounded-xl"
+/>
+
 ## Features
-✅ Retry support (automatic and manual) \
-⏱ Timeout handling for long-running tasks \
-🔁 Manual retry using RetryTaskException\
-🎮 Streaming results from tasks in real-time\
-🧹 Middleware hooks for task lifecycle events\
-⚡ Fast, non-blocking concurrency using threads\
-🧵 Built-in decorators to register tasks quickly\
-💃 Redis-based task queueing\
-🖥️ CLI interface for orchestration\
-🔢 Pydantic model support for task validation and typing\
-🌐 Auto-generated REST API for tasks
+- Retry support (automatic and manual)
+- Timeout handling for long-running tasks
+- Manual retry using RetryTaskException
+- Streaming results from tasks in real-time
+- Middleware hooks for task lifecycle events
+- Fast, non-blocking concurrency using threads
+- Built-in decorators to register tasks quickly
+- Redis-based task queueing
+- CLI interface for orchestration
+- Pydantic model support for task validation and typing
+- Auto-generated REST API for tasks
