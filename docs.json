@@ -46,11 +46,7 @@
         "groups": [
           {
             "group": "Using the APIs",
-            "pages": ["/api-reference"]          },
-          {
-            "group": "Advanced API Usage",
-            "hidden": true,
-            "pages": ["/using-the-api/rate-limiters", "/using-the-api/errors"]
+            "pages": ["/api-reference"]          
           },
           {
             "group": "Our AI APIs",
