@@ -29,7 +29,7 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["index"]
+            "pages": ["developer-guide"]
           },
           {
             "group": "Client SDKs",
@@ -42,12 +42,11 @@
         ]
       },
       {
-        "tab": "API Guide",
+        "tab": "API Reference",
         "groups": [
           {
             "group": "Using the APIs",
-            "pages": ["/overview"]
-          },
+            "pages": ["/api-reference"]          },
           {
             "group": "Advanced API Usage",
             "hidden": true,
@@ -511,11 +510,15 @@
         ]
       },
       {
-        "tab": "Resources",
+        "tab": "Release Notes",
         "groups": [
           {
-            "group": "Resources",
-            "pages": ["resources/resources"]
+            "group": "Release Notes",
+            "pages": [
+              "release-notes/overview",
+              "release-notes/api",
+              "release-notes/playground"
+            ]
           }
         ]
       },
