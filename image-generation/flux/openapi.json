@@ -191,21 +191,6 @@
             "default": false,
             "description": "Create a temporary image link valid for 24 hours."
           },
-          "enhance_prompt": {
-            "type": "boolean",
-            "default": true,
-            "description": "Enhance prompts for better results. Note: 'flux' model does not support this parameter."
-          },
-          "enhance_style": {
-            "type": "string",
-            "nullable": true,
-            "description": "Allows you to set the style of the image for better results. Note: 'flux' model does not support this parameter."
-          },
-          "tomesd": {
-            "type": "boolean",
-            "default": true,
-            "description": "Enable tomesd to generate images quickly. Note: 'flux' model does not support this parameter."
-          },
           "clip_skip": {
             "type": "integer",
             "default": 2,
