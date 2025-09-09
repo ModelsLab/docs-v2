@@ -7,11 +7,11 @@
   },
   "servers": [
     {
-      "url": "https://modelslab.com/api/v1/enterprise"
+      "url": "https://modelslab.com/api/v1"
     }
   ],
   "paths": {
-    "/realtime/restart_server": {
+    "/enterprise/realtime/restart_server": {
       "post": {
         "summary": "Enterprise: Restart Server Endpoint",
         "description": "This endpoint is used to restart your dedicated server. As a response you will receive information about the result of the restart command.",
@@ -43,7 +43,7 @@
         }
       }
     },
-    "/realtime/system_details": {
+    "/enterprise/realtime/system_details": {
       "post": {
         "summary": "Enterprise: System Details Endpoint",
         "description": "This endpoint returns information about your server.",
@@ -75,7 +75,7 @@
         }
       }
     },
-    "/realtime/update_server": {
+    "/enterprise/realtime/update_server": {
       "post": {
         "summary": "Enterprise: Update Server Endpoint",
         "description": "This endpoint is used to update your dedicated server. As a response you will receive information about the result of the update command.",
@@ -107,7 +107,7 @@
         }
       }
     },
-    "/realtime/clear_cache": {
+    "/enterprise/realtime/clear_cache": {
       "post": {
         "summary": "Enterprise: Clear API Cache Endpoint",
         "description": "This endpoint is used to clear the API's cache.",
@@ -139,7 +139,7 @@
         }
       }
     },
-    "/realtime/clear_queue": {
+    "/enterprise/realtime/clear_queue": {
       "post": {
         "summary": "Enterprise: Clear API Queue Endpoint",
         "description": "This endpoint is used to clear the API's queue.",
@@ -171,7 +171,7 @@
         }
       }
     },
-    "/realtime/fetch/{id}": {
+    "/enterprise/realtime/fetch/{id}": {
       "post": {
         "summary": "Enterprise: Fetch Queued Images Endpoint",
         "description": "Fetch Queued Images API fetches queued images from stable diffusion.",

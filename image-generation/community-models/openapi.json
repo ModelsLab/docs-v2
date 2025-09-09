@@ -498,11 +498,6 @@
           "safety_checker_type": {
             "$ref": "#/components/schemas/SafetyCheckerTypeEnum"
           },
-          "enhance_prompt": {
-            "type": "boolean",
-            "default": true,
-            "description": "Enhance prompts for better results."
-          },
           "enhance_style": {
             "$ref": "#/components/schemas/EnhanceStyleEnum"
           },
@@ -673,16 +668,6 @@
             "type": "boolean",
             "default": false,
             "description": "Allow multilingual prompts. Set to 'true' if using a language other than English."
-          },
-          "panorama": {
-            "type": "boolean",
-            "default": false,
-            "description": "Set to 'true' to generate a panorama image."
-          },
-          "self_attention": {
-            "type": "boolean",
-            "default": false,
-            "description": "Set to 'true' for higher quality images (may take longer)."
           },
           "upscale": {
             "type": "boolean",

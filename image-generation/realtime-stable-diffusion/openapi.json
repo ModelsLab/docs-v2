@@ -10,12 +10,12 @@
   },
   "servers": [
     {
-      "url": "https://modelslab.com/api/v6/realtime/",
+      "url": "https://modelslab.com/api/v6",
       "description": "Real-Time Stable Diffusion API v6 server"
     }
   ],
   "paths": {
-    "/inpaint": {
+    "/realtime/inpaint": {
       "post": {
         "summary": "Inpaint parts of an image (Real-Time)",
         "description": "Generates and returns an image from an initial image and a mask, based on provided URLs. You can also add a text description (prompt) and negative prompt to guide the generation.",
@@ -56,7 +56,7 @@
         }
       }
     },
-    "/img2img": {
+    "/realtime/img2img": {
       "post": {
         "summary": "Generate image from image (Real-Time)",
         "description": "Generates an image from an initial image. You can also add a text description (prompt) and negative prompt to guide the generation.",
@@ -97,7 +97,7 @@
         }
       }
     },
-    "/fetch/{id}": {
+    "/realtime/fetch/{id}": {
       "post": {
         "summary": "Fetch queued images (Real-Time)",
         "description": "Fetches queued images from real-time stable diffusion processing. Usually, more complex image generation requests take more time and are queued. This endpoint allows retrieving results for already processed or currently processing requests.",
@@ -150,7 +150,7 @@
         }
       }
     },
-    "/text2img": {
+    "/realtime/text2img": {
       "post": {
         "summary": "Generate image from text prompt (Real-Time)",
         "description": "Rapid image generation with standard quality from a text prompt. Ideal for applications where speed is more critical than high resolution.",
