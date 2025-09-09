@@ -1,6 +1,6 @@
 ---
 title: "Background Removal & Create mask"
-openapi: 'POST /removebg_mask'
+openapi: 'POST /image_editing/removebg_mask'
 description: 'This endpoint removes background from image and create mask.'
 ---
 
@@ -12,6 +12,10 @@ Make a `POST` request to below endpoint and pass the required parameters as a re
 ```curl curl
 --request POST 'https://modelslab.com/api/v6/image_editing/removebg_mask' \
 ```
+
+<Note>
+If you want only mask as a output then set the parameter `only_mask`:`true`
+</Note>
 
 
 ## Body

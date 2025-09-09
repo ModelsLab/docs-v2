@@ -7,11 +7,11 @@
   },
   "servers": [
     {
-      "url": "https://modelslab.com/api/v1/enterprise"
+      "url": "https://modelslab.com/api/v1"
     }
   ],
   "paths": {
-    "/image_editing/clear_queue": {
+    "/enterprise/image_editing/clear_queue": {
       "post": {
         "summary": "Enterprise: Clear API Queue Endpoint",
         "description": "This endpoint is used to clear the API's queue.",
@@ -49,7 +49,7 @@
         }
       }
     },
-    "/image_editing/fetch/{id}": {
+    "/enterprise/image_editing/fetch/{id}": {
       "post": {
         "summary": "Enterprise: Fetch Queued Images Endpoint",
         "description": "Fetch Queued Images API fetches queued images from stable diffusion.",
@@ -87,7 +87,7 @@
         }
       }
     },
-    "/image_editing/restart_server": {
+    "/enterprise/image_editing/restart_server": {
       "post": {
         "summary": "Enterprise: Restart Server Endpoint",
         "description": "This endpoint is used to restart your dedicated server. As a response you will receive information about the result of the restart command.",
@@ -125,7 +125,7 @@
         }
       }
     },
-    "/image_editing/system_details": {
+    "/enterprise/image_editing/system_details": {
       "post": {
         "summary": "Enterprise: System Details Endpoint",
         "description": "This endpoint returns information about your server.",
@@ -163,7 +163,7 @@
         }
       }
     },
-    "/image_editing/update_server": {
+    "/enterprise/image_editing/update_server": {
       "post": {
         "summary": "Enterprise: Update Server Endpoint",
         "description": "This endpoint is used to update your dedicated server. As a response you will receive information about the result of the update command.",
@@ -201,7 +201,7 @@
         }
       }
     },
-    "/image_editing/clear_cache": {
+    "/enterprise/image_editing/clear_cache": {
       "post": {
         "summary": "Enterprise: Clear API Cache Endpoint",
         "description": "This endpoint is used to clear the API's cache.",

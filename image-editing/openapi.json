@@ -10,12 +10,12 @@
   },
   "servers": [
     {
-      "url": "https://modelslab.com/api/v6/image_editing",
+      "url": "https://modelslab.com/api/v6",
       "description": "Image Editing API v6 server"
     }
   ],
   "paths": {
-    "/removebg_mask": {
+    "/image_editing/removebg_mask": {
       "post": {
         "summary": "Background removal and create mask",
         "description": "This endpoint removes background from image and create mask",
@@ -51,7 +51,7 @@
         }
       }
     },
-    "/super_resolution": {
+    "/image_editing/super_resolution": {
       "post": {
         "summary": "Super resolution image enhancement",
         "description": "Super Resolution API returns a super resolution version of an image that is passed to the init_image attribute",
@@ -87,7 +87,7 @@
         }
       }
     },
-    "/base64_to_url": {
+    "/image_editing/base64_to_url": {
       "post": {
         "summary": "Convert base64 to URL",
         "description": "This endpoint allows you to upload image in base64 format and get it in url format",
@@ -115,7 +115,7 @@
         }
       }
     },
-    "/face_gen": {
+    "/image_editing/face_gen": {
       "post": {
         "summary": "Face generator",
         "description": "This endpoint allows you to generate image with the face image provided",
@@ -151,7 +151,7 @@
         }
       }
     },
-    "/fashion": {
+    "/image_editing/fashion": {
       "post": {
         "summary": "Fashion try-on",
         "description": "This endpoint allows you to wear a cloth image sample on an existing model body",
@@ -187,7 +187,7 @@
         }
       }
     },
-    "/fetch/{id}": {
+    "/image_editing/fetch/{id}": {
       "post": {
         "summary": "Fetch queued images",
         "description": "Fetch Queued Images API fetches queued images from stable diffusion processing",
@@ -230,7 +230,7 @@
         }
       }
     },
-    "/flux_headshot": {
+    "/image_editing/flux_headshot": {
       "post": {
         "summary": "Flux head shot generator",
         "description": "This endpoint allows you to generate head shot with flux capabilities (Enterprise feature)",
@@ -266,7 +266,7 @@
         }
       }
     },
-    "/head_shot": {
+    "/image_editing/head_shot": {
       "post": {
         "summary": "Head shot generator",
         "description": "This endpoint allows you to generate head shot image",
@@ -302,7 +302,7 @@
         }
       }
     },
-    "/img_mixer": {
+    "/image_editing/img_mixer": {
       "post": {
         "summary": "Image mixer",
         "description": "This endpoint generates image by mixing multiple images",
@@ -338,7 +338,7 @@
         }
       }
     },
-    "/inpaint": {
+    "/image_editing/inpaint": {
       "post": {
         "summary": "Image inpainting",
         "description": "This endpoint generates and returns an image from an image and a mask passed with their URLs in the request",
@@ -374,7 +374,7 @@
         }
       }
     },
-    "/mask_creator": {
+    "/image_editing/mask_creator": {
       "post": {
         "summary": "Mask creator",
         "description": "This endpoint helps to mask an object on a given image",
@@ -410,7 +410,7 @@
         }
       }
     },
-    "/object_removal": {
+    "/image_editing/object_removal": {
       "post": {
         "summary": "Object removal",
         "description": "This endpoint helps to remove object from an existing image",
@@ -446,7 +446,7 @@
         }
       }
     },
-    "/outpaint": {
+    "/image_editing/outpaint": {
       "post": {
         "summary": "Image outpainting",
         "description": "This endpoint helps to outpaint by expanding the given image",
@@ -648,12 +648,12 @@
           "width": {
             "type": "integer",
             "maximum": 512,
-            "description": "The width of the generated image"
+            "description": "The width of the generated image, If not provided, the width of face_image is used"
           },
           "height": {
             "type": "integer",
             "maximum": 768,
-            "description": "The height of the generated image"
+            "description": "The height of the generated image, If not provided, the height of face_image is used"
           },
           "num_inference_steps": {
             "type": "integer",
@@ -795,12 +795,12 @@
           "width": {
             "type": "integer",
             "maximum": 1024,
-            "description": "Width of your generated image"
+            "description": "Width of your generated image, If not provided, the width of face_image is used"
           },
           "height": {
             "type": "integer",
             "maximum": 1024,
-            "description": "Height of your generated image"
+            "description": "Height of your generated image, If not provided, the height of face_image is used"
           },
           "num_inference_steps": {
             "type": "integer",
@@ -847,12 +847,12 @@
           "width": {
             "type": "integer",
             "maximum": 512,
-            "description": "Width of your generated image"
+            "description": "Width of your generated image, If not provide width of face_image is used"
           },
           "height": {
             "type": "integer",
             "maximum": 768,
-            "description": "Height of your generated image"
+            "description": "Height of your generated image, If not provide height of face_image is used"
           },
           "num_inference_steps": {
             "type": "integer",
@@ -926,12 +926,12 @@
           "width": {
             "type": "integer",
             "maximum": 1024,
-            "description": "The width of the image"
+            "description": "The width of the generated images, If not provided, the width of init_image is used"
           },
           "height": {
             "type": "integer",
             "maximum": 1024,
-            "description": "The height of the image"
+            "description": "The height of the generated images, If not provided, the height of init_image is used"
           },
           "steps": {
             "type": "integer",
@@ -995,13 +995,13 @@
             "type": "integer",
             "default": 512,
             "maximum": 1024,
-            "description": "The width of the generated images"
+            "description": "The width of the generated images, If not provided, the width of init_image is used"
           },
           "height": {
             "type": "integer",
             "default": 512,
             "maximum": 1024,
-            "description": "The height of the generated images"
+            "description": "The height of the generated images, If not provided, the height of init_image is used"
           },
           "samples": {
             "type": "integer",
@@ -1019,12 +1019,6 @@
             "default": "no",
             "enum": ["yes", "no"],
             "description": "A checker for NSFW images"
-          },
-          "enhance_prompt": {
-            "type": "string",
-            "enum": ["yes", "no"],
-            "default": "yes",
-            "description": "Enhance prompts for better results"
           },
           "guidance_scale": {
             "type": "integer",
