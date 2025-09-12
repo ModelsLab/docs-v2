@@ -46,7 +46,7 @@
         "groups": [
           {
             "group": "Using the APIs",
-            "pages": ["/api-reference"]          
+            "pages": ["api-reference"]          
           },
           {
             "group": "Our AI APIs",
@@ -54,42 +54,42 @@
               {
                 "group": " Video API",
                 "pages": [
-                  "/video-api/overview",
-                  "/video-api/text-to-video",
-                  "/video-api/img-to-video",
-                  "/video-api/text-to-video-ultra",
-                  "/video-api/image-to-video-ultra",
-                  "/video-api/scene-maker",
-                  "/video-api/base64-to-url",
-                  "/video-api/fetch-video"
+                  "video-api/overview",
+                  "video-api/text-to-video",
+                  "video-api/img-to-video",
+                  "video-api/text-to-video-ultra",
+                  "video-api/image-to-video-ultra",
+                  "video-api/scene-maker",
+                  "video-api/base64-to-url",
+                  "video-api/fetch-video"
                 ]
               },
               {
                 "group": "Image generation API",
                 "pages": [
-                  "/image-generation/overview",
+                  "image-generation/overview",
                   {
                     "group": "Realtime Stable Diffusion",
                     "pages": [
-                      "/image-generation/realtime-stable-diffusion/overview",
-                      "/image-generation/realtime-stable-diffusion/text-to-image",
-                      "/image-generation/realtime-stable-diffusion/image-to-image",
-                      "/image-generation/realtime-stable-diffusion/inpaint",
-                      "/image-generation/realtime-stable-diffusion/fetchimage"
+                      "image-generation/realtime-stable-diffusion/overview",
+                      "image-generation/realtime-stable-diffusion/text-to-image",
+                      "image-generation/realtime-stable-diffusion/image-to-image",
+                      "image-generation/realtime-stable-diffusion/inpaint",
+                      "image-generation/realtime-stable-diffusion/fetchimage"
                     ]
                   },
                   {
                     "group": "Flux",
                     "pages": [
-                      "/image-generation/flux/overview",
-                      "/image-generation/flux/flux-text-to-image"
+                      "image-generation/flux/overview",
+                      "image-generation/flux/flux-text-to-image"
                     ]
                   },
                   {
                     "group": "Flux Kontext Dev",
                     "pages": [
-                       "/image-generation/flux_kontext/overview",
-                      "/image-generation/flux_kontext/flux-kontext-img-to-image"
+                       "image-generation/flux_kontext/overview",
+                      "image-generation/flux_kontext/flux-kontext-img-to-image"
                     ]
                   },
                   {
@@ -108,37 +108,37 @@
                   {
                     "group": "ControlNet",
                     "pages": [
-                      "/image-generation/controlnet/overview",
-                      "/image-generation/controlnet/controlnet-main",
-                      "/image-generation/controlnet/controlnet-multi"
+                      "image-generation/controlnet/overview",
+                      "image-generation/controlnet/controlnet-main",
+                      "image-generation/controlnet/controlnet-multi"
                     ]
                   },
                   {
                     "group": "A1111 Schedulers",
                     "pages": [
-                      "/image-generation/a1111-scheduler/overview",
-                      "/image-generation/a1111-scheduler/a1111-schedulers"
+                      "image-generation/a1111-scheduler/overview",
+                      "image-generation/a1111-scheduler/a1111-schedulers"
                     ]
                   },
                   {
                     "group": "Train Model",
                     "pages": [
-                      "/image-generation/train-model/overview",
-                      "/image-generation/train-model/lora-finetune",
-                      "/image-generation/train-model/finetune-list",
-                      "/image-generation/train-model/finetune-status",
-                      "/image-generation/train-model/finetune-delete",
-                      "/image-generation/train-model/cancel-training",
-                      "/image-generation/train-model/base64-crop"
+                      "image-generation/train-model/overview",
+                      "image-generation/train-model/lora-finetune",
+                      "image-generation/train-model/finetune-list",
+                      "image-generation/train-model/finetune-status",
+                      "image-generation/train-model/finetune-delete",
+                      "image-generation/train-model/cancel-training",
+                      "image-generation/train-model/base64-crop"
                     ]
                   },
                   {
                     "group": "Model Operations",
                     "pages": [
-                      "/image-generation/model-operation/overview",
-                      "/image-generation/model-operation/model-list",
-                      "/image-generation/model-operation/upload-model",
-                      "/image-generation/model-operation/finetune-list"
+                      "image-generation/model-operation/overview",
+                      "image-generation/model-operation/model-list",
+                      "image-generation/model-operation/upload-model",
+                      "image-generation/model-operation/finetune-list"
                     ]
                   }
                 ]
@@ -146,100 +146,100 @@
               {
                 "group": "Image Editing API",
                 "pages": [
-                  "/image-editing/overview",
-                  "/image-editing/fashion",
-                  "/image-editing/face-gen",
-                  "/image-editing/imagemixer",
-                  "/image-editing/flux-headshot",
-                  "/image-editing/mask-creator",
-                  "/image-editing/object-remover",
-                  "/image-editing/head-shot",
-                  "/image-editing/inpaint",
-                  "/image-editing/outpaint",
-                  "/image-editing/super-resolution",
-                  "/image-editing/removebg-createmask",
-                  "/image-editing/fetchimage",
-                  "/image-editing/base64-to-url"
+                  "image-editing/overview",
+                  "image-editing/fashion",
+                  "image-editing/face-gen",
+                  "image-editing/imagemixer",
+                  "image-editing/flux-headshot",
+                  "image-editing/mask-creator",
+                  "image-editing/object-remover",
+                  "image-editing/head-shot",
+                  "image-editing/inpaint",
+                  "image-editing/outpaint",
+                  "image-editing/super-resolution",
+                  "image-editing/removebg-createmask",
+                  "image-editing/fetchimage",
+                  "image-editing/base64-to-url"
                 ]
               },
               {
                 "group": "Speech & Audio API",
                 "pages": [
-                  "/voice-cloning/overview",
-                  "/voice-cloning/voice-cloning",
-                  "/voice-cloning/text-to-speech",
-                  "/voice-cloning/speech-to-text",
-                  "/voice-cloning/voice-to-voice",
-                  "/voice-cloning/music-gen",
-                  "/voice-cloning/sfx",
-                  "/voice-cloning/voice-cover",
-                  "/voice-cloning/create-dubbing",
-                  "/voice-cloning/vocal-isolator",
-                  "/voice-cloning/lyrics-generator",
-                  "/voice-cloning/song-generator",
-                  "/voice-cloning/voice-list",
-                  "/voice-cloning/fetch-voice",
-                  "/voice-cloning/upload-voice",
-                  "/voice-cloning/base64-to-url"
+                  "voice-cloning/overview",
+                  "voice-cloning/voice-cloning",
+                  "voice-cloning/text-to-speech",
+                  "voice-cloning/speech-to-text",
+                  "voice-cloning/voice-to-voice",
+                  "voice-cloning/music-gen",
+                  "voice-cloning/sfx",
+                  "voice-cloning/voice-cover",
+                  "voice-cloning/create-dubbing",
+                  "voice-cloning/vocal-isolator",
+                  "voice-cloning/lyrics-generator",
+                  "voice-cloning/song-generator",
+                  "voice-cloning/voice-list",
+                  "voice-cloning/fetch-voice",
+                  "voice-cloning/upload-voice",
+                  "voice-cloning/base64-to-url"
                 ]
               },
               {
                 "group": "Deepfake API",
                 "pages": [
-                  "/deepfake-api/overview",
-                  "/deepfake-api/specific-face-swap",
-                  "/deepfake-api/multiple-face-swap",
-                  "/deepfake-api/single-video-swap",
-                  "/deepfake-api/specific-video-swap",
-                  "/deepfake-api/fetch"
+                  "deepfake-api/overview",
+                  "deepfake-api/specific-face-swap",
+                  "deepfake-api/multiple-face-swap",
+                  "deepfake-api/single-video-swap",
+                  "deepfake-api/specific-video-swap",
+                  "deepfake-api/fetch"
                 ]
               },
               {
                 "group": "3D API",
                 "pages": [
-                  "/3d-api/overview",
-                  "/3d-api/text-to-3d",
-                  "/3d-api/image-to-3d",
-                  "/3d-api/fetch",
-                  "/3d-api/base64-to-url"
+                  "3d-api/overview",
+                  "3d-api/text-to-3d",
+                  "3d-api/image-to-3d",
+                  "3d-api/fetch",
+                  "3d-api/base64-to-url"
                 ]
               },
               {
                 "group": "Uncensored Chat API",
                 "pages": [
-                  "/uncensored-chat-api/overview",
-                  "/uncensored-chat-api/completions",
-                  "/uncensored-chat-api/chat-completions",
-                  "/uncensored-chat-api/uncensored-chat"
+                  "uncensored-chat-api/overview",
+                  "uncensored-chat-api/completions",
+                  "uncensored-chat-api/chat-completions",
+                  "uncensored-chat-api/uncensored-chat"
                 ]
               },
               {
                 "group": "Interior API",
                 "pages": [
-                  "/interior-api/overview",
-                  "/interior-api/interior",
-                  "/interior-api/exterior-restorer",
-                  "/interior-api/floor-planning",
-                  "/interior-api/room-decorator",
-                  "/interior-api/scenario-changer",
-                  "/interior-api/sketch-rendering",
-                  "/interior-api/fetch"
+                  "interior-api/overview",
+                  "interior-api/interior",
+                  "interior-api/exterior-restorer",
+                  "interior-api/floor-planning",
+                  "interior-api/room-decorator",
+                  "interior-api/scenario-changer",
+                  "interior-api/sketch-rendering",
+                  "interior-api/fetch"
                 ]
               },
               {
                 "group": "General APIs",
                 "pages": [
-                  "/general-api/overview",
-                  "/general-api/base64-crop",
-                  "/general-api/base64-to-url",
-                  "/general-api/buy-model",
-                  "/general-api/buy-subscription",
-                  "/general-api/cancel-subscription",
-                  "/general-api/clear-cache",
-                  "/general-api/delete-image",
-                  "/general-api/nsfw-image-check",
-                  "/general-api/nsfw-prompt-check",
-                  "/general-api/subscribed-product"
+                  "general-api/overview",
+                  "general-api/base64-crop",
+                  "general-api/base64-to-url",
+                  "general-api/buy-model",
+                  "general-api/buy-subscription",
+                  "general-api/cancel-subscription",
+                  "general-api/clear-cache",
+                  "general-api/delete-image",
+                  "general-api/nsfw-image-check",
+                  "general-api/nsfw-prompt-check",
+                  "general-api/subscribed-product"
                 ]
               }
             ]
