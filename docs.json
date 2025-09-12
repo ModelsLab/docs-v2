@@ -3,9 +3,9 @@
   "theme": "mint",
   "name": "ModelsLab",
   "colors": {
-    "primary": "#3B82F6",
-    "light": "#FAF9F6",
-    "dark": "#28282B"
+    "primary": "#0260fa",
+    "light": "#e8e8e8",
+    "dark": "#202024"
   },
   "contextual": {
     "options": [
@@ -52,20 +52,20 @@
             "group": "Our AI APIs",
             "pages": [
               {
-                "group": " AI Video",
+                "group": " Video API",
                 "pages": [
                   "/video-api/overview",
-                  "/video-api/texttovideo",
-                  "/video-api/imgtovideo",
-                  "/video-api/texttovideo-ultra",
-                  "/video-api/imagetovideo-ultra",
+                  "/video-api/text-to-video",
+                  "/video-api/img-to-video",
+                  "/video-api/text-to-video-ultra",
+                  "/video-api/image-to-video-ultra",
                   "/video-api/scene-maker",
                   "/video-api/base64-to-url",
-                  "/video-api/fetch"
+                  "/video-api/fetch-video"
                 ]
               },
               {
-                "group": "AI Image generation",
+                "group": "Image generation API",
                 "pages": [
                   "/image-generation/overview",
                   {
@@ -144,7 +144,7 @@
                 ]
               },
               {
-                "group": "AI Image Editing",
+                "group": "Image Editing API",
                 "pages": [
                   "/image-editing/overview",
                   "/image-editing/fashion",
@@ -163,7 +163,7 @@
                 ]
               },
               {
-                "group": "AI Speech & Audio",
+                "group": "Speech & Audio API",
                 "pages": [
                   "/voice-cloning/overview",
                   "/voice-cloning/voice-cloning",
@@ -178,13 +178,13 @@
                   "/voice-cloning/lyrics-generator",
                   "/voice-cloning/song-generator",
                   "/voice-cloning/voice-list",
-                  "/voice-cloning/fetchvoice",
+                  "/voice-cloning/fetch-voice",
                   "/voice-cloning/upload-voice",
                   "/voice-cloning/base64-to-url"
                 ]
               },
               {
-                "group": "AI Deepfake",
+                "group": "Deepfake API",
                 "pages": [
                   "/deepfake-api/overview",
                   "/deepfake-api/specific-face-swap",
@@ -195,7 +195,7 @@
                 ]
               },
               {
-                "group": "AI 3D",
+                "group": "3D API",
                 "pages": [
                   "/3d-api/overview",
                   "/3d-api/text-to-3d",
@@ -205,7 +205,7 @@
                 ]
               },
               {
-                "group": "Uncensored Chat",
+                "group": "Uncensored Chat API",
                 "pages": [
                   "/uncensored-chat-api/overview",
                   "/uncensored-chat-api/completions",
@@ -214,7 +214,7 @@
                 ]
               },
               {
-                "group": "AI Interior",
+                "group": "Interior API",
                 "pages": [
                   "/interior-api/overview",
                   "/interior-api/interior",
@@ -268,7 +268,7 @@
                 ]
               },
               {
-                "group": "Deepfake",
+                "group": "Deepfake API",
                 "pages": [
                   "enterprise-api/deepfake/overview",
                   "enterprise-api/deepfake/specific-face-swap",
@@ -284,7 +284,7 @@
                 ]
               },
               {
-                "group": "Deepseek Chat",
+                "group": "Deepseek Chat API",
                 "pages": [
                   "enterprise-api/deepseek-chat/overview",
                   "enterprise-api/deepseek-chat/start",
@@ -293,7 +293,7 @@
                 ]
               },
               {
-                "group": "Face Gen",
+                "group": "Face Gen API",
                 "pages": [
                   "enterprise-api/face-gen/overview",
                   "enterprise-api/face-gen/make-gen",
@@ -306,7 +306,7 @@
                 ]
               },
               {
-                "group": "Flux",
+                "group": "Flux API",
                 "pages": [
                   "enterprise-api/flux/overview",
                   "enterprise-api/flux/text2img",
@@ -320,7 +320,7 @@
                 ]
               },
               {
-                "group": "Flux Headshot",
+                "group": "Flux Headshot API",
                 "pages": [
                   "enterprise-api/flux-headshot/overview",
                   "enterprise-api/flux-headshot/make-gen",
@@ -340,7 +340,7 @@
                 ]
               },
               {
-                "group": "Image Editing",
+                "group": "Image Editing API",
                 "pages": [
                   "enterprise-api/image-editing/overview",
                   "enterprise-api/image-editing/face-gen",
@@ -360,7 +360,7 @@
                 ]
               },
               {
-                "group": "Image to Video Ultra",
+                "group": "Image to Video Ultra API",
                 "pages": [
                   "enterprise-api/image-to-video-ultra/overview",
                   "enterprise-api/image-to-video-ultra/imagetovideo",
@@ -373,7 +373,7 @@
                 ]
               },
               {
-                "group": "Interior",
+                "group": "Interior API",
                 "pages": [
                   "enterprise-api/interior/overview",
                   "enterprise-api/interior/exterior-restorer",
@@ -391,7 +391,7 @@
                 ]
               },
               {
-                "group": "Realtime",
+                "group": "Realtime API",
                 "pages": [
                   "enterprise-api/realtime/overview",
                   "enterprise-api/realtime/text2img",
@@ -406,7 +406,7 @@
                 ]
               },
               {
-                "group": "Super Resolution",
+                "group": "Super Resolution API",
                 "pages": [
                   "enterprise-api/super-resolution/overview",
                   "enterprise-api/super-resolution/make",
@@ -419,7 +419,7 @@
                 ]
               },
               {
-                "group": "Text to Image",
+                "group": "Text to Image API",
                 "pages": [
                   "enterprise-api/text-to-image/overview",
                   "enterprise-api/text-to-image/text2img",
@@ -446,7 +446,7 @@
                 ]
               },
               {
-                "group": "Text to Video Ultra",
+                "group": "Text to Video Ultra API",
                 "pages": [
                   "enterprise-api/text-to-video-ultra/overview",
                   "enterprise-api/text-to-video-ultra/text-to-video-ultra",
@@ -459,7 +459,7 @@
                 ]
               },
               {
-                "group": "Text to Speech",
+                "group": "Text to Speech API",
                 "pages": [
                   "enterprise-api/text-to-speech/overview",
                   "enterprise-api/text-to-speech/text-to-speech",
@@ -472,7 +472,7 @@
                 ]
               },
               {
-                "group": "Uncensored Chat",
+                "group": "Uncensored Chat API",
                 "pages": [
                   "enterprise-api/uncensored-chat/overview",
                   "enterprise-api/uncensored-chat/start",
@@ -482,7 +482,7 @@
                 ]
               },
               {
-                "group": "Video",
+                "group": "Video API",
                 "pages": [
                   "enterprise-api/video/overview",
                   "enterprise-api/video/text-to-video",
@@ -496,7 +496,7 @@
                 ]
               },
               {
-                "group": "Voice Cloning",
+                "group": "Voice Cloning API",
                 "pages": [
                   "enterprise-api/voice-cloning/overview",
                   "enterprise-api/voice-cloning/text-to-audio",
@@ -562,11 +562,6 @@
           "icon": "book-open-cover"
         },
         {
-          "anchor": "Join Our Discord",
-          "href": "https://discord.com/invite/modelslab-1033301189254729748",
-          "icon": "discord"
-        },
-        {
           "anchor": "Support",
           "href": "https://modelslab.com/support",
           "icon": "headset"
@@ -581,8 +576,16 @@
   "navbar": {
     "links": [
       {
-        "label": "Blog",
-        "href": "https://modelslab.com/blog"
+        "label": "Login",
+        "href": "https://modelslab.com/login"
+      },
+      {
+        "label":"Support",
+        "href":"https://modelslab.com/support"
+      },
+      {
+        "label": "Discord",
+        "href": "https://discord.com/invite/modelslab-1033301189254729748"
       }
     ],
     "primary": {
