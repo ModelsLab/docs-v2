@@ -800,7 +800,7 @@
           },
           "voice_id": {
             "type": "string",
-            "description": "ID of trained voice"
+            "description": "ID of trained voice [Find Pretrained Voices Here](https://modelslab.com/trained-voice-lists)"
           },
           "language": {
             "type": "string",
@@ -958,7 +958,7 @@
           },
           "voice_id": {
             "type": "string",
-            "description": "ID of voice from available list"
+            "description": "ID of voice from available list [Find Voice IDs Here](https://modelslab.com/voice-lists)"
           },
           "language": {
             "type": "string",
@@ -1028,7 +1028,7 @@
           },
           "model_id": {
             "type": "string",
-            "description": "ID of the voice cloning model"
+            "description": "ID of the voice cloning model [Find Models Here](https://modelslab.com/models?feature=audiogen)"
           },
           "pitch": {
             "type": "string",

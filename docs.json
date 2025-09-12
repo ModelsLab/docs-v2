@@ -9,12 +9,12 @@
   },
   "contextual": {
     "options": [
+      "chatgpt",
       "copy",
       "view",
-      "chatgpt",
       "claude",
       {
-        "title": "feature request",
+        "title": "Feature Requests",
         "description": "Join the discord to request a new feature.",
         "icon": "discord",
         "href":"https://discord.com/invite/modelslab-1033301189254729748"
@@ -432,16 +432,16 @@
                   "enterprise-api/text-to-image/load-vae",
                   "enterprise-api/text-to-image/sync-model",
                   "enterprise-api/text-to-image/nsfw-image-check",
+                  "enterprise-api/text-to-image/list-schedulers",
                   "enterprise-api/text-to-image/verify-model",
+                  "enterprise-api/text-to-image/get-all-models",
+                  "enterprise-api/text-to-image/delete-model",
+                  "enterprise-api/text-to-image/upload-image",
+                  "enterprise-api/text-to-image/fetch-queue-image",
                   "enterprise-api/text-to-image/clear-cache",
                   "enterprise-api/text-to-image/clear-queue",
-                  "enterprise-api/text-to-image/delete-model",
-                  "enterprise-api/text-to-image/fetch-queue-image",
-                  "enterprise-api/text-to-image/get-all-models",
-                  "enterprise-api/text-to-image/list-schedulers",
-                  "enterprise-api/text-to-image/restart-server",
                   "enterprise-api/text-to-image/system-details",
-                  "enterprise-api/text-to-image/upload-image",
+                  "enterprise-api/text-to-image/restart-server",
                   "enterprise-api/text-to-image/update-server"
                 ]
               },
@@ -456,6 +456,19 @@
                   "enterprise-api/text-to-video-ultra/restart-server",
                   "enterprise-api/text-to-video-ultra/system-details",
                   "enterprise-api/text-to-video-ultra/update-server"
+                ]
+              },
+              {
+                "group": "Text to Speech",
+                "pages": [
+                  "enterprise-api/text-to-speech/overview",
+                  "enterprise-api/text-to-speech/text-to-speech",
+                  "enterprise-api/text-to-speech/clear-cache",
+                  "enterprise-api/text-to-speech/clear-queue",
+                  "enterprise-api/text-to-speech/fetch-audio",
+                  "enterprise-api/text-to-speech/restart-server",
+                  "enterprise-api/text-to-speech/system-details",
+                  "enterprise-api/text-to-speech/update-server"
                 ]
               },
               {
@@ -574,7 +587,7 @@
     ],
     "primary": {
       "type": "button",
-      "label": "Go to modelslab.com",
+      "label": "modelslab.com",
       "href": "https://modelslab.com"
     }
   },

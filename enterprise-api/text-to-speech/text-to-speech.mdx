@@ -1,15 +1,13 @@
 ---
 title: "Text to Speech"
-openapi: 'POST /voice/text_to_speech'
 description: 'Generate Speech by providing a text input along with a pre trained voice.'
 ---
 ## Request
 Make a `POST` request to below endpoint and pass the required parameters as a request body.
 
 ```curl curl
---request POST 'https://modelslab.com/api/v6/voice/text_to_speech' \
+--request POST 'https://modelslab.com/api/v1/enterprise/text_to_speech/make' \
 ```
-
 ## Emotion Support
 
 <Note>
@@ -49,7 +47,7 @@ The following emotion tags can be added to speech prompts to enhance expressiven
 ## Body
 ```json json
 {    
-    "key": "your_api_key",
+    "key": "enterprise_api_key",
     "prompt":"Build next-generation AI products without worrying about GPUs",
     "language":"american english",
     "voice_id":"madison",
@@ -57,3 +55,42 @@ The following emotion tags can be added to speech prompts to enhance expressiven
     "emotion":false
 }
 ```
+
+## Body Attributes
+<ParamField query="key" type="string" required>
+  API key for authentication.
+</ParamField>
+
+<ParamField query="prompt" type="string" required>
+  Text prompt describing audio to be generated.
+</ParamField>
+
+<ParamField query="voice_id" type="string" required>
+  ID of trained voice 
+  [Find Pretrained Voices Here](https://modelslab.com/trained-voice-lists).
+</ParamField>
+
+<ParamField query="language" type="string" default="english">
+  Language for the voice.  
+  Allowed values: `american english`, `british english`, `spanish`, `japanese`, `mandarin chinese`, `french`, `brazilian portuguese`, `hindi`, `italian`.
+</ParamField>
+
+<ParamField query="speed" type="number" default="1.0">
+  Playback speed of generated audio.
+</ParamField>
+
+<ParamField query="emotion" type="boolean" default="false">
+  Enable emotion support (English only).
+</ParamField>
+
+<ParamField query="temp" type="boolean" default="false">
+  Use temporary links valid for 24 hours.
+</ParamField>
+
+<ParamField query="webhook" type="string">
+  URL to receive POST notification upon completion.
+</ParamField>
+
+<ParamField query="track_id" type="integer">
+  ID for webhook identification.
+</ParamField>
