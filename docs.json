@@ -21,6 +21,16 @@
       }
     ]
   },
+  "head": {
+    "scripts": [
+      {
+        "src": "scripts/tawk.js",
+        "async": true,
+        "charset": "UTF-8",
+        "crossorigin": "*"
+      }
+    ]
+  },
   "favicon": "/favicon.png",
   "navigation": {
     "tabs": [
