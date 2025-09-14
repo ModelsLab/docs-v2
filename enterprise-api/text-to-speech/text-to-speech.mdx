@@ -1,35 +1,42 @@
 ---
 title: "Text to Speech"
-description: 'Generate Speech by providing a text input along with a pre trained voice.'
+description: "Generate Speech by providing a text input along with a pre trained voice."
 ---
+
 ## Request
+
 Make a `POST` request to below endpoint and pass the required parameters as a request body.
 
 ```curl curl
 --request POST 'https://modelslab.com/api/v1/enterprise/text_to_speech/make' \
 ```
+
 ## Emotion Support
 
 <Note>
-Emotion support is currently only available in English (`en`) language. When emotion is enabled, you can use special tags in your text prompt to add expressive elements to the generated speech.
+  Emotion support is currently only available in English (`en`) language. When emotion is enabled, you can use special tags in your text prompt to add expressive elements to the generated speech.
 </Note>
 
 ### Available Emotion-Supported Voices
+
 #### Female Voices
-* Tara
-* Leah
-* Jess
-* Mia
-* Zoe
+
+- Tara
+- Leah
+- Jess
+- Mia
+- Zoe
 
 #### Male Voices
-* Leo
-* Dan
-* Zac
+
+- Leo
+- Dan
+- Zac
 
 #### Supported Emotion Tags
+
 <Tip>
-The following emotion tags can be added to speech prompts to enhance expressiveness:
+  The following emotion tags can be added to speech prompts to enhance expressiveness:
 </Tip>
 
 | Tag         | Description                                          |
@@ -43,8 +50,8 @@ The following emotion tags can be added to speech prompts to enhance expressiven
 | `<yawn>`    | Simulates yawning to express boredom or tiredness    |
 | `<gasp>`    | Expresses shock or surprise                          |
 
-
 ## Body
+
 ```json json
 {    
     "key": "enterprise_api_key",
@@ -57,33 +64,34 @@ The following emotion tags can be added to speech prompts to enhance expressiven
 ```
 
 ## Body Attributes
+
 <ParamField query="key" type="string" required>
   API key for authentication.
 </ParamField>
 
-<ParamField query="prompt" type="string" required>
-  Text prompt describing audio to be generated.
+<ParamField query="prompt" default="2500 Chars" type="string" required="false">
+  Text prompt describing audio to be generate Max len `2500` chars.
 </ParamField>
 
 <ParamField query="voice_id" type="string" required>
-  ID of trained voice 
+  ID of trained voice
   [Find Pretrained Voices Here](https://modelslab.com/trained-voice-lists).
 </ParamField>
 
-<ParamField query="language" type="string" default="english">
-  Language for the voice.  
+<ParamField query="language" default="english" type="string">
+  Language for the voice.\
   Allowed values: `american english`, `british english`, `spanish`, `japanese`, `mandarin chinese`, `french`, `brazilian portuguese`, `hindi`, `italian`.
 </ParamField>
 
-<ParamField query="speed" type="number" default="1.0">
+<ParamField query="speed" default="1.0" type="number">
   Playback speed of generated audio.
 </ParamField>
 
-<ParamField query="emotion" type="boolean" default="false">
+<ParamField query="emotion" default="false" type="boolean">
   Enable emotion support (English only).
 </ParamField>
 
-<ParamField query="temp" type="boolean" default="false">
+<ParamField query="temp" default="false" type="boolean">
   Use temporary links valid for 24 hours.
 </ParamField>
 

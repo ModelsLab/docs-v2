@@ -796,7 +796,7 @@
           },
           "prompt": {
             "type": "string",
-            "description": "Text prompt describing audio to be generated"
+            "description": "Text prompt describing audio to be generate Max len `2500` chars."
           },
           "voice_id": {
             "type": "string",
