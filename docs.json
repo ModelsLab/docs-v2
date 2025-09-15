@@ -39,7 +39,7 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["developer-guide"]
+            "pages": ["index"]
           },
           {
             "group": "Client SDKs",
