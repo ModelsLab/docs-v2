@@ -567,11 +567,6 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Old Documentation",
-          "href": "https://docs.modelslab.com",
-          "icon": "book-open-cover"
-        },
-        {
           "anchor": "Support",
           "href": "https://modelslab.com/support",
           "icon": "headset"
