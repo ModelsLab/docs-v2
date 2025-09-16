@@ -1,0 +1,236 @@
+---
+title: TypeScript
+description: "The client for Typescript provides a seamless interface to interact with Modelslab API."
+---
+
+## Installation
+
+```bash
+npm install modelslab
+```
+
+## Basic setup / Connecting to Client
+Create client to connect to ModelsLab API.
+
+```JavaScript
+// Method 1: Direct API key
+import { Client } from "modelslab";
+const client = new Client("your-api-key");
+
+// Method 2: Environment variable
+// Client reads from process.env.API_KEY when called without args
+const clientFromEnv = new Client();
+
+// Method 3: With custom settings (retries, timeout)
+const clientCustom = new Client("your-api-key", 5, 10); // 5 retries, 10s timeout
+```
+You can access client properties:
+
+```JavaScript
+console.log(client.baseUrl);      
+console.log(client.fetchRetry);   
+console.log(client.fetchTimeout);
+```
+
+## Select API Client
+
+```JavaScript
+import { Community, Audio, Video, DeepFake, ImageEditing } from "modelslab";
+
+// Create instances
+const community = new Community(client.key);
+const audio = new Audio(client.key);
+const video = new Video(client.key);
+const deepfake = new DeepFake(client.key);
+const imageEditing = new ImageEditing(client.key);
+```
+
+For enterprise/dedicated endpoints:
+
+```JavaScript
+// Enable enterprise mode
+const enterpriseCommunity = new Community(client.key, true);
+// Uses enterprise endpoints, e.g. https://modelslab.com/api/v1/enterprise/images/
+```
+
+## Quick Start — Your First AI Image
+
+```JavaScript
+import { Client, Community } from "modelslab";
+
+const client = new Client("your-api-key-here");
+const community = new Community(client.key);
+
+const result = await community.textToImage({
+  key: client.key,
+  prompt: "A beautiful sunset over mountains",
+  model_id: "flux",
+  width: 512,
+  height: 512,
+  samples: 1,
+});
+
+console.log("Generated image:", result.output[0]);
+```
+
+## Available APIs (summary)
+
+- Community — community models (text→image, image→image, controlnet, inpainting)
+
+- Audio — text-to-audio, text-to-speech, voice2voice, voice cover, music generation, lyrics, song generator, speech-to-text, SFX
+
+- Video — text-to-video, image-to-video
+
+- DeepFake — face swap and video swap endpoints
+
+- ImageEditing — outpainting, background removal, super resolution, fashion, object removal, facegen, inpainting, headshot, flux headshot
+
+## Community API Usage
+
+```JavaScript
+import { Community } from "modelslab";
+
+const community = new Community(client.key);
+
+// Text to Image
+const image = await community.textToImage({
+  key: client.key,
+  prompt: "A futuristic city at night",
+  model_id: "stable-diffusion-v1-5",
+  width: 512,
+  height: 512,
+  samples: 1,
+  num_inference_steps: 20,
+  guidance_scale: 7.5,
+});
+
+// Image to Image
+const imageToImage = await community.imageToImage({
+  key: client.key,
+  prompt: "A painting in Van Gogh style",
+  init_image: "base64-encoded-image",
+  model_id: "stable-diffusion-v1-5",
+  strength: 0.8,
+});
+
+// Inpainting (Fill masked areas)
+const inpainting = await community.inpainting({
+  key: client.key,
+  prompt: "A red car",
+  init_image: "base64-encoded-image",
+  mask_image: "base64-encoded-mask",
+  model_id: "stable-diffusion-v1-5",
+});
+
+// ControlNet (Guided generation)
+const controlnet = await community.controlnet({
+  key: client.key,
+  prompt: "A realistic portrait",
+  controlnet_model: "canny",
+  controlnet_conditioning_scale: 1.0,
+  model_id: "stable-diffusion-v1-5",
+});
+```
+
+## Audio API Usage
+```JavaScript
+import { Audio } from "modelslab";
+
+const audio = new Audio(client.key);
+
+// Text to Audio
+const t2a = await audio.textToAudio({...});
+
+// Text to Speech
+const tts = await audio.textToSpeech({...});
+
+// Voice to Voice
+const v2v = await audio.voice2voice({...});
+
+// Voice Cover
+const vc = await audio.voiceCover({...});
+
+// Music Generation
+const mg = await audio.musicGen({...});
+
+// Lyrics generation
+const lyrics = await audio.lyricsGen({...});
+
+// Song generation
+const song = await audio.songGenerator({...});
+
+// Speech to Text
+const stt = await audio.speechToText({...});
+
+// SFX generation
+const sfx = await audio.sfxGen({...});
+```
+
+## Video API Usage
+
+```JavaScript
+import { Video } from "modelslab";
+
+const video = new Video(client.key);
+
+// Text to Video
+const t2v = await video.textToVideo({...});
+
+// Image to Video
+const i2v = await video.imageToVideo({...});
+```
+
+## DeepFake API Usage
+
+```JavaScript
+import { DeepFake } from "modelslab";
+
+const deepfake = new DeepFake(client.key);
+
+// Specific Face Swap
+const sfs = await deepfake.specificFaceSwap({...});
+
+// Multiple Face Swap
+const mfs = await deepfake.multipleFaceSwap({...});
+
+// Specific Video Swap
+const svs = await deepfake.specificVideoSwap({...});
+
+// Single Video Swap
+const single = await deepfake.singleVideoSwap({...});
+```
+
+## Image Editing API Usage
+```JavaScript
+import { ImageEditing } from "modelslab";
+
+const imageEditing = new ImageEditing(client.key);
+
+// Outpainting
+const out = await imageEditing.outpainting({...});
+
+// Background Remover
+const br = await imageEditing.backgroundRemover({...});
+
+// Super Resolution
+const sr = await imageEditing.superResolution({...});
+
+// Fashion
+const fashion = await imageEditing.fashion({...});
+
+// Object Remover
+const obj = await imageEditing.objectRemover({...});
+
+// Facegen
+const facegen = await imageEditing.facegen({...});
+
+// Inpainting
+const inp = await imageEditing.inpainting({...});
+
+// Headshot
+const headshot = await imageEditing.headshot({...});
+
+// Flux Headshot
+const flux = await imageEditing.fluxHeadshot({...});
+```
+
