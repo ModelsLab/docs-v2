@@ -1,0 +1,24 @@
+---
+title: "Check Processing Requests"
+openapi: 'POST /processing/request_count'
+description: 'Get the current number of processing requests before sending another request.'
+---
+
+This endpoint allows users to check how many requests are currently being processed before sending another request.
+
+<Note>
+This endpoint is throttled to 30 requests per minute to avoid abuse.
+</Note>
+
+## Request
+Send a `GET` request to below endpoint.
+```curl curl
+--request GET 'https://modelslab.com/api/v6/processing/request_count' \
+```
+
+## Body
+```json json
+{  
+  "key": "your_api_key"
+}
+```

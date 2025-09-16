@@ -249,7 +249,8 @@
                   "general-api/delete-image",
                   "general-api/nsfw-image-check",
                   "general-api/nsfw-prompt-check",
-                  "general-api/subscribed-product"
+                  "general-api/subscribed-product",
+                  "general-api/check-requests"
                 ]
               }
             ]

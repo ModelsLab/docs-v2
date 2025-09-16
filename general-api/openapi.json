@@ -416,6 +416,55 @@
           }
         }
       }
+    },
+    "/processing/request_count": {
+      "post": {
+        "summary": "Check processing requests",
+        "description": "Get the current number of processing requests before sending another request. This endpoint is throttled to 30 requests per minute to avoid abuse.",
+        "servers": [{ "url": "https://modelslab.com/api/v6" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProcessingRequestCountRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Processing request count response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcessingRequestCountResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests - throttled to 30 requests per minute",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -775,6 +824,33 @@
                 "description": "The purchased plan name"
               }
             }
+          }
+        }
+      },
+      "ProcessingRequestCountRequest": {
+        "type": "object",
+        "required": ["key"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          }
+        }
+      },
+      "ProcessingRequestCountResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"]
+          },
+          "processing_count": {
+            "type": "integer",
+            "description": "Current number of processing requests"
+          },
+          "message": {
+            "type": "string",
+            "example": "Current processing request count retrieved successfully"
           }
         }
       },
