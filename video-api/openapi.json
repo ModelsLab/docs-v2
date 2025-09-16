@@ -800,7 +800,7 @@
           },
           "num_inference_steps": {
             "type": "integer",
-            "default": 20,
+            "default": 25,
             "maximum": 25,
             "description": "Number of denoising steps"
           },

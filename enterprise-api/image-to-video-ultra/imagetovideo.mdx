@@ -22,8 +22,8 @@ When the `model_id` is `cogvideox`, the request json looks like so,
     "prompt":"moving character",    
     "negative_prompt":"low quality",    
     "resolution":320,    
-    "num_frames":16,    
-    "num_inference_steps":31,    
+    "num_frames":81,    
+    "num_inference_steps":25,    
     "guidance_scale":7,    
     "webhook": null,    
     "track_id":null
@@ -60,8 +60,8 @@ When the `model_id` is `cogvideox`, the request json looks like so,
   The number of frames in the generated video. Default is 81.
 </ParamField>
 
-<ParamField query="num_inference_steps" type="integer" default="20" max="31">
-  Number of denoising steps. Default is 20. Maximum is 31.
+<ParamField query="num_inference_steps" type="integer" default="25">
+  Number of denoising steps. Required range: `x <= 25`
 </ParamField>
 
 <ParamField query="guidance_scale" type="number" min="0" max="8">
