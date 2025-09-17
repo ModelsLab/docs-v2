@@ -317,6 +317,19 @@
                 ]
               },
               {
+                "group": "Flux Kontext Dev API",
+                "pages": [
+                  "enterprise-api/flux-kontext-dev/overview",
+                  "enterprise-api/flux-kontext-dev/image-to-image",
+                  "enterprise-api/flux-kontext-dev/restart-server",
+                  "enterprise-api/flux-kontext-dev/system-details",
+                  "enterprise-api/flux-kontext-dev/clear-cache",
+                  "enterprise-api/flux-kontext-dev/clear-queue",
+                  "enterprise-api/flux-kontext-dev/fetch-image",
+                  "enterprise-api/flux-kontext-dev/update-server"
+                ]
+              },
+              {
                 "group": "Flux API",
                 "pages": [
                   "enterprise-api/flux/overview",

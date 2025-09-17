@@ -1,0 +1,17 @@
+---
+title: "Fetch Image"
+description: "This endpoint is used to fetch a queued image."
+openapi: "POST /enterprise/flux_kontext_dev/fetch/{id}"
+---
+## Request
+Send a `POST` request to below endpoint to return the corresponding queued Images.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/flux_kontext_dev/fetch/{id}' \
+```
+
+## Body
+```json json
+{ 
+    "key": "enterprise_api_key"
+}
+```
