@@ -27,11 +27,11 @@ When the model\_id is `Wan2.2`, the request json looks like so,
     "prompt":"Space Station in space",    
     "negative_prompt":"low quality",    
     "resolution":480,    
-    "num_frames":81,    
-    "num_inference_steps":30,    
-    "guidance_scale": 5.0,    
+    "num_frames":92,    
+    "num_inference_steps":8,    
+    "guidance_scale": 1.0,    
     "shift_sample":3,    
-    "fps":16,    
+    "fps":18,    
     "webhook": null,    
     "track_id":null
 }
@@ -59,20 +59,20 @@ When the model\_id is `Wan2.2`, the request json looks like so,
   The resolution of the generated output. Maximum is 480.
 </ParamField>
 
-<ParamField query="num_frames" type="integer" default="81">
-  The number of frames in the generated video. Default is 81.
+<ParamField query="num_frames" type="integer" default="92">
+  The number of frames in the generated video. Default is 92.
 </ParamField>
 
-<ParamField query="num_inference_steps" type="integer" min="1" max="50" default="20">
-  Number of denoising steps. Default is 20. Maximum is 50.
+<ParamField query="num_inference_steps" type="integer" min="8" max="8" default="8">
+  Number of denoising steps. Default is 8. Maximum is 8.
 </ParamField>
 
-<ParamField query="guidance_scale" type="number" min="0" max="8" default="7.5">
-  Scale for classifier-free guidance. Minimum is 0, maximum is 8.
+<ParamField query="guidance_scale" type="number" min="1.0" max="2.0" default="1.0">
+  Scale for classifier-free guidance. Minimum is 1.0, maximum is 2.0.
 </ParamField>
 
-<ParamField query="fps" type="integer" min="1" max="16" default="8">
-  Frames per second rate of the generated video. Must be less than num_frames. Maximum is 16.
+<ParamField query="fps" type="integer" min="18" max="18" default="18">
+  Frames per second rate of the generated video. Must be less than num_frames. Maximum is 18.
 </ParamField>
 
 <ParamField query="portrait" type="boolean" default="false">

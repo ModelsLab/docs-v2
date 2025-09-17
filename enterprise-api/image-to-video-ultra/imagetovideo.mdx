@@ -11,9 +11,6 @@ Make a `POST` request to below endpoint and pass the required parameters in the 
 ```
 
 ## Body
-<Note>
-When the `model_id` is `cogvideox`, the request json looks like so,
-</Note>
 
 ```json json
 {    
@@ -22,9 +19,9 @@ When the `model_id` is `cogvideox`, the request json looks like so,
     "prompt":"moving character",    
     "negative_prompt":"low quality",    
     "resolution":320,    
-    "num_frames":81,    
-    "num_inference_steps":25,    
-    "guidance_scale":7,    
+    "num_frames":92,    
+    "num_inference_steps":8,    
+    "guidance_scale":1.0,    
     "webhook": null,    
     "track_id":null
 }
@@ -56,20 +53,20 @@ When the `model_id` is `cogvideox`, the request json looks like so,
   Resolution of the generated output. Maximum is 480.
 </ParamField>
 
-<ParamField query="num_frames" type="integer" default="81">
-  The number of frames in the generated video. Default is 81.
+<ParamField query="num_frames" type="integer" default="92">
+  The number of frames in the generated video. Default is 92.
 </ParamField>
 
-<ParamField query="num_inference_steps" type="integer" default="25">
-  Number of denoising steps. Required range: `x <= 25`
+<ParamField query="num_inference_steps" type="integer" default="8">
+  Number of denoising steps. Required range: `x <= 8`
 </ParamField>
 
-<ParamField query="guidance_scale" type="number" min="0" max="8">
-  Scale for classifier-free guidance. Min is 0, Max is 8.
+<ParamField query="guidance_scale" type="number" min="1.0" max="2.0">
+  Scale for classifier-free guidance. Min is 1.0, Max is 2.0.
 </ParamField>
 
-<ParamField query="fps" type="integer" max="16">
-  Frames per second of the generated video. Should be less than num_frames. Maximum is 16.
+<ParamField query="fps" type="integer" max="18">
+  Frames per second of the generated video. Should be less than num_frames. Maximum is 18.
 </ParamField>
 
 <ParamField query="portrait" type="boolean" default="false">
