@@ -46,13 +46,38 @@
 ## Image Generation API
 - [Overview](https://docs.modelslab.com/image-generation/overview): Generate images from text and controls.
 - [ControlNet](https://docs.modelslab.com/image-generation/controlnet/overview): Structure-guided generation.
+- [ControlNet Main](https://docs.modelslab.com/image-generation/controlnet/controlnet-main): Single ControlNet generation.
+- [ControlNet Multi](https://docs.modelslab.com/image-generation/controlnet/controlnet-multi): Multi-ControlNet generation.
 - [Flux](https://docs.modelslab.com/image-generation/flux/overview): Flux-based generation.
+- [Flux Text to Image](https://docs.modelslab.com/image-generation/flux/flux-text-to-image): Flux text-to-image.
 - [Flux Kontext](https://docs.modelslab.com/image-generation/flux_kontext/overview): Kontext controls for Flux.
+- [Flux Kontext Img-to-Image](https://docs.modelslab.com/image-generation/flux_kontext/flux-kontext-img-to-image): Flux Kontext image-to-image.
 - [Realtime Stable Diffusion](https://docs.modelslab.com/image-generation/realtime-stable-diffusion/overview): Realtime SD APIs.
+- [Realtime SD: Text to Image](https://docs.modelslab.com/image-generation/realtime-stable-diffusion/text-to-image): Realtime T2I.
+- [Realtime SD: Image to Image](https://docs.modelslab.com/image-generation/realtime-stable-diffusion/image-to-image): Realtime I2I.
+- [Realtime SD: Inpaint](https://docs.modelslab.com/image-generation/realtime-stable-diffusion/inpaint): Realtime inpainting.
+- [Realtime SD: Fetch Image](https://docs.modelslab.com/image-generation/realtime-stable-diffusion/fetchimage): Fetch realtime results.
 - [Community Models](https://docs.modelslab.com/image-generation/community-models/overview): Use public community models.
+- [Dreambooth Text to Image](https://docs.modelslab.com/image-generation/community-models/dreambooth-text-to-image): T2I with Dreambooth.
+- [Dreambooth Image to Image](https://docs.modelslab.com/image-generation/community-models/dreambooth-image-to-image): I2I with Dreambooth.
+- [Dreambooth Inpainting](https://docs.modelslab.com/image-generation/community-models/dreambooth-inpainting): Inpaint with Dreambooth.
+- [Dreambooth LoRA](https://docs.modelslab.com/image-generation/community-models/dreambooth-lora): Use a LoRA.
+- [Dreambooth LoRA Multi](https://docs.modelslab.com/image-generation/community-models/dreambooth-lora-multi): Multiple LoRAs.
+- [Dreambooth Reload Model](https://docs.modelslab.com/image-generation/community-models/dreambooth-reload-model): Reload model.
+- [Dreambooth Fetch Queue Image](https://docs.modelslab.com/image-generation/community-models/dreambooth-fetch-queue-image): Fetch queued result.
 - [Train Model](https://docs.modelslab.com/image-generation/train-model/overview): Custom model training.
+- [LoRA Finetune](https://docs.modelslab.com/image-generation/train-model/lora-finetune): Start LoRA training.
+- [Finetune List](https://docs.modelslab.com/image-generation/train-model/finetune-list): List trained models.
+- [Finetune Status](https://docs.modelslab.com/image-generation/train-model/finetune-status): Check training status.
+- [Finetune Delete](https://docs.modelslab.com/image-generation/train-model/finetune-delete): Delete a training.
+- [Cancel Training](https://docs.modelslab.com/image-generation/train-model/cancel-training): Cancel a job.
+- [Base64 Crop](https://docs.modelslab.com/image-generation/train-model/base64-crop): Upload base64 and crop.
 - [Model Operation](https://docs.modelslab.com/image-generation/model-operation/overview): Manage models and operations.
+- [Model List](https://docs.modelslab.com/image-generation/model-operation/model-list): List public models.
+- [Upload Model](https://docs.modelslab.com/image-generation/model-operation/upload-model): Upload or load model.
+- [Finetune List](https://docs.modelslab.com/image-generation/model-operation/finetune-list): List trained models.
 - [A1111 Scheduler](https://docs.modelslab.com/image-generation/a1111-scheduler/overview): Scheduler configuration.
+- [A1111 Schedulers](https://docs.modelslab.com/image-generation/a1111-scheduler/a1111-schedulers): Available schedulers.
 
 ## Video API
 - [Overview](https://docs.modelslab.com/video-api/overview): Generate and transform videos.

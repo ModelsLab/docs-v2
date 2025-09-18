@@ -31,6 +31,10 @@
       }
     ]
   },
+  "banner": {
+    "content": "🎉 Official SDKs are live: [TypeScript](/sdk/typescript) · [Python](/sdk/python) · [Dart](/sdk/dart)",
+    "dismissible": true
+  },
   "favicon": "/favicon.png",
   "navigation": {
     "tabs": [

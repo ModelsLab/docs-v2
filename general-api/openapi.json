@@ -535,7 +535,7 @@
             "type": "string",
             "default": "image",
             "enum": ["image", "video", "voice", "3d"],
-            "description": "The type of assest you want to delete. Default is image"
+            "description": "The type of asset you want to delete. Default is image"
           }
         }
       },
@@ -770,7 +770,7 @@
           },
           "messege": {
             "type": "string",
-            "example": "Payment was charged successfuly"
+            "example": "Payment was charged successfully"
           },
           "purchased_models": {
             "type": "integer",
