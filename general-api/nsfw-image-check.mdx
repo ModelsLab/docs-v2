@@ -14,6 +14,11 @@ Send a `POST` request to below endpoint to check if an image is nsfw or not.
 ```json json
 {  
     "key": "your_api_key",  
-    "init_image": "http://your-image-url.com"
+    "init_image": "http://your-image-url.com",
+    "threshold": 0.5
 }
 ```
+
+<Note>
+`threshold` is a float between 0 and 1 (default: 0.5).
+</Note>

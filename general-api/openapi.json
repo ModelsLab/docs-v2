@@ -564,6 +564,13 @@
             "type": "string",
             "format": "uri",
             "description": "The image you want to check"
+          },
+          "threshold": {
+            "type": "number",
+            "description": "Floating-point threshold score for NSFW detection (image or video)",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0.5
           }
         }
       },
