@@ -1,7 +1,7 @@
 ---
 title: "Uncensored Chat"
-openapi: 'POST /llm/uncensored_chat'
-description: 'Create chat conversations and receive responses based on the conversation, without restrictions.'
+openapi: "POST /llm/uncensored_chat"
+description: "Create chat conversations and receive responses based on the conversation, without restrictions."
 ---
 
 ## Request
@@ -12,7 +12,7 @@ Send a `POST` request to below endpoint and append the response of the api back 
 --request POST 'https://modelslab.com/api/v6/llm/uncensored_chat' \
 ```
 
-## Body 
+## Body
 
 ```json json
 {    
@@ -32,9 +32,6 @@ Send a `POST` request to below endpoint and append the response of the api back 
 ```
 
 Once the endpoint is called, the sample response looks like so;
-<Info>
-Model being used is Mistral 7B Instruct-v0.1
-</Info>
 
 ```json json
 {
@@ -61,10 +58,10 @@ Model being used is Mistral 7B Instruct-v0.1
   }
 }
 ```
-<Info>
-To continue the next API call, append the object of property `role` and `content` to the **messages** array where the `role` value is **assistant** and the `content` value is the response `message` from the previous call. After that, append another object of same property and pass `role` value as **user** and `content` value as your new description to continue the chat. The request will look like so;
-</Info>
 
+<Info>
+  To continue the next API call, append the object of property `role` and `content` to the **messages** array where the `role` value is **assistant** and the `content` value is the response `message` from the previous call. After that, append another object of same property and pass `role` value as **user** and `content` value as your new description to continue the chat. The request will look like so;
+</Info>
 
 ```json json
 {
@@ -90,8 +87,9 @@ To continue the next API call, append the object of property `role` and `content
   "max_tokens": 1000
 }
 ```
+
 <Info>
-The response of the above request looks like so
+  The response of the above request looks like so
 </Info>
 
 ```json json
@@ -127,6 +125,7 @@ The response of the above request looks like so
   }
 }
 ```
+
 <Tip>
-Repeat the process as many times as possible until you are satisfied with the results.
+  Repeat the process as many times as possible until you are satisfied with the results.
 </Tip>
