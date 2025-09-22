@@ -32,7 +32,7 @@
     ]
   },
   "banner": {
-    "content": "🎉 Official SDKs are live: [TypeScript](/sdk/typescript) · [Python](/sdk/python) · [Dart](/sdk/dart)",
+    "content": "🎉 Official SDKs are live: [TypeScript](/sdk/typescript) · [Python](/sdk/python) · [Dart](/sdk/dart) · [Go](/sdk/golang)",
     "dismissible": true
   },
   "favicon": "/favicon.png",
@@ -47,7 +47,7 @@
           },
           {
             "group": "Client SDKs",
-            "pages": ["sdk/python", "sdk/dart", "sdk/typescript"]
+            "pages": ["sdk/python", "sdk/dart", "sdk/typescript", "sdk/golang"]
           },
           {
             "group": "Legal center",
