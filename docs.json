@@ -47,7 +47,7 @@
           },
           {
             "group": "Client SDKs",
-            "pages": ["sdk/python", "sdk/dart", "sdk/typescript", "sdk/golang"]
+            "pages": ["sdk/python", "sdk/dart", "sdk/typescript", "sdk/golang", "sdk/client"]
           },
           {
             "group": "Legal center",
