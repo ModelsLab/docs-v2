@@ -1,0 +1,30 @@
+---
+title: "Reset S3 Details"
+description: "This endpoint is used to reset the S3 details on your dedicated server."
+---
+
+## Request
+Send a POST request to below endpoint. 
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/reset_s3' \
+```
+
+### Body
+
+```json json
+{
+  "key": "enterprise_api_key",
+  "deploy_type": "text_to_image"
+}
+```
+
+## Body Attributes
+
+<ParamField body="key" type="string" required>
+  Your enterprise API Key used for request authorization.
+</ParamField>
+
+<ParamField body="deploy_type" type="string">
+  This is the server type you are making request from. It includes `text_to_image`, `image_editing`, `voice_cloning`, `text_to_3d`, `video`, `face_gen`, `deepfake`, `realtime`, `super_resolution`, `flux`, `flux_headshot` and `interior`. If nothing is passed `text_to_image` will be the default.
+</ParamField>
+

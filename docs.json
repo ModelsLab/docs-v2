@@ -43,7 +43,7 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["index"]
+            "pages": ["index", "rate-limits"]
           },
           {
             "group": "Client SDKs",
@@ -364,7 +364,8 @@
                 "group": "General",
                 "pages": [
                   "enterprise-api/general/overview",
-                  "enterprise-api/general/update-s3-details"
+                  "enterprise-api/general/update-s3-details",
+                  "enterprise-api/general/reset-s3"
                 ]
               },
               {

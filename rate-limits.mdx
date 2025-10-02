@@ -1,0 +1,140 @@
+---
+title: "Rate Limits"
+description: "Understanding API rate limits and request queuing for different subscription plans."
+---
+
+<Info>
+  **Rate limits help ensure fair usage and optimal performance for all users. Each subscription plan has specific limits for queued API requests.**
+</Info>
+
+## Request Queue Limits
+
+Our API uses request queue limits to manage server load and ensure optimal performance. The limits vary based on your subscription plan:
+
+<CardGroup>
+  <Card title="Pay as you go plan" icon="dollar-sign">
+    **5 queued API requests**
+    
+    Perfect for individual developers and small projects getting started with our APIs.
+  </Card>
+  
+  <Card title="Standard plan" icon="star">
+    **10 queued API requests**
+    
+    Ideal for growing businesses and applications with moderate usage requirements.
+  </Card>
+  
+  <Card title="Unlimited Premium Plan" icon="crown">
+    **15 queued API requests**
+    
+    Designed for enterprise applications and high-volume usage scenarios.
+  </Card>
+</CardGroup>
+
+## How Request Queuing Works
+
+Request queuing ensures that API calls are processed sequentially in a controlled manner. Here's what you need to know:
+
+### Understanding the Limits
+
+- **Sequential Processing**: Requests are processed one after another in queue order
+- **Queue Management**: New requests are added to the queue and processed when previous ones complete
+- **Per Account**: Limits apply to your entire account, not per API endpoint
+- **Real-time**: The limit is enforced in real-time as requests come in
+
+### Example Scenarios
+
+<AccordionGroup>
+  <Accordion title="Pay as you go (5 queued requests)">
+    If you have 5 requests in the queue and try to make a 6th request, it will be rejected until one of the queued requests completes and is processed.
+  </Accordion>
+  
+  <Accordion title="Standard plan (10 queued requests)">
+    You can have up to 10 requests in the queue. Any additional requests will be rejected until queue space becomes available.
+  </Accordion>
+  
+  <Accordion title="Premium plan (15 queued requests)">
+    Up to 15 requests can be queued, providing the highest capacity for enterprise applications.
+  </Accordion>
+</AccordionGroup>
+
+## Request Queuing
+
+When you reach your queue limit:
+
+1. **Queue Full**: Additional requests are rejected with a rate limit error
+2. **Sequential Processing**: Requests are processed one after another in queue order
+3. **FIFO Order**: Requests are processed in First-In-First-Out order
+4. **Automatic Processing**: Queued requests are automatically processed as previous ones complete
+
+## Best Practices
+
+### Optimizing for Rate Limits
+
+<Steps>
+  <Step title="Monitor Your Queue">
+    Keep track of your queued requests to avoid hitting limits unexpectedly.
+  </Step>
+  
+  <Step title="Implement Retry Logic">
+    Add exponential backoff retry logic for better handling of rate limit scenarios.
+  </Step>
+  
+  <Step title="Batch Operations">
+    When possible, combine multiple operations into single requests to reduce queue usage.
+  </Step>
+  
+  <Step title="Upgrade When Needed">
+    Consider upgrading your plan if you consistently hit queue limits.
+  </Step>
+</Steps>
+
+### Error Handling
+
+When you hit rate limits, you'll receive an HTTP 429 status code with details about the limit:
+
+```json json
+{
+  "status": "error",
+  "message": "Rate limit exceeded. Maximum 5 queued requests allowed.",
+  "retry_after": 30
+}
+```
+
+## Upgrading Your Plan
+
+If you need higher queue limits:
+
+1. **Log in** to your ModelsLab account
+2. **Navigate** to the billing section
+3. **Select** a higher tier plan
+4. **New limits** take effect immediately
+
+<Note>
+  **Need more than 15 queued requests?** Contact our enterprise team for custom solutions tailored to your specific needs.
+</Note>
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What happens if I exceed my queue limit?">
+    Additional requests are rejected with a rate limit error. You'll need to wait for queued requests to complete before making new ones.
+  </Accordion>
+  
+  <Accordion title="Do rate limits reset daily?">
+    No, queue limits are enforced in real-time, not on a daily basis. They're based on current queue size, not total requests per day.
+  </Accordion>
+  
+  
+  <Accordion title="Are there different limits for different APIs?">
+    No, the queue limit applies to your entire account across all API endpoints.
+  </Accordion>
+</AccordionGroup>
+
+## Support
+
+Need help with rate limits or want to discuss custom solutions?
+
+- **Documentation**: Check our [API Reference](/api-reference) for detailed endpoint information
+- **Support**: Contact us at [support@modelslab.com](mailto:support@modelslab.com)
+- **Discord**: Join our [Discord community](https://discord.com/invite/modelslab-1033301189254729748) for real-time help
