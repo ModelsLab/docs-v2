@@ -4,9 +4,47 @@ description: "Follow along with updates across ModelsLab API and Developer Conso
 rss: true
 ---
 
-<Update label="2025-09-18" description="NSFW Image Check: threshold parameter">
-  ## Changelog
+<Update label="2025-10-02" description="Rate Limits Documentation">
+  ## Rate Limits Documentation
 
+  Added comprehensive rate limits documentation with plan-specific queue limits:
+
+  - **Pay as you go plan**: 5 queued API requests
+  - **Standard plan**: 10 queued API requests  
+  - **Unlimited Premium Plan**: 15 queued API requests
+
+  #### Key Features
+
+  - **Sequential Processing**: Requests are processed one after another in queue order
+  - **Queue Management**: New requests are added to the queue and processed when previous ones complete
+  - **Real-time Enforcement**: Limits are enforced in real-time as requests come in
+  - **FIFO Processing**: Requests are processed in First-In-First-Out order
+
+  #### Enterprise API Updates
+
+  - Added Reset S3 endpoint to Enterprise API General section
+  - Updated S3 management capabilities for dedicated servers
+</Update>
+
+<Update label="2025-09-30" description="Wan 2.5 Release">
+  ## New Model: Wan 2.5
+
+  Added Wan 2.5 to ModelsLab with enhanced video generation capabilities:
+
+  - **Text to Video**: Generate videos from text prompts with audio support
+  - **Image to Video**: Transform static images into dynamic videos with sound
+  - **Audio Integration**: Built-in audio support for complete multimedia experiences
+  - **Enhanced Quality**: Improved motion smoothness and visual realism
+
+  #### Available Models
+
+  - [Wan 2.5 Text to Video](https://modelslab.com/models/alibaba_cloud/wan25-text-to-video-audioSupport)
+  - [Wan 2.5 Image to Video](https://modelslab.com/models/alibaba_cloud/wan25-image-to-video)
+</Update>
+
+<Update label="2025-09-18" description="NSFW Image Check: threshold parameter">
+  ## Added threshold parameter to NSFW Image Check
+  
   - Added `threshold` parameter to `POST /nsfw_image_check`.
     - Type: number; range: 0–1; default: 0.5.
     - Controls sensitivity for NSFW detection in images/videos.
@@ -19,8 +57,8 @@ rss: true
       src="https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/pdzkuYu2KSzjtJkxy2rVoCdbGcDXb6-metaM2RfcGxheWdyb3VuZC5wbmc=-.png"
     />
   </Frame>
-  ## Changelog
-
+  ## v0.1.1 - New 3D Model Viewer
+  
   New 3D Model Viewer in 3DVerse Playground.
 
   #### Features
