@@ -19,15 +19,18 @@ Make a `POST` request to below endpoint and pass the required parameters as a re
 
 ```json json
 {
-  "key": "your_api_key",
-  "init_image": "https://example.com/model-image.jpg",
-  "cloth_image": "https://example.com/cloth-image.jpg",
-  "cloth_type": "upper_body",
-  "num_inference_steps": "21",
-  "guidance_scale": 7.5,
-  "seed": null,
-  "webhook": null,
-  "track_id": null
+    "key": "enterprise_api_key",
+    "prompt": ":A realistic photo of a model wearing a beautiful t-shirt",
+    "negative_prompt": "Low quality, unrealistic, bad cloth, warped cloth",
+    "init_image": "https://assets.modelslab.com/generations/3227c6c5-14f6-4755-8be5-4f96c0fe988c.jpg",
+    "cloth_image": "https://assets.modelslab.com/generations/e202dba8-d3da-4bf6-9849-dc0535563e57.jpg",
+    "cloth_type": "upper_body",
+    "guidance_scale": 7.5,
+    "num_inference_steps": 21,
+    "seed": null,
+    "temp": "no",
+    "webhook": null,
+    "track_id": null 
 }
 ```
 
