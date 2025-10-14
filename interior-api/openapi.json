@@ -147,7 +147,7 @@
     "/interior/scenario_changer": {
       "post": {
         "summary": "Scenario changer",
-        "description": "This endpoint allows you to change the environment scenario to check how house will look in different scenario",
+        "description": "Swap the environment around your space to preview how a home looks across different scenarios",
         "requestBody": {
           "required": true,
           "content": {
@@ -233,7 +233,7 @@
     "/interior/exterior_restorer": {
       "post": {
         "summary": "Exterior restorer",
-        "description": "This endpoint allows you to convert bad exterior to good exterior",
+        "description": "Refresh worn building exteriors into polished designs guided by your prompt",
         "requestBody": {
           "required": true,
           "content": {
@@ -397,6 +397,11 @@
             "type": "integer",
             "nullable": true,
             "description": "An ID returned in the API response, used to identify the webhook request"
+          },
+          "specific_object": {
+            "type": "string",
+            "nullable": true,
+            "description": "Name a specific furniture or decor element that must appear in the redesigned room"
           }
         }
       },
@@ -458,11 +463,6 @@
             "type": "integer",
             "nullable": true,
             "description": "An ID returned in the API response, used to identify the webhook request"
-          },
-          "specific_object": {
-            "type": "string",
-            "nullable": true,
-            "description": "Specific object parameter"
           }
         }
       },
@@ -524,30 +524,43 @@
             "type": "integer",
             "nullable": true,
             "description": "An ID returned in the API response, used to identify the webhook request"
+          },
+          "specific_object": {
+            "type": "string",
+            "nullable": true,
+            "description": "Name a specific furniture or decor element that must appear in the redesigned room"
           }
         }
       },
       "ScenarioChangerRequest": {
         "type": "object",
-        "required": ["key", "init_image", "prompt"],
+        "required": ["key", "init_image", "scenario"],
         "properties": {
           "key": {
             "type": "string",
             "description": "Your API Key used for authenticating your request"
           },
-          "prompt": {
-            "type": "string",
-            "description": "A text prompt describing the content you want in the generated floor plan image"
-          },
           "init_image": {
             "type": "string",
             "format": "uri",
-            "description": "A URL to the initial image of the room to base the floor plan on"
+            "description": "A URL to the photo whose surroundings you want to transform"
           },
           "scenario": {
             "type": "string",
-            "enum": ["beach", "desert", "plain", "taiga"],
-            "description": "The scenario to be changed, it includes beach, desert, plain, taiga"
+            "enum": [
+              "beach",
+              "desert",
+              "plain",
+              "taiga",
+              "mountain",
+              "snow",
+              "jungle",
+              "city",
+              "underwater",
+              "urban",
+              "forest"
+            ],
+            "description": "The target environment you want to apply"
           },
           "negative_prompt": {
             "type": "string",
@@ -590,11 +603,6 @@
             "type": "integer",
             "nullable": true,
             "description": "An ID returned in the API response, used to identify the webhook request"
-          },
-          "specific_object": {
-            "type": "string",
-            "nullable": true,
-            "description": "Specific object parameter"
           }
         }
       },
@@ -608,12 +616,12 @@
           },
           "prompt": {
             "type": "string",
-            "description": "A text prompt describing the content you want in the generated floor plan image"
+            "description": "Describe the materials, colors, and atmosphere you want applied when rendering the sketch"
           },
           "init_image": {
             "type": "string",
             "format": "uri",
-            "description": "A URL to the initial image of the room to base the floor plan on"
+            "description": "A URL to the sketch or line art that should be rendered realistically"
           },
           "negative_prompt": {
             "type": "string",
@@ -656,11 +664,6 @@
             "type": "integer",
             "nullable": true,
             "description": "An ID returned in the API response, used to identify the webhook request"
-          },
-          "specific_object": {
-            "type": "string",
-            "nullable": true,
-            "description": "Specific object parameter"
           }
         }
       },
@@ -674,12 +677,12 @@
           },
           "prompt": {
             "type": "string",
-            "description": "A text prompt describing the content you want in the generated floor plan image"
+            "description": "Describe the refreshed exterior style, colors, and mood you want applied to the facade"
           },
           "init_image": {
             "type": "string",
             "format": "uri",
-            "description": "A URL to the initial image of the room to base the floor plan on"
+            "description": "A URL to the exterior photo you want to enhance"
           },
           "negative_prompt": {
             "type": "string",
@@ -722,11 +725,6 @@
             "type": "integer",
             "nullable": true,
             "description": "An ID returned in the API response, used to identify the webhook request"
-          },
-          "specific_object": {
-            "type": "string",
-            "nullable": true,
-            "description": "Specific object parameter"
           }
         }
       },

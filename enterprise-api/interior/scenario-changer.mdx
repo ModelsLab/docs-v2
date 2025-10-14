@@ -1,6 +1,6 @@
 ---
 title: "Scenario Changer"
-description: "This endpoint allows you to change the environment scenario to check how house will look in different scenario."
+description: "Swap the surroundings of a space to preview how the home looks in different scenarios."
 ---
 
 ## Request
@@ -14,7 +14,6 @@ Make a `POST` request to below endpoint and pass the required parameters in the 
 {  
     "key":"enterprise_api_key",  
     "init_image": "https://imagedelivery.net/pp4qzjxmlvglhjqbm3erng/50bc1662-8d41-468e-55d0-9575ad096000/768", 
-    "prompt": "rendering floor plan of the apartment layout,top view,white background,masterpiece, kitchen, living room, sofa, chair,bedroom,car best quality, extremely detailed,best illustration, best shadow",  
     "seed": 0,  
     "scenario": "beach",
     "guidance_scale": 8,  
@@ -33,16 +32,12 @@ Make a `POST` request to below endpoint and pass the required parameters in the 
   Your API Key used for authenticating your request.
 </ParamField>
 
-<ParamField query="prompt" type="string" required>
-  A text prompt describing the content you want in the generated floor plan image.
-</ParamField>
-
 <ParamField query="init_image" type="string" format="url">
-  A URL to the initial image of the room to base the floor plan on.
+  A URL to the photo whose surroundings you want to transform.
 </ParamField>
 
-<ParamField query="scenario" type="string" enum="[beach, deserat, plain, taiga, mountain, snow, jungle, city, underwater, urban, forest, desert, beach, plain, mountain, snow, jungle, city, underwater, urban, forest, desert]">
-  The scenario to be changed. Options: `beach`, `deserat`, `plain`, `taiga`, `mountain`, `snow`, `jungle`, `city`, `underwater`, `urban`, `forest`, `desert`.
+<ParamField query="scenario" type="string" enum="[beach, desert, plain, taiga]">
+  The scenario to apply. Options: `beach`, `desert`, `plain`, `taiga`.
 </ParamField>
 
 <ParamField query="negative_prompt" type="string">

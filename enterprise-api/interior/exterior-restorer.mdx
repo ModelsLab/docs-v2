@@ -1,6 +1,6 @@
 ---
 title: "Exterior Restorer"
-description: "This endpoint allows you to convert bad exterior to good exterior."
+description: "Refresh worn building exteriors into polished designs guided by your prompt."
 ---
 
 ## Request
@@ -14,7 +14,7 @@ Make a `POST` request to below endpoint and pass the required parameters in the 
 {  
     "key":"enterprise_api_key",  
     "init_image": "https://i.pinimg.com/736x/b2/94/76/b29476a69497bbc870d48a531e0008db.jpg",  
-    "prompt": "rendering floor plan of the apartment layout,top view,white background,masterpiece, kitchen, living room, sofa, chair,bedroom,car best quality, extremely detailed,best illustration, best shadow",  
+    "prompt": "make beautiful pink and golden color exterior",  
     "seed": 0,  
     "guidance_scale": 8,  
     "strength": 0.99,  
@@ -32,12 +32,12 @@ Make a `POST` request to below endpoint and pass the required parameters in the 
   Your API Key used for authenticating your request.
 </ParamField>
 
-<ParamField query="prompt" type="string" required placeholder="Describe the floor plan">
-  A text prompt describing the content you want in the generated floor plan image.
+<ParamField query="prompt" type="string" required placeholder="Describe the refreshed exterior">
+  A text prompt describing the exterior style, colors, and mood you want applied to the restored facade.
 </ParamField>
 
-<ParamField query="init_image" type="string" placeholder="URL to room image">
-  A URL to the initial image of the room to base the floor plan on.
+<ParamField query="init_image" type="string" placeholder="URL to exterior image">
+  A URL to the exterior photo you want to enhance.
 </ParamField>
 
 <ParamField query="negative_prompt" type="string" placeholder="Things to avoid">
