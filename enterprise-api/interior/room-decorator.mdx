@@ -24,6 +24,7 @@ Make a `POST` request to below endpoint and pass the required parameters in the 
     "num_inference_steps": 51,  
     "base64": false,  
     "temp": false,  
+    "specific_object": "mid-century coffee table",  
     "webhook":null,  
     "track_id": null
 }
@@ -63,6 +64,10 @@ Make a `POST` request to below endpoint and pass the required parameters in the 
 
 <ParamField query="temp" type="boolean" default="false">
   Create temp image link. This link is valid for 24 hours.
+</ParamField>
+
+<ParamField query="specific_object" type="string">
+  Name a specific furniture or decor element that must appear in the redesigned room.
 </ParamField>
 
 <ParamField query="seed" type="integer">

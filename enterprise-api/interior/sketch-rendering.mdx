@@ -14,7 +14,7 @@ Make a `POST` request to below endpoint and pass the required parameters in the 
 {  
     "key":"enterprise_api_key",  
     "init_image": "https://imagedelivery.net/pp4qzjxmlvglhjqbm3erng/50bc1662-8d41-468e-55d0-9575ad096000/768",  
-    "prompt": "rendering floor plan of the apartment layout,top view,white background,masterpiece, kitchen, living room, sofa, chair,bedroom,car best quality, extremely detailed,best illustration, best shadow",  
+    "prompt": "turn this pencil sketch of a modern home into a photorealistic render with warm evening lighting",  
     "seed": 0,  
     "guidance_scale": 8,  
     "strength": 0.99,  
@@ -33,11 +33,11 @@ Make a `POST` request to below endpoint and pass the required parameters in the 
 </ParamField>
 
 <ParamField query="prompt" type="string" required>
-  A text prompt describing the content you want in the generated floor plan image.
+  Describe the materials, colors, and atmosphere you want applied when rendering the sketch.
 </ParamField>
 
 <ParamField query="init_image" type="string" format="url">
-  A URL to the initial image of the room to base the floor plan on.
+  A URL to the sketch or line art that should be rendered realistically.
 </ParamField>
 
 <ParamField query="negative_prompt" type="string">
