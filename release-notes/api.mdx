@@ -4,6 +4,33 @@ description: "Follow along with updates across ModelsLab API and Developer Conso
 rss: true
 ---
 
+<Update label="2025-10-17" description="Interior API: Object Removal and Interior Mixer">
+  ## New Interior API Endpoints
+
+  Added two new endpoints to the Interior API for enhanced object manipulation capabilities:
+
+  #### Object Removal
+
+  - **Endpoint**: `POST /api/v6/interior/object_removal`
+  - Remove unwanted objects from interior images using AI
+  - Parameters: `init_image`, `object_name`, `base64`, `webhook`, `track_id`
+  - Simple text-based object identification
+
+  #### Interior Mixer
+
+  - **Endpoint**: `POST /api/v6/interior/interior_mixer`
+  - Add objects from one image into another room image
+  - Parameters: `init_image`, `object_image`, `prompt`, `width`, `height`, `guidance_scale`, `num_inference_steps`
+  - Intelligent object placement with prompt-based positioning
+  - Configurable inference steps (default: 8) and guidance scale
+
+  #### Documentation Updates
+
+  - Added complete API reference documentation for both endpoints
+  - Updated OpenAPI specification with new schemas
+  - Added visual indicators for new endpoints in the overview
+</Update>
+
 <Update label="2025-10-02" description="Rate Limits Documentation">
   ## Rate Limits Documentation
 

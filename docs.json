@@ -237,6 +237,8 @@
                   "interior-api/room-decorator",
                   "interior-api/scenario-changer",
                   "interior-api/sketch-rendering",
+                  "interior-api/object-removal",
+                  "interior-api/interior-mixer",
                   "interior-api/fetch"
                 ]
               },

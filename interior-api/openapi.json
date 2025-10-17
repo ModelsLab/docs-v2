@@ -273,6 +273,92 @@
         }
       }
     },
+    "/interior/object_removal": {
+      "post": {
+        "summary": "Object removal",
+        "description": "Remove objects from images using AI-powered object removal",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObjectRemovalRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Object removal response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    { "$ref": "#/components/schemas/SuccessInteriorResponse" },
+                    {
+                      "$ref": "#/components/schemas/ProcessingInteriorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interior/interior_mixer": {
+      "post": {
+        "summary": "Interior mixer",
+        "description": "Add objects from one image into another room image with AI-powered object placement",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InteriorMixerRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Interior mixer response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    { "$ref": "#/components/schemas/SuccessInteriorResponse" },
+                    {
+                      "$ref": "#/components/schemas/ProcessingInteriorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/interior/fetch/{id}": {
       "post": {
         "summary": "Fetch queued request",
@@ -534,7 +620,7 @@
       },
       "ScenarioChangerRequest": {
         "type": "object",
-        "required": ["key", "init_image", "scenario"],
+        "required": ["key", "init_image", "scenario", "prompt"],
         "properties": {
           "key": {
             "type": "string",
@@ -561,6 +647,10 @@
               "forest"
             ],
             "description": "The target environment you want to apply"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Describe the new environment, colors, and mood you want applied to the surroundings"
           },
           "negative_prompt": {
             "type": "string",
@@ -714,6 +804,102 @@
             "type": "integer",
             "nullable": true,
             "description": "Seed is used to reproduce results, same seed will give you same image in return again. Pass null for a random number"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "description": "A URL to receive a POST API call once the image generation is complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "nullable": true,
+            "description": "An ID returned in the API response, used to identify the webhook request"
+          }
+        }
+      },
+      "ObjectRemovalRequest": {
+        "type": "object",
+        "required": ["key", "init_image", "object_name"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for authenticating your request"
+          },
+          "init_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "Image from which object will be removed"
+          },
+          "object_name": {
+            "type": "string",
+            "description": "Object name on the image that needs to be removed"
+          },
+          "base64": {
+            "type": "boolean",
+            "default": false,
+            "description": "Specifies whether the response should be returned as a base64 string. Defaults to false"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "description": "A URL to receive a POST API call once the image generation is complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "nullable": true,
+            "description": "An ID returned in the API response, used to identify the webhook request"
+          }
+        }
+      },
+      "InteriorMixerRequest": {
+        "type": "object",
+        "required": ["key", "init_image", "object_image", "prompt"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for authenticating your request"
+          },
+          "init_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "Room image in which object wants to be added"
+          },
+          "object_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "Object which we want to add"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Prompt required for generation"
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 512,
+            "maximum": 2048,
+            "description": "Width of output image. Min: 512, Max: 2048. If not provided, uses original image resolution"
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 512,
+            "maximum": 2048,
+            "description": "Height of the output image. Min: 512, Max: 2048. If not provided, uses original image resolution"
+          },
+          "guidance_scale": {
+            "type": "integer",
+            "description": "The scale for classifier-free guidance"
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "default": 8,
+            "description": "Number of inference steps required for generation"
+          },
+          "base64": {
+            "type": "boolean",
+            "default": false,
+            "description": "Specifies whether the response should be returned as a base64 string. Defaults to false"
           },
           "webhook": {
             "type": "string",

@@ -1,0 +1,28 @@
+---
+title: "Interior Mixer"
+openapi: 'POST /interior/interior_mixer'
+description: 'Add objects from one image into another room image with AI-powered object placement.'
+---
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v6/interior/interior_mixer' \
+```
+
+## Body
+```json json
+{
+    "key":"",
+    "init_image": "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/d3eb50fd-0232-416a-8c89-184457098ed2-0.jpg",
+    "object_image":"https://i.pinimg.com/736x/ba/c8/0a/bac80ac4b8b718836a0b3c2818de509f.jpg",
+    "prompt": "add sofa from image 1 to the good position room in image 2",
+    "width": 1024,
+    "height": 1024,
+    "guidance_scale": 8,
+    "num_inference_steps": 51,
+    "base64": false,
+    "webhook": null,
+    "track_id": null
+}
+```

@@ -1,0 +1,23 @@
+---
+title: "Object Removal"
+openapi: 'POST /interior/object_removal'
+description: 'Remove objects from images using AI-powered object removal.'
+---
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v6/interior/object_removal' \
+```
+
+## Body
+```json json
+{
+    "key":"",
+    "init_image": "https://i.pinimg.com/1200x/3f/5e/e3/3f5ee397f73d2ba20952d20698616fd3.jpg",
+    "object_name":"remove sofa from the image",
+    "base64": false,
+    "webhook": null,
+    "track_id": null
+}
+```
