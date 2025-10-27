@@ -1,0 +1,53 @@
+---
+title: "Qwen Edit"
+description: "This endpoint allows you to edit images using Qwen model."
+---
+
+<Warning>
+  Make sure you add your [s3 details](/enterprise-api/general/update-s3-details) for `image_editing` server, so you can receive image generated in your bucket. Images generated without s3 details being added will be delete after **24hours**
+</Warning>
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body to the endpoint.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/image_editing/qwen_edit' \
+```
+
+## Body
+
+```json json
+{
+  "key":"",
+  "prompt": "the woman wearing the dress",   
+  "init_image": [
+    "https://assets.modelslab.ai/characters/68e7a7f153307.png",
+    "https://i.pinimg.com/736x/6e/ab/48/6eab481a1ee8fcfaec32a316d2768a61.jpg"
+  ]
+}
+```
+
+
+## Body Attributes
+<ParamField body="key" type="string" required>
+  Your API Key used for request authorization
+</ParamField>
+
+<ParamField body="prompt" type="string" required>
+  Text prompt with description of the things you want in the image to be generated.
+</ParamField>
+
+<ParamField body="init_image" type="array" required>
+  Links  to the image  want your generations to edit and manipulate.
+</ParamField>
+
+<ParamField body="base64" type="boolean" required>
+  If provided init_image is in base64 format or if you want your generated images as a base64 string, must be set to `true`. Default: `false`.
+</ParamField>
+
+<ParamField body="webhook" type="string" required>
+  Set an URL to get a POST API call once the image generation is complete.
+</ParamField>
+
+<ParamField body="track_id" type="string" required>
+  This ID is returned in the response to the webhook API call. This will be used to identify the webhook request.
+</ParamField>
