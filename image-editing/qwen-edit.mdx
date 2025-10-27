@@ -1,0 +1,31 @@
+---
+title: "Qwen Edit"
+openapi: 'POST /image_editing/qwen_edit'
+description: "This endpoint allows you to edit images using Qwen model."
+---
+
+![Qwen Edit endpoint result](https://assets.modelslab.com/generations/cc18442d-6dc0-4eb2-9c40-27fa7c59dce4.jpg)
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body to the endpoint.
+```curl curl
+--request POST 'https://modelslab.com/api/v6/image_editing/qwen_edit' \
+```
+<Note>
+The `init_image` parameter can accept a string if editing a single image or an array of strings if editing multiple images. Maximum number of images to be passed is 4.
+</Note>
+
+## Body
+```json json
+{
+  "key":"",
+  "prompt": "the woman wearing the dress",
+  "init_image": [
+    "https://assets.modelslab.ai/characters/68e7a7f153307.png",
+    "https://i.pinimg.com/736x/6e/ab/48/6eab481a1ee8fcaec32a316d2768a61.jpg"
+  ],
+  "base64": false,
+  "webhook": null,
+  "track_id": null
+}
+```

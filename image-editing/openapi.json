@@ -187,6 +187,42 @@
         }
       }
     },
+    "/image_editing/qwen_edit": {
+      "post": {
+        "summary": "Qwen Edit",
+        "description": "This endpoint allows you to edit images using Qwen model",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QwenRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Qwen Edit response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ImageEditingSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingProcessingResponse"
+                    },
+                    { "$ref": "#/components/schemas/ImageEditingErrorResponse" }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/image_editing/fetch/{id}": {
       "post": {
         "summary": "Fetch queued images",
@@ -695,6 +731,41 @@
             "type": "string",
             "enum": ["comic", "chibi", "3d", "anime", "realistic"],
             "default": "realistic"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST API call when complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
+        }
+      },
+      "QwenRequest": {
+        "type": "object",
+        "required": ["key", "prompt", "init_image"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "The text prompt describing the content you want in the generated image"
+          },
+          "init_image": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Link the image you want your generations to  edit and manipulate"
+          },
+          "base64": {
+            "type": "boolean",
+            "default": false,
+            "description": "Set to true for base64 response"
           },
           "webhook": {
             "type": "string",
