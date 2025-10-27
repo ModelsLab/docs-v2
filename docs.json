@@ -161,6 +161,7 @@
                 "group": "Image Editing API",
                 "pages": [
                   "image-editing/overview",
+                  "image-editing/qwen-edit",
                   "image-editing/fashion",
                   "image-editing/face-gen",
                   "image-editing/imagemixer",
@@ -374,6 +375,7 @@
                 "group": "Image Editing API",
                 "pages": [
                   "enterprise-api/image-editing/overview",
+                  "enterprise-api/image-editing/qwen-edit",
                   "enterprise-api/image-editing/face-gen",
                   "enterprise-api/image-editing/fashion",
                   "enterprise-api/image-editing/head-shot",
