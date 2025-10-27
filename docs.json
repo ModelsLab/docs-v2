@@ -32,7 +32,7 @@
     ]
   },
   "banner": {
-    "content": "🎉 Official SDKs are live: [TypeScript](/sdk/typescript) · [Python](/sdk/python) · [PHP](/sdk/php) · [Dart](/sdk/dart) · [Go](/sdk/golang)",
+    "content": "✨ NEW: Qwen Edit - AI-powered image editing with prompt-based manipulation · [Try it now](/image-editing/qwen-edit)",
     "dismissible": true
   },
   "favicon": "/favicon.png",
