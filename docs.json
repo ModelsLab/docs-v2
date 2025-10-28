@@ -100,13 +100,6 @@
                     ]
                   },
                   {
-                    "group": "Flux Kontext Dev",
-                    "pages": [
-                       "image-generation/flux_kontext/overview",
-                      "image-generation/flux_kontext/flux-kontext-img-to-image"
-                    ]
-                  },
-                  {
                     "group": "Community Models",
                     "pages": [
                       "image-generation/community-models/overview",
@@ -161,6 +154,7 @@
                 "group": "Image Editing API",
                 "pages": [
                   "image-editing/overview",
+                  "image-editing/flux-kontext-img-to-image",
                   "image-editing/qwen-edit",
                   "image-editing/fashion",
                   "image-editing/face-gen",
