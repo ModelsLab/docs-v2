@@ -91,6 +91,44 @@
         }
       }
     },
+     "/image_editing/caption": {
+      "post": {
+        "summary": "Caption",
+        "description": "This endpoint allows getting image captions.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CaptionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Caption response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ImageEditingSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingProcessingResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageEditingErrorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/image_editing/base64_to_url": {
       "post": {
         "summary": "Convert base64 to URL",
@@ -878,6 +916,48 @@
               "type": "string"
             },
             "description": "Link the image you want your generations to  edit and manipulate"
+          },
+          "base64": {
+            "type": "boolean",
+            "default": false,
+            "description": "Set to true for base64 response"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST API call when complete"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
+        }
+      },
+      "CaptionRequest": {
+        "type": "object",
+        "required": [
+          "key",
+          "prompt",
+          "init_image"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "init_image": {
+            "type": "string",
+            "description": "Link the image you want your generate prompt from"
+          },
+           "length": {
+            "type": "string",
+             "enum": [
+              "short",
+              "normal",
+              "long"
+            ],
+            "default": "normal",
+            "description": "the length of the caption"
           },
           "base64": {
             "type": "boolean",
