@@ -1,0 +1,44 @@
+---
+title: "Caption"
+description: "This endpoint allows getting image captions."
+---
+
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body to the endpoint.
+```curl curl
+--request POST 'https://modelslab.com/api/v6/image_editing/caption' \
+```
+
+## Body
+```json json
+{
+    "key":"",
+    "init_image":"https://i.pinimg.com/736x/6e/ab/48/6eab481a1ee8fcfaec32a316d2768a61.jpg",
+    "length":"long",
+    "base64": false,
+    "webhook": null,
+    "track_id": null
+}
+```
+
+## Body Attributes
+<ParamField body="key" type="string" required>
+  Your API Key used for request authorization
+</ParamField>
+
+<ParamField body="init_image" type="string" required>
+  Links  to the image  want you want to get captions from.
+</ParamField>
+
+<ParamField body="base64" type="boolean" required>
+  If provided init_image is in base64 format or if you want your generated images as a base64 string, must be set to `true`. Default: `false`.
+</ParamField>
+
+<ParamField body="webhook" type="string" required>
+  Set an URL to get a POST API call once the image generation is complete.
+</ParamField>
+
+<ParamField body="track_id" type="string" required>
+  This ID is returned in the response to the webhook API call. This will be used to identify the webhook request.
+</ParamField>
