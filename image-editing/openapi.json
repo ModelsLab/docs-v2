@@ -94,7 +94,7 @@
      "/image_editing/caption": {
       "post": {
         "summary": "Caption",
-        "description": "This endpoint allows getting image captions.",
+        "description": "This endpoint allows you to caption image.",
         "requestBody": {
           "required": true,
           "content": {
@@ -947,7 +947,7 @@
           },
           "init_image": {
             "type": "string",
-            "description": "Link the image you want your generate prompt from"
+            "description": "Link the image you want your generate prompt from. Available formats: `png`, `jpeg`, `jpg`"
           },
            "length": {
             "type": "string",
