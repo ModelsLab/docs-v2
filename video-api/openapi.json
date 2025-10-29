@@ -72,6 +72,64 @@
         }
       }
     },
+      "/video/watermark_remover": {
+      "post": {
+        "summary": "Remove watermark from video",
+        "description": "Removes watermark from a video",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WatermarkRemoverRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Video generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/video/text2video_ultra": {
       "post": {
         "summary": "Generate HD video from text prompt",
@@ -566,6 +624,30 @@
             "type": "boolean",
             "default": false,
             "description": "If true, stores video in temporary storage (cleaned every 24 hours)"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive a POST API call once video generation is complete"
+          },
+          "track_id": {
+            "type": "string",
+            "description": "Unique ID used in webhook response to identify the request"
+          }
+        }
+      },
+      "WatermarkRemoverRequest": {
+        "type": "object",
+        "required": ["key", "init_video"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "init_video": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL of the initial video with watermark"
           },
           "webhook": {
             "type": "string",
