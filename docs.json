@@ -154,8 +154,9 @@
                 "group": "Image Editing API",
                 "pages": [
                   "image-editing/overview",
-                  "image-editing/flux-kontext-img-to-image",
                   "image-editing/qwen-edit",
+                  "image-editing/caption",
+                  "image-editing/flux-kontext-img-to-image",
                   "image-editing/fashion",
                   "image-editing/face-gen",
                   "image-editing/imagemixer",
