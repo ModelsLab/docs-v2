@@ -1,0 +1,29 @@
+---
+title: "Remove Watermark"
+openapi: 'POST /video/watermark_remover'
+description: "This endpoint helps to remove watermarks from videos."
+---
+
+### Text to Video
+
+![Text to Video Example](/images/video-api/assets/images/Text-to-video-059ae4e254324cdd6b271d791167cb35.jpg)
+
+## Request
+
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+
+```curl curl
+--request POST 'https://modelslab.com/api/v6/video/watermark_remover' \
+```
+
+
+## Body
+```json json
+{
+    "key": "your_api_key",
+    "key":"{{MAIN_KEY}}",
+    "init_video":"https://cdn.discordapp.com/attachments/1138898393691852911/1433006084859232278/dog_vs_sam.mp4?ex=69031e6a&is=6901ccea&hm=6e703ba543e94e88693a87ab75f150a70bff21d9af8e694b22aacf2c7d2001c3&"
+    "webhook": null,
+    "track_id": null
+}
+```
