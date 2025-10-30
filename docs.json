@@ -32,7 +32,7 @@
     ]
   },
   "banner": {
-    "content": "✨ NEW: Qwen Edit - AI-powered image editing with prompt-based manipulation · [Try it now](/image-editing/qwen-edit)",
+    "content": "✨ NEW:SORA Watermark Remover - Remove watermarks from SORA generated videos. · [Try it now](/video-api/watermark-remover)",
     "dismissible": true
   },
   "favicon": "/favicon.png",
@@ -69,6 +69,7 @@
                 "group": " Video API",
                 "pages": [
                   "video-api/overview",
+                  "video-api/watermark-remover",
                   "video-api/text-to-video",
                   "video-api/img-to-video",
                   "video-api/text-to-video-ultra",
