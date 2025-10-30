@@ -29,6 +29,9 @@
 
 ## Image Editing API
 - [Overview](https://docs.modelslab.com/image-editing/overview): Tools for editing images.
+- [Qwen Edit](https://docs.modelslab.com/image-editing/qwen-edit): **NEW** AI-powered image editing with Qwen model.
+- [Caption](https://docs.modelslab.com/image-editing/caption): **NEW** Generate descriptive captions from images.
+- [Flux Kontext Image to Image](https://docs.modelslab.com/image-editing/flux-kontext-img-to-image): Flux Kontext-based image transformations.
 - [Inpaint](https://docs.modelslab.com/image-editing/inpaint): Masked edits within regions.
 - [Outpaint](https://docs.modelslab.com/image-editing/outpaint): Extend image boundaries.
 - [Object Remover](https://docs.modelslab.com/image-editing/object-remover): Remove objects from images.
@@ -81,6 +84,7 @@
 
 ## Video API
 - [Overview](https://docs.modelslab.com/video-api/overview): Generate and transform videos.
+- [Watermark Remover](https://docs.modelslab.com/video-api/watermark-remover): **NEW** Remove watermarks from SORA videos.
 - [Text to Video](https://docs.modelslab.com/video-api/text-to-video): Create videos from prompts.
 - [Text to Video Ultra](https://docs.modelslab.com/video-api/text-to-video-ultra): High-quality text-to-video.
 - [Image to Video](https://docs.modelslab.com/video-api/img-to-video): Animate images into videos.
@@ -117,6 +121,8 @@
 ## Interior API
 - [Overview](https://docs.modelslab.com/interior-api/overview): Interior design transformations.
 - [Interior](https://docs.modelslab.com/interior-api/interior): Transform interior styles.
+- [Object Removal](https://docs.modelslab.com/interior-api/object-removal): Remove objects from interior images.
+- [Interior Mixer](https://docs.modelslab.com/interior-api/interior-mixer): Add objects from one image to another room.
 - [Room Decorator](https://docs.modelslab.com/interior-api/room-decorator): Redesign rooms with styles.
 - [Floor Planning](https://docs.modelslab.com/interior-api/floor-planning): Generate layout plans.
 - [Exterior Restorer](https://docs.modelslab.com/interior-api/exterior-restorer): Restore building exteriors.
