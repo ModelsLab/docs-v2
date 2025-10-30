@@ -94,7 +94,7 @@ pre {
 
 /* Banner styles */
 #banner {
-  background: linear-gradient(120deg, #000208 0%, #1e47fa 100%);
+  background: radial-gradient(circle, #d15392 0%, #667eea 50%, #1e3a8a 100%);
   color: rgb(255, 255, 255);
   padding: 12px 20px;
 }

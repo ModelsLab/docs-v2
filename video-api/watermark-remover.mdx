@@ -1,0 +1,23 @@
+---
+title: "Watermark Remover"
+openapi: 'POST /video/watermark_remover'
+description: "This endpoint helps to remove watermarks from videos."
+---
+
+![Watermark Remover](https://assets.modelslab.com/generations/42a8971d-ed6b-4fab-8cab-1fe294e0ce62.webp)
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v6/video/watermark_remover' \
+```
+
+## Body
+```json json
+{
+    "key": "your_api_key",
+    "init_video":"https://assets.modelslab.com/generations/ee2c3b2c-7d68-4e71-900a-8566b0b05fe9.mp4"
+    "webhook": null,
+    "track_id": null
+}
+```
