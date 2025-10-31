@@ -1,0 +1,18 @@
+---
+title: "Fetch Image"
+description: "Fetch Queued Image."
+openapi: "POST /qwen/fetch/{id}"
+---
+
+## Request
+Send a `POST` request to below endpoint to return the corresponding queued videos. Where `{id}` is the ID returned together with the image URL in the response upon its generation. This endpoint does not generate new video, it returns already generated/queued videos.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/qwen/fetch/{id}' \
+```
+
+## Body
+```json json
+{ 
+    "key": ""
+}
+```
