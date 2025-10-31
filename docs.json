@@ -282,6 +282,20 @@
                 ]
               },
               {
+                "group": "Qwen API",
+                "pages": [
+                  "enterprise-api/qwen/overview",
+                  "enterprise-api/qwen/text-to-img",
+                  "enterprise-api/qwen/system-details",
+                  "enterprise-api/qwen/restart-server",
+                  "enterprise-api/qwen/update-server",
+                  "enterprise-api/qwen/clear-cache",
+                  "enterprise-api/qwen/clear-queue",
+                  "enterprise-api/qwen/fetch"
+
+                ]
+              },
+              {
                 "group": "Deepfake API",
                 "pages": [
                   "enterprise-api/deepfake/overview",
