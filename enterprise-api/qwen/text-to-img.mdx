@@ -3,7 +3,6 @@ title: "Text to Image"
 description: "Generate high-definition image from text using qwen model."
 ---
 
-
 ## Request
 Make a `POST` request to below endpoint and pass the required parameters in the request body.
 ```curl curl
@@ -14,7 +13,7 @@ Make a `POST` request to below endpoint and pass the required parameters in the 
 
 ```json json
 {
-  "key":"",
+  "key":"enterprise_api_key",
   "prompt": " photorealistic style, Victoria Orlova, a 24-year-old woman with long wavy dark chestnut hair, plump scarlet lips, deep brown eyes, almond-shaped eyes, fair skin, a slender curvaceous figure, an elegant posture, wearing cherry-colored lace lingerie, a delicate gold chain on her collarbone, a silk slip, strappy high heels, a subtle smoky eye, lounging on a velvet chaise lounge, watching a movie, lazily tracing a finger along her lips, glancing from under her lashes with a smirking expression, soft ambient lighting, photorealistic style",
   "width": 1024,
   "height": 1024,
@@ -26,7 +25,7 @@ Make a `POST` request to below endpoint and pass the required parameters in the 
 
 ## Body Attributes
 
-<ParamField query="key" type="string" required placeholder="Your API Key">
+<ParamField query="key" type="string" required placeholder="enterprise_api_key">
   Your API Key used for request authorization.
 </ParamField>
 

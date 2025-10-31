@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "ModelsLab Enterprise Video API",
+    "title": "ModelsLab Enterprise Qwen API",
     "version": "1.0.0",
-    "description": "API for managing enterprise Video server operations."
+    "description": "API for managing enterprise Qwen server operations."
   },
   "servers": [
     {
@@ -173,8 +173,8 @@
     },
     "/qwen/fetch/{id}": {
       "post": {
-        "summary": "Enterprise: Fetch Queued Video Endpoint",
-        "description": "Fetch Queued Video API fetches queued video.",
+        "summary": "Enterprise: Fetch Queued Image Endpoint",
+        "description": "Fetch Queued Image API fetches queued images.",
         "requestBody": {
           "required": true,
           "content": {

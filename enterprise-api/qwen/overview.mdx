@@ -1,16 +1,19 @@
 ---
 title: "Overview"
-description: "Generate high-definition videos from images using the Image to Video Ultra API."
+description: "Collection of endpoints to generate high-definition images with Qwen Image API."
 ---
 
 ## Endpoints
 
 <CardGroup cols={2}>
-  <Card title="Text to Image" icon="image" href="/enterprise-api/qwen/text2img">
-    Generate images from text with qwen model
+  <Card title="Qwen Text to Image" icon="image" href="/enterprise-api/qwen/text-to-img">
+    <div className="flex items-start justify-between">
+      <span>Generate images from text with qwen model</span>
+      <span className="badge-new">NEW</span>
+    </div>
   </Card>
 
-  <Card title="Fetch Video" icon="download" href="/enterprise-api/qwen/fetchimage">
+  <Card title="Fetch Image" icon="download" href="/enterprise-api/qwen/fetch">
     Retrieve queued and processing image requests
   </Card>
 
@@ -19,7 +22,7 @@ description: "Generate high-definition videos from images using the Image to Vid
   </Card>
 
   <Card title="Restart Server" icon="refresh" href="/enterprise-api/qwen/restart-server">
-    Restart your dedicated video processing server
+    Restart your dedicated server
   </Card>
 
   <Card title="System Details" icon="server" href="/enterprise-api/qwen/system-details">
