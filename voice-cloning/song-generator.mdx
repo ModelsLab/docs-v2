@@ -14,6 +14,12 @@ Make a `POST` request to below endpoint and pass the required parameters as a re
 
 
 ## Body 
+
+<Warning>
+    - If you send custom lyrics in the `lyrics` field, the model will generate a song based on those lyrics.
+    - Currenly only `English` and `Chinese` lyrics are supported.
+    - Chinese and English lyrics should not be mixed in the same input.
+</Warning>
 <Info>
 Sample request when `lyrics_generation` is `false`
 </Info>
@@ -23,7 +29,8 @@ Sample request when `lyrics_generation` is `false`
     "key":"your_api_key",   
     "lyrics_generation":false,    
     "init_audio":"https://storage.googleapis.com/falserverless/model_tests/diffrythm/rock_en.wav",    
-    "lyrics":"[00:10.00]Moonlight spills through broken blinds [00:13.20]Your shadow dances on the dashboard shrine [00:16.85]Neon ghosts in gasoline rain",    
+    "lyrics":"[00:10.00]Moonlight spills through broken blinds [00:13.20]Your shadow dances on the dashboard shrine [00:16.85]Neon ghosts in gasoline rain",
+    "model_id":"diffrhythm-short",  
     "webhook":null,     
     "track_id": null
 }

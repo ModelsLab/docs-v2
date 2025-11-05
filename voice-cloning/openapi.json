@@ -619,7 +619,13 @@
           },
           "prompt": {
             "type": "string",
-            "description": "Prompt with which lyrics should be generated"
+            "description": "Prompt to guide automatic lyrics generation"
+          },
+          "length": {
+            "type": "string",
+            "enum": ["short", "long"],
+            "default": "short",
+            "description": "Desired length of generated lyrics"
           },
           "webhook": {
             "type": "string",
@@ -741,6 +747,12 @@
             "type": "string",
             "format": "uri",
             "description": "URL to reference audio file to influence style"
+          },
+          "model_id":{
+            "type":"string",
+            "enum":["diffrhythm-short","diffrhythm-long"],
+            "default":"diffrhythm-short",
+            "description":"ID of the music generation model to use"
           },
           "webhook": {
             "type": "string",

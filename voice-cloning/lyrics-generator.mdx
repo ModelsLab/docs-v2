@@ -12,11 +12,19 @@ Make a `POST` request to the endpoint below and pass the required parameters in 
 --request POST 'https://modelslab.com/api/v6/voice/lyrics_generator' \
 ```
 
+<Note>
+  The `length` parameter allows you to specify whether you want short or long lyrics generated. Choose "short" for minimal lyrics or "long" for more extensive verses.
+</Note>
+<Note>
+  Lyrics will be generated in `English` language only.
+</Note>
+
 ### Body
 ```json json
 {
-  "key": "your-api-key",
+  "key": "your_api_key",
   "prompt": "tokyo",
+  "length": "short",
   "webhook": null,
   "track_id": null
 }
