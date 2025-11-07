@@ -5,6 +5,29 @@ rss: true
 ---
 
 
+<Update label="2025-11-05" description="Song Generator API and Lyrics Generator API: New Parameters">
+  ## New Parameter in Song Generator API Endpoint: [Song Generator API](/voice-cloning/song-generator)
+
+  Added `model_id` parameter to select between `diffrhythm-short` and `diffrhythm-long` models for song generation.
+  - `diffrhythm-short`: Generates shorter with maximum duration of 1 minute 35 seconds.
+  - `diffrhythm-long`: Generates longer songs with maximum duration of 4 minute 45 seconds.
+
+  ## New parameter in Lyrics Generator API Endpoint: [Lyrics Generator API](/voice-cloning/lyrics-generator)
+
+  Added `length` parameter to specify desired length of generated lyrics.
+  - `short`: Generates shorter lyrics with maximum duration of 1 minute 35 seconds.
+  - `long`: Generates longer lyrics with maximum duration of 4 minute 45 seconds.
+
+  #### API Endpoints
+  - **Standard API**: `POST /api/v6/voice/song_generator`
+  - **Standard API**: `POST /api/v6/voice/lyrics_generator`
+  
+  #### Key Features
+  - Select between short and long models for song generation
+  - Specify desired length of generated lyrics
+  
+</Update>
+
 <Update label="2025-10-30" description="Enterprise API: Qwen Text to Image">
   ## New Enterprise API Endpoint: [Qwen Text to Image](/enterprise-api/qwen/text-to-img)
 
