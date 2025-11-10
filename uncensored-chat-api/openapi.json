@@ -8,19 +8,14 @@
     },
     "version": "6.0.0"
   },
-  "servers": [
-    {
-      "url": "https://modelslab.com/api/v6",
-      "description": "Main API server"
-    },
-    {
-      "url": "https://modelslab.com/api/uncensored-chat/v1",
-      "description": "OpenAI-compatible API server"
-    }
-  ],
   "paths": {
     "/llm/uncensored_chat": {
       "post": {
+        "servers": [
+          {
+            "url": "https://modelslab.com/api/v6"
+          }
+        ],
         "summary": "Create uncensored chat conversation",
         "description": "Creates chat conversations without restrictions. Highly flexible and can answer any question without content limitations.",
         "requestBody": {
@@ -59,6 +54,11 @@
     },
     "/chat/completions": {
       "post": {
+        "servers": [
+          {
+            "url": "https://modelslab.com/api/uncensored-chat/v1"
+          }
+        ],
         "summary": "OpenAI-compatible chat completions",
         "description": "OpenAI-compatible API for chat completions with Bearer token authentication",
         "security": [
@@ -83,59 +83,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ChatCompletionsResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/completions": {
-      "post": {
-        "summary": "OpenAI-compatible text completions",
-        "description": "OpenAI-compatible API for text completions with Bearer token authentication",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CompletionsRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Text completion response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CompletionsResponse"
                 }
               }
             }
@@ -255,71 +202,6 @@
           }
         }
       },
-      "CompletionsRequest": {
-        "type": "object",
-        "required": ["prompt"],
-        "properties": {
-          "model": {
-            "type": "string",
-            "default": "ModelsLab/Llama-3.1-8b-Uncensored-Dare",
-            "description": "Model to use for completion"
-          },
-          "prompt": {
-            "oneOf": [
-              { "type": "string" },
-              { "type": "array", "items": { "type": "string" } }
-            ],
-            "description": "Prompt(s) to generate completions for"
-          },
-          "max_tokens": {
-            "type": "integer",
-            "default": 128,
-            "minimum": 1,
-            "maximum": 44000,
-            "description": "Maximum number of tokens allowed in the response"
-          },
-          "temperature": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 2,
-            "default": 1,
-            "description": "Sampling temperature for randomness"
-          },
-          "top_p": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 1,
-            "default": 1,
-            "description": "Nucleus sampling parameter"
-          },
-          "presence_penalty": {
-            "type": "number",
-            "minimum": -2,
-            "maximum": 2,
-            "default": 0,
-            "description": "Presence penalty for token repetition"
-          },
-          "frequency_penalty": {
-            "type": "number",
-            "minimum": -2,
-            "maximum": 2,
-            "default": 0,
-            "description": "Frequency penalty for token repetition"
-          },
-          "stream": {
-            "type": "boolean",
-            "default": false,
-            "description": "Whether to stream back partial progress"
-          },
-          "stop": {
-            "oneOf": [
-              { "type": "string" },
-              { "type": "array", "items": { "type": "string" }, "maxItems": 4 }
-            ],
-            "description": "Stop sequences to end generation"
-          }
-        }
-      },
       "ChatMessage": {
         "type": "object",
         "required": ["role", "content"],
@@ -430,35 +312,6 @@
           }
         }
       },
-      "CompletionsResponse": {
-        "type": "object",
-        "properties": {
-          "object": {
-            "type": "string",
-            "enum": ["text_completion"],
-            "description": "Object type"
-          },
-          "created": {
-            "type": "integer",
-            "description": "Unix timestamp of creation"
-          },
-          "model": {
-            "type": "string",
-            "description": "Model used for generation"
-          },
-          "choices": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CompletionChoice"
-            },
-            "description": "Array of completion choices"
-          },
-          "usage": {
-            "$ref": "#/components/schemas/Usage",
-            "description": "Token usage information"
-          }
-        }
-      },
       "ChatChoice": {
         "type": "object",
         "properties": {
@@ -499,39 +352,6 @@
             "type": "string",
             "nullable": true,
             "description": "Specific stop reason if applicable"
-          }
-        }
-      },
-      "CompletionChoice": {
-        "type": "object",
-        "properties": {
-          "text": {
-            "type": "string",
-            "description": "Generated text completion"
-          },
-          "index": {
-            "type": "integer",
-            "description": "Index of the choice"
-          },
-          "logprobs": {
-            "type": "object",
-            "nullable": true,
-            "description": "Log probabilities for the choice"
-          },
-          "finish_reason": {
-            "type": "string",
-            "enum": ["stop", "length", "content_filter"],
-            "description": "Reason the generation finished"
-          },
-          "stop_reason": {
-            "type": "string",
-            "nullable": true,
-            "description": "Specific stop reason if applicable"
-          },
-          "prompt_logprobs": {
-            "type": "object",
-            "nullable": true,
-            "description": "Log probabilities for prompt tokens"
           }
         }
       },

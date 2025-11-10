@@ -219,7 +219,6 @@
                 "group": "Uncensored Chat API",
                 "pages": [
                   "uncensored-chat-api/overview",
-                  "uncensored-chat-api/completions",
                   "uncensored-chat-api/chat-completions",
                   "uncensored-chat-api/uncensored-chat"
                 ]
