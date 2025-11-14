@@ -246,6 +246,64 @@
         }
       }
     },
+    "/video/video2video": {
+      "post": {
+        "summary": "Generate video from video",
+        "description": "Creates a video from an initial video using",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VideoToVideoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Image-to-video generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/video/img2video_ultra": {
       "post": {
         "summary": "Generate HD video from image",
@@ -827,6 +885,51 @@
             "type": "boolean",
             "default": false,
             "description": "Store in temporary storage"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "Webhook URL"
+          },
+          "track_id": {
+            "type": "string",
+            "description": "Tracking ID"
+          }
+        }
+      },
+      "VideoToVideoRequest": {
+        "type": "object",
+        "required": ["key", "init_image", "init_video"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "init_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL of the initial image"
+          },
+            "init_video": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL of the initial video"
+          },
+          "to_animate": {
+            "type": "boolean",
+            "description": "Should only be used for high motion videos. For standard videos, keep default false."
+          },
+       
+          "resolution": {
+            "type": "integer",
+            "maximum": 720,
+            "description": " Output video resolution. Higher resolution may increase processing time. It allows 480 and 720 resolutions."
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "default": 6,
+            "maximum": 10,
+            "description": "Number of inference steps for generation. Higher values may improve quality but increase processing time"
           },
           "webhook": {
             "type": "string",
