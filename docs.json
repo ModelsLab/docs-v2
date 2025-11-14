@@ -72,6 +72,7 @@
                   "video-api/watermark-remover",
                   "video-api/text-to-video",
                   "video-api/img-to-video",
+                  "video-api/video-to-video",
                   "video-api/text-to-video-ultra",
                   "video-api/image-to-video-ultra",
                   "video-api/scene-maker",
@@ -285,6 +286,8 @@
                 "pages": [
                   "enterprise-api/qwen/overview",
                   "enterprise-api/qwen/text-to-img",
+                  "enterprise-api/qwen/img-to-img",
+                  "enterprise-api/qwen/inpaint",
                   "enterprise-api/qwen/system-details",
                   "enterprise-api/qwen/restart-server",
                   "enterprise-api/qwen/update-server",
