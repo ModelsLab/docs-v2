@@ -198,7 +198,7 @@
             "type": "string",
             "description": "API key for request authorization"
           },
-          "image": {
+          "init_image": {
             "type": "string",
             "description": "The input image URL or file path to be used for 3D conversion"
           },
