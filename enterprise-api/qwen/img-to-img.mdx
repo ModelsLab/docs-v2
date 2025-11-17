@@ -1,0 +1,64 @@
+---
+title: "Image to Image"
+description: "Generate high-definition image from text using qwen model."
+---
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/qwen/img2img' \
+```
+
+## Body
+
+```json json
+{
+  "key":"enterprise_api_key",
+  "prompt": " photorealistic style, Victoria Orlova, a 24-year-old woman with long wavy dark chestnut hair, plump scarlet lips, deep brown eyes, almond-shaped eyes, fair skin, a slender curvaceous figure, an elegant posture, wearing cherry-colored lace lingerie, a delicate gold chain on her collarbone, a silk slip, strappy high heels, a subtle smoky eye, lounging on a velvet chaise lounge, watching a movie, lazily tracing a finger along her lips, glancing from under her lashes with a smirking expression, soft ambient lighting, photorealistic style",
+  "init_image": "https://assets.modelslab.com/generations/a56df09f-4c7f-4172-8390-29a22b17877a.avif",
+  "width": 1024,
+  "height": 1024,
+  "samples": 1,
+  "track_id":null,
+  "webhook":null
+}
+```
+
+## Body Attributes
+
+<ParamField query="key" type="string" required placeholder="enterprise_api_key">
+  Your API Key used for request authorization.
+</ParamField>
+
+<ParamField path="prompt" type="string" required>
+  Text prompt describing the image you want to generate.
+</ParamField>
+
+
+<ParamField path="init_image" type="string" required>
+  Image URL to use as the initial image for the image generation.
+</ParamField>
+
+<ParamField path="negative_prompt" type="string">
+  Items you don’t want in the image.
+</ParamField>
+
+<ParamField path="samples" type="number" min="1" max="2" default="1">
+  Number of images to return. Maximum: 2.
+</ParamField>
+
+<ParamField path="width" type="number" max="1024" default="512">
+  Width of the generated image. Maximum: 1024.
+</ParamField>
+
+<ParamField path="height" type="number" max="1024" default="512">
+  Height of the generated image. Maximum: 1024.
+</ParamField>
+
+<ParamField query="webhook" type="string" placeholder="https://your.webhook.url">
+  A URL to receive a POST API call once the video generation is complete.
+</ParamField>
+
+<ParamField query="track_id" type="string" placeholder="Unique ID for webhook">
+  A unique ID used in the webhook response to identify the request.
+</ParamField>

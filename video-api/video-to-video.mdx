@@ -1,0 +1,34 @@
+---
+title: "Video to Video"
+openapi: 'POST /video/video2video'
+description: "Generate videos from video using the Video to Video API."
+---
+
+### Video to Video
+Generate videos from video.
+
+![Video to Video Example](/images/video-api/assets/images/Image-to-video-06907dcc4363b727c589be0243af41f4.jpg)
+
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+
+```curl curl
+--request POST 'https://modelslab.com/api/v6/video/video2video' \
+```
+
+## Body
+```json json
+{
+    "key":"",
+    "init_image": "https://assets.modelslab.com/generations/8761aacb-6dce-4cea-8705-46de16003794.png",
+    "init_video": "https://assets.modelslab.com/generations/b0374de1-ef0e-417b-9982-dd488331cae6.mp4",
+    "to_animate": true,
+    "seed": null,
+    "resolution": 720,
+    "num_inference_steps": 6,
+    "base64": false,
+    "track_id ": null,
+    "webhook": null,
+}
+```
