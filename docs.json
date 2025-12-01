@@ -558,6 +558,19 @@
                   "enterprise-api/voice-cloning/system-details",
                   "enterprise-api/voice-cloning/update-server"
                 ]
+              },
+              {
+                "group": "Z Image Turbo API",
+                "pages": [
+                  "enterprise-api/z-image-turbo/overview",
+                  "enterprise-api/z-image-turbo/text2img",
+                  "enterprise-api/z-image-turbo/fetch",
+                  "enterprise-api/z-image-turbo/clear-cache",
+                  "enterprise-api/z-image-turbo/clear-queue",
+                  "enterprise-api/z-image-turbo/restart-server",
+                  "enterprise-api/z-image-turbo/system-details",
+                  "enterprise-api/z-image-turbo/update-server"
+                ]
               }
             ]
           }

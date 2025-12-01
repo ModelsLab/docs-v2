@@ -1,0 +1,82 @@
+---
+title: "Text to Image"
+description: "This endpoint generates an image from a text prompt using flux model."
+---
+
+<Warning>
+  Make sure you add your [s3 details](/enterprise-api/general/update-s3-details.mdx) for `flux` server, so you can receive image generated in your bucket. 
+  Images generated without s3 details being added will be delete after **24hours**
+</Warning>
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/z_image_turbo/text2img' \
+```
+
+## Body
+```json json
+{  
+  "key" : "enterprise_api_key",  
+  "prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner))",  
+  "negative_prompt": "bad quality",  
+  "width": "512",  
+  "height": "512",  
+  "safety_checker": false,  
+  "seed": null,  
+  "samples":1,  
+  "base64":false,  
+  "webhook": null,  
+  "track_id": null
+}
+```
+
+## Body Attributes
+
+<ParamField query="key" type="string" required placeholder="Your API key">
+  Your API Key used for request authorization.
+</ParamField>
+
+<ParamField query="prompt" type="string" required placeholder="Text prompt">
+  Text prompt with description of the things you want in the image to be generated.
+</ParamField>
+
+<ParamField query="negative_prompt" type="string" placeholder="Exclude items">
+  Items you don't want in the image.
+</ParamField>
+
+<ParamField query="width" type="number" placeholder="Max 1024">
+  Max Height: Width: 1024x1024.
+</ParamField>
+
+<ParamField query="height" type="number" placeholder="Max 1024">
+  Max Height: Width: 1024x1024.
+</ParamField>
+
+<ParamField query="samples" type="number" placeholder="1-2">
+  Number of images to be returned in response. The maximum value is 2.
+</ParamField>
+
+<ParamField query="safety_checker" type="boolean">
+  A checker for NSFW images. If such an image is detected, it will be replaced by a blank image.
+</ParamField>
+
+<ParamField query="seed" type="number" placeholder="Seed number or null">
+  Seed is used to reproduce results. Same seed will give you the same image again. Pass <em>null</em> for a random number.
+</ParamField>
+
+<ParamField query="instant_response" type="boolean" default="false">
+  Queue response instantly before processing finishes instead of waiting a minimum amount of time. <strong>default</strong>: <code>false</code>, <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="base64" type="boolean" default="false">
+  Get response as base64 string. <strong>default</strong>: <code>false</code>, <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="webhook" type="string" placeholder="Webhook URL">
+  Set a URL to get a POST API call once the image generation is complete.
+</ParamField>
+
+<ParamField query="track_id" type="string" placeholder="Tracking ID">
+  This ID is returned in the response to the webhook API call. This will be used to identify the webhook request.
+</ParamField>
