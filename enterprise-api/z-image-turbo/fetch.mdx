@@ -1,0 +1,18 @@
+---
+title: "Fetch Image"
+description: "Fetch Queued Images API fetches queued images for flux."
+openapi: "POST /flux/fetch"
+---
+
+## Request
+Send a `POST` request to below endpoint to return the corresponding queued images.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/z_image_turbo/fetch/{id}' \
+```
+
+## Body
+```json json
+{ 
+    "key": "enterprise_api_key"
+}
+```
