@@ -1,0 +1,192 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "ModelsLab Enterprise Flux API",
+    "version": "1.0.0",
+    "description": "Enterprise endpoints for Flux API including cache clearing, queue clearing, fetch, server management."
+  },
+  "servers": [
+    {
+      "url": "https://modelslab.com/api/v1/enterprise"
+    }
+  ],
+  "paths": {
+    "/flux/clear_cache": {
+      "post": {
+        "summary": "Clear API Cache",
+        "description": "Clears the API's cache.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "key": { "type": "string", "description": "Your API key" }
+                },
+                "required": ["key"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cache cleared successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "message": "Cache cleared successfully"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flux/clear_queue": {
+      "post": {
+        "summary": "Clear API Queue",
+        "description": "Clears the API's queue.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "key": { "type": "string", "description": "Your API key" }
+                },
+                "required": ["key"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Queue cleared successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "message": "Queue cleared, server is restarting"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flux/fetch/{id}": {
+      "post": {
+        "summary": "Fetch Queued Images",
+        "description": "Fetches the queued image result by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "key": { "type": "string", "description": "Your API key" }
+                },
+                "required": ["key"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Fetch successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "id": 12202888,
+                  "output": [
+                    "https://pub-8b49af329fae499aa563997f5d4068a4.r2.dev/generations/e5cd86d3-7305-47fc-82c1-7d1a3b130fa4-0.png"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flux/restart_server": {
+      "post": {
+        "summary": "Restart Server",
+        "description": "Restarts the dedicated server.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "key": { "type": "string", "description": "Your API key" }
+                },
+                "required": ["key"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Server restarting",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "message": "server restarting"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flux/system_details": {
+      "post": {
+        "summary": "System Details",
+        "description": "Gets information about the server.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "key": { "type": "string", "description": "Your API key" }
+                },
+                "required": ["key"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "System details retrieved",
+            "content": {
+              "application/json": {
+                "example": {
+                  "model_count": 0,
+                  "queue_time": 0,
+                  "status": "ok"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

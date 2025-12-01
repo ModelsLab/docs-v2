@@ -571,6 +571,20 @@
                   "enterprise-api/z-image-turbo/system-details",
                   "enterprise-api/z-image-turbo/update-server"
                 ]
+              },
+              {
+                "group": "Flux 2 Dev API",
+                "pages": [
+                  "enterprise-api/flux-2-dev/overview",
+                  "enterprise-api/flux-2-dev/text2img",
+                  "enterprise-api/flux-2-dev/img2img",
+                  "enterprise-api/flux-2-dev/fetch",
+                  "enterprise-api/flux-2-dev/clear-cache",
+                  "enterprise-api/flux-2-dev/clear-queue",
+                  "enterprise-api/flux-2-dev/restart-server",
+                  "enterprise-api/flux-2-dev/system-details",
+                  "enterprise-api/flux-2-dev/update-server"
+                ]
               }
             ]
           }
