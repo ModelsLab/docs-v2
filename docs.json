@@ -72,7 +72,6 @@
                   "video-api/watermark-remover",
                   "video-api/text-to-video",
                   "video-api/img-to-video",
-                  "video-api/video-to-video",
                   "video-api/text-to-video-ultra",
                   "video-api/image-to-video-ultra",
                   "video-api/scene-maker",
