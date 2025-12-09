@@ -263,14 +263,16 @@
             "enum": [
               "stable_diffusion",
               "stable_diffusion_xl",
-              "controlnet",
-              "lora",
-              "embeddings",
-              "flux_lora",
-              "flux_embeddings",
-              "flux_checkpoint"
+              "flux"
             ],
             "description": "The category of the model you want to upload"
+          },
+          "model_subcategory": {
+            "type": "string",
+            "enum": [
+              "lora"
+            ],
+            "description": "for lora models, specify the model sub category as lora"
           },
           "model_visibility": {
             "type": "string",
