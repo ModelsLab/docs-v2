@@ -32,7 +32,7 @@
     ]
   },
   "banner": {
-    "content": "✨ NEW:SORA Watermark Remover - Remove watermarks from SORA generated videos. · [Try it now](/video-api/watermark-remover)",
+    "content": "✨ NEW:Flux 2 Dev Generate photorealistic images. · [Try it now](/enterprise-api/flux-2-dev/overview)",
     "dismissible": true
   },
   "favicon": "/favicon.png",
@@ -72,6 +72,7 @@
                   "video-api/watermark-remover",
                   "video-api/text-to-video",
                   "video-api/img-to-video",
+                  "video-api/video-to-video",
                   "video-api/text-to-video-ultra",
                   "video-api/image-to-video-ultra",
                   "video-api/scene-maker",
