@@ -222,6 +222,45 @@
         }
       }
     },
+    "/assets_generated": {
+      "post": {
+        "summary": "Assets generated",
+        "description": "This endpoint gets a list of generated assets across endpoints",
+        "servers": [{ "url": "https://modelslab.com/api" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssetsGeneratedRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "NSFW prompt check response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetsGeneratedResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/subscribed_products": {
       "get": {
         "summary": "Get subscribed products",
@@ -627,6 +666,46 @@
           "filtered_prompt": {
             "type": "string",
             "description": "The filtered version of the prompt"
+          }
+        }
+      },
+      "AssetsGeneratedRequest": {
+        "type": "object",
+        "required": ["key", "type"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your enterprise API Key used for request authorization"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["image", "video", "voice", "3d"],
+            "description": "The type of asset "
+          },
+          "per_page": {
+            "type": "integer",
+            "description": "Number of assets to return per page (default: 10, max: 30)"
+          },
+          "page": {
+            "type": "integer",
+            "description": "Page number (default: 1)"
+          }
+        }
+      },
+      "AssetsGeneratedResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"]
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of asset generated"
+          },
+          "data": {
+            "type": "array",
+            "description": "Whether the prompt contains NSFW content"
           }
         }
       },
