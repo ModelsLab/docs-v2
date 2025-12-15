@@ -222,6 +222,45 @@
         }
       }
     },
+    "/assets_generated": {
+      "post": {
+        "summary": "Assets generated",
+        "description": "This endpoint gets a list of generated assets across endpoints",
+        "servers": [{ "url": "https://modelslab.com/api" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssetsGeneratedRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "NSFW prompt check response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetsGeneratedResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/subscribed_products": {
       "get": {
         "summary": "Get subscribed products",
@@ -627,6 +666,99 @@
           "filtered_prompt": {
             "type": "string",
             "description": "The filtered version of the prompt"
+          }
+        }
+      },
+      "AssetsGeneratedRequest": {
+        "type": "object",
+        "required": ["key", "type"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your enterprise API Key used for request authorization"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["image", "video", "voice", "3d"],
+            "description": "The type of asset "
+          },
+          "per_page": {
+            "type": "integer",
+            "description": "Number of assets to return per page (default: 10, max: 30)"
+          },
+          "page": {
+            "type": "integer",
+            "description": "Page number (default: 1)"
+          }
+        }
+      },
+      "AssetsGeneratedResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"]
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of asset generated"
+          },
+          "data": {
+            "type": "array",
+            "description": "Array of generated assets",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "Unique identifier for the generated asset"
+                },
+                "output": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "description": "Array of URLs to the generated asset files"
+                }
+              }
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "description": "Pagination information for the response",
+            "properties": {
+              "current_page": {
+                "type": "integer",
+                "description": "The current page number",
+                "example": 2
+              },
+              "per_page": {
+                "type": "integer",
+                "description": "Number of items per page",
+                "example": 15
+              },
+              "total": {
+                "type": "integer",
+                "description": "Total number of assets",
+                "example": 53
+              },
+              "last_page": {
+                "type": "integer",
+                "description": "The last page number",
+                "example": 4
+              },
+              "from": {
+                "type": "integer",
+                "description": "Starting index of current page results",
+                "example": 16
+              },
+              "to": {
+                "type": "integer",
+                "description": "Ending index of current page results",
+                "example": 30
+              }
+            }
           }
         }
       },
