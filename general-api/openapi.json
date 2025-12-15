@@ -705,7 +705,60 @@
           },
           "data": {
             "type": "array",
-            "description": "Array of generated assets"
+            "description": "Array of generated assets",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "Unique identifier for the generated asset"
+                },
+                "output": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "description": "Array of URLs to the generated asset files"
+                }
+              }
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "description": "Pagination information for the response",
+            "properties": {
+              "current_page": {
+                "type": "integer",
+                "description": "The current page number",
+                "example": 2
+              },
+              "per_page": {
+                "type": "integer",
+                "description": "Number of items per page",
+                "example": 15
+              },
+              "total": {
+                "type": "integer",
+                "description": "Total number of assets",
+                "example": 53
+              },
+              "last_page": {
+                "type": "integer",
+                "description": "The last page number",
+                "example": 4
+              },
+              "from": {
+                "type": "integer",
+                "description": "Starting index of current page results",
+                "example": 16
+              },
+              "to": {
+                "type": "integer",
+                "description": "Ending index of current page results",
+                "example": 30
+              }
+            }
           }
         }
       },
