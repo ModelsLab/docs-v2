@@ -705,7 +705,7 @@
           },
           "data": {
             "type": "array",
-            "description": "Whether the prompt contains NSFW content"
+            "description": "Array of generated assets"
           }
         }
       },
