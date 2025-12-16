@@ -17,7 +17,7 @@
         "title": "Feature Requests",
         "description": "Join the discord to request a new feature.",
         "icon": "discord",
-        "href":"https://discord.com/invite/modelslab-1033301189254729748"
+        "href": "https://discord.com/invite/modelslab-1033301189254729748"
       }
     ]
   },
@@ -47,7 +47,14 @@
           },
           {
             "group": "Client SDKs",
-            "pages": ["sdk/python", "sdk/php", "sdk/dart", "sdk/typescript", "sdk/golang", "sdk/client"]
+            "pages": [
+              "sdk/python",
+              "sdk/php",
+              "sdk/dart",
+              "sdk/typescript",
+              "sdk/golang",
+              "sdk/client"
+            ]
           },
           {
             "group": "Legal center",
@@ -60,11 +67,23 @@
         "groups": [
           {
             "group": "Using the APIs",
-            "pages": ["api-reference"]          
+            "pages": ["api-reference"]
           },
           {
             "group": "Our AI APIs",
             "pages": [
+              {
+                "group": "Workflows API",
+                "pages": [
+                  "workflows-api/overview",
+                  "workflows-api/list-workflows",
+                  "workflows-api/get-workflow-schema",
+                  "workflows-api/run-workflow",
+                  "workflows-api/get-execution-status",
+                  "workflows-api/cancel-execution",
+                  "workflows-api/examples"
+                ]
+              },
               {
                 "group": " Video API",
                 "pages": [
@@ -295,7 +314,6 @@
                   "enterprise-api/qwen/clear-cache",
                   "enterprise-api/qwen/clear-queue",
                   "enterprise-api/qwen/fetch"
-
                 ]
               },
               {
@@ -648,8 +666,8 @@
         "href": "https://modelslab.com/login"
       },
       {
-        "label":"Support",
-        "href":"https://modelslab.com/support"
+        "label": "Support",
+        "href": "https://modelslab.com/support"
       },
       {
         "label": "Discord",

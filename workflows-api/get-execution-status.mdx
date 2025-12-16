@@ -1,0 +1,115 @@
+---
+title: "Get Execution Status"
+api: "GET https://modelslab.com/api/v1/workflows/{workflow_id}/runs/{execution_id}"
+description: "Returns the status and results of a workflow execution."
+---
+
+### Path Parameters
+
+<ParamField path="workflow_id" type="string" required>
+  The workflow UUID
+</ParamField>
+
+<ParamField path="execution_id" type="integer" required>
+  The execution ID
+</ParamField>
+
+### Response (Pending/Running)
+
+```json
+{
+  "status": "success",
+  "execution": {
+    "id": 12345,
+    "workflow_id": "uuid-string",
+    "status": "running",
+    "started_at": "2024-01-15T10:30:00Z",
+    "completed_at": null,
+    "execution_time": null
+  },
+  "steps": [
+    {
+      "name": "Text to Image",
+      "status": "completed",
+      "started_at": "2024-01-15T10:30:00Z",
+      "completed_at": "2024-01-15T10:30:05Z"
+    },
+    {
+      "name": "Image Upscaler",
+      "status": "running",
+      "started_at": "2024-01-15T10:30:05Z",
+      "completed_at": null
+    }
+  ]
+}
+```
+
+### Response (Completed)
+
+```json
+{
+  "status": "success",
+  "execution": {
+    "id": 12345,
+    "workflow_id": "uuid-string",
+    "status": "completed",
+    "started_at": "2024-01-15T10:30:00Z",
+    "completed_at": "2024-01-15T10:30:15Z",
+    "execution_time": 15.234
+  },
+  "output": {
+    "output": ["https://cdn.modelslab.com/generated/image1.png"],
+    "proxy_links": ["https://cdn.modelslab.com/proxy/image1.png"],
+    "status": "success"
+  },
+  "steps": [
+    {
+      "name": "Text to Image",
+      "status": "completed",
+      "started_at": "2024-01-15T10:30:00Z",
+      "completed_at": "2024-01-15T10:30:05Z"
+    },
+    {
+      "name": "Image Upscaler",
+      "status": "completed",
+      "started_at": "2024-01-15T10:30:05Z",
+      "completed_at": "2024-01-15T10:30:15Z"
+    }
+  ]
+}
+```
+
+### Response (Failed)
+
+```json
+{
+  "status": "success",
+  "execution": {
+    "id": 12345,
+    "workflow_id": "uuid-string",
+    "status": "failed",
+    "started_at": "2024-01-15T10:30:00Z",
+    "completed_at": "2024-01-15T10:30:05Z",
+    "execution_time": 5.123
+  },
+  "error": "Image generation failed: Invalid prompt",
+  "steps": [
+    {
+      "name": "Text to Image",
+      "status": "failed",
+      "started_at": "2024-01-15T10:30:00Z",
+      "completed_at": "2024-01-15T10:30:05Z"
+    }
+  ]
+}
+```
+
+### Execution Statuses
+
+| Status    | Description                         |
+| --------- | ----------------------------------- |
+| pending   | Execution is queued                 |
+| running   | Execution is in progress            |
+| completed | Execution finished successfully     |
+| failed    | Execution encountered an error      |
+| cancelled | Execution was cancelled by the user |

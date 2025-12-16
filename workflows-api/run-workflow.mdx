@@ -1,0 +1,45 @@
+---
+title: "Run Workflow"
+api: "POST https://modelslab.com/api/v1/workflows/{workflow_id}/run"
+description: "Executes a workflow with the provided parameters."
+---
+
+Workflow execution is asynchronous - you'll receive an execution ID that you can use to poll for results.
+
+### Path Parameters
+
+<ParamField path="workflow_id" type="string" required>
+  The workflow UUID
+</ParamField>
+
+### Request Body
+
+The request body should contain the workflow parameters. Each workflow has different parameters based on its configuration. Use the [Get Workflow Schema](/workflows-api/get-workflow-schema) endpoint to discover available parameters.
+
+```json
+{
+  "prompt": "A beautiful sunset over mountains",
+  "negative_prompt": "blurry, low quality",
+  "width": 1024,
+  "height": 1024
+}
+```
+
+### Response (202 Accepted)
+
+```json
+{
+  "status": "success",
+  "message": "Workflow execution started.",
+  "execution_id": 12345,
+  "workflow_id": "uuid-string",
+  "status_url": "https://modelslab.com/api/v1/workflows/uuid-string/runs/12345",
+  "webhook_url": "https://your-webhook.com/callback"
+}
+```
+
+### Error Responses
+
+- `404 Not Found` - Workflow not found or API not enabled
+- `422 Unprocessable Entity` - Validation failed (missing required parameters)
+- `429 Too Many Requests` - Rate limit exceeded

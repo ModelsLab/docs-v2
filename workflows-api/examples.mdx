@@ -1,0 +1,122 @@
+---
+title: "Examples"
+description: "Code examples for running workflows and handling results."
+---
+
+## Run Workflow and Poll for Results
+
+### Python
+
+```python
+import requests
+import time
+
+API_KEY = "YOUR_API_KEY"
+WORKFLOW_ID = "YOUR_WORKFLOW_ID"
+BASE_URL = "https://modelslab.com/api/v1/workflows"
+
+headers = {
+    "Content-Type": "application/json",
+    "key": API_KEY
+}
+
+# Run the workflow
+response = requests.post(
+    f"{BASE_URL}/{WORKFLOW_ID}/run",
+    headers=headers,
+    json={
+        "prompt": "A beautiful sunset over mountains",
+        "width": 1024,
+        "height": 1024
+    }
+)
+
+result = response.json()
+execution_id = result["execution_id"]
+print(f"Execution started: {execution_id}")
+
+# Poll for results
+while True:
+    status_response = requests.get(
+        f"{BASE_URL}/{WORKFLOW_ID}/runs/{execution_id}",
+        headers=headers
+    )
+    status = status_response.json()
+
+    if status["execution"]["status"] == "completed":
+        print("Output:", status["output"])
+        break
+    elif status["execution"]["status"] == "failed":
+        print("Error:", status["error"])
+        break
+    else:
+        print(f"Status: {status['execution']['status']}")
+        time.sleep(2)
+```
+
+### JavaScript/Node.js
+
+```javascript
+const API_KEY = "YOUR_API_KEY";
+const WORKFLOW_ID = "YOUR_WORKFLOW_ID";
+const BASE_URL = "https://modelslab.com/api/v1/workflows";
+
+async function runWorkflow() {
+  // Run the workflow
+  const runResponse = await fetch(`${BASE_URL}/${WORKFLOW_ID}/run`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      key: API_KEY,
+    },
+    body: JSON.stringify({
+      prompt: "A beautiful sunset over mountains",
+      width: 1024,
+      height: 1024,
+    }),
+  });
+
+  const { execution_id } = await runResponse.json();
+  console.log(`Execution started: ${execution_id}`);
+
+  // Poll for results
+  while (true) {
+    const statusResponse = await fetch(
+      `${BASE_URL}/${WORKFLOW_ID}/runs/${execution_id}`,
+      { headers: { key: API_KEY } }
+    );
+    const status = await statusResponse.json();
+
+    if (status.execution.status === "completed") {
+      console.log("Output:", status.output);
+      break;
+    } else if (status.execution.status === "failed") {
+      console.log("Error:", status.error);
+      break;
+    } else {
+      console.log(`Status: ${status.execution.status}`);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+    }
+  }
+}
+
+runWorkflow();
+```
+
+### cURL
+
+```bash
+# Run a workflow
+curl -X POST "https://modelslab.com/api/v1/workflows/YOUR_WORKFLOW_ID/run" \
+  -H "Content-Type: application/json" \
+  -H "key: YOUR_API_KEY" \
+  -d '{
+    "prompt": "A beautiful sunset over mountains",
+    "width": 1024,
+    "height": 1024
+  }'
+
+# Check execution status
+curl "https://modelslab.com/api/v1/workflows/YOUR_WORKFLOW_ID/runs/12345" \
+  -H "key: YOUR_API_KEY"
+```

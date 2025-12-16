@@ -1,0 +1,29 @@
+---
+title: "Cancel Execution"
+api: "POST https://modelslab.com/api/v1/workflows/{workflow_id}/runs/{execution_id}/cancel"
+description: "Cancels a running or pending workflow execution."
+---
+
+### Path Parameters
+
+<ParamField path="workflow_id" type="string" required>
+  The workflow UUID
+</ParamField>
+
+<ParamField path="execution_id" type="integer" required>
+  The execution ID
+</ParamField>
+
+### Response
+
+```json
+{
+  "status": "success",
+  "message": "Execution cancelled."
+}
+```
+
+### Error Responses
+
+- `400 Bad Request` - Cannot cancel execution in current state (already completed/failed)
+- `404 Not Found` - Execution not found
