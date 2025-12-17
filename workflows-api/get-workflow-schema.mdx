@@ -1,0 +1,53 @@
+---
+title: "Get Workflow Schema"
+api: "GET https://modelslab.com/api/v1/workflows/{workflow_id}"
+description: "Returns the workflow details including its parameters and configuration."
+---
+
+### Path Parameters
+
+<ParamField path="workflow_id" type="string" required>
+  The workflow UUID
+</ParamField>
+
+### Response
+
+```json
+{
+  "status": "success",
+  "workflow": {
+    "id": "uuid-string",
+    "name": "Image Generator",
+    "description": "Generates images using Stable Diffusion",
+    "rate_limit": 10,
+    "webhook_url": "https://your-webhook.com/callback"
+  },
+  "parameters": [
+    {
+      "key": "prompt",
+      "type": "string",
+      "required": true,
+      "node_id": "node-1",
+      "node_name": "Text to Image"
+    },
+    {
+      "key": "negative_prompt",
+      "type": "string",
+      "required": false,
+      "node_id": "node-1",
+      "node_name": "Text to Image"
+    },
+    {
+      "key": "width",
+      "type": "number",
+      "required": false,
+      "node_id": "node-1",
+      "node_name": "Text to Image"
+    }
+  ],
+  "endpoints": {
+    "run": "https://modelslab.com/api/v1/workflows/uuid-string/run",
+    "status": "https://modelslab.com/api/v1/workflows/uuid-string/runs/{id}"
+  }
+}
+```

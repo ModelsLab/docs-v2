@@ -1,0 +1,25 @@
+---
+title: "List Workflows"
+api: "GET https://modelslab.com/api/v1/workflows"
+description: "Returns a list of your API-enabled workflows."
+---
+
+### Response
+
+```json
+{
+  "status": "success",
+  "workflows": [
+    {
+      "id": "uuid-string",
+      "name": "My Workflow",
+      "description": "Generates images with custom prompts",
+      "rate_limit": 10,
+      "call_count": 150,
+      "last_called_at": "2024-01-15T10:30:00Z",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-15T10:30:00Z"
+    }
+  ]
+}
+```

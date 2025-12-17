@@ -1,0 +1,45 @@
+---
+title: "Overview"
+description: "Execute your custom workflows programmatically."
+---
+
+The Workflows API allows you to execute your custom workflows programmatically. Each workflow you create can be enabled as an API endpoint with its own unique parameters and responses.
+
+## Base URL
+
+```
+https://modelslab.com/api/v1/workflows
+```
+
+## Authentication
+
+All Workflows API requests require authentication using your ModelsLab API key. Include your API key in the request header:
+
+```
+key: YOUR_API_KEY
+```
+
+You can find your API key in your [dashboard settings](https://modelslab.com/dashboard/api-keys).
+
+## Rate Limiting
+
+Each workflow has its own configurable rate limit (default: 10 requests per minute per user). When you exceed the rate limit, you'll receive a `429 Too Many Requests` response with a `retry_after` field indicating when you can retry.
+
+## Webhooks
+
+If your workflow has a webhook URL configured, execution results will be automatically sent to that URL when the workflow completes or fails.
+
+**Webhook Payload:**
+
+```json
+{
+  "event": "workflow.completed",
+  "execution_id": 12345,
+  "workflow_id": "uuid-string",
+  "status": "completed",
+  "output": {
+    "output": ["https://cdn.modelslab.com/generated/image1.png"]
+  },
+  "completed_at": "2024-01-15T10:30:15Z"
+}
+```
