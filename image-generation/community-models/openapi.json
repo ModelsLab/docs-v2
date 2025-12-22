@@ -270,6 +270,11 @@
             "type": "string",
             "description": "Items you don't want in the image."
           },
+          "enhance_prompt": {
+            "type": "boolean",
+            "default": "yes",
+            "description": "If true, the prompt will be enhanced for better results. Default is (true)."
+          },
           "width": {
             "type": "integer",
             "default": 512,
