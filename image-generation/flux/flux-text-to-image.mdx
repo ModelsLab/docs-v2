@@ -1,33 +1,259 @@
 ---
 title: "Text to Image"
 openapi: 'POST /text2img'
-description: 'Create high quality image from text using FLUX model.'
+description: 'Create high quality images from text using the FLUX model.'
 ---
 
 ![Text to image endpoint result](/images/image-generation/flux/assets/images/Text-to-image-1-a226305d52e197b14c4cc0b1534ea06c.jpg)
 
+Generate photorealistic images from text descriptions using the FLUX model. FLUX excels at creating highly detailed, realistic images with excellent prompt adherence.
+
 ## Request
-Make a `POST` request to below endpoint and pass the required parameters as a request body.
-```curl curl
---request POST 'https://modelslab.com/api/v6/images/text2img' \
+
+Make a `POST` request to the endpoint below with the required parameters.
+
+```bash
+POST https://modelslab.com/api/v6/images/text2img
 ```
 
-## Body
-```json json
-{  
-    "key": "your_api_key",  
-    "model_id": "flux",  
-    "prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner)), blue eyes, shaved side haircut, hyper detail, cinematic lighting, magic neon, dark red city, Canon EOS R3, nikon, f/1.4, ISO 200, 1/160s, 8K, RAW, unedited, symmetrical balance, in-frame, 8K",  
-    "width": "512",  
-    "height": "512",  
-    "samples": "1",  
-    "num_inference_steps": "31",  
-    "safety_checker": "no",    
-    "seed": null,  
-    "guidance_scale": 7.5,   
-    "clip_skip": "2",  
-    "vae": null,  
-    "webhook": null,  
+## Parameters
+
+<ParamField body="key" type="string" required>
+  Your API key for authentication. Get one from your [dashboard](https://modelslab.com/dashboard/api-keys).
+</ParamField>
+
+<ParamField body="model_id" type="string" required>
+  The model to use for generation. Use `flux` for the FLUX model.
+</ParamField>
+
+<ParamField body="prompt" type="string" required>
+  Text description of the image you want to generate. Be specific and detailed for best results.
+</ParamField>
+
+<ParamField body="negative_prompt" type="string">
+  Things you don't want in the image. Example: "blurry, low quality, distorted"
+</ParamField>
+
+<ParamField body="width" type="integer" default="512">
+  Image width in pixels. Must be between 256-1024 and divisible by 8.
+</ParamField>
+
+<ParamField body="height" type="integer" default="512">
+  Image height in pixels. Must be between 256-1024 and divisible by 8.
+</ParamField>
+
+<ParamField body="samples" type="integer" default="1">
+  Number of images to generate. Range: 1-4.
+</ParamField>
+
+<ParamField body="num_inference_steps" type="integer" default="30">
+  Number of denoising steps. Higher values produce more detailed images but take longer. Range: 20-50.
+</ParamField>
+
+<ParamField body="guidance_scale" type="float" default="7.5">
+  How closely to follow the prompt. Higher values = more literal interpretation. Range: 1-20.
+</ParamField>
+
+<ParamField body="safety_checker" type="string" default="yes">
+  Enable NSFW content filter. Values: "yes" or "no".
+</ParamField>
+
+<ParamField body="seed" type="integer">
+  Random seed for reproducible results. Use the same seed with same parameters to get identical images.
+</ParamField>
+
+<ParamField body="clip_skip" type="integer" default="2">
+  Number of CLIP layers to skip. Affects style interpretation. Range: 1-4.
+</ParamField>
+
+<ParamField body="webhook" type="string">
+  URL to receive a POST request when generation completes. See [Webhooks](/webhooks).
+</ParamField>
+
+<ParamField body="track_id" type="string">
+  Your custom identifier to track this request. Returned in response and webhook.
+</ParamField>
+
+## Request Example
+
+<CodeGroup>
+
+```json Body
+{
+    "key": "your_api_key",
+    "model_id": "flux",
+    "prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner)), blue eyes, shaved side haircut, hyper detail, cinematic lighting, magic neon, dark red city, Canon EOS R3, nikon, f/1.4, ISO 200, 1/160s, 8K, RAW, unedited, symmetrical balance, in-frame, 8K",
+    "negative_prompt": "blurry, low quality, distorted, deformed",
+    "width": 512,
+    "height": 512,
+    "samples": 1,
+    "num_inference_steps": 31,
+    "safety_checker": "no",
+    "seed": null,
+    "guidance_scale": 7.5,
+    "clip_skip": 2,
+    "webhook": null,
     "track_id": null
 }
 ```
+
+```python Python
+import requests
+
+response = requests.post(
+    "https://modelslab.com/api/v6/images/text2img",
+    json={
+        "key": "your_api_key",
+        "model_id": "flux",
+        "prompt": "ultra realistic portrait of a cyberpunk woman, blue eyes, cinematic lighting, 8K",
+        "negative_prompt": "blurry, low quality, distorted",
+        "width": 512,
+        "height": 512,
+        "samples": 1,
+        "num_inference_steps": 31,
+        "guidance_scale": 7.5
+    }
+)
+
+data = response.json()
+print(data)
+```
+
+```javascript JavaScript
+const response = await fetch("https://modelslab.com/api/v6/images/text2img", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    key: "your_api_key",
+    model_id: "flux",
+    prompt: "ultra realistic portrait of a cyberpunk woman, blue eyes, cinematic lighting, 8K",
+    negative_prompt: "blurry, low quality, distorted",
+    width: 512,
+    height: 512,
+    samples: 1,
+    num_inference_steps: 31,
+    guidance_scale: 7.5
+  })
+});
+
+const data = await response.json();
+console.log(data);
+```
+
+```bash cURL
+curl -X POST "https://modelslab.com/api/v6/images/text2img" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "key": "your_api_key",
+    "model_id": "flux",
+    "prompt": "ultra realistic portrait of a cyberpunk woman, blue eyes, cinematic lighting, 8K",
+    "negative_prompt": "blurry, low quality, distorted",
+    "width": 512,
+    "height": 512,
+    "samples": 1,
+    "num_inference_steps": 31,
+    "guidance_scale": 7.5
+  }'
+```
+
+</CodeGroup>
+
+## Response
+
+### Success Response
+
+When the image is generated successfully:
+
+```json
+{
+  "status": "success",
+  "generationTime": 2.45,
+  "id": 12345678,
+  "output": [
+    "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/abc123.png"
+  ],
+  "proxy_links": {
+    "0": "https://cdn.modelslab.com/generations/abc123.png"
+  },
+  "meta": {
+    "prompt": "ultra realistic portrait...",
+    "model_id": "flux",
+    "width": 512,
+    "height": 512,
+    "seed": 12345
+  }
+}
+```
+
+### Processing Response
+
+For complex requests, you may receive a processing status:
+
+```json
+{
+  "status": "processing",
+  "id": 12345678,
+  "eta": 10,
+  "message": "Your request is being processed"
+}
+```
+
+<Tip>
+When you receive a processing response, use the [Fetch endpoint](/image-generation/community-models/dreambooth-fetch-queue-image) to poll for results.
+</Tip>
+
+### Error Response
+
+```json
+{
+  "status": "error",
+  "message": "prompt is required"
+}
+```
+
+## Response Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `status` | string | "success", "processing", or "error" |
+| `id` | integer | Unique request identifier |
+| `output` | array | URLs of generated images |
+| `proxy_links` | object | CDN-optimized URLs for faster delivery |
+| `generationTime` | float | Time taken to generate (seconds) |
+| `meta` | object | Generation parameters used |
+
+## Tips for Better Results
+
+<AccordionGroup>
+  <Accordion title="Write Detailed Prompts">
+    FLUX responds well to detailed, specific prompts. Include:
+    - Subject description
+    - Style (photorealistic, cinematic, etc.)
+    - Lighting details
+    - Camera settings (for photorealistic images)
+  </Accordion>
+
+  <Accordion title="Use Negative Prompts">
+    Always include a negative prompt to avoid common issues:
+    ```
+    "blurry, low quality, distorted, deformed, ugly, bad anatomy"
+    ```
+  </Accordion>
+
+  <Accordion title="Adjust Guidance Scale">
+    - **Lower (3-7)**: More creative, varied results
+    - **Higher (8-15)**: More literal prompt adherence
+    - **Default (7.5)**: Good balance for most use cases
+  </Accordion>
+</AccordionGroup>
+
+## Related Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Image to Image" icon="image" href="/image-generation/flux/flux-img2img">
+    Transform existing images with FLUX
+  </Card>
+  <Card title="Fetch Results" icon="download" href="/image-generation/community-models/dreambooth-fetch-queue-image">
+    Retrieve results for processing requests
+  </Card>
+</CardGroup>

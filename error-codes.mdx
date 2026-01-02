@@ -1,0 +1,340 @@
+---
+title: "Error Codes"
+description: "Understanding and handling API errors"
+---
+
+## Error Response Format
+
+When an error occurs, the API returns a JSON response with the following structure:
+
+```json
+{
+  "status": "error",
+  "message": "Human-readable error description"
+}
+```
+
+<Note>
+Some legacy endpoints may return `messege` instead of `message`. Handle both fields for compatibility.
+</Note>
+
+## HTTP Status Codes
+
+<AccordionGroup>
+  <Accordion title="400 - Bad Request" icon="circle-xmark">
+    **Cause**: The request contains invalid parameters or is malformed.
+
+    **Common Issues**:
+    - Missing required parameter (e.g., `prompt`, `key`)
+    - Invalid parameter type (e.g., string instead of number)
+    - Parameter value out of allowed range
+    - Malformed JSON in request body
+
+    **Example Response**:
+    ```json
+    {
+      "status": "error",
+      "message": "prompt is required"
+    }
+    ```
+
+    **Solution**: Review your request parameters against the API documentation. Ensure all required fields are included and properly formatted.
+  </Accordion>
+
+  <Accordion title="401 - Unauthorized" icon="lock">
+    **Cause**: Authentication failed or API key is invalid.
+
+    **Common Issues**:
+    - Missing `key` parameter in request body
+    - Invalid or revoked API key
+    - Expired API key
+
+    **Example Response**:
+    ```json
+    {
+      "status": "error",
+      "message": "Invalid API key"
+    }
+    ```
+
+    **Solution**:
+    1. Verify your API key is correct
+    2. Check the key is included in the request body
+    3. Ensure the key hasn't been revoked in your [dashboard](https://modelslab.com/dashboard/api-keys)
+  </Accordion>
+
+  <Accordion title="402 - Payment Required" icon="credit-card">
+    **Cause**: Insufficient credits or expired subscription.
+
+    **Example Response**:
+    ```json
+    {
+      "status": "error",
+      "message": "Insufficient credits. Please add more credits to continue."
+    }
+    ```
+
+    **Solution**: Add credits or renew your subscription in the [billing section](https://modelslab.com/dashboard/billing).
+  </Accordion>
+
+  <Accordion title="403 - Forbidden" icon="ban">
+    **Cause**: The requested feature is not available on your current plan.
+
+    **Example Response**:
+    ```json
+    {
+      "status": "error",
+      "message": "This feature requires a premium subscription"
+    }
+    ```
+
+    **Solution**: Upgrade your subscription to access this feature.
+  </Accordion>
+
+  <Accordion title="429 - Too Many Requests" icon="gauge-high">
+    **Cause**: You've exceeded your rate limit (queue limit).
+
+    **Example Response**:
+    ```json
+    {
+      "status": "error",
+      "message": "Rate limit exceeded. Maximum 5 queued requests allowed.",
+      "retry_after": 30
+    }
+    ```
+
+    **Solution**:
+    1. Wait for current requests to complete
+    2. Implement exponential backoff in your code
+    3. Consider upgrading your plan for higher limits
+
+    See [Rate Limits](/rate-limits) for plan-specific queue limits.
+  </Accordion>
+
+  <Accordion title="500 - Server Error" icon="server">
+    **Cause**: An internal server error occurred during processing.
+
+    **Example Response**:
+    ```json
+    {
+      "status": "error",
+      "message": "Internal server error. Please try again."
+    }
+    ```
+
+    **Solution**:
+    1. Wait a few seconds and retry the request
+    2. If the error persists, check the [status page](https://modelslab.com/status)
+    3. Contact [support](https://modelslab.com/support) if the issue continues
+  </Accordion>
+
+  <Accordion title="503 - Service Unavailable" icon="clock">
+    **Cause**: The service is temporarily unavailable, usually due to high load or maintenance.
+
+    **Example Response**:
+    ```json
+    {
+      "status": "error",
+      "message": "Service temporarily unavailable. Please try again later."
+    }
+    ```
+
+    **Solution**: Wait and retry with exponential backoff. Check the status page for any ongoing maintenance.
+  </Accordion>
+</AccordionGroup>
+
+## Common Error Scenarios
+
+### Missing Required Parameters
+
+```json
+// Request missing prompt
+{
+  "key": "your_api_key",
+  "model_id": "flux"
+}
+
+// Response
+{
+  "status": "error",
+  "message": "prompt is required"
+}
+```
+
+### Invalid Model ID
+
+```json
+// Request with invalid model
+{
+  "key": "your_api_key",
+  "prompt": "A sunset",
+  "model_id": "invalid_model_name"
+}
+
+// Response
+{
+  "status": "error",
+  "message": "Model not found: invalid_model_name"
+}
+```
+
+### Image URL Issues
+
+```json
+// Request with inaccessible image URL
+{
+  "key": "your_api_key",
+  "init_image": "https://example.com/image.jpg"
+}
+
+// Response
+{
+  "status": "error",
+  "message": "Unable to fetch image from provided URL"
+}
+```
+
+<Tip>
+When using image URLs, ensure the image is publicly accessible and returns proper CORS headers.
+</Tip>
+
+## Handling Errors in Code
+
+### Python
+
+```python
+import requests
+import time
+
+def make_api_request(payload, max_retries=3):
+    url = "https://modelslab.com/api/v6/images/text2img"
+
+    for attempt in range(max_retries):
+        response = requests.post(url, json=payload)
+        data = response.json()
+
+        if response.status_code == 200:
+            if data.get("status") == "success":
+                return data["output"]
+            elif data.get("status") == "processing":
+                # Handle async processing
+                return poll_for_result(data["id"])
+
+        elif response.status_code == 429:
+            # Rate limited - wait and retry
+            retry_after = data.get("retry_after", 30)
+            print(f"Rate limited. Waiting {retry_after} seconds...")
+            time.sleep(retry_after)
+            continue
+
+        elif response.status_code == 401:
+            raise Exception("Invalid API key")
+
+        elif response.status_code >= 500:
+            # Server error - retry with backoff
+            wait_time = 2 ** attempt
+            print(f"Server error. Retrying in {wait_time} seconds...")
+            time.sleep(wait_time)
+            continue
+
+        else:
+            raise Exception(f"API Error: {data.get('message', 'Unknown error')}")
+
+    raise Exception("Max retries exceeded")
+```
+
+### JavaScript
+
+```javascript
+async function makeApiRequest(payload, maxRetries = 3) {
+  const url = "https://modelslab.com/api/v6/images/text2img";
+
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        if (data.status === "success") {
+          return data.output;
+        } else if (data.status === "processing") {
+          return await pollForResult(data.id);
+        }
+      }
+
+      if (response.status === 429) {
+        const retryAfter = data.retry_after || 30;
+        console.log(`Rate limited. Waiting ${retryAfter} seconds...`);
+        await new Promise(r => setTimeout(r, retryAfter * 1000));
+        continue;
+      }
+
+      if (response.status === 401) {
+        throw new Error("Invalid API key");
+      }
+
+      if (response.status >= 500) {
+        const waitTime = Math.pow(2, attempt) * 1000;
+        console.log(`Server error. Retrying in ${waitTime / 1000} seconds...`);
+        await new Promise(r => setTimeout(r, waitTime));
+        continue;
+      }
+
+      throw new Error(`API Error: ${data.message || "Unknown error"}`);
+
+    } catch (error) {
+      if (attempt === maxRetries - 1) throw error;
+    }
+  }
+
+  throw new Error("Max retries exceeded");
+}
+```
+
+## Validation Errors
+
+When request validation fails, you'll receive specific error messages:
+
+| Field | Error Message | Solution |
+|-------|---------------|----------|
+| prompt | "prompt is required" | Include the `prompt` parameter |
+| prompt | "prompt must be a string" | Ensure prompt is a text string |
+| width | "width must be between 256 and 1024" | Use valid dimensions |
+| height | "height must be divisible by 8" | Use values like 512, 768, 1024 |
+| samples | "samples must be between 1 and 4" | Request 1-4 images per call |
+| guidance_scale | "guidance_scale must be between 1 and 20" | Use values in valid range |
+
+## Processing Status vs Errors
+
+Not all non-success responses are errors. Some indicate the request is still processing:
+
+```json
+// This is NOT an error - request is processing
+{
+  "status": "processing",
+  "id": "abc123-def456",
+  "eta": 30,
+  "message": "Your request is being processed"
+}
+```
+
+Use the [fetch endpoint](/general-api/fetch-image) to check the status of processing requests.
+
+## Getting Help
+
+<CardGroup cols={3}>
+  <Card title="Discord" icon="discord" href="https://discord.com/invite/modelslab-1033301189254729748">
+    Get community help
+  </Card>
+  <Card title="Email Support" icon="envelope" href="mailto:support@modelslab.com">
+    Contact support team
+  </Card>
+  <Card title="Status Page" icon="signal" href="https://modelslab.com/status">
+    Check service status
+  </Card>
+</CardGroup>

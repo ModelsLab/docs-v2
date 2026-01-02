@@ -1,0 +1,411 @@
+---
+title: "Webhooks"
+description: "Receive notifications when your API requests complete"
+---
+
+## Overview
+
+Webhooks allow you to receive real-time notifications when your API requests complete processing. Instead of polling the fetch endpoint repeatedly, ModelsLab will send the results directly to your server.
+
+<Info>
+**Best for**: Long-running operations like video generation, model training, and batch image processing where you don't want to keep polling for results.
+</Info>
+
+## How Webhooks Work
+
+<Steps>
+  <Step title="Include Webhook URL">
+    Add the `webhook` parameter to your API request with your endpoint URL.
+  </Step>
+  <Step title="Request Processing">
+    ModelsLab processes your request asynchronously.
+  </Step>
+  <Step title="Webhook Delivery">
+    When complete, ModelsLab sends a POST request to your webhook URL with the results.
+  </Step>
+</Steps>
+
+## Using Webhooks
+
+Add the `webhook` parameter to any API request that supports async processing:
+
+<CodeGroup>
+
+```python Python
+import requests
+
+response = requests.post(
+    "https://modelslab.com/api/v6/video/text2video",
+    json={
+        "key": "your_api_key",
+        "model_id": "cogvideox",
+        "prompt": "A spaceship flying through an asteroid field",
+        "width": 512,
+        "height": 512,
+        "num_frames": 25,
+        "webhook": "https://your-server.com/webhook/modelslab",
+        "track_id": "video_001"  # Optional: your own identifier
+    }
+)
+
+# You'll get an immediate response with the request ID
+data = response.json()
+print(f"Request ID: {data['id']}")
+# Results will be sent to your webhook URL when ready
+```
+
+```javascript JavaScript
+const response = await fetch("https://modelslab.com/api/v6/video/text2video", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    key: "your_api_key",
+    model_id: "cogvideox",
+    prompt: "A spaceship flying through an asteroid field",
+    width: 512,
+    height: 512,
+    num_frames: 25,
+    webhook: "https://your-server.com/webhook/modelslab",
+    track_id: "video_001"
+  })
+});
+
+const data = await response.json();
+console.log(`Request ID: ${data.id}`);
+// Results will be sent to your webhook URL when ready
+```
+
+```bash cURL
+curl -X POST "https://modelslab.com/api/v6/video/text2video" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "key": "your_api_key",
+    "model_id": "cogvideox",
+    "prompt": "A spaceship flying through an asteroid field",
+    "width": 512,
+    "height": 512,
+    "num_frames": 25,
+    "webhook": "https://your-server.com/webhook/modelslab",
+    "track_id": "video_001"
+  }'
+```
+
+</CodeGroup>
+
+## Webhook Payload
+
+When your request completes, ModelsLab sends a POST request to your webhook URL with this payload:
+
+### Success Payload
+
+```json
+{
+  "status": "success",
+  "id": "abc123-def456",
+  "output": [
+    "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/abc123.mp4"
+  ],
+  "generationTime": 45.2,
+  "track_id": "video_001",
+  "meta": {
+    "prompt": "A spaceship flying through an asteroid field",
+    "model_id": "cogvideox",
+    "width": 512,
+    "height": 512
+  }
+}
+```
+
+### Failure Payload
+
+```json
+{
+  "status": "failed",
+  "id": "abc123-def456",
+  "message": "Processing failed: Invalid input dimensions",
+  "track_id": "video_001"
+}
+```
+
+### Workflow Webhook Payload
+
+For Workflows API, the payload structure includes additional workflow information:
+
+```json
+{
+  "event": "workflow.completed",
+  "workflow": {
+    "id": "wf_abc123",
+    "name": "My Image Pipeline",
+    "user_id": 12345
+  },
+  "execution": {
+    "id": "exec_xyz789",
+    "status": "completed",
+    "started_at": "2026-01-02T10:30:00Z",
+    "completed_at": "2026-01-02T10:30:45Z",
+    "execution_time": 45.2,
+    "input_data": {
+      "prompt": "A beautiful sunset"
+    },
+    "output_data": {
+      "images": ["https://..."]
+    }
+  }
+}
+```
+
+## Setting Up Your Webhook Endpoint
+
+Create an endpoint on your server to receive webhook notifications:
+
+<CodeGroup>
+
+```python Python (Flask)
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route('/webhook/modelslab', methods=['POST'])
+def handle_webhook():
+    data = request.json
+
+    if data.get('status') == 'success':
+        # Process successful generation
+        output_urls = data.get('output', [])
+        track_id = data.get('track_id')
+
+        print(f"Generation {track_id} completed!")
+        print(f"Output URLs: {output_urls}")
+
+        # Your logic here: save to database, notify user, etc.
+
+    elif data.get('status') == 'failed':
+        # Handle failure
+        error_message = data.get('message')
+        track_id = data.get('track_id')
+
+        print(f"Generation {track_id} failed: {error_message}")
+
+    return jsonify({'received': True}), 200
+
+if __name__ == '__main__':
+    app.run(port=5000)
+```
+
+```javascript JavaScript (Express)
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+app.post('/webhook/modelslab', (req, res) => {
+  const data = req.body;
+
+  if (data.status === 'success') {
+    // Process successful generation
+    const outputUrls = data.output || [];
+    const trackId = data.track_id;
+
+    console.log(`Generation ${trackId} completed!`);
+    console.log(`Output URLs: ${outputUrls}`);
+
+    // Your logic here: save to database, notify user, etc.
+
+  } else if (data.status === 'failed') {
+    // Handle failure
+    const errorMessage = data.message;
+    const trackId = data.track_id;
+
+    console.log(`Generation ${trackId} failed: ${errorMessage}`);
+  }
+
+  res.json({ received: true });
+});
+
+app.listen(5000, () => {
+  console.log('Webhook server running on port 5000');
+});
+```
+
+```php PHP
+<?php
+header('Content-Type: application/json');
+
+$payload = file_get_contents('php://input');
+$data = json_decode($payload, true);
+
+if ($data['status'] === 'success') {
+    // Process successful generation
+    $outputUrls = $data['output'] ?? [];
+    $trackId = $data['track_id'] ?? '';
+
+    error_log("Generation {$trackId} completed!");
+    error_log("Output URLs: " . json_encode($outputUrls));
+
+    // Your logic here: save to database, notify user, etc.
+
+} elseif ($data['status'] === 'failed') {
+    // Handle failure
+    $errorMessage = $data['message'] ?? 'Unknown error';
+    $trackId = $data['track_id'] ?? '';
+
+    error_log("Generation {$trackId} failed: {$errorMessage}");
+}
+
+echo json_encode(['received' => true]);
+?>
+```
+
+</CodeGroup>
+
+## Webhook Requirements
+
+<CardGroup cols={2}>
+  <Card title="HTTPS Required" icon="lock">
+    Your webhook URL must use HTTPS for security.
+  </Card>
+  <Card title="Respond Quickly" icon="clock">
+    Return a 2xx status code within 30 seconds to acknowledge receipt.
+  </Card>
+  <Card title="Handle Duplicates" icon="copy">
+    Webhooks may be sent multiple times. Use `id` or `track_id` for idempotency.
+  </Card>
+  <Card title="Public Endpoint" icon="globe">
+    Your webhook endpoint must be publicly accessible.
+  </Card>
+</CardGroup>
+
+## The `track_id` Parameter
+
+Use `track_id` to correlate webhook responses with your internal records:
+
+```python
+# When making the request
+response = requests.post(url, json={
+    "key": "your_api_key",
+    "prompt": "A sunset",
+    "webhook": "https://your-server.com/webhook",
+    "track_id": "order_12345"  # Your internal order ID
+})
+
+# In your webhook handler
+def handle_webhook(data):
+    track_id = data.get('track_id')  # "order_12345"
+    # Update your order with the generated content
+    update_order(track_id, data['output'])
+```
+
+## Retry Policy
+
+If your webhook endpoint is unreachable or returns a non-2xx status:
+
+- **Workflow webhooks**: Retried up to 3 times with exponential backoff
+- **Generation webhooks**: Best-effort delivery, use fetch endpoint as fallback
+
+<Tip>
+Always implement the fetch endpoint as a fallback. If you don't receive a webhook within the expected time, poll the fetch endpoint.
+</Tip>
+
+## Testing Webhooks Locally
+
+Use a tunneling service to test webhooks during development:
+
+### Using ngrok
+
+```bash
+# Install ngrok
+brew install ngrok  # macOS
+
+# Start your local server
+python app.py  # Running on port 5000
+
+# In another terminal, start ngrok
+ngrok http 5000
+
+# Use the ngrok URL as your webhook
+# https://abc123.ngrok.io/webhook/modelslab
+```
+
+### Using localtunnel
+
+```bash
+# Install localtunnel
+npm install -g localtunnel
+
+# Start tunnel
+lt --port 5000
+
+# Use the provided URL as your webhook
+```
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Always respond with 2xx">
+    Return a 200 or 202 status code immediately to acknowledge receipt. Do heavy processing asynchronously.
+  </Accordion>
+
+  <Accordion title="Implement idempotency">
+    Store the `id` or `track_id` and check before processing to handle duplicate deliveries.
+  </Accordion>
+
+  <Accordion title="Log webhook payloads">
+    Log all incoming webhook payloads for debugging and audit purposes.
+  </Accordion>
+
+  <Accordion title="Use a message queue">
+    For production systems, push webhook data to a queue (Redis, SQS, etc.) and process asynchronously.
+  </Accordion>
+
+  <Accordion title="Set up monitoring">
+    Monitor your webhook endpoint for failures and response times.
+  </Accordion>
+</AccordionGroup>
+
+## Endpoints Supporting Webhooks
+
+The `webhook` parameter is supported by these API endpoints:
+
+| Category | Endpoints |
+|----------|-----------|
+| **Image Generation** | text2img, img2img, inpaint, controlnet |
+| **Video** | text2video, img2video, text2video_ultra, img2video_ultra |
+| **Audio** | text_to_speech, voice_to_voice, music_gen, song_generator |
+| **3D** | text_to_3d, image_to_3d |
+| **Image Editing** | All editing endpoints |
+| **Training** | fine_tune, lora_fine_tune |
+| **Workflows** | run (workflow execution) |
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Webhook not received">
+    1. Verify your URL is publicly accessible (test with curl from outside your network)
+    2. Check your server logs for incoming requests
+    3. Ensure your endpoint returns 2xx within 30 seconds
+    4. Use the fetch endpoint to check if the request completed
+  </Accordion>
+
+  <Accordion title="Receiving duplicate webhooks">
+    This is expected behavior for reliability. Implement idempotency using the request `id` or your `track_id`.
+  </Accordion>
+
+  <Accordion title="Webhook timing out">
+    If your processing takes too long:
+    1. Return 200 immediately
+    2. Process the webhook payload asynchronously
+    3. Use a message queue for heavy processing
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Video API" icon="video" href="/video-api/overview">
+    Generate videos with webhook notifications
+  </Card>
+  <Card title="Workflows API" icon="diagram-project" href="/workflows-api/overview">
+    Create complex pipelines with webhooks
+  </Card>
+</CardGroup>

@@ -1,7 +1,20 @@
 ---
-title: TypeScript
-description: "The client for Typescript provides a seamless interface to interact with Modelslab API."
+title: "TypeScript SDK"
+description: "Official TypeScript/JavaScript client for the ModelsLab API - generate images, videos, audio, and more."
 ---
+
+## Overview
+
+The ModelsLab TypeScript SDK provides a type-safe interface to interact with all ModelsLab APIs. It works with both Node.js and browser environments.
+
+<CardGroup cols={2}>
+  <Card title="npm Package" icon="npm" href="https://www.npmjs.com/package/modelslab">
+    View on npm
+  </Card>
+  <Card title="GitHub" icon="github" href="https://github.com/modelslab/modelslab-js">
+    Source code and issues
+  </Card>
+</CardGroup>
 
 ## Installation
 
@@ -9,35 +22,73 @@ description: "The client for Typescript provides a seamless interface to interac
 npm install modelslab
 ```
 
-## Basic setup / Connecting to Client
-Create client to connect to ModelsLab API.
+Or with yarn:
 
-```JavaScript
-// Method 1: Direct API key
+```bash
+yarn add modelslab
+```
+
+## Quick Start
+
+Generate your first AI image in just a few lines:
+
+```javascript
+import { Client, Community } from "modelslab";
+
+const client = new Client("your-api-key");
+const community = new Community(client.key);
+
+const result = await community.textToImage({
+  key: client.key,
+  prompt: "A beautiful sunset over mountains, photorealistic, 8k",
+  model_id: "flux",
+  width: 512,
+  height: 512,
+  samples: 1,
+  num_inference_steps: 30,
+  guidance_scale: 7.5
+});
+
+if (result.status === "success") {
+  console.log("Generated image:", result.output[0]);
+} else if (result.status === "processing") {
+  console.log("Processing, request ID:", result.id);
+}
+```
+
+## Client Configuration
+
+### Basic Setup
+
+```javascript
 import { Client } from "modelslab";
+
+// Method 1: Direct API key
 const client = new Client("your-api-key");
 
 // Method 2: Environment variable
-// Client reads from process.env.API_KEY when called without args
+// Reads from process.env.API_KEY when called without args
 const clientFromEnv = new Client();
 
-// Method 3: With custom settings (retries, timeout)
-const clientCustom = new Client("your-api-key", 5, 10); // 5 retries, 10s timeout
-```
-You can access client properties:
-
-```JavaScript
-console.log(client.baseUrl);      
-console.log(client.fetchRetry);   
-console.log(client.fetchTimeout);
+// Method 3: With custom settings
+// new Client(apiKey, retries, timeoutSeconds)
+const clientCustom = new Client("your-api-key", 5, 10);
 ```
 
-## Select API Client
+### Client Properties
 
-```JavaScript
+```javascript
+console.log(client.baseUrl);       // API base URL
+console.log(client.fetchRetry);    // Number of retries
+console.log(client.fetchTimeout);  // Timeout in seconds
+```
+
+## Available APIs
+
+```javascript
 import { Community, Audio, Video, DeepFake, ImageEditing } from "modelslab";
 
-// Create instances
+// Create instances with your API key
 const community = new Community(client.key);
 const audio = new Audio(client.key);
 const video = new Video(client.key);
@@ -45,192 +96,581 @@ const deepfake = new DeepFake(client.key);
 const imageEditing = new ImageEditing(client.key);
 ```
 
+### Enterprise Mode
+
 For enterprise/dedicated endpoints:
 
-```JavaScript
-// Enable enterprise mode
+```javascript
+// Pass true as second argument for enterprise mode
 const enterpriseCommunity = new Community(client.key, true);
-// Uses enterprise endpoints, e.g. https://modelslab.com/api/v1/enterprise/images/
+// Uses endpoints like: https://modelslab.com/api/v1/enterprise/images/
 ```
 
-## Quick Start — Your First AI Image
+---
 
-```JavaScript
+## Image Generation (Community API)
+
+### Text to Image
+
+```javascript
 import { Client, Community } from "modelslab";
 
-const client = new Client("your-api-key-here");
+const client = new Client("your-api-key");
 const community = new Community(client.key);
 
 const result = await community.textToImage({
   key: client.key,
-  prompt: "A beautiful sunset over mountains",
+  prompt: "A cyberpunk city at night, neon lights, rain, cinematic",
+  negative_prompt: "blurry, low quality, distorted",
   model_id: "flux",
-  width: 512,
-  height: 512,
+  width: 1024,
+  height: 1024,
   samples: 1,
+  num_inference_steps: 30,
+  guidance_scale: 7.5,
+  seed: 12345  // Optional: for reproducible results
 });
 
 console.log("Generated image:", result.output[0]);
 ```
 
-## Available APIs (summary)
+### Image to Image
 
-- Community — community models (text→image, image→image, controlnet, inpainting)
+Transform existing images with a text prompt:
 
-- Audio — text-to-audio, text-to-speech, voice2voice, voice cover, music generation, lyrics, song generator, speech-to-text, SFX
-
-- Video — text-to-video, image-to-video
-
-- DeepFake — face swap and video swap endpoints
-
-- ImageEditing — outpainting, background removal, super resolution, fashion, object removal, facegen, inpainting, headshot, flux headshot
-
-## Community API Usage
-
-```JavaScript
-import { Community } from "modelslab";
-
-const community = new Community(client.key);
-
-// Text to Image
-const image = await community.textToImage({
+```javascript
+const result = await community.imageToImage({
   key: client.key,
-  prompt: "A futuristic city at night",
-  model_id: "stable-diffusion-v1-5",
+  prompt: "Transform into a watercolor painting style",
+  negative_prompt: "photo, realistic",
+  init_image: "https://example.com/your-image.jpg",
+  model_id: "flux",
+  strength: 0.7,  // How much to change (0-1)
   width: 512,
   height: 512,
-  samples: 1,
-  num_inference_steps: 20,
-  guidance_scale: 7.5,
+  num_inference_steps: 30,
+  guidance_scale: 7.5
 });
 
-// Image to Image
-const imageToImage = await community.imageToImage({
-  key: client.key,
-  prompt: "A painting in Van Gogh style",
-  init_image: "base64-encoded-image",
-  model_id: "stable-diffusion-v1-5",
-  strength: 0.8,
-});
-
-// Inpainting (Fill masked areas)
-const inpainting = await community.inpainting({
-  key: client.key,
-  prompt: "A red car",
-  init_image: "base64-encoded-image",
-  mask_image: "base64-encoded-mask",
-  model_id: "stable-diffusion-v1-5",
-});
-
-// ControlNet (Guided generation)
-const controlnet = await community.controlnet({
-  key: client.key,
-  prompt: "A realistic portrait",
-  controlnet_model: "canny",
-  controlnet_conditioning_scale: 1.0,
-  model_id: "stable-diffusion-v1-5",
-});
+console.log("Transformed image:", result.output[0]);
 ```
 
-## Audio API Usage
-```JavaScript
-import { Audio } from "modelslab";
+### Inpainting
 
+Edit specific areas of an image:
+
+```javascript
+const result = await community.inpainting({
+  key: client.key,
+  prompt: "A red sports car",
+  init_image: "https://example.com/image.jpg",
+  mask_image: "https://example.com/mask.png",  // White = edit, Black = keep
+  model_id: "flux",
+  width: 512,
+  height: 512,
+  num_inference_steps: 30,
+  guidance_scale: 7.5
+});
+
+console.log("Inpainted image:", result.output[0]);
+```
+
+### ControlNet
+
+Guided generation with reference images:
+
+```javascript
+const result = await community.controlnet({
+  key: client.key,
+  prompt: "A beautiful house, photorealistic, sunny day",
+  controlnet_model: "canny",  // canny, depth, pose, etc.
+  controlnet_image: "https://example.com/edges.jpg",
+  controlnet_conditioning_scale: 1.0,
+  model_id: "flux",
+  width: 512,
+  height: 512,
+  num_inference_steps: 30,
+  guidance_scale: 7.5
+});
+
+console.log("ControlNet result:", result.output[0]);
+```
+
+---
+
+## Audio API
+
+### Text to Audio
+
+Generate audio from text descriptions:
+
+```javascript
+import { Client, Audio } from "modelslab";
+
+const client = new Client("your-api-key");
 const audio = new Audio(client.key);
 
-// Text to Audio
-const t2a = await audio.textToAudio({...});
+const result = await audio.textToAudio({
+  key: client.key,
+  prompt: "A calm piano melody with soft strings in the background",
+  duration: 30  // Duration in seconds
+});
 
-// Text to Speech
-const tts = await audio.textToSpeech({...});
-
-// Voice to Voice
-const v2v = await audio.voice2voice({...});
-
-// Voice Cover
-const vc = await audio.voiceCover({...});
-
-// Music Generation
-const mg = await audio.musicGen({...});
-
-// Lyrics generation
-const lyrics = await audio.lyricsGen({...});
-
-// Song generation
-const song = await audio.songGenerator({...});
-
-// Speech to Text
-const stt = await audio.speechToText({...});
-
-// SFX generation
-const sfx = await audio.sfxGen({...});
+console.log("Audio URL:", result.output[0]);
 ```
 
-## Video API Usage
+### Text to Speech
 
-```JavaScript
-import { Video } from "modelslab";
+Convert text to natural speech:
 
+```javascript
+const result = await audio.textToSpeech({
+  key: client.key,
+  text: "Hello! Welcome to ModelsLab. This is a sample of our text-to-speech API.",
+  voice_id: "alloy",  // Choose from available voices
+  language: "en"
+});
+
+console.log("Speech URL:", result.output[0]);
+```
+
+### Voice to Voice (Voice Cloning)
+
+Clone a voice from a reference audio:
+
+```javascript
+const result = await audio.voice2voice({
+  key: client.key,
+  init_audio: "https://example.com/source-speech.mp3",
+  target_audio: "https://example.com/voice-to-clone.mp3"
+});
+
+console.log("Cloned voice URL:", result.output[0]);
+```
+
+### Voice Cover
+
+Create AI covers with different voices:
+
+```javascript
+const result = await audio.voiceCover({
+  key: client.key,
+  init_audio: "https://example.com/song.mp3",
+  voice_id: "celebrity-voice-id"
+});
+
+console.log("Voice cover URL:", result.output[0]);
+```
+
+### Music Generation
+
+Generate music from text prompts:
+
+```javascript
+const result = await audio.musicGen({
+  key: client.key,
+  prompt: "Upbeat electronic dance music with heavy bass drops and synth melodies",
+  duration: 30
+});
+
+console.log("Generated music:", result.output[0]);
+```
+
+### Lyrics Generation
+
+Generate song lyrics:
+
+```javascript
+const result = await audio.lyricsGen({
+  key: client.key,
+  prompt: "Write lyrics for a pop song about summer love and road trips"
+});
+
+console.log("Generated lyrics:", result.output);
+```
+
+### Song Generation
+
+Generate complete songs with vocals:
+
+```javascript
+const result = await audio.songGenerator({
+  key: client.key,
+  prompt: "A country ballad about hometown memories",
+  lyrics: "Optional: your custom lyrics here"
+});
+
+console.log("Generated song:", result.output[0]);
+```
+
+### Speech to Text
+
+Transcribe audio to text:
+
+```javascript
+const result = await audio.speechToText({
+  key: client.key,
+  audio: "https://example.com/speech.mp3",
+  language: "en"
+});
+
+console.log("Transcription:", result.text);
+```
+
+### Sound Effects (SFX)
+
+Generate sound effects:
+
+```javascript
+const result = await audio.sfxGen({
+  key: client.key,
+  prompt: "Thunder rolling in the distance with heavy rain on a metal roof",
+  duration: 10
+});
+
+console.log("Sound effect URL:", result.output[0]);
+```
+
+---
+
+## Video API
+
+### Text to Video
+
+Generate videos from text descriptions:
+
+```javascript
+import { Client, Video } from "modelslab";
+
+const client = new Client("your-api-key");
 const video = new Video(client.key);
 
-// Text to Video
-const t2v = await video.textToVideo({...});
+const result = await video.textToVideo({
+  key: client.key,
+  model_id: "cogvideox",
+  prompt: "A spaceship flying through an asteroid field, cinematic, 4K",
+  negative_prompt: "low quality, blurry, static",
+  width: 512,
+  height: 512,
+  num_frames: 25,
+  num_inference_steps: 20,
+  guidance_scale: 7
+});
 
-// Image to Video
-const i2v = await video.imageToVideo({...});
+// Video generation is async
+if (result.status === "processing") {
+  console.log("Processing, request ID:", result.id);
+  console.log("ETA:", result.eta, "seconds");
+} else if (result.status === "success") {
+  console.log("Video URL:", result.output[0]);
+}
 ```
 
-## DeepFake API Usage
+### Image to Video
 
-```JavaScript
-import { DeepFake } from "modelslab";
+Animate a static image:
 
+```javascript
+const result = await video.imageToVideo({
+  key: client.key,
+  model_id: "cogvideox",
+  init_image: "https://example.com/landscape.jpg",
+  prompt: "Clouds moving slowly, birds flying in the distance",
+  num_frames: 25,
+  num_inference_steps: 20,
+  guidance_scale: 7
+});
+
+console.log("Result:", result);
+```
+
+---
+
+## DeepFake API
+
+### Specific Face Swap (Image)
+
+Swap a specific face in an image:
+
+```javascript
+import { Client, DeepFake } from "modelslab";
+
+const client = new Client("your-api-key");
 const deepfake = new DeepFake(client.key);
 
-// Specific Face Swap
-const sfs = await deepfake.specificFaceSwap({...});
+const result = await deepfake.specificFaceSwap({
+  key: client.key,
+  init_image: "https://example.com/target-photo.jpg",
+  target_image: "https://example.com/face-to-swap.jpg"
+});
 
-// Multiple Face Swap
-const mfs = await deepfake.multipleFaceSwap({...});
-
-// Specific Video Swap
-const svs = await deepfake.specificVideoSwap({...});
-
-// Single Video Swap
-const single = await deepfake.singleVideoSwap({...});
+console.log("Face swap result:", result.output[0]);
 ```
 
-## Image Editing API Usage
-```JavaScript
-import { ImageEditing } from "modelslab";
+### Multiple Face Swap
 
+Swap all faces in an image:
+
+```javascript
+const result = await deepfake.multipleFaceSwap({
+  key: client.key,
+  init_image: "https://example.com/group-photo.jpg",
+  target_image: "https://example.com/new-face.jpg"
+});
+
+console.log("Multiple face swap:", result.output[0]);
+```
+
+### Single Video Swap
+
+Swap all faces in a video:
+
+```javascript
+const result = await deepfake.singleVideoSwap({
+  key: client.key,
+  init_video: "https://example.com/video.mp4",
+  target_image: "https://example.com/face.jpg"
+});
+
+console.log("Video swap result:", result);
+```
+
+### Specific Video Swap
+
+Swap a specific face in a video:
+
+```javascript
+const result = await deepfake.specificVideoSwap({
+  key: client.key,
+  init_video: "https://example.com/video.mp4",
+  target_image: "https://example.com/new-face.jpg",
+  source_image: "https://example.com/face-to-replace.jpg"
+});
+
+console.log("Specific video swap:", result);
+```
+
+---
+
+## Image Editing API
+
+### Background Removal
+
+```javascript
+import { Client, ImageEditing } from "modelslab";
+
+const client = new Client("your-api-key");
 const imageEditing = new ImageEditing(client.key);
 
-// Outpainting
-const out = await imageEditing.outpainting({...});
+const result = await imageEditing.backgroundRemover({
+  key: client.key,
+  image: "https://example.com/photo.jpg"
+});
 
-// Background Remover
-const br = await imageEditing.backgroundRemover({...});
-
-// Super Resolution
-const sr = await imageEditing.superResolution({...});
-
-// Fashion
-const fashion = await imageEditing.fashion({...});
-
-// Object Remover
-const obj = await imageEditing.objectRemover({...});
-
-// Facegen
-const facegen = await imageEditing.facegen({...});
-
-// Inpainting
-const inp = await imageEditing.inpainting({...});
-
-// Headshot
-const headshot = await imageEditing.headshot({...});
-
-// Flux Headshot
-const flux = await imageEditing.fluxHeadshot({...});
+console.log("Image without background:", result.output[0]);
 ```
 
+### Super Resolution (Upscale)
+
+```javascript
+const result = await imageEditing.superResolution({
+  key: client.key,
+  image: "https://example.com/low-res-image.jpg",
+  scale: 4  // 2x or 4x upscale
+});
+
+console.log("Upscaled image:", result.output[0]);
+```
+
+### Outpainting (Extend Images)
+
+```javascript
+const result = await imageEditing.outpainting({
+  key: client.key,
+  image: "https://example.com/photo.jpg",
+  prompt: "Continue the landscape with mountains and trees",
+  width: 1024,  // New width (larger than original)
+  height: 768   // New height
+});
+
+console.log("Extended image:", result.output[0]);
+```
+
+### Object Removal
+
+```javascript
+const result = await imageEditing.objectRemover({
+  key: client.key,
+  image: "https://example.com/photo.jpg",
+  mask_image: "https://example.com/mask.png"  // White areas will be removed
+});
+
+console.log("Object removed:", result.output[0]);
+```
+
+### Fashion / Virtual Try-On
+
+```javascript
+const result = await imageEditing.fashion({
+  key: client.key,
+  model_image: "https://example.com/person.jpg",
+  cloth_image: "https://example.com/shirt.jpg"
+});
+
+console.log("Virtual try-on result:", result.output[0]);
+```
+
+### Face Generation
+
+```javascript
+const result = await imageEditing.facegen({
+  key: client.key,
+  image: "https://example.com/portrait.jpg",
+  prompt: "Make the person look 10 years younger"
+});
+
+console.log("Face generation result:", result.output[0]);
+```
+
+### Inpainting
+
+```javascript
+const result = await imageEditing.inpainting({
+  key: client.key,
+  image: "https://example.com/photo.jpg",
+  mask_image: "https://example.com/mask.png",
+  prompt: "A beautiful garden with flowers"
+});
+
+console.log("Inpainting result:", result.output[0]);
+```
+
+### AI Headshots
+
+```javascript
+// Standard headshot
+const result = await imageEditing.headshot({
+  key: client.key,
+  image: "https://example.com/selfie.jpg",
+  prompt: "Professional headshot, studio lighting, business attire"
+});
+
+console.log("Headshot:", result.output[0]);
+
+// FLUX-powered headshot (higher quality)
+const fluxResult = await imageEditing.fluxHeadshot({
+  key: client.key,
+  image: "https://example.com/selfie.jpg",
+  prompt: "Professional LinkedIn headshot, neutral background"
+});
+
+console.log("FLUX Headshot:", fluxResult.output[0]);
+```
+
+---
+
+## Error Handling
+
+Always handle potential errors in production:
+
+```javascript
+import { Client, Community } from "modelslab";
+
+async function generateImage(prompt, apiKey) {
+  try {
+    const client = new Client(apiKey);
+    const community = new Community(client.key);
+
+    const result = await community.textToImage({
+      key: client.key,
+      prompt: prompt,
+      model_id: "flux",
+      width: 512,
+      height: 512,
+      samples: 1
+    });
+
+    if (result.status === "success") {
+      return result.output[0];
+    } else if (result.status === "processing") {
+      return { requestId: result.id, eta: result.eta };
+    } else {
+      throw new Error(result.message || "Unknown error");
+    }
+  } catch (error) {
+    console.error("Error generating image:", error.message);
+    throw error;
+  }
+}
+
+// Usage
+try {
+  const imageUrl = await generateImage("A sunset over mountains", "your-api-key");
+  console.log("Generated:", imageUrl);
+} catch (error) {
+  console.error("Failed:", error.message);
+}
+```
+
+---
+
+## Async Processing Pattern
+
+For long-running operations, poll for results:
+
+```javascript
+async function generateVideoWithPolling(prompt, apiKey, timeout = 300000) {
+  const client = new Client(apiKey);
+  const video = new Video(client.key);
+
+  const result = await video.textToVideo({
+    key: client.key,
+    model_id: "cogvideox",
+    prompt: prompt,
+    width: 512,
+    height: 512,
+    num_frames: 25
+  });
+
+  if (result.status === "success") {
+    return result.output[0];
+  }
+
+  if (result.status !== "processing") {
+    throw new Error(result.message || "Generation failed");
+  }
+
+  const requestId = result.id;
+  const startTime = Date.now();
+
+  while (Date.now() - startTime < timeout) {
+    // Poll the fetch endpoint
+    await new Promise(resolve => setTimeout(resolve, 5000));
+
+    // Check status using fetch endpoint
+    // If complete, return URL
+    // If failed, throw error
+  }
+
+  throw new Error("Timeout waiting for video generation");
+}
+```
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="API Reference" icon="book" href="/image-generation/overview">
+    Explore all API endpoints
+  </Card>
+  <Card title="Models" icon="cube" href="https://modelslab.com/models">
+    Browse available models
+  </Card>
+  <Card title="Webhooks" icon="bell" href="/webhooks">
+    Set up async notifications
+  </Card>
+  <Card title="Error Codes" icon="triangle-exclamation" href="/error-codes">
+    Handle errors properly
+  </Card>
+</CardGroup>

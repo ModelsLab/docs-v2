@@ -1,7 +1,20 @@
 ---
-title: Python
-description: "The client for Python provides a seamless interface to interact with Modelslab API."
+title: "Python SDK"
+description: "Official Python client for the ModelsLab API - generate images, videos, audio, and more."
 ---
+
+## Overview
+
+The ModelsLab Python SDK provides a simple, type-safe interface to interact with all ModelsLab APIs. It handles authentication, request formatting, and response parsing automatically.
+
+<CardGroup cols={2}>
+  <Card title="PyPI Package" icon="python" href="https://pypi.org/project/modelslab-py/">
+    View on PyPI
+  </Card>
+  <Card title="GitHub" icon="github" href="https://github.com/modelslab/modelslab-py">
+    Source code and issues
+  </Card>
+</CardGroup>
 
 ## Installation
 
@@ -9,452 +22,776 @@ description: "The client for Python provides a seamless interface to interact wi
 pip install modelslab_py
 ```
 
-## Connecting to Client 
-Create client to connect to modelslab api.
+<Tip>
+Requires Python 3.7 or higher.
+</Tip>
 
-```Python
+## Quick Start
+
+Here's a complete example to generate your first image:
+
+```python
+from modelslab_py.core.client import Client
+from modelslab_py.core.apis.realtime import Realtime
+from modelslab_py.schemas.realtime import RealtimeText2ImageSchema
+
+# Initialize the client
+client = Client(api_key="your_api_key")
+
+# Create the API instance
+api = Realtime(client=client, enterprise=False)
+
+# Define the generation parameters
+schema = RealtimeText2ImageSchema(
+    prompt="A majestic lion in a savanna at sunset, photorealistic, 8k",
+    negative_prompt="blurry, low quality, distorted",
+    width=512,
+    height=512,
+    samples=1,
+    num_inference_steps=30,
+    guidance_scale=7.5
+)
+
+# Generate the image
+response = api.text_to_image(schema)
+
+# Handle the response
+if response.get("status") == "success":
+    print(f"Image URL: {response['output'][0]}")
+elif response.get("status") == "processing":
+    print(f"Request ID: {response['id']} - Check back later")
+else:
+    print(f"Error: {response.get('message')}")
+```
+
+## Client Configuration
+
+### Basic Setup
+
+```python
 from modelslab_py.core.client import Client
 
-client = Client(api_key="your api key")
+# Standard API access
+client = Client(api_key="your_api_key")
 ```
 
-## Select api schema
-Select particular api schema as need.
-```Python
-# for realtime image generation api.
-from modelslab_py.schemas.realtime import (
-    RealtimeText2ImageSchema,
-    RealtimeImage2ImageSchema
-)
+### Enterprise Setup
 
-# for image editing api.
-from modelslab_py.schemas.image_editing import (
-    OutpaintingSchema,
-    BackgroundRemoverSchema,
-    SuperResolutionSchema,
-    FashionSchema,
-    ObjectRemovalSchema,
-    FacegenSchema,
-    InpaintingSchema,
-    HeadshotSchema,
-    FluxHeadshotSchema,
-)
-
-# for community models apis.
-from modelslab_py.schemas.community import (
-    Text2Image,
-    Image2Image,
-    Inpainting,
-    ControlNet
-)
-
-# for audio apis.
-from modelslab_py.schemas.audio import (
-    Text2Audio,
-    Text2Speech,
-    Voice2Voice,
-    VoiceCover,
-    MusicGenSchema,
-    LyricsGenerator,
-    SongGenerator,
-    Speech2Text,
-    SFX
-)
-# for deepfake apis.
-from modelslab_py.schemas.deepfake import (
-    SpecificFaceSwap,
-    MultipleFaceSwap,
-    SingleVideoSwap,
-    SpecificVideoSwap
-)
-
-# for interior apis.
-from modelslab_py.schemas.interior import (
-    SkechRendringSchema,
-    InteriorSchema,
-    RoomDecoratorSchema,
-    FloorSchema,
-    ExteriorSchema,
-    ScenarioSchema
-)
-
-# for 3d apis.
-from modelslab_py.schemas.threed import (
-    Text23D,
-    Image23D,
-)
-
-#for video apis.
-from modelslab_py.schemas.video import (
-    Text2Video,
-    Image2Video,
-    Text2VideoUltra
-)
-```
-
-## Select API Client.
-```Python
-#to use interior api.
-from modelslab_py.core.apis.interior import Interior
-
-#to use realtime api.
-from modelslab_py.core.apis.realtime import Realtime
-
-#to use image editing api.
-from modelslab_py.core.apis.image_editing import Image_editing
-
-#to use audio api.
-from modelslab_py.core.apis.audio import Audio
-
-# to use community models api.
-from modelslab_py.core.apis.community import Community
-
-# to use deepfake api.
-from modelslab_py.core.apis.deepfake import DeepFake
-
-# to use 3D api.
-from modelslab_py.core.apis.three_d import Three_D
-
-# to use Video api.
-from modelslab_py.core.apis.video import Video
-```
-
-## Realtime Api Usage
-
-```Python
-from modelslab_py.core.apis.realtime import Realtime
+```python
 from modelslab_py.core.client import Client
+from modelslab_py.core.apis.realtime import Realtime
 
-from modelslab_py.schemas.realtime import (
-    RealtimeText2ImageSchema,
-    RealtimeImage2ImageSchema
+client = Client(api_key="your_enterprise_api_key")
+
+# Set enterprise=True for enterprise endpoints
+api = Realtime(client=client, enterprise=True)
+```
+
+## Available APIs
+
+<AccordionGroup>
+  <Accordion title="Image Generation APIs">
+    - **Realtime** - Fast image generation with FLUX and other models
+    - **Community** - Access community fine-tuned models
+    - **Image_editing** - Edit, enhance, and transform images
+  </Accordion>
+
+  <Accordion title="Video APIs">
+    - **Video** - Generate videos from text or images
+  </Accordion>
+
+  <Accordion title="Audio APIs">
+    - **Audio** - Text-to-speech, voice cloning, music generation
+  </Accordion>
+
+  <Accordion title="Other APIs">
+    - **DeepFake** - Face swapping in images and videos
+    - **Interior** - Interior design and room transformation
+    - **Three_D** - Generate 3D models from text or images
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Image Generation
+
+### Text to Image (Realtime)
+
+Generate images from text prompts using the fastest models:
+
+```python
+from modelslab_py.core.client import Client
+from modelslab_py.core.apis.realtime import Realtime
+from modelslab_py.schemas.realtime import RealtimeText2ImageSchema
+
+client = Client(api_key="your_api_key")
+api = Realtime(client=client, enterprise=False)
+
+schema = RealtimeText2ImageSchema(
+    prompt="A cyberpunk city at night, neon lights, rain, cinematic",
+    negative_prompt="blurry, low quality, distorted, deformed",
+    width=1024,
+    height=1024,
+    samples=1,
+    num_inference_steps=30,
+    guidance_scale=7.5,
+    seed=12345  # Optional: for reproducible results
 )
 
-client = Client(api_key="your api key ")
+response = api.text_to_image(schema)
+print(response)
+```
+
+### Image to Image (Realtime)
+
+Transform existing images with a text prompt:
+
+```python
+from modelslab_py.core.apis.realtime import Realtime
+from modelslab_py.schemas.realtime import RealtimeImage2ImageSchema
 
 api = Realtime(client=client, enterprise=False)
 
-#for text to image api.
-
-schema = RealtimeText2ImageSchema(...)
-response = api.text_to_image(schema)
-
-#for image to image api.
-
-schema = RealtimeImage2ImageSchema(...)
-response = api.image_to_image(schema)
-
-```
-
-## Community Api Usage
-
-```Python
-from modelslab_py.core.apis.community import Community
-from modelslab_py.core.client import Client
-
-from modelslab_py.schemas.community import (
-    Text2Image,
-    Image2Image,
-    Inpainting,
-    ControlNet
+schema = RealtimeImage2ImageSchema(
+    init_image="https://example.com/your-image.jpg",
+    prompt="Transform into a watercolor painting style",
+    negative_prompt="photo, realistic",
+    width=512,
+    height=512,
+    strength=0.7,  # How much to change the image (0-1)
+    num_inference_steps=30,
+    guidance_scale=7.5
 )
 
-client = Client(api_key="your api key ")
+response = api.image_to_image(schema)
+print(response)
+```
 
+### Community Models
+
+Use fine-tuned community models for specific styles:
+
+```python
+from modelslab_py.core.client import Client
+from modelslab_py.core.apis.community import Community
+from modelslab_py.schemas.community import Text2Image, Image2Image, Inpainting, ControlNet
+
+client = Client(api_key="your_api_key")
 api = Community(client=client, enterprise=False)
 
-#for text to image api.
-
-schema = Text2Image(...)
+# Text to Image with a specific model
+schema = Text2Image(
+    model_id="flux",  # or any community model ID
+    prompt="Portrait of a woman, oil painting style, renaissance",
+    negative_prompt="modern, photo, blurry",
+    width=512,
+    height=768,
+    samples=1,
+    num_inference_steps=30,
+    guidance_scale=7.5
+)
 response = api.text_to_image(schema)
 
-#for image to image api.
-
-schema = Image2Image(...)
+# Image to Image
+schema = Image2Image(
+    model_id="flux",
+    init_image="https://example.com/image.jpg",
+    prompt="Add autumn colors to the scene",
+    strength=0.6,
+    width=512,
+    height=512
+)
 response = api.image_to_image(schema)
 
-#for image Inpainting api
-schema = Inpainting(...)
+# Inpainting (edit specific areas)
+schema = Inpainting(
+    model_id="flux",
+    init_image="https://example.com/image.jpg",
+    mask_image="https://example.com/mask.png",  # White = edit, Black = keep
+    prompt="A red sports car",
+    width=512,
+    height=512
+)
 response = api.inpainting(schema)
 
-#for controlent api.
-schema = ControlNet(...)
+# ControlNet (guided generation)
+schema = ControlNet(
+    model_id="flux",
+    controlnet_model="canny",  # canny, depth, pose, etc.
+    controlnet_image="https://example.com/control-image.jpg",
+    prompt="A beautiful house, photorealistic",
+    width=512,
+    height=512
+)
 response = api.controlnet(schema)
 ```
 
-## DeepFake Api Usage
+---
 
-```Python
-from modelslab_py.core.apis.deepfake import DeepFake
+## Image Editing
+
+### Background Removal
+
+```python
 from modelslab_py.core.client import Client
-
-from modelslab_py.schemas.deepfake import (
-    SpecificFaceSwap,
-    MultipleFaceSwap,
-    SingleVideoSwap,
-    SpecificVideoSwap
-)
-
-client = Client(api_key="your api key ")
-
-api = DeepFake(client=client, enterprise=False)
-
-#for specifc face swap.
-
-schema = SpecificFaceSwap(...)
-response = api.specific_face_swap(schema)
-
-#for multiple face swap.
-
-schema = MultipleFaceSwap(...)
-response = api.specific_face_swap(schema)
-
-#for multiple video swap.
-schema = SpecificVideoSwap(...)
-response = api.multiple_video_swap(schema)
-
-#for single video swap.
-schema = SingleVideoSwap(...)
-response = api.single_video_swap(schema)
-```
-
-## Image editing Api Usage
-
-```Python
 from modelslab_py.core.apis.image_editing import Image_editing
-from modelslab_py.core.client import Client
+from modelslab_py.schemas.image_editing import BackgroundRemoverSchema
 
-from modelslab_py.schemas.image_editing import (
-    OutpaintingSchema,
-    BackgroundRemoverSchema,
-    SuperResolutionSchema,
-    FashionSchema,
-    ObjectRemovalSchema,
-    FacegenSchema,
-    InpaintingSchema,
-    HeadshotSchema,
-    FluxHeadshotSchema,
-)
-
-client = Client(api_key="your api key ")
-
+client = Client(api_key="your_api_key")
 api = Image_editing(client=client, enterprise=False)
 
-#for outpainting api.
+schema = BackgroundRemoverSchema(
+    image="https://example.com/photo.jpg"
+)
 
-schema = OutpaintingSchema(...)
-response = api.outpainting(schema)
-
-#for background remover apis.
-
-schema = BackgroundRemoverSchema(...)
 response = api.background_remover(schema)
+print(f"Image without background: {response['output'][0]}")
+```
 
-#for super resolution api.
-schema = SuperResolutionSchema(...)
+### Super Resolution (Upscale)
+
+```python
+from modelslab_py.schemas.image_editing import SuperResolutionSchema
+
+schema = SuperResolutionSchema(
+    image="https://example.com/low-res-image.jpg",
+    scale=4  # 2x or 4x upscale
+)
+
 response = api.super_resolution(schema)
+print(f"Upscaled image: {response['output'][0]}")
+```
 
-#for fashion api.
-schema = FashionSchema(...)
-response = api.fashion(schema)
+### Object Removal
 
-#for object remover api.
-schema = ObjectRemovalSchema(...)
+```python
+from modelslab_py.schemas.image_editing import ObjectRemovalSchema
+
+schema = ObjectRemovalSchema(
+    image="https://example.com/photo.jpg",
+    mask_image="https://example.com/mask.png"  # White areas will be removed
+)
+
 response = api.object_remover(schema)
+print(response)
+```
 
-#for facegen api.
-schema = FacegenSchema(...)
-response = api.facegen(schema)
+### Outpainting (Extend Images)
 
-#for inpainting api.
-schema = InpaintingSchema(...)
-response = api.inpainting(schema)
+```python
+from modelslab_py.schemas.image_editing import OutpaintingSchema
 
-#for headshot api.
-schema = HeadshotSchema(...)
+schema = OutpaintingSchema(
+    image="https://example.com/photo.jpg",
+    prompt="Continue the landscape with mountains and trees",
+    width=1024,  # New width (larger than original)
+    height=768   # New height
+)
+
+response = api.outpainting(schema)
+print(response)
+```
+
+### AI Headshots
+
+```python
+from modelslab_py.schemas.image_editing import HeadshotSchema, FluxHeadshotSchema
+
+# Standard headshot
+schema = HeadshotSchema(
+    image="https://example.com/selfie.jpg",
+    prompt="Professional headshot, studio lighting, business attire"
+)
 response = api.headshot(schema)
 
-#for flux headshot api.
-schema = FluxHeadshotSchema(...)
+# FLUX-powered headshot (higher quality)
+schema = FluxHeadshotSchema(
+    image="https://example.com/selfie.jpg",
+    prompt="Professional LinkedIn headshot, neutral background"
+)
 response = api.flux_headshot(schema)
-
 ```
 
-## Interior Api Usage
+### Face Generation
 
-```Python
-from modelslab_py.core.apis.interior import Interior
-from modelslab_py.core.client import Client
+```python
+from modelslab_py.schemas.image_editing import FacegenSchema
 
-from modelslab_py.schemas.interior import (
-    ExteriorSchema,
-    ScenarioSchema,
-    FloorSchema,
-    RoomDecoratorSchema,
-    InteriorSchema
+schema = FacegenSchema(
+    image="https://example.com/portrait.jpg",
+    prompt="Make the person look 10 years younger"
 )
 
-client = Client(api_key="your api key ")
-
-api = Interior(client=client, enterprise=False)
-
-#for interior apis.
-
-schema = InteriorSchema(...)
-response = api.interior(schema)
-
-#for room decorator apis.
-
-schema = RoomDecoratorSchema(...)
-response = api.room_decorator(schema)
-
-#for floor planning apis.
-schema = FloorSchema(...)
-response = api.floor(schema)
-
-#for scenario changer apis.
-schema = ScenarioSchema(...)
-response = api.scenario(schema)
-
-#for exterior restorer apis.
-schema = ScenariExteriorSchemaoSchema(...)
-response = api.exterior_restorer(schema)
-
-#for room decorator apis.
-schema = RoomDecoratorSchema(...)
-response = api.room_decorator(schema)
+response = api.facegen(schema)
+print(response)
 ```
 
-## Audio Api Usage
+### Fashion / Virtual Try-On
 
-```Python
-from modelslab_py.core.apis.audio import Audio
-from modelslab_py.core.client import Client
+```python
+from modelslab_py.schemas.image_editing import FashionSchema
 
-from modelslab_py.schemas.audio import (
-    Text2Audio,
-    Text2Speech,
-    Voice2Voice,
-    VoiceCover,
-    MusicGenSchema,
-    LyricsGenerator,
-    SongGenerator,
-    Speech2Text,
-    SFX
+schema = FashionSchema(
+    model_image="https://example.com/person.jpg",
+    cloth_image="https://example.com/shirt.jpg"
 )
 
-client = Client(api_key="your api key ")
-
-api = Audio(client=client, enterprise=False)
-
-#for text to audio.
-
-schema = Text2Audio(...)
-response = api.text_to_audio(schema)
-
-#for text to speech apis.
-
-schema = Text2Speech(...)
-response = api.text_to_speech(schema)
-
-#for voice to voice apis.
-schema = Voice2Voice(...)
-response = api.voice2voice(schema)
-
-#for voice cover apis.
-schema = VoiceCover(...)
-response = api.voice_cover(schema)
-
-#for music gen apis.
-schema = MusicGenSchema(...)
-response = api.music_gen(schema)
-
-#for lyrics apis.
-schema = LyricsGenerator(...)
-response = api.lyrics_gen(schema)
-
-#for song generation apis.
-schema = SongGenerator(...)
-response = api.song_generator(schema)
-
-#for speech to text apis.
-schema = Speech2Text(...)
-response = api.speech_to_text(schema)
-
-#for sfx gen apis.
-schema = SFX(...)
-response = api.sfx_gen(schema)
+response = api.fashion(schema)
+print(response)
 ```
 
-## 3D Api Usage
+---
 
-```Python
-from modelslab_py.core.apis.three_d import Three_D
+## Video Generation
+
+### Text to Video
+
+```python
 from modelslab_py.core.client import Client
-
-from modelslab_py.schemas.threed import Text23D,Image23D
-
-client = Client(api_key="your api key ")
-
-api = Three_D(client=client, enterprise=False)
-
-#for text to 3d.
-
-schema = Text23D(...)
-response = api.text_to_3d(schema)
-
-#for image to 3d apis.
-
-schema = Image23D(...)
-response = api.image_to_3d(schema)
-
-```
-
-## Video Api Usage
-
-```Python
 from modelslab_py.core.apis.video import Video
-from modelslab_py.core.client import Client
+from modelslab_py.schemas.video import Text2Video
 
-from modelslab_py.schemas.video import Text2Video, Image2Video
-
-client = Client(api_key="your api key ")
-
+client = Client(api_key="your_api_key")
 api = Video(client=client, enterprise=False)
 
-#for text to video.
-
-schema = Text2Video(...)
-response = api.text_to_video(schema)
-
-#for image to video.
-
-schema = Image2Video(...)
-response = api.image_to_video(schema)
-
-```
-
-## Example Usage.
-
-```Python
-from modelslab_py.core.client import Client
-from modelslab_py.schemas.image_editing import BackgroundRemoverSchema
-from modelslab_py.utils.image_utils import *
-from modelslab_py.core.apis.image_editing import Image_editing
-
-client = Client(api_key="your api key ")
-
-image_pil = read_image_from_file("7c504529-f038-4011-b344-764e0da1d4f2-0.png")
-image = image_to_base64(image_pil)
-schema = BackgroundRemoverSchema(  
-    image=image,
-    base64=True,
+schema = Text2Video(
+    model_id="cogvideox",
+    prompt="A spaceship flying through an asteroid field, cinematic, 4K",
+    negative_prompt="low quality, blurry, static",
+    width=512,
+    height=512,
+    num_frames=25,
+    num_inference_steps=20,
+    guidance_scale=7
 )
 
+response = api.text_to_video(schema)
+
+# Video generation is async - you'll get a request ID
+if response.get("status") == "processing":
+    print(f"Video processing, request ID: {response['id']}")
+    print(f"ETA: {response.get('eta')} seconds")
+```
+
+### Image to Video
+
+Animate a static image:
+
+```python
+from modelslab_py.schemas.video import Image2Video
+
+schema = Image2Video(
+    model_id="cogvideox",
+    init_image="https://example.com/landscape.jpg",
+    prompt="The clouds moving slowly, birds flying in the distance",
+    num_frames=25,
+    num_inference_steps=20
+)
+
+response = api.image_to_video(schema)
+print(response)
+```
+
+---
+
+## Audio Generation
+
+### Text to Speech
+
+```python
+from modelslab_py.core.client import Client
+from modelslab_py.core.apis.audio import Audio
+from modelslab_py.schemas.audio import Text2Speech
+
+client = Client(api_key="your_api_key")
+api = Audio(client=client, enterprise=False)
+
+schema = Text2Speech(
+    text="Hello, welcome to ModelsLab! This is a sample audio generation.",
+    voice_id="alloy",  # Choose from available voices
+    language="en"
+)
+
+response = api.text_to_speech(schema)
+print(f"Audio URL: {response['output'][0]}")
+```
+
+### Voice Cloning (Voice to Voice)
+
+```python
+from modelslab_py.schemas.audio import Voice2Voice
+
+schema = Voice2Voice(
+    init_audio="https://example.com/source-voice.mp3",
+    target_audio="https://example.com/target-voice.mp3"  # Voice to clone
+)
+
+response = api.voice2voice(schema)
+print(response)
+```
+
+### Music Generation
+
+```python
+from modelslab_py.schemas.audio import MusicGenSchema
+
+schema = MusicGenSchema(
+    prompt="Upbeat electronic dance music with heavy bass drops",
+    duration=30  # Duration in seconds
+)
+
+response = api.music_gen(schema)
+print(response)
+```
+
+### Song Generation
+
+```python
+from modelslab_py.schemas.audio import SongGenerator
+
+schema = SongGenerator(
+    prompt="A pop song about summer love",
+    lyrics="optional custom lyrics here"
+)
+
+response = api.song_generator(schema)
+print(response)
+```
+
+### Lyrics Generation
+
+```python
+from modelslab_py.schemas.audio import LyricsGenerator
+
+schema = LyricsGenerator(
+    prompt="Write lyrics for a country song about road trips"
+)
+
+response = api.lyrics_gen(schema)
+print(response)
+```
+
+### Sound Effects (SFX)
+
+```python
+from modelslab_py.schemas.audio import SFX
+
+schema = SFX(
+    prompt="Thunder rolling in the distance, heavy rain",
+    duration=10
+)
+
+response = api.sfx_gen(schema)
+print(response)
+```
+
+### Speech to Text
+
+```python
+from modelslab_py.schemas.audio import Speech2Text
+
+schema = Speech2Text(
+    audio="https://example.com/speech.mp3",
+    language="en"
+)
+
+response = api.speech_to_text(schema)
+print(f"Transcription: {response['text']}")
+```
+
+---
+
+## DeepFake / Face Swap
+
+### Single Face Swap (Image)
+
+```python
+from modelslab_py.core.client import Client
+from modelslab_py.core.apis.deepfake import DeepFake
+from modelslab_py.schemas.deepfake import SpecificFaceSwap, MultipleFaceSwap
+
+client = Client(api_key="your_api_key")
+api = DeepFake(client=client, enterprise=False)
+
+schema = SpecificFaceSwap(
+    init_image="https://example.com/target-photo.jpg",
+    target_image="https://example.com/face-to-swap.jpg"
+)
+
+response = api.specific_face_swap(schema)
+print(response)
+```
+
+### Multiple Face Swap
+
+```python
+schema = MultipleFaceSwap(
+    init_image="https://example.com/group-photo.jpg",
+    target_image="https://example.com/new-face.jpg"
+)
+
+response = api.multiple_face_swap(schema)
+print(response)
+```
+
+### Video Face Swap
+
+```python
+from modelslab_py.schemas.deepfake import SingleVideoSwap, SpecificVideoSwap
+
+# Swap all faces in video
+schema = SingleVideoSwap(
+    init_video="https://example.com/video.mp4",
+    target_image="https://example.com/face.jpg"
+)
+response = api.single_video_swap(schema)
+
+# Swap specific face in video
+schema = SpecificVideoSwap(
+    init_video="https://example.com/video.mp4",
+    target_image="https://example.com/face.jpg",
+    source_image="https://example.com/face-to-replace.jpg"
+)
+response = api.multiple_video_swap(schema)
+```
+
+---
+
+## Interior Design
+
+### Interior Redesign
+
+```python
+from modelslab_py.core.client import Client
+from modelslab_py.core.apis.interior import Interior
+from modelslab_py.schemas.interior import InteriorSchema
+
+client = Client(api_key="your_api_key")
+api = Interior(client=client, enterprise=False)
+
+schema = InteriorSchema(
+    init_image="https://example.com/room-photo.jpg",
+    prompt="Modern minimalist living room with Scandinavian furniture"
+)
+
+response = api.interior(schema)
+print(response)
+```
+
+### Room Decorator
+
+```python
+from modelslab_py.schemas.interior import RoomDecoratorSchema
+
+schema = RoomDecoratorSchema(
+    init_image="https://example.com/empty-room.jpg",
+    prompt="Cozy bedroom with warm lighting and plants"
+)
+
+response = api.room_decorator(schema)
+print(response)
+```
+
+### Exterior Restoration
+
+```python
+from modelslab_py.schemas.interior import ExteriorSchema
+
+schema = ExteriorSchema(
+    init_image="https://example.com/house-exterior.jpg",
+    prompt="Modern exterior with landscaping and new paint"
+)
+
+response = api.exterior_restorer(schema)
+print(response)
+```
+
+### Floor Planning
+
+```python
+from modelslab_py.schemas.interior import FloorSchema
+
+schema = FloorSchema(
+    init_image="https://example.com/floor-plan.jpg",
+    prompt="Open concept kitchen and living area"
+)
+
+response = api.floor(schema)
+print(response)
+```
+
+---
+
+## 3D Model Generation
+
+### Text to 3D
+
+```python
+from modelslab_py.core.client import Client
+from modelslab_py.core.apis.three_d import Three_D
+from modelslab_py.schemas.threed import Text23D, Image23D
+
+client = Client(api_key="your_api_key")
+api = Three_D(client=client, enterprise=False)
+
+schema = Text23D(
+    prompt="A medieval sword with ornate handle",
+    num_inference_steps=50
+)
+
+response = api.text_to_3d(schema)
+print(response)
+```
+
+### Image to 3D
+
+```python
+schema = Image23D(
+    image="https://example.com/product-photo.jpg"
+)
+
+response = api.image_to_3d(schema)
+print(response)
+```
+
+---
+
+## Working with Base64 Images
+
+For local images, convert them to base64:
+
+```python
+from modelslab_py.core.client import Client
+from modelslab_py.core.apis.image_editing import Image_editing
+from modelslab_py.schemas.image_editing import BackgroundRemoverSchema
+from modelslab_py.utils.image_utils import read_image_from_file, image_to_base64
+
+client = Client(api_key="your_api_key")
 api = Image_editing(client=client, enterprise=False)
 
-response = api.background_remover(schema=schema)
+# Read local image and convert to base64
+image_pil = read_image_from_file("local-image.png")
+image_base64 = image_to_base64(image_pil)
 
+schema = BackgroundRemoverSchema(
+    image=image_base64,
+    base64=True  # Important: set this to True for base64 images
+)
+
+response = api.background_remover(schema)
 print(response)
-
 ```
+
+---
+
+## Error Handling
+
+Always handle potential errors in production code:
+
+```python
+from modelslab_py.core.client import Client
+from modelslab_py.core.apis.realtime import Realtime
+from modelslab_py.schemas.realtime import RealtimeText2ImageSchema
+
+def generate_image(prompt: str, api_key: str) -> str:
+    """Generate an image and return the URL."""
+    try:
+        client = Client(api_key=api_key)
+        api = Realtime(client=client, enterprise=False)
+
+        schema = RealtimeText2ImageSchema(
+            prompt=prompt,
+            width=512,
+            height=512,
+            samples=1,
+            num_inference_steps=30
+        )
+
+        response = api.text_to_image(schema)
+
+        if response.get("status") == "success":
+            return response["output"][0]
+        elif response.get("status") == "processing":
+            # Handle async processing
+            return f"Processing... Request ID: {response['id']}"
+        else:
+            raise Exception(f"API Error: {response.get('message', 'Unknown error')}")
+
+    except Exception as e:
+        print(f"Error generating image: {e}")
+        raise
+
+# Usage
+try:
+    image_url = generate_image("A sunset over mountains", "your_api_key")
+    print(f"Generated: {image_url}")
+except Exception as e:
+    print(f"Failed: {e}")
+```
+
+---
+
+## Async Processing Pattern
+
+For long-running operations (videos, training), poll for results:
+
+```python
+import time
+from modelslab_py.core.client import Client
+from modelslab_py.core.apis.video import Video
+from modelslab_py.schemas.video import Text2Video
+
+def generate_video_with_polling(prompt: str, api_key: str, timeout: int = 300):
+    """Generate a video and wait for completion."""
+    client = Client(api_key=api_key)
+    api = Video(client=client, enterprise=False)
+
+    schema = Text2Video(
+        model_id="cogvideox",
+        prompt=prompt,
+        width=512,
+        height=512,
+        num_frames=25
+    )
+
+    response = api.text_to_video(schema)
+
+    if response.get("status") == "success":
+        return response["output"][0]
+
+    if response.get("status") != "processing":
+        raise Exception(f"Error: {response.get('message')}")
+
+    request_id = response["id"]
+    start_time = time.time()
+
+    while time.time() - start_time < timeout:
+        # Use the fetch endpoint (implement based on your needs)
+        # This is a simplified example
+        time.sleep(5)
+
+        # Check status...
+        # If complete, return URL
+        # If failed, raise exception
+
+    raise Exception("Timeout waiting for video generation")
+```
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="API Reference" icon="book" href="/image-generation/overview">
+    Explore all API endpoints
+  </Card>
+  <Card title="Models" icon="cube" href="https://modelslab.com/models">
+    Browse available models
+  </Card>
+  <Card title="Webhooks" icon="bell" href="/webhooks">
+    Set up async notifications
+  </Card>
+  <Card title="Error Codes" icon="triangle-exclamation" href="/error-codes">
+    Handle errors properly
+  </Card>
+</CardGroup>

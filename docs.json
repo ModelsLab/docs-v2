@@ -43,7 +43,7 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["index", "rate-limits"]
+            "pages": ["index", "quickstart", "authentication", "rate-limits", "error-codes", "webhooks"]
           },
           {
             "group": "Client SDKs",

@@ -1,7 +1,20 @@
 ---
-title: PHP
-description: "The client for PHP provides a seamless interface to interact with Modelslab API."
+title: "PHP SDK"
+description: "Official PHP client for the ModelsLab API - generate images, videos, audio, and more."
 ---
+
+## Overview
+
+The ModelsLab PHP SDK provides a clean, object-oriented interface to interact with all ModelsLab APIs. It handles authentication, request formatting, and response parsing automatically.
+
+<CardGroup cols={2}>
+  <Card title="Packagist" icon="php" href="https://packagist.org/packages/modelslab/php">
+    View on Packagist
+  </Card>
+  <Card title="GitHub" icon="github" href="https://github.com/Modelslab/modelslab-php">
+    Source code and issues
+  </Card>
+</CardGroup>
 
 ## Installation
 
@@ -21,31 +34,13 @@ Or add it to your `composer.json`:
 }
 ```
 
+<Tip>
+Requires PHP 7.4 or higher and Guzzle HTTP client.
+</Tip>
+
 ## Quick Start
 
-### Text to Speech
-
-```php
-<?php
-require_once 'vendor/autoload.php';
-
-use ModelsLab\ModelsLab;
-use ModelsLab\Schemas\Text2Speech;
-
-$apiKey = 'your-api-key';
-$modelslab = new ModelsLab($apiKey);
-
-$tts = new Text2Speech([
-    'prompt' => 'Hello from ModelsLab!',
-    'voice_id' => 'madison',
-    'language' => 'english'
-]);
-
-$response = $modelslab->audio()->textToSpeech($tts);
-echo json_encode($response, JSON_PRETTY_PRINT);
-```
-
-### Text to Image
+Generate your first AI image:
 
 ```php
 <?php
@@ -58,47 +53,260 @@ $apiKey = 'your-api-key';
 $modelslab = new ModelsLab($apiKey);
 
 $image = new RealtimeText2ImageSchema([
-    'prompt' => 'A beautiful landscape',
+    'prompt' => 'A majestic lion in a savanna at sunset, photorealistic, 8k',
+    'negative_prompt' => 'blurry, low quality, distorted',
     'width' => 512,
-    'height' => 512
+    'height' => 512,
+    'samples' => 1,
+    'num_inference_steps' => 30,
+    'guidance_scale' => 7.5
+]);
+
+$response = $modelslab->realtime()->textToImage($image);
+
+if ($response['status'] === 'success') {
+    echo "Image URL: " . $response['output'][0];
+} elseif ($response['status'] === 'processing') {
+    echo "Processing, request ID: " . $response['id'];
+}
+```
+
+## Client Configuration
+
+### Basic Setup
+
+```php
+<?php
+use ModelsLab\ModelsLab;
+
+// Method 1: Direct API key
+$modelslab = new ModelsLab('your-api-key');
+
+// Method 2: With custom options
+$modelslab = new ModelsLab('your-api-key', [
+    'base_url' => 'https://modelslab.com/api/',
+    'fetch_retry' => 10,
+    'fetch_timeout' => 2
+]);
+```
+
+### Environment Variables
+
+Set your API key using environment variables:
+
+```bash
+export MODELSLAB_API_KEY="your-actual-api-key"
+# Or
+export API_KEY="your-actual-api-key"
+```
+
+Then in your code:
+
+```php
+$modelslab = new ModelsLab(getenv('MODELSLAB_API_KEY'));
+```
+
+---
+
+## Image Generation
+
+### Text to Image (Realtime)
+
+```php
+<?php
+use ModelsLab\ModelsLab;
+use ModelsLab\Schemas\RealtimeText2ImageSchema;
+
+$modelslab = new ModelsLab('your-api-key');
+
+$image = new RealtimeText2ImageSchema([
+    'prompt' => 'A cyberpunk city at night, neon lights, rain, cinematic',
+    'negative_prompt' => 'blurry, low quality, distorted, deformed',
+    'width' => 1024,
+    'height' => 1024,
+    'samples' => 1,
+    'num_inference_steps' => 30,
+    'guidance_scale' => 7.5,
+    'seed' => 12345  // Optional: for reproducible results
 ]);
 
 $response = $modelslab->realtime()->textToImage($image);
 echo json_encode($response, JSON_PRETTY_PRINT);
 ```
 
+### Image to Image
+
+```php
+<?php
+use ModelsLab\Schemas\RealtimeImage2ImageSchema;
+
+$image = new RealtimeImage2ImageSchema([
+    'init_image' => 'https://example.com/your-image.jpg',
+    'prompt' => 'Transform into a watercolor painting style',
+    'negative_prompt' => 'photo, realistic',
+    'width' => 512,
+    'height' => 512,
+    'strength' => 0.7,
+    'num_inference_steps' => 30,
+    'guidance_scale' => 7.5
+]);
+
+$response = $modelslab->realtime()->imageToImage($image);
+echo json_encode($response, JSON_PRETTY_PRINT);
+```
+
+### Community Models
+
+```php
+<?php
+use ModelsLab\Schemas\Text2Image;
+
+$image = new Text2Image([
+    'model_id' => 'flux',
+    'prompt' => 'Portrait of a woman, oil painting style, renaissance',
+    'negative_prompt' => 'modern, photo, blurry',
+    'width' => 512,
+    'height' => 768,
+    'samples' => 1,
+    'num_inference_steps' => 30,
+    'guidance_scale' => 7.5
+]);
+
+$response = $modelslab->community()->textToImage($image);
+echo json_encode($response, JSON_PRETTY_PRINT);
+```
+
+---
+
+## Video Generation
+
 ### Text to Video
 
 ```php
 <?php
-require_once 'vendor/autoload.php';
-
 use ModelsLab\ModelsLab;
 use ModelsLab\Schemas\Text2Video;
 
-$apiKey = 'your-api-key';
-$modelslab = new ModelsLab($apiKey);
+$modelslab = new ModelsLab('your-api-key');
 
 $video = new Text2Video([
-    'prompt' => 'A cat playing with a ball',
-    'model_id' => 'svd'
+    'prompt' => 'A spaceship flying through an asteroid field, cinematic, 4K',
+    'negative_prompt' => 'low quality, blurry, static',
+    'model_id' => 'cogvideox',
+    'width' => 512,
+    'height' => 512,
+    'num_frames' => 25,
+    'num_inference_steps' => 20,
+    'guidance_scale' => 7
 ]);
 
 $response = $modelslab->video()->textToVideo($video);
-echo json_encode($response, JSON_PRETTY_PRINT);
+
+// Video generation is async
+if ($response['status'] === 'processing') {
+    echo "Processing, request ID: " . $response['id'];
+    echo "ETA: " . $response['eta'] . " seconds";
+}
 ```
 
-### Deepfake Video Swap
+### Image to Video
 
 ```php
 <?php
-require_once 'vendor/autoload.php';
+use ModelsLab\Schemas\Image2Video;
 
+$video = new Image2Video([
+    'init_image' => 'https://example.com/landscape.jpg',
+    'prompt' => 'Clouds moving slowly, birds flying in the distance',
+    'model_id' => 'cogvideox',
+    'num_frames' => 25,
+    'num_inference_steps' => 20
+]);
+
+$response = $modelslab->video()->imageToVideo($video);
+echo json_encode($response, JSON_PRETTY_PRINT);
+```
+
+---
+
+## Audio Generation
+
+### Text to Speech
+
+```php
+<?php
+use ModelsLab\ModelsLab;
+use ModelsLab\Schemas\Text2Speech;
+
+$modelslab = new ModelsLab('your-api-key');
+
+$tts = new Text2Speech([
+    'prompt' => 'Hello! Welcome to ModelsLab. This is a sample of our text-to-speech API.',
+    'voice_id' => 'madison',
+    'language' => 'english'
+]);
+
+$response = $modelslab->audio()->textToSpeech($tts);
+echo "Audio URL: " . $response['output'][0];
+```
+
+### Music Generation
+
+```php
+<?php
+use ModelsLab\Schemas\MusicGenSchema;
+
+$music = new MusicGenSchema([
+    'prompt' => 'Upbeat electronic dance music with heavy bass drops',
+    'duration' => 30
+]);
+
+$response = $modelslab->audio()->musicGen($music);
+echo json_encode($response, JSON_PRETTY_PRINT);
+```
+
+### Voice to Voice (Voice Cloning)
+
+```php
+<?php
+use ModelsLab\Schemas\Voice2VoiceSchema;
+
+$voice = new Voice2VoiceSchema([
+    'init_audio' => 'https://example.com/source-speech.mp3',
+    'target_audio' => 'https://example.com/voice-to-clone.mp3'
+]);
+
+$response = $modelslab->audio()->voice2Voice($voice);
+echo json_encode($response, JSON_PRETTY_PRINT);
+```
+
+### Sound Effects (SFX)
+
+```php
+<?php
+use ModelsLab\Schemas\SFXSchema;
+
+$sfx = new SFXSchema([
+    'prompt' => 'Thunder rolling in the distance with heavy rain',
+    'duration' => 10
+]);
+
+$response = $modelslab->audio()->sfxGen($sfx);
+echo json_encode($response, JSON_PRETTY_PRINT);
+```
+
+---
+
+## DeepFake / Face Swap
+
+### Single Video Swap
+
+```php
+<?php
 use ModelsLab\ModelsLab;
 use ModelsLab\Schemas\DeepfakeSchema;
 
-$apiKey = 'your-api-key';
-$modelslab = new ModelsLab($apiKey);
+$modelslab = new ModelsLab('your-api-key');
 
 $deepfake = new DeepfakeSchema([
     'init_image' => 'https://example.com/face.jpg',
@@ -110,124 +318,146 @@ $response = $modelslab->deepfake()->singleVideoSwap($deepfake);
 echo json_encode($response, JSON_PRETTY_PRINT);
 ```
 
-## API Reference
-
-### Audio API
-
-The Audio API provides text-to-speech, music generation, and voice conversion capabilities.
+### Face Swap (Image)
 
 ```php
-$audio = $modelslab->audio();
+<?php
+use ModelsLab\Schemas\FaceSwapSchema;
 
-// Text to Speech
-$response = $audio->textToSpeech($textToSpeechSchema);
-
-// Music Generation
-$response = $audio->musicGen($musicGenSchema);
-
-// Voice to Voice
-$response = $audio->voice2Voice($voice2VoiceSchema);
-
-// Sound Effects
-$response = $audio->sfxGen($sfxSchema);
-```
-
-### Video API
-
-Generate videos from text prompts.
-
-```php
-$video = $modelslab->video();
-$response = $video->textToVideo($videoSchema);
-```
-
-### 3D API
-
-Generate 3D models from text descriptions.
-
-```php
-$threeD = $modelslab->threeD();
-$response = $threeD->textTo3D($threeDSchema);
-```
-
-### Interior API
-
-Generate interior design images.
-
-```php
-$interior = $modelslab->interior();
-$response = $interior->interior($interiorSchema);
-```
-
-### Realtime API
-
-Real-time image generation.
-
-```php
-$realtime = $modelslab->realtime();
-$response = $realtime->textToImage($realtimeSchema);
-```
-
-### Deepfake API
-
-Generate deepfake content.
-
-```php
-$deepfake = $modelslab->deepfake();
-$response = $deepfake->generate($deepfakeSchema);
-```
-
-### Community API
-
-Access community models.
-
-```php
-$community = $modelslab->community();
-$response = $community->generate($communitySchema);
-```
-
-### Image Editing API
-
-Edit and manipulate images.
-
-```php
-$imageEditing = $modelslab->imageEditing();
-$response = $imageEditing->backgroundRemover($backgroundRemoverSchema);
-```
-
-## Configuration
-
-### Environment Variables
-
-You can set your API key using environment variables:
-
-```bash
-export MODELSLAB_API_KEY="your-actual-api-key"
-```
-
-Or use the API_KEY environment variable:
-
-```bash
-export API_KEY="your-actual-api-key"
-```
-
-### Client Options
-
-```php
-$modelslab = new ModelsLab($apiKey, [
-    'base_url' => 'https://modelslab.com/api/',
-    'fetch_retry' => 10,
-    'fetch_timeout' => 2
+$faceSwap = new FaceSwapSchema([
+    'init_image' => 'https://example.com/target-photo.jpg',
+    'target_image' => 'https://example.com/face-to-swap.jpg'
 ]);
+
+$response = $modelslab->deepfake()->specificFaceSwap($faceSwap);
+echo json_encode($response, JSON_PRETTY_PRINT);
 ```
+
+---
+
+## Image Editing
+
+### Background Removal
+
+```php
+<?php
+use ModelsLab\ModelsLab;
+use ModelsLab\Schemas\BackgroundRemoverSchema;
+
+$modelslab = new ModelsLab('your-api-key');
+
+$bgRemover = new BackgroundRemoverSchema([
+    'image' => 'https://example.com/photo.jpg'
+]);
+
+$response = $modelslab->imageEditing()->backgroundRemover($bgRemover);
+echo "Image without background: " . $response['output'][0];
+```
+
+### Super Resolution (Upscale)
+
+```php
+<?php
+use ModelsLab\Schemas\SuperResolutionSchema;
+
+$upscale = new SuperResolutionSchema([
+    'image' => 'https://example.com/low-res-image.jpg',
+    'scale' => 4  // 2x or 4x
+]);
+
+$response = $modelslab->imageEditing()->superResolution($upscale);
+echo json_encode($response, JSON_PRETTY_PRINT);
+```
+
+### Object Removal
+
+```php
+<?php
+use ModelsLab\Schemas\ObjectRemovalSchema;
+
+$removal = new ObjectRemovalSchema([
+    'image' => 'https://example.com/photo.jpg',
+    'mask_image' => 'https://example.com/mask.png'
+]);
+
+$response = $modelslab->imageEditing()->objectRemover($removal);
+echo json_encode($response, JSON_PRETTY_PRINT);
+```
+
+---
+
+## 3D Model Generation
+
+### Text to 3D
+
+```php
+<?php
+use ModelsLab\ModelsLab;
+use ModelsLab\Schemas\Text23DSchema;
+
+$modelslab = new ModelsLab('your-api-key');
+
+$model = new Text23DSchema([
+    'prompt' => 'A medieval sword with ornate handle',
+    'num_inference_steps' => 50
+]);
+
+$response = $modelslab->threeD()->textTo3D($model);
+echo json_encode($response, JSON_PRETTY_PRINT);
+```
+
+---
+
+## Interior Design
+
+### Interior Redesign
+
+```php
+<?php
+use ModelsLab\ModelsLab;
+use ModelsLab\Schemas\InteriorSchema;
+
+$modelslab = new ModelsLab('your-api-key');
+
+$interior = new InteriorSchema([
+    'init_image' => 'https://example.com/room-photo.jpg',
+    'prompt' => 'Modern minimalist living room with Scandinavian furniture'
+]);
+
+$response = $modelslab->interior()->interior($interior);
+echo json_encode($response, JSON_PRETTY_PRINT);
+```
+
+---
 
 ## Error Handling
 
 The SDK throws exceptions for various error conditions:
 
 ```php
+<?php
+use ModelsLab\ModelsLab;
+use ModelsLab\Schemas\Text2Speech;
+
 try {
-    $response = $modelslab->audio()->textToSpeech($schema);
+    $modelslab = new ModelsLab('your-api-key');
+
+    $tts = new Text2Speech([
+        'prompt' => 'Hello world',
+        'voice_id' => 'madison',
+        'language' => 'english'
+    ]);
+
+    $response = $modelslab->audio()->textToSpeech($tts);
+
+    if ($response['status'] === 'success') {
+        echo "Audio URL: " . $response['output'][0];
+    } elseif ($response['status'] === 'processing') {
+        echo "Processing, check back later with ID: " . $response['id'];
+    } elseif ($response['status'] === 'error') {
+        echo "API Error: " . $response['message'];
+    }
+
 } catch (InvalidArgumentException $e) {
     // Invalid API key or parameters
     echo "Invalid argument: " . $e->getMessage();
@@ -237,25 +467,78 @@ try {
 }
 ```
 
-## Environment Setup
+---
 
-Copy the environment example file:
+## Async Processing Pattern
 
-```bash
-cp env.example .env
+For long-running operations, poll for results:
+
+```php
+<?php
+function generateVideoWithPolling($modelslab, $prompt, $timeout = 300) {
+    $video = new Text2Video([
+        'prompt' => $prompt,
+        'model_id' => 'cogvideox',
+        'width' => 512,
+        'height' => 512,
+        'num_frames' => 25
+    ]);
+
+    $response = $modelslab->video()->textToVideo($video);
+
+    if ($response['status'] === 'success') {
+        return $response['output'][0];
+    }
+
+    if ($response['status'] !== 'processing') {
+        throw new Exception($response['message'] ?? 'Generation failed');
+    }
+
+    $requestId = $response['id'];
+    $startTime = time();
+
+    while (time() - $startTime < $timeout) {
+        sleep(5);  // Wait 5 seconds between polls
+
+        // Use fetch endpoint to check status
+        // Return URL when complete
+        // Throw exception if failed
+    }
+
+    throw new Exception('Timeout waiting for video generation');
+}
 ```
 
-Edit `.env` and add your API key:
+---
 
-```
-MODELSLAB_API_KEY=your-actual-api-key
-```
+## Available APIs Summary
 
-## Requirements
+| API | Methods |
+|-----|---------|
+| **Realtime** | `textToImage()`, `imageToImage()` |
+| **Community** | `textToImage()`, `imageToImage()`, `inpainting()`, `controlnet()` |
+| **Video** | `textToVideo()`, `imageToVideo()` |
+| **Audio** | `textToSpeech()`, `musicGen()`, `voice2Voice()`, `sfxGen()`, `speechToText()` |
+| **DeepFake** | `singleVideoSwap()`, `specificFaceSwap()`, `multipleFaceSwap()` |
+| **ImageEditing** | `backgroundRemover()`, `superResolution()`, `objectRemover()`, `outpainting()` |
+| **ThreeD** | `textTo3D()`, `imageTo3D()` |
+| **Interior** | `interior()`, `roomDecorator()`, `exterior()` |
 
-- PHP 7.4 or higher
-- Guzzle HTTP client
-- Composer for dependency management
+---
 
+## Next Steps
 
-Link to the Github repository: [modelslab-php](https://github.com/Modelslab/modelslab-php)
+<CardGroup cols={2}>
+  <Card title="API Reference" icon="book" href="/image-generation/overview">
+    Explore all API endpoints
+  </Card>
+  <Card title="Models" icon="cube" href="https://modelslab.com/models">
+    Browse available models
+  </Card>
+  <Card title="Webhooks" icon="bell" href="/webhooks">
+    Set up async notifications
+  </Card>
+  <Card title="Error Codes" icon="triangle-exclamation" href="/error-codes">
+    Handle errors properly
+  </Card>
+</CardGroup>

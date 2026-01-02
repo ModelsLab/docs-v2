@@ -1,0 +1,244 @@
+---
+title: "Quickstart"
+description: "Generate your first AI image in under 5 minutes"
+---
+
+## Overview
+
+This guide will help you make your first API call to ModelsLab and generate an AI image. By the end, you'll have a working integration.
+
+<Info>
+**Time to complete**: 5 minutes
+
+**What you'll need**:
+- A ModelsLab account ([sign up free](https://modelslab.com))
+- An API key ([get one here](https://modelslab.com/dashboard/api-keys))
+</Info>
+
+## Step 1: Get Your API Key
+
+<Steps>
+  <Step title="Log in to ModelsLab">
+    Go to [modelslab.com](https://modelslab.com) and log in to your account.
+  </Step>
+  <Step title="Navigate to API Keys">
+    Open your [API Keys Dashboard](https://modelslab.com/dashboard/api-keys).
+  </Step>
+  <Step title="Create a New Key">
+    Click **Create New Key** and copy the generated key.
+  </Step>
+</Steps>
+
+<Warning>
+Save your API key securely. You won't be able to see it again after leaving the page.
+</Warning>
+
+## Step 2: Make Your First API Call
+
+Choose your preferred language and run the code:
+
+<CodeGroup>
+
+```python Python
+import requests
+
+response = requests.post(
+    "https://modelslab.com/api/v6/images/text2img",
+    json={
+        "key": "YOUR_API_KEY",
+        "prompt": "A majestic lion in a savanna at sunset, photorealistic, 8k",
+        "model_id": "flux",
+        "width": 512,
+        "height": 512,
+        "samples": 1,
+        "num_inference_steps": 30,
+        "guidance_scale": 7.5
+    }
+)
+
+data = response.json()
+print(data)
+
+# If successful, the image URL will be in data["output"]
+if data.get("status") == "success":
+    print(f"Image URL: {data['output'][0]}")
+```
+
+```javascript JavaScript
+const response = await fetch("https://modelslab.com/api/v6/images/text2img", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    key: "YOUR_API_KEY",
+    prompt: "A majestic lion in a savanna at sunset, photorealistic, 8k",
+    model_id: "flux",
+    width: 512,
+    height: 512,
+    samples: 1,
+    num_inference_steps: 30,
+    guidance_scale: 7.5
+  })
+});
+
+const data = await response.json();
+console.log(data);
+
+// If successful, the image URL will be in data.output
+if (data.status === "success") {
+  console.log(`Image URL: ${data.output[0]}`);
+}
+```
+
+```bash cURL
+curl -X POST "https://modelslab.com/api/v6/images/text2img" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "key": "YOUR_API_KEY",
+    "prompt": "A majestic lion in a savanna at sunset, photorealistic, 8k",
+    "model_id": "flux",
+    "width": 512,
+    "height": 512,
+    "samples": 1,
+    "num_inference_steps": 30,
+    "guidance_scale": 7.5
+  }'
+```
+
+</CodeGroup>
+
+<Tip>
+Replace `YOUR_API_KEY` with your actual API key from Step 1.
+</Tip>
+
+## Step 3: Understanding the Response
+
+### Success Response
+
+When your image is generated successfully:
+
+```json
+{
+  "status": "success",
+  "generationTime": 2.45,
+  "id": "abc123-def456",
+  "output": [
+    "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/abc123.png"
+  ],
+  "meta": {
+    "prompt": "A majestic lion in a savanna at sunset, photorealistic, 8k",
+    "model_id": "flux",
+    "width": 512,
+    "height": 512,
+    "seed": 12345
+  }
+}
+```
+
+Open the URL in `output` to see your generated image!
+
+### Processing Response (Async)
+
+For complex generations, you may receive a processing status:
+
+```json
+{
+  "status": "processing",
+  "id": "abc123-def456",
+  "eta": 15,
+  "message": "Your request is being processed"
+}
+```
+
+If this happens, use the fetch endpoint to check the status:
+
+```python
+# Poll for results
+fetch_response = requests.post(
+    f"https://modelslab.com/api/v6/images/fetch/{data['id']}",
+    json={"key": "YOUR_API_KEY"}
+)
+print(fetch_response.json())
+```
+
+## Key Parameters Explained
+
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `key` | Your API key (required) | - |
+| `prompt` | Text description of the image (required) | - |
+| `model_id` | AI model to use (e.g., "flux", "sdxl") | "flux" |
+| `width` | Image width in pixels (256-1024) | 512 |
+| `height` | Image height in pixels (256-1024) | 512 |
+| `samples` | Number of images to generate (1-4) | 1 |
+| `num_inference_steps` | Quality/detail level (20-50) | 30 |
+| `guidance_scale` | How closely to follow prompt (1-20) | 7.5 |
+
+## Pro Tips for Better Results
+
+<AccordionGroup>
+  <Accordion title="Write Detailed Prompts">
+    Be specific about what you want:
+    - ❌ "a dog"
+    - ✅ "A golden retriever puppy playing in autumn leaves, soft natural lighting, shallow depth of field, professional photography"
+  </Accordion>
+
+  <Accordion title="Use Style Keywords">
+    Add style modifiers to guide the output:
+    - "photorealistic", "8k", "detailed"
+    - "oil painting", "watercolor", "digital art"
+    - "cinematic lighting", "studio photography"
+  </Accordion>
+
+  <Accordion title="Experiment with Guidance Scale">
+    - **Lower (3-7)**: More creative, varied results
+    - **Higher (8-15)**: Closer to your prompt, more literal
+  </Accordion>
+
+  <Accordion title="Choose the Right Model">
+    - **flux**: Best for photorealistic images
+    - **sdxl**: Great for artistic and stylized images
+    - Browse [all models](https://modelslab.com/models) to find the perfect fit
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+Now that you've made your first API call, explore more:
+
+<CardGroup cols={2}>
+  <Card title="Image Generation" icon="image" href="/image-generation/overview">
+    Explore all image generation options
+  </Card>
+  <Card title="Video Generation" icon="video" href="/video-api/overview">
+    Create AI-generated videos
+  </Card>
+  <Card title="Voice Cloning" icon="microphone" href="/voice-cloning/overview">
+    Generate speech and clone voices
+  </Card>
+  <Card title="Image Editing" icon="wand-magic-sparkles" href="/image-editing/overview">
+    Edit and enhance images with AI
+  </Card>
+</CardGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Invalid API Key Error">
+    - Double-check your API key is copied correctly
+    - Ensure you're including it in the `key` field of the request body
+    - Verify your key hasn't been revoked in the dashboard
+  </Accordion>
+
+  <Accordion title="Rate Limit Exceeded">
+    You've hit your queue limit. Wait for current requests to complete or upgrade your plan.
+    See [Rate Limits](/rate-limits) for details.
+  </Accordion>
+
+  <Accordion title="Request Timeout">
+    Some generations take longer. Use the async pattern with the fetch endpoint to handle long-running requests.
+  </Accordion>
+</AccordionGroup>
+
+<Note>
+Need help? Join our [Discord community](https://discord.com/invite/modelslab-1033301189254729748) or contact [support@modelslab.com](mailto:support@modelslab.com).
+</Note>
