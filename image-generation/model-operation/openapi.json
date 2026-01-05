@@ -263,7 +263,8 @@
             "enum": [
               "stable_diffusion",
               "stable_diffusion_xl",
-              "flux"
+              "flux",
+              "z_image"
             ],
             "description": "The category of the model you want to upload"
           },
