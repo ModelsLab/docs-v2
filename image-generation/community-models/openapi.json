@@ -336,7 +336,7 @@
             "description": "Use a custom VAE for generating images. Default is null."
           },
           "lora_strength": {
-            "type": "string",
+            "type": "integer",
             "description": "Strength of the LoRa model(s). If multiple LoRa models, provide comma-separated values (0.1 to 1)."
           },
           "lora_model": {

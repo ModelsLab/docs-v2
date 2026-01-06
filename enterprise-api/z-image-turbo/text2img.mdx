@@ -22,7 +22,9 @@ Make a `POST` request to below endpoint and pass the required parameters as a re
   "negative_prompt": "bad quality",  
   "width": "512",  
   "height": "512",  
-  "safety_checker": false,  
+  "safety_checker": false,
+  "lora_model":null,
+  "lora_strength":null,
   "seed": null,  
   "samples":1,  
   "base64":false,  
@@ -56,6 +58,15 @@ Make a `POST` request to below endpoint and pass the required parameters as a re
 <ParamField query="samples" type="number" placeholder="1-2">
   Number of images to be returned in response. The maximum value is 2.
 </ParamField>
+
+<ParamField query="lora_model" type="string">
+  Optional. LoRa models to use.
+</ParamField>
+
+<ParamField query="lora_strength" type="int" placeholder="0.1 - 1">
+  Optional. Strength of the LoRa model(s). If multiple LoRa models, provide comma-separated values (0.1 to 1).
+</ParamField>
+
 
 <ParamField query="safety_checker" type="boolean">
   A checker for NSFW images. If such an image is detected, it will be replaced by a blank image.
