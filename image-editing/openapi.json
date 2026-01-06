@@ -917,6 +917,10 @@
             },
             "description": "Link the image you want your generations to  edit and manipulate"
           },
+           "safety_checker": {
+            "type": "boolean",
+            "description": "Whether to run the safety checker"
+          },
           "base64": {
             "type": "boolean",
             "default": false,
@@ -1564,6 +1568,10 @@
             "type": "string",
             "format": "uri",
             "description": "URL of the secondary reference image to incorporate elements from. Optional for single-image workflows."
+          },
+            "safety_checker": {
+            "type": "boolean",
+            "description": "Whether to run the safety checker"
           },
           "num_inference_steps": {
             "oneOf": [
