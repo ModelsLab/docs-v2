@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/text-to-image/restart_server": {
+    "/restart_server": {
       "post": {
         "summary": "Enterprise: Restart Server Endpoint",
         "description": "This endpoint is used to restart your dedicated server. As a response you will receive information about the result of the restart command.",
@@ -49,7 +49,7 @@
         }
       }
     },
-    "/text-to-image/system_details": {
+    "/system_details": {
       "post": {
         "summary": "Enterprise: System Details Endpoint",
         "description": "This endpoint returns information about your server.",
@@ -87,7 +87,7 @@
         }
       }
     },
-    "/text-to-image/update_server": {
+    "/update_server": {
       "post": {
         "summary": "Enterprise: Update Server Endpoint",
         "description": "This endpoint is used to update your dedicated server. As a response you will receive information about the result of the update command.",
@@ -125,7 +125,7 @@
         }
       }
     },
-    "/text-to-image/clear_cache": {
+    "/clear_cache": {
       "post": {
         "summary": "Enterprise: Clear API Cache Endpoint",
         "description": "This endpoint is used to clear the API's cache.",
@@ -163,7 +163,7 @@
         }
       }
     },
-    "/text-to-image/clear_queue": {
+    "/clear_queue": {
       "post": {
         "summary": "Enterprise: Clear API Queue Endpoint",
         "description": "This endpoint is used to clear the API's queue.",
@@ -201,7 +201,7 @@
         }
       }
     },
-    "/text-to-image/fetch/{id}": {
+    "/fetch/{id}": {
       "post": {
         "summary": "Enterprise: Fetch Queued Request Endpoint",
         "description": "Fetch Queued Request API fetches queued request.",
