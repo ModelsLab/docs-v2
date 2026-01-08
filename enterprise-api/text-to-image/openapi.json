@@ -201,7 +201,7 @@
         }
       }
     },
-    "/fetch/{id}": {
+    "/fetch": {
       "post": {
         "summary": "Enterprise: Fetch Queued Request Endpoint",
         "description": "Fetch Queued Request API fetches queued request.",
@@ -210,7 +210,18 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ApiKey"
+                "type": "object",
+                "required": ["key", "request_id"],
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "description": "Your API key"
+                  },
+                  "request_id": {
+                    "type": "string",
+                    "description": "The request ID returned from the generation endpoint"
+                  }
+                }
               }
             }
           }
