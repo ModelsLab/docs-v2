@@ -9,10 +9,12 @@
   },
   "contextual": {
     "options": [
+      "claude",
       "chatgpt",
       "copy",
+      "mcp",
       "view",
-      "claude",
+      "vscode",
       {
         "title": "Feature Requests",
         "description": "Join the discord to request a new feature.",

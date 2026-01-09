@@ -7,11 +7,11 @@
   },
   "servers": [
     {
-      "url": "https://modelslab.com/api/v1/enterprise"
+      "url": "https://modelslab.com/api/v1"
     }
   ],
   "paths": {
-    "/restart_server": {
+    "/enterprise/restart_server": {
       "post": {
         "summary": "Enterprise: Restart Server Endpoint",
         "description": "This endpoint is used to restart your dedicated server. As a response you will receive information about the result of the restart command.",
@@ -49,7 +49,7 @@
         }
       }
     },
-    "/system_details": {
+    "/enterprise/system_details": {
       "post": {
         "summary": "Enterprise: System Details Endpoint",
         "description": "This endpoint returns information about your server.",
@@ -87,7 +87,7 @@
         }
       }
     },
-    "/update_server": {
+    "/enterprise/update_server": {
       "post": {
         "summary": "Enterprise: Update Server Endpoint",
         "description": "This endpoint is used to update your dedicated server. As a response you will receive information about the result of the update command.",
@@ -125,7 +125,7 @@
         }
       }
     },
-    "/clear_cache": {
+    "/enterprise/clear_cache": {
       "post": {
         "summary": "Enterprise: Clear API Cache Endpoint",
         "description": "This endpoint is used to clear the API's cache.",
@@ -163,7 +163,7 @@
         }
       }
     },
-    "/clear_queue": {
+    "/enterprise/clear_queue": {
       "post": {
         "summary": "Enterprise: Clear API Queue Endpoint",
         "description": "This endpoint is used to clear the API's queue.",
@@ -201,7 +201,7 @@
         }
       }
     },
-    "/fetch": {
+    "/enterprise/fetch": {
       "post": {
         "summary": "Enterprise: Fetch Queued Request Endpoint",
         "description": "Fetch Queued Request API fetches queued request.",
