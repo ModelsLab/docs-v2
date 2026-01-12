@@ -1,0 +1,48 @@
+---
+title: "Object Removal"
+description: "This endpoint helps to remove objects from an image."
+---
+
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/interior/object_removal' \
+```
+
+## Body
+
+```json json
+{  
+    "key":"enterprise_api_key",  
+    "init_image": "https://upcdn.io/12a1yeE/raw/WhatsApp%20Image%202024-04-04%20at%208.06.42%20AM.jpeg", 
+    "object_name": "table",  
+    "base64": false,    
+    "webhook":null,  
+    "track_id": null
+}
+```
+## Body Attributes
+<ParamField query="key" type="string" required>
+  Your API Key used for request authorization.
+</ParamField>
+
+<ParamField query="object_name" type="string" required>
+  Describe the object you want to remove from the image.
+</ParamField>
+
+<ParamField query="init_image" type="string">
+  Link to the Initial Image of the room.
+</ParamField>
+
+<ParamField query="base64" type="boolean" default="false">
+  Get response as a base64 string. Options: `true` or `false`.
+</ParamField>
+
+<ParamField query="webhook" type="string" format="url">
+  Provide a URL to receive a POST API call once the image generation is complete.
+</ParamField>
+
+<ParamField query="track_id" type="integer">
+  This ID is returned in the response to the webhook API call and will be used to identify the webhook request.
+</ParamField>
