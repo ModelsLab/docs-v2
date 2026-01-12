@@ -448,6 +448,7 @@
                   "enterprise-api/interior/scenario-changer",
                   "enterprise-api/interior/sketch-rendering",
                   "enterprise-api/interior/room-decorator",
+                  "enterprise-api/interior/object-removal",
                   "enterprise-api/interior/clear-cache",
                   "enterprise-api/interior/clear-queue",
                   "enterprise-api/interior/fetch",

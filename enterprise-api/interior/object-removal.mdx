@@ -1,6 +1,6 @@
 ---
-title: "Decorator"
-description: "This endpoint helps to decorate a room according to prompt passed."
+title: "Object Removal"
+description: "This endpoint helps to remove objects from an image."
 ---
 
 
@@ -16,15 +16,8 @@ Make a `POST` request to below endpoint and pass the required parameters in the 
 {  
     "key":"enterprise_api_key",  
     "init_image": "https://upcdn.io/12a1yeE/raw/WhatsApp%20Image%202024-04-04%20at%208.06.42%20AM.jpeg", 
-    "prompt": "luxury badroom, table, red carpet, wodden floor",  
-    "negative_prompt": "bad quality",  
-    "seed": 0,  
-    "guidance_scale": 8,  
-    "strength": 0.99,  
-    "num_inference_steps": 51,  
-    "base64": false,  
-    "temp": false,  
-    "specific_object": "mid-century coffee table",  
+    "object_name": "table",  
+    "base64": false,    
     "webhook":null,  
     "track_id": null
 }
