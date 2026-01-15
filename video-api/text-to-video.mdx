@@ -15,6 +15,24 @@ Make a `POST` request to the endpoint below with the required parameters.
 ```bash
 POST https://modelslab.com/api/v6/video/text2video
 ```
+# Body 
+
+```json json
+{
+    "key": "your_api_key",
+    "model_id": "cogvideox",
+    "prompt": "A majestic space station orbiting Earth, with the sun rising behind it, cinematic, 4K",
+    "negative_prompt": "low quality, blurry, static",
+    "height": 512,
+    "width": 512,
+    "num_frames": 25,
+    "num_inference_steps": 20,
+    "guidance_scale": 7,
+    "output_type": "mp4",
+    "webhook": null,
+    "track_id": null
+}
+```
 
 ## Async Pattern
 
