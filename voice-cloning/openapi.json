@@ -785,7 +785,7 @@
           "timestamp_level": {
             "type": "string",
             "enum": ["word", "sentence", null],
-            "description": "Level of detail for timestamps in transcription"
+            "description": "Level of detail for timestamps in transcription. Sentence-level timestamps work well and provide reliable results. However, word-level timestamps may not be accurate and may provide less reliable results."
           },
           "webhook": {
             "type": "string",

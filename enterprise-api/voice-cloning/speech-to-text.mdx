@@ -41,6 +41,10 @@ Make a `POST` request to below endpoint and pass the required parameters as a re
   The level of detail for timestamps in the transcription. Options: word, sentence, or null (no timestamps). Default: null.
 </ParamField>
 
+<Warning>
+**Timestamp Level Accuracy:** Sentence-level timestamps work well and provide reliable results. However, word-level timestamps may not be accurate and may provide less reliable results.
+</Warning>
+
 <ParamField query="webhook" type="string" format="url">
   A URL to receive a POST request once the transcription is complete.
 </ParamField>
