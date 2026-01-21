@@ -975,8 +975,7 @@
           },
           "resolution": {
             "type": "integer",
-            "maximum": 480,
-            "description": "Resolution of the output"
+            "description": "Output video resolution. For wan2.2 maximum resolution is 720p and for wan2.1 maximum resolution is 480p."
           },
           "num_frames": {
             "type": "integer",
