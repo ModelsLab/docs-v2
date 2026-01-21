@@ -1,0 +1,407 @@
+---
+title: "Agent Integration"
+description: "Setup guides for integrating ModelsLab MCP Web API with Claude Code, OpenCode, Cursor, and other AI coding agents."
+---
+
+Connect ModelsLab's powerful AI generation capabilities to your favorite AI coding assistant. This guide covers integration with popular MCP-compatible agents and tools.
+
+## Overview
+
+The ModelsLab MCP Web API works with any client that supports the [Model Context Protocol](https://modelcontextprotocol.io/) over HTTP. This includes:
+
+- **Claude Code** - Anthropic's CLI coding assistant
+- **OpenCode** - Open-source AI coding agent
+- **Claude Desktop** - Claude's desktop application
+- **Cursor** - AI-powered code editor
+- **Continue** - Open-source AI code assistant
+- **Custom integrations** - Any MCP-compatible client
+
+## Claude Code
+
+[Claude Code](https://docs.anthropic.com/en/docs/claude-code) is Anthropic's agentic CLI tool for software development.
+
+### Configuration
+
+Add ModelsLab to your Claude Code MCP settings file:
+
+<Tabs>
+  <Tab title="macOS / Linux">
+    Edit `~/.claude/settings.json`:
+    
+    ```json settings.json
+    {
+      "mcpServers": {
+        "modelslab": {
+          "url": "http://modelslab-frontend-v2.test/mcp/v7",
+          "headers": {
+            "Authorization": "Bearer YOUR_API_KEY"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Windows">
+    Edit `%USERPROFILE%\.claude\settings.json`:
+    
+    ```json settings.json
+    {
+      "mcpServers": {
+        "modelslab": {
+          "url": "http://modelslab-frontend-v2.test/mcp/v7",
+          "headers": {
+            "Authorization": "Bearer YOUR_API_KEY"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Usage
+
+Once configured, you can ask Claude Code to generate images, videos, and audio directly:
+
+```bash
+claude "Generate an image of a futuristic cityscape at night using ModelsLab"
+```
+
+```bash
+claude "Create a 5-second video of a cat walking using the ModelsLab API"
+```
+
+---
+
+## OpenCode
+
+[OpenCode](https://opencode.ai) is an open-source AI coding agent that runs in your terminal.
+
+### Configuration
+
+Add ModelsLab to your OpenCode configuration:
+
+<Tabs>
+  <Tab title="opencode.json (Project-level)">
+    Create or edit `opencode.json` in your project root:
+    
+    ```json opencode.json
+    {
+      "mcp": {
+        "servers": {
+          "modelslab": {
+            "type": "http",
+            "url": "http://modelslab-frontend-v2.test/mcp/v7",
+            "headers": {
+              "Authorization": "Bearer YOUR_API_KEY"
+            }
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Global Config">
+    Edit `~/.config/opencode/config.json`:
+    
+    ```json config.json
+    {
+      "mcp": {
+        "servers": {
+          "modelslab": {
+            "type": "http",
+            "url": "http://modelslab-frontend-v2.test/mcp/v7",
+            "headers": {
+              "Authorization": "Bearer YOUR_API_KEY"
+            }
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Usage
+
+Start OpenCode and use ModelsLab tools:
+
+```bash
+opencode
+```
+
+Then in the interactive session:
+
+```
+> Generate a logo for my startup using ModelsLab's flux-dev model
+```
+
+---
+
+## Claude Desktop
+
+[Claude Desktop](https://claude.ai/download) supports MCP servers for extended functionality.
+
+### Configuration
+
+<Tabs>
+  <Tab title="macOS">
+    Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
+    
+    ```json claude_desktop_config.json
+    {
+      "mcpServers": {
+        "modelslab": {
+          "url": "http://modelslab-frontend-v2.test/mcp/v7",
+          "headers": {
+            "Authorization": "Bearer YOUR_API_KEY"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Windows">
+    Edit `%APPDATA%\Claude\claude_desktop_config.json`:
+    
+    ```json claude_desktop_config.json
+    {
+      "mcpServers": {
+        "modelslab": {
+          "url": "http://modelslab-frontend-v2.test/mcp/v7",
+          "headers": {
+            "Authorization": "Bearer YOUR_API_KEY"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Restart Required
+
+After updating the configuration:
+
+1. Completely quit Claude Desktop (not just minimize)
+2. Reopen Claude Desktop
+3. The ModelsLab tools should now be available
+
+---
+
+## Cursor
+
+[Cursor](https://cursor.sh) is an AI-powered code editor with MCP support.
+
+### Configuration
+
+Add ModelsLab to your Cursor MCP settings:
+
+1. Open Cursor Settings (`Cmd/Ctrl + ,`)
+2. Search for "MCP"
+3. Add the following server configuration:
+
+```json
+{
+  "mcp.servers": {
+    "modelslab": {
+      "url": "http://modelslab-frontend-v2.test/mcp/v7",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+Alternatively, edit `.cursor/mcp.json` in your project:
+
+```json mcp.json
+{
+  "servers": {
+    "modelslab": {
+      "type": "http",
+      "url": "http://modelslab-frontend-v2.test/mcp/v7",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+---
+
+## Continue
+
+[Continue](https://continue.dev) is an open-source AI code assistant that works with VS Code and JetBrains IDEs.
+
+### Configuration
+
+Edit your Continue configuration file (`~/.continue/config.json`):
+
+```json config.json
+{
+  "mcpServers": [
+    {
+      "name": "modelslab",
+      "transport": {
+        "type": "http",
+        "url": "http://modelslab-frontend-v2.test/mcp/v7",
+        "headers": {
+          "Authorization": "Bearer YOUR_API_KEY"
+        }
+      }
+    }
+  ]
+}
+```
+
+---
+
+## Generic MCP Client
+
+For any MCP-compatible client, use the following configuration pattern:
+
+```json
+{
+  "servers": {
+    "modelslab-v7": {
+      "transport": "http",
+      "url": "http://modelslab-frontend-v2.test/mcp/v7",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+---
+
+## Environment Variables
+
+For security, you can use environment variables instead of hardcoding your API key:
+
+<Tabs>
+  <Tab title="macOS / Linux">
+    Add to your shell profile (`~/.bashrc`, `~/.zshrc`, etc.):
+    
+    ```bash
+    export MODELSLAB_API_KEY="your_api_key_here"
+    ```
+    
+    Then reference it in your config:
+    
+    ```json
+    {
+      "mcpServers": {
+        "modelslab": {
+          "url": "http://modelslab-frontend-v2.test/mcp/v7",
+          "headers": {
+            "Authorization": "Bearer ${MODELSLAB_API_KEY}"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Windows">
+    Set environment variable:
+    
+    ```powershell
+    setx MODELSLAB_API_KEY "your_api_key_here"
+    ```
+    
+    Then reference it in your config:
+    
+    ```json
+    {
+      "mcpServers": {
+        "modelslab": {
+          "url": "http://modelslab-frontend-v2.test/mcp/v7",
+          "headers": {
+            "Authorization": "Bearer %MODELSLAB_API_KEY%"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+<Warning>
+  Note: Environment variable substitution support varies by client. Check your specific client's documentation.
+</Warning>
+
+---
+
+## Verification
+
+After configuring your MCP client, verify the integration is working:
+
+### Test Connection
+
+Ask your AI agent to list available models:
+
+```
+List the available image generation models from ModelsLab
+```
+
+### Generate a Test Image
+
+```
+Generate a simple test image of a blue circle on a white background using ModelsLab
+```
+
+### Check for Errors
+
+If the integration isn't working, check:
+
+1. **API Key**: Ensure your API key is valid and has sufficient credits
+2. **URL**: Verify the endpoint URL is correct
+3. **Headers**: Confirm the Authorization header format is correct
+4. **Client Support**: Ensure your MCP client supports HTTP transport
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Connection refused or timeout">
+    - Verify the endpoint URL is correct
+    - Check your network connection
+    - Ensure there are no firewall rules blocking the connection
+  </Accordion>
+  
+  <Accordion title="Authentication errors">
+    - Verify your API key is correct
+    - Check that the Authorization header uses `Bearer ` prefix (with space)
+    - Ensure your API key has not expired
+  </Accordion>
+  
+  <Accordion title="Tools not appearing">
+    - Restart your MCP client after configuration changes
+    - Check the configuration file syntax (valid JSON)
+    - Verify the config file is in the correct location
+  </Accordion>
+  
+  <Accordion title="Rate limiting">
+    - Check your ModelsLab account for usage limits
+    - Add delays between requests if making many calls
+    - Consider upgrading your plan for higher limits
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Tools Reference" icon="wrench" href="/mcp-web-api/tools-reference">
+    Explore all available MCP tools and their parameters
+  </Card>
+  <Card title="Get API Key" icon="key" href="https://modelslab.com/dashboard/api-keys">
+    Create or manage your ModelsLab API keys
+  </Card>
+</CardGroup>

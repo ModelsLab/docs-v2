@@ -46,6 +46,14 @@
             "pages": ["index", "rate-limits"]
           },
           {
+            "group": "MCP Web API",
+            "pages": [
+              "mcp-web-api/overview",
+              "mcp-web-api/tools-reference",
+              "mcp-web-api/agent-integration"
+            ]
+          },
+          {
             "group": "Client SDKs",
             "pages": [
               "sdk/python",

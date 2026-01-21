@@ -1,0 +1,206 @@
+---
+title: "MCP Web API"
+description: "Connect AI agents like Claude Code, OpenCode, and other MCP-compatible clients to ModelsLab's powerful AI generation capabilities."
+---
+
+## What is the MCP Web API?
+
+The ModelsLab MCP (Model Context Protocol) Web API enables AI assistants and applications to interact with the ModelsLab V7 API for AI-powered generation capabilities including images, videos, audio, and chat completions.
+
+Unlike the [open-source MCP Server](/open-source/modelslab-mcp/overview) which requires local installation, the MCP Web API is a hosted solution that works directly over HTTP, making it easy to integrate with any MCP-compatible client.
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="Image Generation" icon="image">
+    Generate, transform, and edit images using text prompts and advanced AI models
+  </Card>
+  <Card title="Video Creation" icon="video">
+    Create videos from text, animate images, and apply AI transformations
+  </Card>
+  <Card title="Audio & Speech" icon="microphone">
+    Text-to-speech, speech-to-text, music generation, and voice transformation
+  </Card>
+  <Card title="LLM Chat" icon="comments">
+    Chat with powerful language models for text generation and conversation
+  </Card>
+</CardGroup>
+
+## Endpoint
+
+```
+http://modelslab-frontend-v2.test/mcp/v7
+```
+
+## Authentication
+
+All requests must include your ModelsLab API key using one of the following methods:
+
+<Tabs>
+  <Tab title="Authorization Header (Recommended)">
+    ```http
+    Authorization: Bearer YOUR_API_KEY
+    ```
+  </Tab>
+  <Tab title="X-API-Key Header">
+    ```http
+    X-API-Key: YOUR_API_KEY
+    ```
+  </Tab>
+</Tabs>
+
+<Info>
+  Get your API key from the [ModelsLab Dashboard](https://modelslab.com/dashboard/api-keys).
+</Info>
+
+## Protocol
+
+The MCP Web API uses the [Model Context Protocol](https://modelcontextprotocol.io/) specification. Communication is done via JSON-RPC 2.0 over HTTP.
+
+### Request Format
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "tool-name",
+    "arguments": {
+      "param1": "value1",
+      "param2": "value2"
+    }
+  }
+}
+```
+
+### Response Format
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "..."
+      }
+    ]
+  }
+}
+```
+
+## Available Tools
+
+The MCP Web API provides a comprehensive set of tools organized by category:
+
+| Category | Tools | Description |
+|----------|-------|-------------|
+| **Models** | `list-models`, `list-providers` | Browse available AI models |
+| **Image** | `text-to-image`, `image-to-image`, `inpaint-image`, `fetch-image` | Generate and edit images |
+| **Video** | `text-to-video`, `image-to-video`, `video-to-video`, `lip-sync`, `motion-control`, `fetch-video` | Create and transform videos |
+| **Audio** | `text-to-speech`, `speech-to-text`, `speech-to-speech`, `sound-generation`, `music-generation`, `song-extender`, `song-inpaint`, `dubbing`, `fetch-audio` | Audio generation and processing |
+| **LLM** | `chat-completion` | Chat with AI language models |
+
+<Card title="View Complete Tool Reference" icon="book" href="/mcp-web-api/tools-reference">
+  See detailed documentation for all available tools, parameters, and examples.
+</Card>
+
+## Quick Example
+
+Here's a simple example generating an image using the MCP Web API:
+
+**1. List available models:**
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "list-models",
+    "arguments": {
+      "feature": "imagen",
+      "limit": 5
+    }
+  }
+}
+```
+
+**2. Generate an image:**
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "tools/call",
+  "params": {
+    "name": "text-to-image",
+    "arguments": {
+      "model_id": "flux-dev",
+      "prompt": "A futuristic city at night with neon lights",
+      "width": 1024,
+      "height": 1024
+    }
+  }
+}
+```
+
+**3. Fetch the result:**
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "method": "tools/call",
+  "params": {
+    "name": "fetch-image",
+    "arguments": {
+      "id": 12345
+    }
+  }
+}
+```
+
+## Error Handling
+
+Errors are returned in standard JSON-RPC 2.0 format:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "error": {
+    "code": -32600,
+    "message": "Authentication required. Please provide a valid API key."
+  }
+}
+```
+
+### Common Error Codes
+
+| Code | Description |
+|------|-------------|
+| `-32600` | Invalid Request |
+| `-32601` | Method not found |
+| `-32602` | Invalid params |
+| `-32603` | Internal error |
+
+## Server Information
+
+- **Name:** `modelslab-v7-api`
+- **Version:** `1.0.0`
+- **Protocol:** MCP (Model Context Protocol)
+- **Transport:** HTTP with JSON-RPC 2.0
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Tools Reference" icon="wrench" href="/mcp-web-api/tools-reference">
+    Complete documentation for all available MCP tools
+  </Card>
+  <Card title="Agent Integration" icon="robot" href="/mcp-web-api/agent-integration">
+    Setup guides for Claude Code, OpenCode, and other AI agents
+  </Card>
+</CardGroup>
