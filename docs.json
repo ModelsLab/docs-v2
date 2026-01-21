@@ -648,6 +648,7 @@
           },
           {
             "group": "ModelsLab MCP",
+            "hidden": true,
             "pages": [
               "open-source/modelslab-mcp/overview",
               "open-source/modelslab-mcp/installation"
