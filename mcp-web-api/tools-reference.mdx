@@ -1,0 +1,761 @@
+---
+title: "Tools Reference"
+description: "Complete reference for all MCP Web API tools including parameters, examples, and response formats."
+---
+
+## Models (Read-Only)
+
+### list-models
+
+Browse and search available AI models on the ModelsLab platform.
+
+<ParamField path="feature" type="string">
+  Filter by product: `imagen`, `videofusion`, `audiogen`, `llmaster`, `threedverse`
+</ParamField>
+
+<ParamField path="category" type="string">
+  Filter by model category (e.g., `stable_diffusion`, `flux`, `llm`, `video`)
+</ParamField>
+
+<ParamField path="subcategory" type="string">
+  Filter by subcategory (e.g., `lora`, `controlnet`, `checkpoint`)
+</ParamField>
+
+<ParamField path="provider" type="string">
+  Filter by provider (e.g., `modelslab`, `civitai`)
+</ParamField>
+
+<ParamField path="search" type="string">
+  Search by name, ID, description, or tags
+</ParamField>
+
+<ParamField path="tags" type="array">
+  Filter models that have ALL specified tags
+</ParamField>
+
+<ParamField path="nsfw" type="boolean">
+  `false` to exclude NSFW, `true` to include. Defaults to user preference
+</ParamField>
+
+<ParamField path="sort" type="string">
+  Sort order: `recommended` (default), `latest`, `most-used`
+</ParamField>
+
+<ParamField path="limit" type="integer">
+  Max results (1-100). Default: 20
+</ParamField>
+
+<Accordion title="Example Request">
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "list-models",
+    "arguments": {
+      "feature": "imagen",
+      "search": "realistic",
+      "limit": 5
+    }
+  }
+}
+```
+</Accordion>
+
+---
+
+### list-providers
+
+List all model providers with model counts.
+
+<ParamField path="feature" type="string">
+  Filter by product: `imagen`, `videofusion`, `audiogen`, `llmaster`, `threedverse`
+</ParamField>
+
+<ParamField path="category" type="string">
+  Filter by model category
+</ParamField>
+
+---
+
+## Image Generation
+
+### text-to-image
+
+Generate images from text prompts.
+
+<ParamField path="model_id" type="string" required>
+  Model ID (e.g., `flux-dev`, `sdxl`)
+</ParamField>
+
+<ParamField path="prompt" type="string" required>
+  Text description of the image
+</ParamField>
+
+<ParamField path="negative_prompt" type="string">
+  What to avoid in the image
+</ParamField>
+
+<ParamField path="width" type="integer" default="1024">
+  Image width (512-1024)
+</ParamField>
+
+<ParamField path="height" type="integer" default="1024">
+  Image height (512-1024)
+</ParamField>
+
+<ParamField path="aspect_ratio" type="string">
+  Aspect ratio (e.g., `1:1`, `16:9`, `9:16`)
+</ParamField>
+
+<ParamField path="samples" type="integer" default="1">
+  Number of images (1-4)
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  Webhook URL for completion notification
+</ParamField>
+
+<ParamField path="track_id" type="string">
+  Custom tracking ID
+</ParamField>
+
+<Accordion title="Example Request">
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "text-to-image",
+    "arguments": {
+      "model_id": "flux-dev",
+      "prompt": "A serene mountain landscape at sunset with a crystal clear lake",
+      "negative_prompt": "blurry, low quality",
+      "width": 1024,
+      "height": 768,
+      "samples": 1
+    }
+  }
+}
+```
+</Accordion>
+
+<Note>
+  Returns a request ID that can be used with `fetch-image` to retrieve results.
+</Note>
+
+---
+
+### image-to-image
+
+Transform existing images based on text prompts.
+
+<ParamField path="model_id" type="string" required>
+  Model ID for transformation
+</ParamField>
+
+<ParamField path="prompt" type="string" required>
+  How to transform the image
+</ParamField>
+
+<ParamField path="init_image" type="string" required>
+  Input image URL or base64 string
+</ParamField>
+
+<ParamField path="negative_prompt" type="string">
+  What to avoid in the output
+</ParamField>
+
+<ParamField path="width" type="integer">
+  Output width (512-1024)
+</ParamField>
+
+<ParamField path="height" type="integer">
+  Output height (512-1024)
+</ParamField>
+
+<ParamField path="aspect_ratio" type="string">
+  Output aspect ratio
+</ParamField>
+
+<ParamField path="strength" type="number">
+  Transformation strength (0-1). Higher = more change
+</ParamField>
+
+<ParamField path="samples" type="integer">
+  Number of images (1-4)
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  Webhook URL
+</ParamField>
+
+<ParamField path="track_id" type="string">
+  Custom tracking ID
+</ParamField>
+
+---
+
+### inpaint-image
+
+Edit specific areas of images using masks.
+
+<ParamField path="model_id" type="string" required>
+  Model ID for inpainting
+</ParamField>
+
+<ParamField path="prompt" type="string" required>
+  What to paint in the masked area
+</ParamField>
+
+<ParamField path="init_image" type="string" required>
+  Input image URL or base64
+</ParamField>
+
+<ParamField path="mask_image" type="string" required>
+  Mask image (white = edit, black = preserve)
+</ParamField>
+
+<ParamField path="negative_prompt" type="string">
+  What to avoid
+</ParamField>
+
+<ParamField path="strength" type="number">
+  Transformation strength (0-1)
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  Webhook URL
+</ParamField>
+
+<ParamField path="track_id" type="string">
+  Custom tracking ID
+</ParamField>
+
+---
+
+### fetch-image
+
+Retrieve the status and results of an image generation request.
+
+<ParamField path="id" type="integer" required>
+  Request ID from a previous generation call
+</ParamField>
+
+---
+
+## Video Generation
+
+### text-to-video
+
+Generate videos from text descriptions.
+
+<ParamField path="model_id" type="string" required>
+  Model ID for video generation
+</ParamField>
+
+<ParamField path="prompt" type="string" required>
+  Text description of the video
+</ParamField>
+
+<ParamField path="negative_prompt" type="string">
+  What to avoid
+</ParamField>
+
+<ParamField path="width" type="integer">
+  Video width (512-1024)
+</ParamField>
+
+<ParamField path="height" type="integer">
+  Video height (512-1024)
+</ParamField>
+
+<ParamField path="aspect_ratio" type="string">
+  Aspect ratio (e.g., `16:9`, `9:16`)
+</ParamField>
+
+<ParamField path="duration" type="integer">
+  Duration in seconds (min 4)
+</ParamField>
+
+<ParamField path="fps" type="integer">
+  Frames per second
+</ParamField>
+
+<ParamField path="resolution" type="string">
+  Output resolution preset
+</ParamField>
+
+<ParamField path="portrait" type="boolean">
+  Generate in portrait orientation
+</ParamField>
+
+<ParamField path="camera_fixed" type="boolean">
+  Keep camera position fixed
+</ParamField>
+
+<ParamField path="enhance_prompt" type="boolean">
+  Use AI to enhance the prompt
+</ParamField>
+
+<ParamField path="generate_audio" type="boolean">
+  Generate audio for the video
+</ParamField>
+
+<ParamField path="init_audio" type="string">
+  Audio URL to sync with
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  Webhook URL
+</ParamField>
+
+<ParamField path="track_id" type="string">
+  Custom tracking ID
+</ParamField>
+
+---
+
+### image-to-video
+
+Animate static images into videos.
+
+<ParamField path="model_id" type="string" required>
+  Model ID for video generation
+</ParamField>
+
+<ParamField path="init_image" type="string" required>
+  Input image URL or base64
+</ParamField>
+
+<ParamField path="prompt" type="string">
+  Motion/transformation description
+</ParamField>
+
+<ParamField path="negative_prompt" type="string">
+  What to avoid
+</ParamField>
+
+<ParamField path="aspect_ratio" type="string">
+  Video aspect ratio
+</ParamField>
+
+<ParamField path="duration" type="integer">
+  Duration in seconds (min 4)
+</ParamField>
+
+<ParamField path="resolution" type="string">
+  Output resolution preset
+</ParamField>
+
+<ParamField path="portrait" type="boolean">
+  Portrait orientation
+</ParamField>
+
+<ParamField path="init_audio" type="string">
+  Audio URL to sync with
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  Webhook URL
+</ParamField>
+
+<ParamField path="track_id" type="string">
+  Custom tracking ID
+</ParamField>
+
+---
+
+### video-to-video
+
+Transform existing videos with AI.
+
+<ParamField path="model_id" type="string" required>
+  Model ID for transformation
+</ParamField>
+
+<ParamField path="prompt" type="string" required>
+  How to transform the video
+</ParamField>
+
+<ParamField path="init_video" type="string" required>
+  Input video URL
+</ParamField>
+
+<ParamField path="init_image" type="string">
+  Optional reference image
+</ParamField>
+
+<ParamField path="negative_prompt" type="string">
+  What to avoid
+</ParamField>
+
+<ParamField path="aspect_ratio" type="string">
+  Output aspect ratio
+</ParamField>
+
+<ParamField path="duration" type="integer">
+  Duration in seconds (min 4)
+</ParamField>
+
+<ParamField path="seed" type="integer">
+  Random seed (0-4294967295)
+</ParamField>
+
+<ParamField path="public_figure_threshold" type="string">
+  `auto`, `low`, `medium`, `high`
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  Webhook URL
+</ParamField>
+
+<ParamField path="track_id" type="string">
+  Custom tracking ID
+</ParamField>
+
+---
+
+### lip-sync
+
+Sync video with audio for lip movements.
+
+<ParamField path="model_id" type="string" required>
+  Model ID for lip sync
+</ParamField>
+
+<ParamField path="init_video" type="string" required>
+  Video URL or base64 containing face
+</ParamField>
+
+<ParamField path="init_audio" type="string" required>
+  Audio URL or base64 to sync with
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  Webhook URL
+</ParamField>
+
+<ParamField path="track_id" type="string">
+  Custom tracking ID
+</ParamField>
+
+---
+
+### motion-control
+
+Control motion in video generation using reference video.
+
+<ParamField path="model_id" type="string" required>
+  Model ID for motion control
+</ParamField>
+
+<ParamField path="init_image" type="string" required>
+  Character/subject image
+</ParamField>
+
+<ParamField path="init_video" type="string" required>
+  Video for motion reference
+</ParamField>
+
+<ParamField path="character_orientation" type="string" required>
+  Use orientation from `image` or `video`
+</ParamField>
+
+<ParamField path="prompt" type="string">
+  Optional text prompt (max 2500 chars)
+</ParamField>
+
+<ParamField path="mode" type="string">
+  `std` (standard) or `pro` (professional)
+</ParamField>
+
+<ParamField path="keep_original_sound" type="string">
+  `yes` or `no`
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  Webhook URL
+</ParamField>
+
+<ParamField path="track_id" type="string">
+  Custom tracking ID
+</ParamField>
+
+---
+
+### fetch-video
+
+Retrieve the status and results of a video generation request.
+
+<ParamField path="id" type="string" required>
+  Request ID from a previous video generation call
+</ParamField>
+
+---
+
+## Audio Generation
+
+### text-to-speech
+
+Convert text to natural speech audio.
+
+<ParamField path="model_id" type="string" required>
+  Model ID for text-to-speech
+</ParamField>
+
+<ParamField path="prompt" type="string" required>
+  Text to convert to speech
+</ParamField>
+
+<ParamField path="voice_id" type="string" required>
+  Voice ID to use
+</ParamField>
+
+<ParamField path="temperature" type="number">
+  Voice variation (0-1)
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  Webhook URL
+</ParamField>
+
+<ParamField path="track_id" type="string">
+  Custom tracking ID
+</ParamField>
+
+---
+
+### speech-to-text
+
+Transcribe audio to text.
+
+<ParamField path="model_id" type="string" required>
+  Model ID for transcription
+</ParamField>
+
+<ParamField path="init_audio" type="string" required>
+  Audio URL or base64 to transcribe
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  Webhook URL
+</ParamField>
+
+<ParamField path="track_id" type="string">
+  Custom tracking ID
+</ParamField>
+
+---
+
+### speech-to-speech
+
+Voice conversion and transformation.
+
+<ParamField path="model_id" type="string" required>
+  Model ID for voice conversion
+</ParamField>
+
+<ParamField path="init_audio" type="string" required>
+  Audio URL or base64 to transform
+</ParamField>
+
+<ParamField path="voice_id" type="string" required>
+  Target voice ID
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  Webhook URL
+</ParamField>
+
+<ParamField path="track_id" type="string">
+  Custom tracking ID
+</ParamField>
+
+---
+
+### sound-generation
+
+Generate sound effects from text descriptions.
+
+<ParamField path="model_id" type="string" required>
+  Model ID for sound generation
+</ParamField>
+
+<ParamField path="prompt" type="string" required>
+  Description of the sound effect
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  Webhook URL
+</ParamField>
+
+<ParamField path="track_id" type="string">
+  Custom tracking ID
+</ParamField>
+
+---
+
+### music-generation
+
+Create music from text prompts.
+
+<ParamField path="model_id" type="string" required>
+  Model ID for music generation
+</ParamField>
+
+<ParamField path="prompt" type="string" required>
+  Description of the music to generate
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  Webhook URL
+</ParamField>
+
+<ParamField path="track_id" type="string">
+  Custom tracking ID
+</ParamField>
+
+---
+
+### song-extender
+
+Extend existing music tracks.
+
+<ParamField path="model_id" type="string" required>
+  Model ID for song extension
+</ParamField>
+
+<ParamField path="init_audio" type="string" required>
+  Audio URL or base64 to extend
+</ParamField>
+
+<ParamField path="prompt" type="string">
+  Direction for the extension
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  Webhook URL
+</ParamField>
+
+<ParamField path="track_id" type="string">
+  Custom tracking ID
+</ParamField>
+
+---
+
+### song-inpaint
+
+Edit specific parts of songs.
+
+<ParamField path="model_id" type="string" required>
+  Model ID for song inpainting
+</ParamField>
+
+<ParamField path="init_audio" type="string" required>
+  Audio URL or base64 to edit
+</ParamField>
+
+<ParamField path="prompt" type="string" required>
+  What to replace/edit in the song
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  Webhook URL
+</ParamField>
+
+<ParamField path="track_id" type="string">
+  Custom tracking ID
+</ParamField>
+
+---
+
+### dubbing
+
+Create dubbed audio content.
+
+<ParamField path="model_id" type="string" required>
+  Model ID for dubbing
+</ParamField>
+
+<ParamField path="init_audio" type="string" required>
+  Original audio URL or base64
+</ParamField>
+
+<ParamField path="target_language" type="string" required>
+  Target language for dubbing
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  Webhook URL
+</ParamField>
+
+<ParamField path="track_id" type="string">
+  Custom tracking ID
+</ParamField>
+
+---
+
+### fetch-audio
+
+Retrieve the status and results of an audio generation request.
+
+<ParamField path="id" type="string" required>
+  Request ID from a previous audio generation call
+</ParamField>
+
+---
+
+## LLM
+
+### chat-completion
+
+Chat with AI language models.
+
+<ParamField path="model_id" type="string" required>
+  LLM model ID
+</ParamField>
+
+<ParamField path="messages" type="array" required>
+  Array of message objects with `role` and `content`
+</ParamField>
+
+<ParamField path="temperature" type="number">
+  Sampling temperature
+</ParamField>
+
+<ParamField path="max_tokens" type="integer">
+  Maximum tokens to generate
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  Webhook URL
+</ParamField>
+
+<ParamField path="track_id" type="string">
+  Custom tracking ID
+</ParamField>
+
+<Accordion title="Example Request">
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "chat-completion",
+    "arguments": {
+      "model_id": "llama-3",
+      "messages": [
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "What is the capital of France?"}
+      ],
+      "temperature": 0.7,
+      "max_tokens": 500
+    }
+  }
+}
+```
+</Accordion>

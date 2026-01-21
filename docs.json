@@ -48,6 +48,14 @@
             "pages": ["index", "quickstart", "authentication", "rate-limits", "error-codes", "webhooks"]
           },
           {
+            "group": "MCP Web API",
+            "pages": [
+              "mcp-web-api/overview",
+              "mcp-web-api/tools-reference",
+              "mcp-web-api/agent-integration"
+            ]
+          },
+          {
             "group": "Client SDKs",
             "pages": [
               "sdk/python",
