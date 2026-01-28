@@ -934,6 +934,12 @@
           "track_id": {
             "type": "integer",
             "description": "ID for webhook identification"
+          },
+          "model_id": {
+            "type": "string",
+            "enum": ["qwen-edit-2509", "qwen-edit-2511"],
+            "default": "qwen-edit-2509",
+            "description": "The model version to use for image editing"
           }
         }
       },
