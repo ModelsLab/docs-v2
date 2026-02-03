@@ -1,0 +1,17 @@
+---
+title: "Fetch Audio"
+description: "This endpoint is used to fetch a queued audio."
+openapi: "POST /enterprise/text_to_speech/fetch/{id}"
+---
+## Request
+Send a `POST` request to below endpoint to return the corresponding queued audio. Where `{id}` is the ID returned together with the audio URL in the response upon its generation.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/speech_to_text/fetch/{id}' \
+```
+
+## Body
+```json json
+{ 
+    "key": "enterprise_api_key"
+}
+```

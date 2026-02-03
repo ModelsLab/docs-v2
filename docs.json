@@ -573,6 +573,19 @@
                   "enterprise-api/video/update-server"
                 ]
               },
+                  {
+                "group": "Speech to Text API",
+                "pages": [
+                  "enterprise-api/speech-to-text/overview",
+                  "enterprise-api/speech-to-text/text-to-speech",
+                  "enterprise-api/speech-to-text/clear-cache",
+                  "enterprise-api/speech-to-text/clear-queue",
+                  "enterprise-api/speech-to-text/fetch-audio",
+                  "enterprise-api/speech-to-text/restart-server",
+                  "enterprise-api/speech-to-text/system-details",
+                  "enterprise-api/speech-to-text/update-server"
+                ]
+              },
               {
                 "group": "Voice Cloning API",
                 "pages": [

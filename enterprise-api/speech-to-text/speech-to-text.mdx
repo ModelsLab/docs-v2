@@ -1,0 +1,54 @@
+---
+title: "Speech to Text"
+description: "Generate text from audio using our enterprise API."
+---
+
+## Request
+
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
+
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/speech_to_text/transcribe' \
+```
+
+
+
+## Body
+
+```json json
+{    
+    "key": "enterprise_api_key",
+    "init_audio":"audio you want to transcribe to text",
+    "language":"en",
+}
+```
+
+## Body Attributes
+
+<ParamField query="key" type="string" required>
+  API key for authentication.
+</ParamField>
+
+<ParamField query="init_audio" type="string" required>
+  The audio file to transcribe.
+</ParamField>
+
+
+<ParamField query="language" default="english" type="string">
+  Language for the voice.\
+  Allowed values: `en`
+</ParamField>
+
+
+<ParamField query="timestamp_level" default="null">
+  Timestamp level for the transcription.\
+  Allowed values: `null`, `word`, `sentence`
+</ParamField>
+
+<ParamField query="webhook" type="string">
+  URL to receive POST notification upon completion.
+</ParamField>
+
+<ParamField query="track_id" type="integer">
+  ID for webhook identification.
+</ParamField>
