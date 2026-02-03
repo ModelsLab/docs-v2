@@ -11,10 +11,48 @@
     }
   ],
   "paths": {
-    "/enterprise/text_to_speech/restart_server": {
+    "/enterprise/speech_to_text/transcribe": {
       "post": {
-        "summary": "Enterprise: Restart Server Endpoint",
-        "description": "This endpoint is used to restart your dedicated server. As a response you will receive information about the result of the restart command.",
+        "summary": "Enterprise: Speech to Text Transcription Endpoint",
+        "description": "This endpoint generates and returns text from audio.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TranscribeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API Key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enterprise/speech_to_text/fetch/{id}": {
+      "post": {
+        "summary": "Enterprise: Fetch Queued Request Endpoint",
+        "description": "Fetch Queued Request API fetches queued request.",
         "requestBody": {
           "required": true,
           "content": {
@@ -49,83 +87,7 @@
         }
       }
     },
-    "/enterprise/text_to_speech/system_details": {
-      "post": {
-        "summary": "Enterprise: System Details Endpoint",
-        "description": "This endpoint returns information about your server.",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ApiKey"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GenericResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid API Key",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/enterprise/text_to_speech/update_server": {
-      "post": {
-        "summary": "Enterprise: Update Server Endpoint",
-        "description": "This endpoint is used to update your dedicated server. As a response you will receive information about the result of the update command.",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ApiKey"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GenericResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Invalid API Key",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/enterprise/text_to_speech/clear_cache": {
+    "/enterprise/speech_to_text/clear_cache": {
       "post": {
         "summary": "Enterprise: Clear API Cache Endpoint",
         "description": "This endpoint is used to clear the API's cache.",
@@ -163,7 +125,7 @@
         }
       }
     },
-    "/enterprise/text_to_speech/clear_queue": {
+    "/enterprise/speech_to_text/clear_queue": {
       "post": {
         "summary": "Enterprise: Clear API Queue Endpoint",
         "description": "This endpoint is used to clear the API's queue.",
@@ -201,10 +163,86 @@
         }
       }
     },
-    "/enterprise/text_to_speech/fetch/{id}": {
+    "/enterprise/speech_to_text/restart_server": {
       "post": {
-        "summary": "Enterprise: Fetch Queued Request Endpoint",
-        "description": "Fetch Queued Request API fetches queued request.",
+        "summary": "Enterprise: Restart Server Endpoint",
+        "description": "This endpoint is used to restart your dedicated server. As a response you will receive information about the result of the restart command.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiKey"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API Key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enterprise/speech_to_text/system_details": {
+      "post": {
+        "summary": "Enterprise: System Details Endpoint",
+        "description": "This endpoint returns information about your server.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiKey"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid API Key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enterprise/speech_to_text/update_server": {
+      "post": {
+        "summary": "Enterprise: Update Server Endpoint",
+        "description": "This endpoint is used to update your dedicated server. As a response you will receive information about the result of the update command.",
         "requestBody": {
           "required": true,
           "content": {
@@ -251,6 +289,39 @@
           }
         },
         "required": ["key"]
+      },
+      "TranscribeRequest": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API key"
+          },
+          "init_audio": {
+            "type": "string",
+            "description": "The audio file to transcribe"
+          },
+          "language": {
+            "type": "string",
+            "description": "Language for the transcription",
+            "default": "en"
+          },
+          "timestamp_level": {
+            "type": "string",
+            "description": "Timestamp level for the transcription",
+            "enum": ["null", "word", "sentence"],
+            "default": "null"
+          },
+          "webhook": {
+            "type": "string",
+            "description": "URL to receive POST notification upon completion"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
+        },
+        "required": ["key", "init_audio"]
       },
       "GenericResponse": {
         "type": "object",

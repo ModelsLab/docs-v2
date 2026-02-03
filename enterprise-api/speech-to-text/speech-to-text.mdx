@@ -1,6 +1,7 @@
 ---
 title: "Speech to Text"
 description: "Generate text from audio using our enterprise API."
+openapi: "POST /enterprise/speech_to_text/transcribe"
 ---
 
 ## Request
@@ -34,7 +35,7 @@ Make a `POST` request to below endpoint and pass the required parameters as a re
 </ParamField>
 
 
-<ParamField query="language" default="english" type="string">
+<ParamField query="language" default="en" type="string">
   Language for the voice.\
   Allowed values: `en`
 </ParamField>
