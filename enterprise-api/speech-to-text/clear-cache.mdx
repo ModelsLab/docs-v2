@@ -1,0 +1,24 @@
+---
+title: "Clear Cache"
+description: "This endpoint is used to clear the API's cache."
+openapi: "POST /enterprise/speech_to_text/clear_cache"
+---
+
+## Request
+Send a `POST` request to below endpoint to clear the API's cache.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/speech_to_text/clear_cache' \
+```
+
+## Body
+```json json
+{
+    "key": "enterprise_api_key"
+}
+```
+
+## Body Attributes
+
+<ParamField query="key" type="string" required>
+  API key for authentication.
+</ParamField>
