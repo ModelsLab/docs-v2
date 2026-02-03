@@ -94,9 +94,32 @@ pre {
 
 /* Banner styles */
 #banner {
-  background: radial-gradient(circle, #356892 0%, #eaac66 50%, #1e3a8a 100%);
+  background: linear-gradient(to right,
+    #6366f1 0%,
+    #8b5cf6 15%,
+    #d946ef 30%,
+    #ec4899 45%,
+    #f43f5e 55%,
+    #fb923c 75%,
+    #fbbf24 100%
+  );
+  position: relative;
   color: rgb(255, 255, 255);
   padding: 12px 20px;
+  overflow: hidden;
+}
+
+#banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(circle, rgba(0, 0, 0, 0.15) 1px, transparent 1px);
+  background-size: 4px 4px;
+  pointer-events: none;
 }
 
 #banner * {

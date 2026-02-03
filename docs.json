@@ -10,10 +10,13 @@
   "contextual": {
     "options": [
       "claude",
-      "chatgpt",
       "copy",
-      "mcp",
       "view",
+      "chatgpt",
+      "perplexity",
+      "grok",
+      "mcp",
+      "cursor",
       "vscode",
       {
         "title": "Feature Requests",
