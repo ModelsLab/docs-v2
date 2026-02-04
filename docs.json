@@ -48,7 +48,15 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["index", "quickstart", "authentication", "rate-limits", "error-codes", "webhooks"]
+            "pages": [
+              "index",
+              "quickstart",
+              "agent-skills",
+              "authentication",
+              "rate-limits",
+              "error-codes",
+              "webhooks"
+            ]
           },
           {
             "group": "MCP Web API",

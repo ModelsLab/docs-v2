@@ -1,0 +1,86 @@
+---
+title: "ModelsLab Agent Skills"
+description: "Install and use ModelsLab Agent Skills in your coding agents"
+---
+
+## Overview
+
+ModelsLab Agent Skills are modular capabilities that extend your coding agents with ModelsLab-specific workflows. Each Skill bundles instructions (and optional resources) so your agent can use ModelsLab APIs consistently without repeating setup across projects.
+
+<Info>
+**What you get**:
+- Pre-built skills for image, video, audio, 3D, and more
+- A consistent workflow your agent can reuse automatically
+- Easy installation via the Skills CLI
+</Info>
+
+## Quick Start
+
+```bash
+# Install all ModelsLab skills
+npx skills add modelslab/skills --all
+
+# Install a specific skill
+npx skills add modelslab/skills --skill modelslab-image-generation
+
+# List available skills
+npx skills add modelslab/skills --list
+```
+
+<Tip>
+Use `--all` if you want your agent to cover all ModelsLab capabilities.
+</Tip>
+
+## Available Skills
+
+| Skill | Description | Use Cases |
+|-------|-------------|-----------|
+| 🎨 **Image Generation** (`modelslab-image-generation`) | Generate high-quality images from text prompts or transform images. | Product photos, marketing graphics, concept art |
+| 🎬 **Video Generation** (`modelslab-video-generation`) | Generate videos from text or animate images. | Product demos, social media videos, animations |
+| 🎵 **Audio Generation** (`modelslab-audio-generation`) | Generate speech, music, and sound effects with voice cloning. | Audiobooks, podcasts, game audio |
+| ✂️ **Image Editing** (`modelslab-image-editing`) | Background removal, upscaling, and editing tools. | E-commerce, real estate, restoration |
+| 🎲 **3D Generation** (`modelslab-3d-generation`) | Generate 3D models from text or images. | Game assets, 3D printing, AR/VR |
+| 🎭 **Deepfake & Face Swap** (`modelslab-deepfake`) | Face swapping for images and videos. | Entertainment, personalization |
+| 🏠 **Interior Design** (`modelslab-interior-design`) | Room redesign and decoration. | Staging, renovation, mockups |
+| 🔔 **Webhooks** (`modelslab-webhooks`) | Handle async work with webhook notifications. | Batch jobs, background tasks |
+| 📦 **SDK Usage** (`modelslab-sdk-usage`) | Guidance for ModelsLab SDKs. | Type safety, autocomplete, cleaner code |
+
+## How Skills Work
+
+Skills live on disk as folders containing a `SKILL.md` file. When your agent sees a matching task, it loads only the relevant Skill instructions and any referenced resources. This keeps context light while still giving your agent expert guidance when it matters.
+
+```text
+modelslab-image-generation/
+├── SKILL.md
+├── templates/
+└── scripts/
+```
+
+## Install to Specific Agents
+
+You can target specific agents that support the Skills CLI:
+
+```bash
+npx skills add modelslab/skills --all -a claude-code -a cursor
+```
+
+## Resources
+
+- **ModelsLab Skills repo**: https://github.com/ModelsLab/skills
+- **Docs**: https://docs.modelslab.com
+- **Dashboard**: https://modelslab.com/dashboard
+- **Discord**: https://discord.gg/modelslab
+
+## Next Steps
+
+<Steps>
+  <Step title="Get an API key">
+    Create a project and grab your key in the dashboard: https://modelslab.com/dashboard
+  </Step>
+  <Step title="Install Skills">
+    Run `npx skills add modelslab/skills --all` to enable all ModelsLab Skills.
+  </Step>
+  <Step title="Start using your agent">
+    Ask your agent to generate images, videos, audio, or 3D using ModelsLab APIs.
+  </Step>
+</Steps>
