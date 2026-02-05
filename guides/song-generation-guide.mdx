@@ -1,0 +1,356 @@
+---
+title: "Song Generation Guide"
+description: "Professional guide to creating music with ModelsLab Song Generator API powered by ACE-Step v1.5"
+---
+
+<img
+  src="https://assets.modelslab.com/generations/5441a55a-b930-4e15-b14d-61fc8b08c3d8.png"
+  alt="Song Generation Guide"
+  style={{ width: '100%', borderRadius: '8px', marginBottom: '2rem' }}
+/>
+
+# Song Generation Guide
+
+This guide contains professional music creation knowledge to help you create high-quality songs using the ModelsLab Song Generator API, powered by **ACE-Step v1.5** model.
+
+---
+
+## Overview
+
+The Song Generator API allows you to create complete songs with vocals in 50+ languages using the advanced **ACE-Step v1.5** model. You can either provide your own lyrics or let the AI generate them automatically based on your prompt.
+
+### Key Features
+
+- **Duration Control**: Generate songs from 30 seconds to 8 minutes (30-480 seconds)
+- **50+ Languages**: Support for languages from Arabic to Chinese
+- **Lyrics Generation**: Automatic lyrics generation or use your own
+- **Instrumental Mode**: Generate instrumental versions without vocals
+- **Style Control**: Use caption to define music style, instruments, and atmosphere
+
+---
+
+## Understanding the Parameters
+
+### Caption: Your Music Blueprint
+
+**Caption is the most important parameter** affecting your generated song. It describes the overall music elements you want.
+
+#### What to Include in Caption
+
+| Dimension | Examples |
+|-----------|----------|
+| **Style/Genre** | pop, rock, jazz, electronic, hip-hop, R&B, folk, reggaeton, synthwave |
+| **Emotion/Atmosphere** | melancholic, uplifting, energetic, dreamy, dark, nostalgic, euphoric, intimate |
+| **Instruments** | acoustic guitar, piano, synth pads, 808 drums, strings, brass, electric bass |
+| **Timbre Texture** | warm, bright, crisp, airy, punchy, lush, raw, polished |
+| **Era Reference** | 80s synth-pop, 90s grunge, 2010s EDM, vintage soul, modern trap |
+| **Vocal Characteristics** | female vocal, male vocal, breathy, powerful, falsetto, raspy |
+| **Production Style** | lo-fi, high-fidelity, live recording, studio-polished |
+
+#### Caption Writing Principles
+
+1. **Be Specific** — "sad piano ballad with female breathy vocal" works better than "a sad song"
+
+2. **Combine Dimensions** — Mix style + emotion + instruments + timbre for precise control
+
+3. **Use References** — "80s synthwave style" or "reggaeton with flamenco influence" conveys complex aesthetics quickly
+
+4. **Texture Words Matter** — Adjectives like warm, crisp, airy, punchy influence mixing and timbre
+
+5. **Balance Detail vs Freedom** — More details = more control, fewer details = more AI creativity
+
+6. **Avoid Conflicts** — Don't combine incompatible styles like "classical strings" and "hardcore metal" unless you want evolution
+
+**Example Good Captions:**
+
+```
+A modern reggaeton track with strong flamenco influence, featuring female vocal with reverb,
+deep sub-bass, crisp percussion, and plucked synth guitar riff
+```
+
+```
+Lo-fi hip-hop beat with warm vinyl crackle, mellow piano chords, subtle jazz drums,
+and atmospheric pad textures
+```
+
+```
+80s synthwave pop with bright synth leads, punchy drum machine, nostalgic atmosphere,
+and powerful female vocals
+```
+
+---
+
+## Lyrics: Your Song's Timeline
+
+Lyrics control how your song unfolds over time. They include:
+- Lyric text content
+- Structure tags ([Verse], [Chorus], etc.)
+- Vocal style hints
+- Instrumental sections
+- Energy changes
+
+### Common Structure Tags
+
+| Category | Tag | Description |
+|----------|-----|-------------|
+| **Basic Structure** | `[Intro]` | Opening, establish atmosphere |
+| | `[Verse]` / `[Verse 1]` | Verse, narrative progression |
+| | `[Pre-Chorus]` | Build energy before chorus |
+| | `[Chorus]` | Emotional climax, hook |
+| | `[Bridge]` | Transition or elevation |
+| | `[Outro]` | Ending, conclusion |
+| **Dynamic Sections** | `[Build]` | Energy gradually rising |
+| | `[Drop]` | Electronic music energy release |
+| | `[Breakdown]` | Reduced instrumentation |
+| **Instrumental** | `[Instrumental]` | Pure instrumental, no vocals |
+| | `[Guitar Solo]` | Guitar solo section |
+| | `[Piano Interlude]` | Piano interlude |
+| **Special Tags** | `[Fade Out]` | Fade out ending |
+
+### Vocal Control Tags
+
+| Tag | Effect |
+|-----|--------|
+| `[raspy vocal]` | Raspy, textured vocals |
+| `[whispered]` | Whispered vocals |
+| `[falsetto]` | Falsetto vocals |
+| `[powerful belting]` | Powerful, high-pitched singing |
+| `[harmonies]` | Layered harmonies |
+
+### Energy Tags
+
+| Tag | Effect |
+|-----|--------|
+| `[high energy]` | High energy, passionate |
+| `[building energy]` | Increasing energy |
+| `[explosive]` | Explosive energy |
+| `[melancholic]` | Melancholic mood |
+| `[euphoric]` | Euphoric feeling |
+
+### Lyrics Writing Tips
+
+**1. Control Syllable Count**
+
+Keep **6-10 syllables per line** for best results. Consistent syllable counts create better rhythm.
+
+**2. Use Case for Intensity**
+
+```
+[Verse]
+walking through the empty streets (normal)
+
+[Chorus]
+WE ARE THE CHAMPIONS! (high intensity)
+```
+
+**3. Parentheses for Background Vocals**
+
+```
+[Chorus]
+We rise together (together)
+Into the light (into the light)
+```
+
+**4. Clear Section Separation**
+
+Always separate sections with blank lines:
+
+```
+[Verse 1]
+First verse lyrics here
+Continue first verse
+
+[Chorus]
+Chorus lyrics here
+Chorus continues
+```
+
+### Keep Caption and Lyrics Consistent
+
+⚠️ **Critical**: Descriptions in Caption and Lyrics must align. If Caption says "soft piano ballad" but Lyrics has `[explosive metal solo]`, results will be poor.
+
+**Checklist:**
+- Instruments in Caption ↔ Instrumental tags in Lyrics
+- Emotion in Caption ↔ Energy tags in Lyrics
+- Vocal description in Caption ↔ Vocal control tags in Lyrics
+
+---
+
+## Duration Calculation
+
+**You MUST calculate appropriate duration** based on your lyrics and structure.
+
+### Estimation Method
+
+- **Per line of lyrics**: 3-5 seconds
+- **Intro/Outro**: 5-10 seconds each
+- **Instrumental sections**: 5-15 seconds
+- **Typical structures**:
+  - 2 verses + 2 choruses: 120-150 seconds minimum
+  - 2 verses + 2 choruses + bridge: 180-240 seconds
+  - Full song with intro/outro: 210-270 seconds (3.5-4.5 minutes)
+
+### Common Pitfall
+
+❌ **DON'T**: 10 lines of lyrics with 60 seconds duration → rushed and compressed
+
+✅ **DO**: 10 lines → ~40 seconds vocals + 20 seconds intro/outro = 60+ seconds
+
+**Rule**: When in doubt, estimate longer rather than shorter.
+
+---
+
+## Using Lyrics Generation
+
+When you don't have lyrics, set `lyrics_generation: true` and provide:
+
+1. **prompt**: Describe the topic/theme for lyrics
+2. **caption**: Describe the music style (same as with manual lyrics)
+
+### Example Request with Lyrics Generation
+
+```json
+{
+  "key": "your_api_key",
+  "lyrics_generation": true,
+  "prompt": "A song about overcoming challenges and finding inner strength, with uplifting message and emotional journey from doubt to confidence",
+  "caption": "Inspiring pop ballad with piano and strings, building from intimate verse to powerful anthemic chorus, female vocal with emotional delivery",
+  "duration": 180,
+  "webhook": null,
+  "track_id": null
+}
+```
+
+---
+
+## Instrumental Mode
+
+To generate music without vocals, set `instrumental: true`:
+
+```json
+{
+  "key": "your_api_key",
+  "lyrics_generation": false,
+  "lyrics": "[Instrumental]",
+  "caption": "Energetic electronic dance music with driving bassline, synth melodies, and dynamic build-ups",
+  "instrumental": true,
+  "duration": 240,
+  "webhook": null,
+  "track_id": null
+}
+```
+
+---
+
+## Language Support
+
+The API supports 50+ languages. Specify the language code:
+
+| Language | Code | Language | Code |
+|----------|------|----------|------|
+| English | en | Spanish | es |
+| Chinese | zh | French | fr |
+| Japanese | ja | German | de |
+| Korean | ko | Italian | it |
+| Portuguese | pt | Russian | ru |
+| Hindi | hi | Arabic | ar |
+| Cantonese | yue | Turkish | tr |
+
+[See full language table in API reference](/voice-cloning/song-generator#supported-languages)
+
+---
+
+## Complete Example
+
+### Reggaeton Track with Manual Lyrics
+
+```json
+{
+  "key": "your_api_key",
+  "lyrics_generation": false,
+  "lyrics": "[Intro: Sampled Vocal Loop]
+(Oh-oh-oh-oh-oh-oh-oh-oh)
+
+[Chorus]
+Esta noche todo te lo daré
+Es libre ya no me amarraré
+Grita mi nombre, dime que me quieres
+Me pierdo en tus ojos como si fuera nieve
+
+[Verse 1]
+Tus ojos me hipnotizan, me hacen suspirar
+Tus labios me llaman, no puedo escapar
+Tus manos me tocan, siento la pasión
+Cada latido es una explosión
+
+[Chorus]
+Esta noche todo te lo daré
+Es libre ya no me amarraré
+Grita mi nombre, dime que me quieres
+Me pierdo en tus ojos como si fuera nieve
+
+[Bridge - whispered]
+Solo un instante
+Deja que te acerque, ven a mí
+
+[Final Chorus]
+Esta noche todo te lo daré
+Entre tus brazos me quedaré
+Grita mi nombre, dime que me quieres
+Me pierdo en tus ojos como si fuera nieve
+
+[Outro]
+Solo una noche más",
+  "caption": "A modern reggaeton track with strong flamenco influence, opening with pitched vocal sample over dembow beat. Clear confident female vocal in Spanish with reverb. Deep sub-bass, crisp drum machine, plucked synth guitar riff. Layered vocals in chorus, atmospheric bridge, sparse whispered outro.",
+  "duration": 199,
+  "language": "es",
+  "webhook": null,
+  "track_id": null
+}
+```
+
+### Analysis
+
+**Caption matches Lyrics:**
+- ✅ Caption says "reggaeton with flamenco" → Lyrics in Spanish with reggaeton structure
+- ✅ Caption says "confident female vocal" → Lyrics tone matches
+- ✅ Caption mentions "whispered outro" → Lyrics has `[Bridge - whispered]`
+- ✅ Duration 199 seconds appropriate for lyrics amount
+
+---
+
+## Best Practices Summary
+
+1. **Caption First** — Spend time crafting detailed, specific caption
+2. **Consistent Description** — Ensure caption and lyrics tell the same story
+3. **Calculate Duration** — Count lyrics lines and sections, then estimate time
+4. **Use Structure Tags** — Clear sections improve song structure
+5. **Test Iterations** — Start simple, then refine based on results
+6. **Language Matters** — Set correct language code for best pronunciation
+
+---
+
+## Common Mistakes to Avoid
+
+| Mistake | Fix |
+|---------|-----|
+| Too short duration for lyrics | Calculate: lines × 4 seconds + intro/outro |
+| Conflicting caption and lyrics | Align instruments, energy, vocal style |
+| Vague caption | Add specific genres, instruments, emotions |
+| Too many structure tags | Keep tags simple, details in caption |
+| No section separation | Add blank lines between sections |
+| Mixed incompatible styles | Either separate or describe as evolution |
+
+---
+
+## Getting Started
+
+1. Start with [Song Generator API Reference](/voice-cloning/song-generator)
+2. Try simple examples first
+3. Iterate on caption and lyrics
+4. Use webhooks for async processing
+5. Join our [Discord](https://discord.com/invite/modelslab-1033301189254729748) for community support
+
+---
+
+**Need Help?** Check our [API Reference](/voice-cloning/song-generator) or reach out via [Support](https://modelslab.com/support).

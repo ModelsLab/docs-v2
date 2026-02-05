@@ -750,7 +750,7 @@
           },
           "duration": {
             "type": ["integer", "null"],
-            "description": "Duration of the generated song in seconds"
+            "description": "Duration of the generated song in seconds (30-480 seconds / 0.5-8 minutes)"
           },
           "language": {
             "type": ["string", "null"],
@@ -763,7 +763,7 @@
           },
           "caption": {
             "type": ["string", "null"],
-            "description": "Caption for the generated song"
+            "description": "Caption for the song describe styles, female or male voice or loops and more."
           },
           "webhook": {
             "type": "string",

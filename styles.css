@@ -92,34 +92,65 @@ pre {
   color: #93c5fd;
 }
 
-/* Banner styles */
+/* Banner styles with premium gradient animation */
 #banner {
-  background: linear-gradient(to right,
-    #6366f1 0%,
-    #8b5cf6 15%,
-    #d946ef 30%,
-    #ec4899 45%,
-    #f43f5e 55%,
-    #fb923c 75%,
-    #fbbf24 100%
+  background: linear-gradient(
+    110deg,
+    #3d0a1f,
+    #2e0d1f,
+    #1a0b2e,
+    #2d1b4e,
+    #4c1d95,
+    #5b21b6,
+    #7c3aed,
+    #5b21b6,
+    #4c1d95,
+    #2d1b4e,
+    #1a0b2e,
+    #2e0d1f,
+    #3d0a1f
   );
+  background-size: 200% 100%;
+  animation: elegantFlow 20s ease-in-out infinite;
   position: relative;
   color: rgb(255, 255, 255);
   padding: 12px 20px;
   overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-#banner::before {
+#banner::after {
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image:
-    radial-gradient(circle, rgba(0, 0, 0, 0.15) 1px, transparent 1px);
-  background-size: 4px 4px;
-  pointer-events: none;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  animation: shine 6s ease-in-out infinite;
+}
+
+@keyframes elegantFlow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  50%, 100% {
+    left: 100%;
+  }
 }
 
 #banner * {

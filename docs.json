@@ -37,8 +37,9 @@
     ]
   },
   "banner": {
-    "content": "🔥NEW: Z Image Turbo create photorealistic images with blazing fast speeds⚡ · [Try it now](/enterprise-api/z-image-turbo/overview)",
-    "dismissible": true
+    "content": "🎵 NEW: Song Generator API powered by ACE-Step v1.5 - Create full songs with vocals in 50+ languages (30s-8min) 🎶 · [Try it now](/voice-cloning/song-generator) · [Read Guide](/guides/song-generation-guide)",
+    "dismissible": true,
+    "animated": true
   },
   "favicon": "/favicon.png",
   "navigation": {
@@ -75,6 +76,12 @@
               "sdk/typescript",
               "sdk/golang",
               "sdk/client"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "guides/song-generation-guide"
             ]
           },
           {
@@ -218,6 +225,8 @@
                 "group": "Speech & Audio API",
                 "pages": [
                   "voice-cloning/overview",
+                  "voice-cloning/song-generator",
+                  "voice-cloning/lyrics-generator",
                   "voice-cloning/voice-cloning",
                   "voice-cloning/text-to-speech",
                   "voice-cloning/speech-to-text",
@@ -227,8 +236,6 @@
                   "voice-cloning/voice-cover",
                   "voice-cloning/create-dubbing",
                   "voice-cloning/vocal-isolator",
-                  "voice-cloning/lyrics-generator",
-                  "voice-cloning/song-generator",
                   "voice-cloning/voice-list",
                   "voice-cloning/fetch-voice",
                   "voice-cloning/upload-voice",
