@@ -17,9 +17,64 @@ Make a `POST` request to below endpoint and pass the required parameters as a re
 
 <Warning>
     - If you send custom lyrics in the `lyrics` field, the model will generate a song based on those lyrics.
-    - Currenly only `English` and `Chinese` lyrics are supported.
     - Chinese and English lyrics should not be mixed in the same input.
 </Warning>
+
+## Supported Languages
+
+| Language | Code |
+|----------|------|
+| Arabic | ar |
+| Azerbaijani | az |
+| Bulgarian | bg |
+| Bengali | bn |
+| Catalan | ca |
+| Czech | cs |
+| Danish | da |
+| German | de |
+| Greek | el |
+| English | en |
+| Spanish | es |
+| Persian | fa |
+| Finnish | fi |
+| French | fr |
+| Hebrew | he |
+| Hindi | hi |
+| Croatian | hr |
+| Haitian Creole | ht |
+| Hungarian | hu |
+| Indonesian | id |
+| Icelandic | is |
+| Italian | it |
+| Japanese | ja |
+| Korean | ko |
+| Latin | la |
+| Lithuanian | lt |
+| Malay | ms |
+| Nepali | ne |
+| Dutch | nl |
+| Norwegian | no |
+| Punjabi | pa |
+| Polish | pl |
+| Portuguese | pt |
+| Romanian | ro |
+| Russian | ru |
+| Sanskrit | sa |
+| Slovak | sk |
+| Serbian | sr |
+| Swedish | sv |
+| Swahili | sw |
+| Tamil | ta |
+| Telugu | te |
+| Thai | th |
+| Tagalog | tl |
+| Turkish | tr |
+| Ukrainian | uk |
+| Urdu | ur |
+| Vietnamese | vi |
+| Cantonese | yue |
+| Chinese | zh |
+| Unknown | unknown |
 <Info>
 Sample request when `lyrics_generation` is `false`
 </Info>
@@ -29,8 +84,8 @@ Sample request when `lyrics_generation` is `false`
     "key":"your_api_key",   
     "lyrics_generation":false,    
     "init_audio":"https://storage.googleapis.com/falserverless/model_tests/diffrythm/rock_en.wav",    
-    "lyrics":"[00:10.00]Moonlight spills through broken blinds [00:13.20]Your shadow dances on the dashboard shrine [00:16.85]Neon ghosts in gasoline rain",
-    "model_id":"diffrhythm-short",  
+    "lyrics":"[Intro - Guitar Riff]\n\n[Verse 1]\nRip the script, break it mold\nShatter chains, dare the bold\nTook your crown, you can't ignore\nFreedom's knock on every door\n\n[Chorus]\nBreak the chains, let it pour\nShout it loud, beg no more\nBurn the rules, end the war\nWe're alive, can't ignore\nCan't ignore\n\n[Verse 2]\nTear it down, brick by brick\nEvery lie, every trick\nSkies on fire, won't obey\nChaos calls, don't delay\n\n[Chorus]\nBreak the chains, let it pour\nShout it loud, beg no more\nBurn the rules, end the war\nWe're alive, can't ignore\nCan't ignore\n\n[Guitar Solo]\n\n[Verse 3]\nEchoes scream, hearts collide\nNo surrender, no divide\nWolves are howling, hear their cry\nWe rise up, won't comply\n\n[Chorus]\nBreak the chains, let it pour\nShout it loud, beg no more\nBurn the rules, end the war\nWe're alive, can't ignore\nCan't ignore\n\n[Outro - Guitar Riff]\n[abrupt silence]",
+    "duration": 95,  
     "webhook":null,     
     "track_id": null
 }
@@ -44,7 +99,7 @@ Sample request when `lyrics_generation` is `true`
     "key":"your_api_key",   
     "lyrics_generation":true,    
     "init_audio":"https://storage.googleapis.com/falserverless/model_tests/diffrythm/rock_en.wav",    
-    "prompt":"a rock song with lyrics about moonlight and shadows",    
+    "prompt":"Generate a catchy Tamil hip-hop / rap song.\nLanguage: simple Tamil (preferably Roman Tamil, no complex literary words).\nStyle: modern desi hip-hop with Chennai street vibes.\nTheme: confidence, mass attitude, swag, city life, light romance.\nMusic feel: heavy bass, fast groove, club-ready beat.\nLyrics: very simple lines, easy rhymes, highly repeatable hook.\nStructure: Intro, Chorus, Verse 1, Chorus, Verse 2, Chorus.\nAvoid poetry and long sentences. Keep it raw, catchy, and street-level",    
     "webhook":null,     
     "track_id": null
 }
