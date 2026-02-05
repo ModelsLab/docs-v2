@@ -748,11 +748,22 @@
             "format": "uri",
             "description": "URL to reference audio file to influence style"
           },
-          "model_id":{
-            "type":"string",
-            "enum":["diffrhythm-short","diffrhythm-long"],
-            "default":"diffrhythm-short",
-            "description":"ID of the music generation model to use"
+          "duration": {
+            "type": ["integer", "null"],
+            "description": "Duration of the generated song in seconds"
+          },
+          "language": {
+            "type": ["string", "null"],
+            "enum": ["ar", "az", "bg", "bn", "ca", "cs", "da", "de", "el", "en", "es", "fa", "fi", "fr", "he", "hi", "hr", "ht", "hu", "id", "is", "it", "ja", "ko", "la", "lt", "ms", "ne", "nl", "no", "pa", "pl", "pt", "ro", "ru", "sa", "sk", "sr", "sv", "sw", "ta", "te", "th", "tl", "tr", "uk", "ur", "vi", "yue", "zh", null],
+            "description": "Language for the generated song"
+          },
+          "instrumental": {
+            "type": ["boolean", "null"],
+            "description": "Whether to generate an instrumental version without vocals"
+          },
+          "caption": {
+            "type": ["string", "null"],
+            "description": "Caption for the generated song"
           },
           "webhook": {
             "type": "string",
