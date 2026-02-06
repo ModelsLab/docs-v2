@@ -26,6 +26,16 @@
       }
     ]
   },
+  "metadata": {
+    "og:site_name": "ModelsLab API Documentation",
+    "og:type": "website",
+    "twitter:site": "@ModelsLabAI"
+  },
+  "analytics": {
+    "ga4": {
+      "measurementId": "G-0020HFS383"
+    }
+  },
   "head": {
     "scripts": [
       {
@@ -33,6 +43,10 @@
         "async": true,
         "charset": "UTF-8",
         "crossorigin": "*"
+      },
+      {
+        "src": "scripts/jsonld.js",
+        "defer": true
       }
     ]
   },
@@ -85,8 +99,9 @@
             ]
           },
           {
-            "group": "Legal center",
-            "pages": []
+            "group": "Legal",
+            "pages": [],
+            "hidden": true
           }
         ]
       },
@@ -728,6 +743,33 @@
       "x": "https://x.com/ModelsLabAI",
       "github": "https://github.com/ModelsLab",
       "linkedin": "https://www.linkedin.com/company/stablediffusion"
-    }
+    },
+    "links": [
+      {
+        "header": "Resources",
+        "items": [
+          { "title": "API Reference", "href": "/api-reference" },
+          { "title": "Quickstart Guide", "href": "/quickstart" },
+          { "title": "Client SDKs", "href": "/sdk/python" },
+          { "title": "Playground", "href": "https://modelslab.com/playground" }
+        ]
+      },
+      {
+        "header": "Company",
+        "items": [
+          { "title": "ModelsLab", "href": "https://modelslab.com" },
+          { "title": "Pricing", "href": "https://modelslab.com/pricing" },
+          { "title": "Enterprise", "href": "https://modelslab.com/enterprise" },
+          { "title": "Support", "href": "https://modelslab.com/support" }
+        ]
+      },
+      {
+        "header": "Legal",
+        "items": [
+          { "title": "Privacy Policy", "href": "https://modelslab.com/privacy-policy" },
+          { "title": "Terms of Service", "href": "https://modelslab.com/terms-of-service" }
+        ]
+      }
+    ]
   }
 }
