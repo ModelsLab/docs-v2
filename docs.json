@@ -26,6 +26,16 @@
       }
     ]
   },
+  "metadata": {
+    "og:site_name": "ModelsLab API Documentation",
+    "og:type": "website",
+    "twitter:site": "@ModelsLabAI"
+  },
+  "analytics": {
+    "ga4": {
+      "measurementId": "G-0020HFS383"
+    }
+  },
   "head": {
     "scripts": [
       {
@@ -33,6 +43,10 @@
         "async": true,
         "charset": "UTF-8",
         "crossorigin": "*"
+      },
+      {
+        "src": "/scripts/jsonld.js",
+        "defer": true
       }
     ]
   },
@@ -83,10 +97,6 @@
             "pages": [
               "guides/song-generation-guide"
             ]
-          },
-          {
-            "group": "Legal center",
-            "pages": []
           }
         ]
       },
@@ -728,6 +738,33 @@
       "x": "https://x.com/ModelsLabAI",
       "github": "https://github.com/ModelsLab",
       "linkedin": "https://www.linkedin.com/company/stablediffusion"
-    }
+    },
+    "links": [
+      {
+        "header": "Resources",
+        "items": [
+          { "label": "API Reference", "href": "/api-reference" },
+          { "label": "Quickstart Guide", "href": "/quickstart" },
+          { "label": "Client SDKs", "href": "/sdk/python" },
+          { "label": "Playground", "href": "https://modelslab.com/playground" }
+        ]
+      },
+      {
+        "header": "Company",
+        "items": [
+          { "label": "ModelsLab", "href": "https://modelslab.com" },
+          { "label": "Pricing", "href": "https://modelslab.com/pricing" },
+          { "label": "Enterprise", "href": "https://modelslab.com/enterprise" },
+          { "label": "Support", "href": "https://modelslab.com/support" }
+        ]
+      },
+      {
+        "header": "Legal",
+        "items": [
+          { "label": "Privacy Policy", "href": "https://modelslab.com/privacy-policy" },
+          { "label": "Terms of Service", "href": "https://modelslab.com/terms-of-service" }
+        ]
+      }
+    ]
   }
 }
