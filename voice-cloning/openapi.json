@@ -558,6 +558,44 @@
         }
       }
     },
+    "/voice/voice_design": {
+      "post": {
+        "summary": "Design and generate custom voices",
+        "description": "Design and generate custom voices using text prompts and voice descriptions",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoiceDesignRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Voice design response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/voice/create_dubbing": {
       "post": {
         "summary": "Create video dubbing with voice translation",
@@ -1223,6 +1261,38 @@
             "type": "boolean",
             "default": false,
             "description": "Use temporary links valid for 24 hours"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive POST notification upon completion"
+          },
+          "track_id": {
+            "type": "integer",
+            "description": "ID for webhook identification"
+          }
+        }
+      },
+      "VoiceDesignRequest": {
+        "type": "object",
+        "required": ["prompt", "voice_description"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "The text content to be spoken by the designed voice"
+          },
+          "voice_description": {
+            "type": "string",
+            "description": "A detailed description of the voice characteristics (tone, accent, gender, age, style)"
+          },
+          "language": {
+            "type": "string",
+            "enum": ["chinese", "english", "japanese", "korean", "german", "french", "russian", "portuguese", "spanish", "italian"],
+            "description": "Language for the voice"
           },
           "webhook": {
             "type": "string",

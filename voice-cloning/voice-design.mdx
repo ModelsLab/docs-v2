@@ -1,0 +1,37 @@
+---
+title: "Voice Design"
+openapi: 'POST /voice/voice_design'
+description: 'Design and generate custom voices using text prompts and voice descriptions.'
+---
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v6/voice/voice_design' \
+```
+## Body
+```json json
+{
+    "key": "your_api_key",
+    "prompt": "Hello, welcome to the future of voice technology.",
+    "voice_description": "A warm, friendly female voice with a slight British accent",
+    "language": "english",
+    "webhook": null,
+    "track_id": null
+}
+```
+
+## Supported Languages
+
+| Language   | Value        |
+| ---------- | ------------ |
+| Chinese    | `chinese`    |
+| English    | `english`    |
+| Japanese   | `japanese`   |
+| Korean     | `korean`     |
+| German     | `german`     |
+| French     | `french`     |
+| Russian    | `russian`    |
+| Portuguese | `portuguese` |
+| Spanish    | `spanish`    |
+| Italian    | `italian`    |
