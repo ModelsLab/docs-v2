@@ -249,7 +249,8 @@
                   "voice-cloning/voice-list",
                   "voice-cloning/fetch-voice",
                   "voice-cloning/upload-voice",
-                  "voice-cloning/base64-to-url"
+                  "voice-cloning/base64-to-url",
+                  "voice-cloning/voice-design"
                 ]
               },
               {
