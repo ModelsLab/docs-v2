@@ -636,6 +636,7 @@
                 "pages": [
                   "enterprise-api/z-image-turbo/overview",
                   "enterprise-api/z-image-turbo/text2img",
+                  "enterprise-api/z-image-turbo/img2img",
                   "enterprise-api/z-image-turbo/fetch",
                   "enterprise-api/z-image-turbo/clear-cache",
                   "enterprise-api/z-image-turbo/clear-queue",
