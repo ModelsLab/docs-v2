@@ -44,6 +44,14 @@ Make a `POST` request to below endpoint and pass the required parameters in the 
   Set a URL to receive a POST API call once the image generation is complete.
 </ParamField>
 
+<ParamField query="watermark" type="bool" default="true">
+  Whether the generated result should have a watermark. Available options: `true`, `false`
+</ParamField>
+
+<ParamField query="watermark_image" type="string">
+  The image to use as a watermark. If not provided, a default watermark will be used. Parameter is only used if `watermark` is set to `true`.
+</ParamField>
+
 <ParamField query="track_id" type="string">
   This ID is returned in the response to the webhook API call. Used to identify the webhook request.
 </ParamField>
