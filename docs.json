@@ -132,7 +132,6 @@
                   "video-api/video-to-video",
                   "video-api/text-to-video-ultra",
                   "video-api/image-to-video-ultra",
-                  "video-api/scene-maker",
                   "video-api/base64-to-url",
                   "video-api/fetch-video"
                 ]
