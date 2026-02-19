@@ -1,0 +1,66 @@
+---
+title: "Profile and API Keys"
+description: "Manage account profile/preferences and API keys through the Agents control plane."
+---
+
+## Profile Endpoints
+
+| Method | Endpoint | Auth | Purpose |
+|---|---|---|---|
+| `GET` | `/api/agents/v1/me` | Bearer token | Get account profile, preferences, and wallet summary |
+| `PATCH` | `/api/agents/v1/me` | Bearer token | Update profile fields |
+| `PATCH` | `/api/agents/v1/me/preferences` | Bearer token | Update preference fields |
+
+### Update profile example
+
+```bash
+curl --request PATCH 'https://modelslab.com/api/agents/v1/me' \
+  --header 'Authorization: Bearer <agent_access_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": "Agent Runner",
+    "username": "agent-runner",
+    "about_me": "Automation account"
+  }'
+```
+
+### Update preferences example
+
+```bash
+curl --request PATCH 'https://modelslab.com/api/agents/v1/me/preferences' \
+  --header 'Authorization: Bearer <agent_access_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "nsfw_content": false,
+    "wallet_notification_enabled": true,
+    "wallet_notification_threshold": 10
+  }'
+```
+
+## API Key Endpoints
+
+| Method | Endpoint | Auth | Purpose |
+|---|---|---|---|
+| `GET` | `/api/agents/v1/api-keys` | Bearer token | List API keys |
+| `POST` | `/api/agents/v1/api-keys` | Bearer token | Create API key |
+| `GET` | `/api/agents/v1/api-keys/{id}` | Bearer token | Get API key details |
+| `PUT` | `/api/agents/v1/api-keys/{id}` | Bearer token | Update API key metadata |
+| `DELETE` | `/api/agents/v1/api-keys/{id}` | Bearer token | Delete API key |
+
+### Create API key example
+
+```bash
+curl --request POST 'https://modelslab.com/api/agents/v1/api-keys' \
+  --header 'Authorization: Bearer <agent_access_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": "Production Key",
+    "notes": "Used by orchestrator"
+  }'
+```
+
+### Use API key for generation APIs
+
+<Note>
+  Generation endpoints still use API key flow. Example: `/api/v6/images/text2img` with `key` in payload.
+</Note>

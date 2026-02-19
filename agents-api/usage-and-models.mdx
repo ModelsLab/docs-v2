@@ -1,0 +1,65 @@
+---
+title: "Usage and Models"
+description: "Retrieve usage, product limits, and discover models through the Agents API and generic model-search APIs."
+---
+
+## Usage Endpoints
+
+| Method | Endpoint | Auth | Purpose |
+|---|---|---|---|
+| `GET` | `/api/agents/v1/usage/summary` | Bearer token | High-level usage, limits, and wallet |
+| `GET` | `/api/agents/v1/usage/products` | Bearer token | Product-wise plan limits/remaining |
+| `GET` | `/api/agents/v1/usage/history` | Bearer token | Usage timeline (`from`, `to`, `limit`) |
+
+Usage history query parameters:
+
+- `from` (optional, date)
+- `to` (optional, date)
+- `limit` (optional, integer, max 200)
+
+## Agent Model Discovery Endpoints
+
+| Method | Endpoint | Auth | Purpose |
+|---|---|---|---|
+| `GET` | `/api/agents/v1/models` | Bearer token | Search/filter paginated model catalog |
+| `GET` | `/api/agents/v1/models/filters` | Bearer token | Filter metadata (sorts/types/base models/features) |
+| `GET` | `/api/agents/v1/models/tags` | Bearer token | Active model tags |
+| `GET` | `/api/agents/v1/models/providers` | Bearer token | Providers list |
+| `GET` | `/api/agents/v1/models/{modelId}` | Bearer token | Model details |
+
+Common model query parameters:
+
+- `feature`
+- `search`
+- `model_type`
+- `model_subcategory`
+- `base_model`
+- `provider`
+- `sort` (`recommended`, `latest`, `most-used`, `asc`, `desc`, `sort-asc`, `sort-desc`)
+- `per_page`
+- `tags` (array or comma-separated)
+
+### Example
+
+```bash
+curl --request GET 'https://modelslab.com/api/agents/v1/models?feature=imagen&search=flux&per_page=20' \
+  --header 'Authorization: Bearer <agent_access_token>'
+```
+
+## Generic Model Discovery under Existing API Key Flow
+
+These endpoints are available for existing API-key users as well:
+
+| Method | Endpoint | Auth |
+|---|---|---|
+| `GET` | `/api/v6/model-search` | API key (`key`) |
+| `GET` | `/api/v6/model-search/filters` | API key (`key`) |
+| `GET` | `/api/v6/model-search/tags` | API key (`key`) |
+| `GET` | `/api/v6/model-search/providers` | API key (`key`) |
+| `GET` | `/api/v6/model-search/{modelId}` | API key (`key`) |
+
+Example:
+
+```bash
+curl --request GET 'https://modelslab.com/api/v6/model-search?key=<api_key>&search=flux'
+```

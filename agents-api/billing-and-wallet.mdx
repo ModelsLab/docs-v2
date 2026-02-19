@@ -1,0 +1,61 @@
+---
+title: "Billing and Wallet"
+description: "Manage payment methods, billing profile, invoices, and wallet operations from the control plane."
+---
+
+## Billing Endpoints
+
+| Method | Endpoint | Auth | Purpose |
+|---|---|---|---|
+| `GET` | `/api/agents/v1/billing/overview` | Bearer token | Wallet summary, cards, subscriptions, invoice count |
+| `GET` | `/api/agents/v1/billing/payment-methods` | Bearer token | List payment methods |
+| `POST` | `/api/agents/v1/billing/payment-methods` | Bearer token | Attach payment method |
+| `PUT` | `/api/agents/v1/billing/payment-methods/{id}/default` | Bearer token | Set default payment method |
+| `DELETE` | `/api/agents/v1/billing/payment-methods/{id}` | Bearer token | Remove payment method |
+| `GET` | `/api/agents/v1/billing/info` | Bearer token | Get billing profile |
+| `PUT` | `/api/agents/v1/billing/info` | Bearer token | Update billing profile |
+| `GET` | `/api/agents/v1/billing/invoices` | Bearer token | List invoices |
+| `GET` | `/api/agents/v1/billing/invoices/{id}` | Bearer token | Invoice detail |
+| `GET` | `/api/agents/v1/billing/invoices/{id}/pdf` | Bearer token | Invoice PDF/receipt URLs |
+
+### Card Data Policy
+
+<Warning>
+  Raw card PAN/CVV is not accepted on Agents API endpoints.
+  Use Stripe `payment_method_id` / SetupIntent outputs only.
+</Warning>
+
+### Attach payment method example
+
+```bash
+curl --request POST 'https://modelslab.com/api/agents/v1/billing/payment-methods' \
+  --header 'Authorization: Bearer <agent_access_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "payment_method_id": "pm_xxx",
+    "make_default": true
+  }'
+```
+
+## Wallet Endpoints
+
+| Method | Endpoint | Auth | Purpose |
+|---|---|---|---|
+| `POST` | `/api/agents/v1/wallet/fund` | Bearer token | Fund wallet (payment method / checkout flow) |
+| `PUT` | `/api/agents/v1/wallet/auto-funding` | Bearer token | Set auto-funding settings |
+| `DELETE` | `/api/agents/v1/wallet/auto-funding` | Bearer token | Disable auto-funding |
+| `POST` | `/api/agents/v1/wallet/withdraw` | Bearer token | Withdraw (reseller-only) |
+| `POST` | `/api/agents/v1/wallet/coupons/validate` | Bearer token | Validate coupon |
+| `POST` | `/api/agents/v1/wallet/coupons/redeem` | Bearer token | Redeem coupon |
+
+### Wallet fund example
+
+```bash
+curl --request POST 'https://modelslab.com/api/agents/v1/wallet/fund' \
+  --header 'Authorization: Bearer <agent_access_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "amount": 25,
+    "payment_method_id": "pm_xxx"
+  }'
+```

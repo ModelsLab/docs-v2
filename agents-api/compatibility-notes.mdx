@@ -1,0 +1,33 @@
+---
+title: "Compatibility Notes"
+description: "Migration and compatibility details for the new Agents API control plane."
+---
+
+## Email Verification Compatibility
+
+The compatibility endpoint is preserved:
+
+- `GET /verify/{token}`
+
+This supports existing verification links while enabling agent-first signup flows.
+
+## Legacy AI Agent v6 Endpoints
+
+The following legacy endpoints are removed:
+
+- `POST /api/v6/ai_agent/create`
+- `POST /api/v6/ai_agent/get_queued_response`
+
+These calls now return route-not-found API error responses.
+
+## Backward Compatibility Contract
+
+- Existing generation APIs and existing API key auth flow are unchanged.
+- New control-plane functionality is additive under `/api/agents/v1`.
+- Existing API consumers can continue using current generation endpoints without migration.
+
+## Migration Guidance
+
+1. Use `/api/agents/v1/auth/login` to obtain Bearer token (`token_expiry`: `1_week`, `1_month`, `3_months`, `never`).
+2. Use Bearer token for profile, billing, team, and API-key management.
+3. Continue using API keys for generation requests under `/api/v6`, `/api/v7`, `/api/v8`.

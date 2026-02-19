@@ -1,0 +1,91 @@
+---
+title: "Agents API (Control Plane)"
+description: "Manage full ModelsLab account lifecycle via API: signup, auth, API keys, usage, model discovery, billing, wallet, subscriptions, and teams."
+---
+
+The Agents API is the control plane for programmatic account management.
+
+## Base URL
+
+```text
+https://modelslab.com/api/agents/v1
+```
+
+## Authentication Model Split
+
+- **Agents API (`/api/agents/v1`)**: Bearer token (Sanctum personal access token)
+- **Generation APIs (`/api/v6`, `/api/v7`, `/api/v8`)**: existing API key flow continues
+
+Token issuance supports `token_expiry` on login:
+
+- `1_week`
+- `1_month` (default)
+- `3_months`
+- `never`
+
+<Note>
+  Use a Bearer token to manage account and billing operations.
+  Use API keys for generation requests.
+</Note>
+
+## Standard Response Envelope (Agents API)
+
+```json
+{
+  "data": {},
+  "error": null,
+  "meta": {
+    "request_id": "<request-id>"
+  }
+}
+```
+
+Error shape:
+
+```json
+{
+  "data": null,
+  "error": {
+    "code": "validation_error",
+    "message": "Human readable message",
+    "details": {}
+  },
+  "meta": {
+    "request_id": "<request-id>"
+  }
+}
+```
+
+## Rate Limiting
+
+Agents API uses dedicated limiters:
+
+- `agent-auth`: signup/login/forgot/reset/resend verification
+- `agent-billing`: payment methods, wallet funding, coupon redemption, subscription mutations
+- `agent-general`: authenticated control-plane endpoints
+
+## Endpoint Groups
+
+<CardGroup cols={2}>
+  <Card title="Authentication" href="/agents-api/authentication">
+    Signup, login, logout, password reset, and email verification.
+  </Card>
+  <Card title="Profile & API Keys" href="/agents-api/profile-and-api-keys">
+    Read/update profile and manage API keys.
+  </Card>
+  <Card title="Usage & Models" href="/agents-api/usage-and-models">
+    Usage summaries/history and model discovery APIs.
+  </Card>
+  <Card title="Billing & Wallet" href="/agents-api/billing-and-wallet">
+    Payment methods, billing info, invoices, and wallet operations.
+  </Card>
+  <Card title="Subscriptions" href="/agents-api/subscriptions">
+    Create/update/cancel/pause/resume/reset subscriptions.
+  </Card>
+  <Card title="Teams" href="/agents-api/teams">
+    Team members, invites, and invitation acceptance.
+  </Card>
+  <Card title="Compatibility Notes" href="/agents-api/compatibility-notes">
+    Verification compatibility route and removed legacy endpoints.
+  </Card>
+</CardGroup>

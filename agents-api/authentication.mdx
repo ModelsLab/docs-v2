@@ -1,0 +1,118 @@
+---
+title: "Authentication"
+description: "Agent signup, login/logout, password reset, and verification endpoints for the control plane."
+---
+
+## Endpoints
+
+| Method | Endpoint | Auth | Notes |
+|---|---|---|---|
+| `POST` | `/api/agents/v1/auth/signup` | None | Create user, create Stripe customer, send verification email |
+| `POST` | `/api/agents/v1/auth/login` | None | Returns Bearer token. Supports `token_expiry` selector |
+| `POST` | `/api/agents/v1/auth/logout` | Bearer token | Revokes current token |
+| `POST` | `/api/agents/v1/auth/logout-all` | Bearer token | Revokes all user tokens |
+| `POST` | `/api/agents/v1/auth/resend-verification` | None | Resends verification email |
+| `POST` | `/api/agents/v1/auth/forgot-password` | None | Sends password reset email |
+| `POST` | `/api/agents/v1/auth/reset-password` | None | Resets password with token |
+| `GET` | `/verify/{token}` | None | Compatibility verification endpoint |
+
+## Signup
+
+```bash
+curl --request POST 'https://modelslab.com/api/agents/v1/auth/signup' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "email": "agent@example.com",
+    "password": "secret123",
+    "name": "Agent Runner"
+  }'
+```
+
+## Login
+
+```bash
+curl --request POST 'https://modelslab.com/api/agents/v1/auth/login' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "email": "agent@example.com",
+    "password": "secret123",
+    "device_name": "orchestrator-prod",
+    "token_expiry": "1_month"
+  }'
+```
+
+Supported `token_expiry` values:
+
+- `1_week`
+- `1_month` (default)
+- `3_months`
+- `never`
+
+Example response:
+
+```json
+{
+  "data": {
+    "access_token": "<bearer-token>",
+    "token_type": "Bearer",
+    "token_expiry": "1_month",
+    "expires_at": "2026-03-21T09:30:00Z",
+    "user": {
+      "id": 123,
+      "name": "Agent Runner",
+      "email": "agent@example.com",
+      "username": "agent",
+      "verified": true
+    },
+    "api_key": "<default-api-key-or-null>"
+  },
+  "error": null,
+  "meta": {
+    "request_id": "..."
+  }
+}
+```
+
+## Logout
+
+```bash
+curl --request POST 'https://modelslab.com/api/agents/v1/auth/logout' \
+  --header 'Authorization: Bearer <agent_access_token>'
+```
+
+## Resend Verification
+
+```bash
+curl --request POST 'https://modelslab.com/api/agents/v1/auth/resend-verification' \
+  --header 'Content-Type: application/json' \
+  --data '{"email":"agent@example.com"}'
+```
+
+## Forgot / Reset Password
+
+```bash
+curl --request POST 'https://modelslab.com/api/agents/v1/auth/forgot-password' \
+  --header 'Content-Type: application/json' \
+  --data '{"email":"agent@example.com"}'
+```
+
+```bash
+curl --request POST 'https://modelslab.com/api/agents/v1/auth/reset-password' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "email":"agent@example.com",
+    "token":"<reset-token>",
+    "password":"new-secret123",
+    "password_confirmation":"new-secret123"
+  }'
+```
+
+## Verification Compatibility Route
+
+```bash
+curl --request GET 'https://modelslab.com/verify/<verification_token>'
+```
+
+<Note>
+  This route exists for compatibility and supports browser redirect flow as well as JSON response mode.
+</Note>

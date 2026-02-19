@@ -1,0 +1,38 @@
+---
+title: "Subscriptions"
+description: "Create and manage plan subscriptions from the Agents control plane."
+---
+
+## Endpoints
+
+| Method | Endpoint | Auth | Purpose |
+|---|---|---|---|
+| `GET` | `/api/agents/v1/subscriptions` | Bearer token | List user subscriptions |
+| `POST` | `/api/agents/v1/subscriptions` | Bearer token | Create subscription checkout session |
+| `PUT` | `/api/agents/v1/subscriptions/{id}` | Bearer token | Change subscription plan |
+| `POST` | `/api/agents/v1/subscriptions/{id}/cancel` | Bearer token | Cancel subscription |
+| `POST` | `/api/agents/v1/subscriptions/{id}/pause` | Bearer token | Pause subscription |
+| `POST` | `/api/agents/v1/subscriptions/{id}/resume` | Bearer token | Resume subscription |
+| `POST` | `/api/agents/v1/subscriptions/{id}/reset-cycle` | Bearer token | Reset billing cycle anchor |
+
+### Create subscription example
+
+```bash
+curl --request POST 'https://modelslab.com/api/agents/v1/subscriptions' \
+  --header 'Authorization: Bearer <agent_access_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "plan_id": 123,
+    "success_url": "https://your-app.com/billing/success",
+    "cancel_url": "https://your-app.com/billing/cancel"
+  }'
+```
+
+### Update subscription plan example
+
+```bash
+curl --request PUT 'https://modelslab.com/api/agents/v1/subscriptions/45' \
+  --header 'Authorization: Bearer <agent_access_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{"new_plan_id": 456}'
+```
