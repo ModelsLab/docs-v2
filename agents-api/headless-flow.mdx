@@ -1,0 +1,199 @@
+---
+title: "Headless Agent Flow"
+description: "Complete account-to-generation workflow without a browser in 5 steps."
+---
+
+## Overview
+
+The Headless Agent Flow allows an AI agent or automation script to go from zero to generating content in 5 API calls, with no browser interaction required. Card data never touches ModelsLab servers — agents tokenize cards directly with Stripe.
+
+<Info>
+  All responses include `X-RateLimit-Remaining` and `X-RateLimit-Reset` headers for rate-limit awareness.
+</Info>
+
+## Stripe Publishable Key
+
+Agents fetch the Stripe publishable key via the API, then create PaymentMethods directly with Stripe. Card data never touches ModelsLab servers.
+
+```bash
+curl --request GET 'https://modelslab.com/api/agents/v1/billing/stripe-config' \
+  --header 'Authorization: Bearer <agent_access_token>'
+```
+Returns `{ "publishable_key": "pk_live_...", "instructions": "..." }`. Always use this endpoint to get the current key — it handles key rotation automatically.
+
+## The 5-Step Flow
+
+<Steps>
+  <Step title="Create Account">
+    ```bash
+    curl --request POST 'https://modelslab.com/api/agents/v1/auth/signup' \
+      --header 'Content-Type: application/json' \
+      --data '{
+        "email": "agent@example.com",
+        "password": "secret123",
+        "name": "Agent Runner"
+      }'
+    ```
+    A verification email is sent automatically.
+  </Step>
+  <Step title="Verify Email (Headless)">
+    Extract the `verification_code` from the verification email and verify without a browser.
+    ```bash
+    curl --request POST 'https://modelslab.com/api/agents/v1/auth/verify-email' \
+      --header 'Content-Type: application/json' \
+      --data '{
+        "verification_code": "<code-from-email>"
+      }'
+    ```
+    Returns `access_token` and `api_key` directly.
+  </Step>
+  <Step title="Create Payment Method via Stripe">
+    Use the publishable key from Step 1 of the flow (fetched via `GET /billing/stripe-config`) to tokenize card details. Card data never touches ModelsLab servers.
+    ```bash
+    curl --request POST 'https://api.stripe.com/v1/payment_methods' \
+      --user '<publishable_key>:' \
+      --data 'type=card' \
+      --data 'card[number]=4242424242424242' \
+      --data 'card[exp_month]=12' \
+      --data 'card[exp_year]=2027' \
+      --data 'card[cvc]=123'
+    ```
+    Returns a `payment_method_id` (e.g., `pm_1Xyz...`). Use this ID with ModelsLab endpoints — never send raw card numbers to ModelsLab.
+  </Step>
+  <Step title="Fund Wallet or Subscribe">
+    Use the `payment_method_id` from Step 3 to either fund the wallet or create a subscription.
+
+    **Option A — Fund wallet (pay-as-you-go):**
+    ```bash
+    curl --request POST 'https://modelslab.com/api/agents/v1/wallet/fund' \
+      --header 'Authorization: Bearer <access_token>' \
+      --header 'Content-Type: application/json' \
+      --data '{
+        "amount": 25,
+        "payment_method_id": "pm_1Xyz..."
+      }'
+    ```
+
+    **Option B — Subscribe to a plan:**
+    ```bash
+    curl --request POST 'https://modelslab.com/api/agents/v1/subscriptions' \
+      --header 'Authorization: Bearer <access_token>' \
+      --header 'Content-Type: application/json' \
+      --data '{
+        "plan_id": 10,
+        "payment_method_id": "pm_1Xyz..."
+      }'
+    ```
+    Use `GET /subscriptions/plans` first to discover available plan IDs.
+  </Step>
+  <Step title="Generate Content with Existing APIs">
+    Use the existing generation APIs (`/api/v6`, `/api/v7`, `/api/v8`) with the `api_key` returned in Step 2. See the [Image Generation](/image-generation/overview), [Video API](/video-api/overview), and [Speech & Audio](/voice-cloning/overview) docs for endpoint details.
+    ```bash
+    curl --request POST 'https://modelslab.com/api/v6/images/text2img' \
+      --header 'Content-Type: application/json' \
+      --data '{
+        "key": "<api_key>",
+        "model_id": "flux",
+        "prompt": "A futuristic cityscape at sunset",
+        "width": 1024,
+        "height": 1024
+      }'
+    ```
+  </Step>
+</Steps>
+
+## Flow Diagram
+
+```text
+1. POST /auth/signup                    --> account created, verification email sent
+2. POST /auth/verify-email              --> email verified, access_token + api_key returned
+3. POST Stripe /v1/payment_methods      --> card tokenized (pm_xxx), card data stays with Stripe
+4. POST /wallet/fund or /subscriptions  --> pay-as-you-go or subscription (headless, no redirect)
+5. Use /api/v6, /api/v7, /api/v8        --> generate content with the api_key from step 2
+```
+
+## Alternative: Human-Assisted Payment
+
+If your agent does not have access to card details or the card requires 3D Secure, use the **Human-Assisted** flow instead. The agent creates a Stripe-hosted payment link and forwards it to a human:
+
+```bash
+curl --request POST 'https://modelslab.com/api/agents/v1/billing/payment-link' \
+  --header 'Authorization: Bearer <access_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{"purpose": "fund", "amount": 25}'
+```
+
+The human completes payment on Stripe Checkout, is redirected to ModelsLab's success page with a `session_id`, and relays it to the agent. The agent then confirms:
+
+```bash
+# For wallet funding
+curl --request POST 'https://modelslab.com/api/agents/v1/wallet/confirm-checkout' \
+  --header 'Authorization: Bearer <access_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{"session_id": "cs_live_..."}'
+
+# For subscriptions
+curl --request POST 'https://modelslab.com/api/agents/v1/subscriptions/confirm-checkout' \
+  --header 'Authorization: Bearer <access_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{"session_id": "cs_live_..."}'
+```
+
+See [Billing & Wallet](/agents-api/billing-and-wallet#create-payment-link-human-assisted-flow) for full details on the three payment paths.
+
+## Handling Card Failures
+
+When a card is declined, the API returns HTTP 402 with a structured error:
+
+```json
+{
+  "data": null,
+  "error": {
+    "code": "payment_declined",
+    "message": "Your card was declined.",
+    "details": {
+      "decline_code": "insufficient_funds",
+      "payment_intent_id": "pi_xxx"
+    }
+  }
+}
+```
+
+If a card requires 3D Secure authentication, the API returns HTTP 202:
+
+```json
+{
+  "data": {
+    "payment": {
+      "status": "requires_action",
+      "payment_intent_id": "pi_xxx",
+      "client_secret": "pi_xxx_secret_yyy"
+    },
+    "message": "Additional authentication is required. Use modelslab.com/pricing to do payment for this transaction."
+  }
+}
+```
+
+## Rate Limits
+
+| Limiter | Limit | Applies to |
+|---|---|---|
+| `agent-auth` | 20/min per IP+email | Signup, login, verify, forgot-password |
+| `agent-billing` | 15/min per IP+user | Wallet fund, subscriptions, payment methods |
+| `agent-general` | 120/min per IP+user | All other authenticated endpoints |
+
+## Idempotency
+
+All billing mutations support an `Idempotency-Key` header. If you retry a request with the same key, the cached response is returned with `idempotency_replay: true` instead of charging again.
+
+```bash
+curl --request POST 'https://modelslab.com/api/agents/v1/wallet/fund' \
+  --header 'Authorization: Bearer <access_token>' \
+  --header 'Idempotency-Key: fund-25-20260220-abc' \
+  --header 'Content-Type: application/json' \
+  --data '{"amount": 25, "payment_method_id": "pm_1Xyz..."}'
+```
+
+<Tip>
+  Use deterministic idempotency keys (e.g., `fund-{amount}-{date}-{nonce}`) to prevent duplicate charges on retries.
+</Tip>

@@ -246,7 +246,6 @@ Endpoint prefix: `https://modelslab.com/api/v6/`
 - [Base64 to URL](https://docs.modelslab.com/general-api/base64-to-url): Convert base64 to temporary hosted URL.
 - [Buy Model](https://docs.modelslab.com/general-api/buy-model): Purchase a LoRA model.
 - [Buy Subscription](https://docs.modelslab.com/general-api/buy-subscription): Purchase an API key plan.
-- [Cancel Subscription](https://docs.modelslab.com/general-api/cancel-subscription): Cancel a plan for an API key.
 - [Clear Cache](https://docs.modelslab.com/general-api/clear-cache): Clear user cache.
 - [Delete Image](https://docs.modelslab.com/general-api/delete-image): Delete uploaded assets.
 - [NSFW Image Check](https://docs.modelslab.com/general-api/nsfw-image-check): Check if an image contains NSFW content.
@@ -535,6 +534,53 @@ Enterprise APIs provide dedicated server infrastructure with additional manageme
 - [Restart Server](https://docs.modelslab.com/enterprise-api/flux-2-dev/restart-server): Restart server.
 - [System Details](https://docs.modelslab.com/enterprise-api/flux-2-dev/system-details): Server status.
 - [Update Server](https://docs.modelslab.com/enterprise-api/flux-2-dev/update-server): Update configuration.
+
+## Agent Control Plane API
+
+Base URL: `https://modelslab.com/api/agents/v1/`
+
+The Agent Control Plane provides headless account management, billing, and subscription APIs for AI agents. Agents can manage everything programmatically — no browser needed.
+
+**Authentication:** Use `Authorization: Bearer <access_token>` header. Get a token via `POST /auth/login` or `POST /auth/signup` + `POST /auth/verify`.
+
+**Stripe Publishable Key (for card tokenization):** Fetch dynamically via `GET /billing/stripe-config` — returns `{ "publishable_key": "pk_live_..." }`. Always use this endpoint to get the current key.
+
+Agents create PaymentMethods by calling `POST https://api.stripe.com/v1/payment_methods` with the publishable key and card details. Then pass the `payment_method_id` to ModelsLab endpoints. Card data never touches ModelsLab servers.
+
+**Three payment paths:** (1) Headless: `GET /billing/stripe-config` -> tokenize card via Stripe -> pass `payment_method_id` to `/wallet/fund` or `/subscriptions`. (2) Setup Intent: `POST /billing/setup-intent` -> confirm via Stripe -> reuse payment_method_id. (3) Human-Assisted: `POST /billing/payment-link` -> forward URL to human -> human pays -> agent confirms via `POST /wallet/confirm-checkout` or `POST /subscriptions/confirm-checkout`.
+
+**Rate limits:** `agent-auth` 20/min, `agent-billing` 15/min, `agent-general` 120/min. All responses include `X-RateLimit-Remaining` and `X-RateLimit-Reset` headers.
+
+**Idempotency:** Billing mutations accept an `Idempotency-Key` header to prevent duplicate charges on retries.
+
+- [Headless Agent Flow](https://docs.modelslab.com/agents-api/headless-flow): Complete 5-step account-to-generation workflow without a browser.
+- [Authentication](https://docs.modelslab.com/agents-api/authentication): Signup, login, email verification, password reset, token management.
+- [Profile & API Keys](https://docs.modelslab.com/agents-api/profile-api-keys): View/update profile, manage API keys.
+- [Billing & Wallet](https://docs.modelslab.com/agents-api/billing-and-wallet): Payment methods, wallet funding, invoices, coupons, payment status.
+- [Subscriptions](https://docs.modelslab.com/agents-api/subscriptions): List plans, create/pause/resume subscriptions headlessly.
+- [Usage & Analytics](https://docs.modelslab.com/agents-api/usage-analytics): Usage summaries, product subscriptions, generation history.
+- [Model Discovery](https://docs.modelslab.com/agents-api/model-discovery): Search and browse AI models with filters.
+- [Teams](https://docs.modelslab.com/agents-api/teams): Team management and invitations.
+
+### Headless Payment Flow (for AI agents)
+
+```text
+1. Agent → POST https://api.stripe.com/v1/payment_methods (with publishable key + card) → pm_id
+2. Agent → POST /wallet/fund or POST /subscriptions (with pm_id) → payment complete
+```
+
+Key billing endpoints:
+- `GET /billing/stripe-config` — Get Stripe publishable key for card tokenization
+- `POST /billing/payment-link` — Create Stripe-hosted payment URL for human-assisted payments (params: purpose, amount/plan_id)
+- `GET /wallet/balance` — Quick balance check (returns balance + currency)
+- `POST /wallet/fund` — Fund wallet with payment_method_id
+- `POST /wallet/confirm-checkout` — Confirm Stripe Checkout session for wallet funding (param: session_id)
+- `GET /payments/{id}/status` — Check payment status (succeeded/pending/failed)
+- `GET /subscriptions/plans` — Discover available plans
+- `POST /subscriptions` — Create subscription (headless with pm_id, or Checkout redirect)
+- `POST /subscriptions/confirm-checkout` — Confirm Stripe Checkout session for subscription (param: session_id)
+- `GET /subscriptions/{id}/status` — Check subscription status (active/past_due/canceled/paused/trialing)
+- `GET /wallet/coupons/validate?coupon_code=CODE` — Validate coupon
 
 ## Release Notes
 

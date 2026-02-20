@@ -27,45 +27,6 @@
     }
   ],
   "paths": {
-    "/cancel_subscription": {
-      "post": {
-        "summary": "Cancel subscription plan",
-        "description": "This endpoint allows you to cancel subscription for a particular api key automatically",
-        "servers": [{ "url": "https://modelslab.com/api/v3" }],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CancelSubscriptionRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Subscription cancellation response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CancelSubscriptionResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/clear_cache": {
       "get": {
         "summary": "Clear user cache",
@@ -508,33 +469,6 @@
   },
   "components": {
     "schemas": {
-      "CancelSubscriptionRequest": {
-        "type": "object",
-        "required": ["key", "key_to_cancel"],
-        "properties": {
-          "key": {
-            "type": "string",
-            "description": "Your default API Key used for request authorization"
-          },
-          "key_to_cancel": {
-            "type": "string",
-            "description": "The api custom api key you want to cancel the subscription for"
-          }
-        }
-      },
-      "CancelSubscriptionResponse": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "enum": ["success"]
-          },
-          "messege": {
-            "type": "string",
-            "example": "subscription cancelled successfully"
-          }
-        }
-      },
       "ClearCacheRequest": {
         "type": "object",
         "required": ["key"],

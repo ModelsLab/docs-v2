@@ -1,0 +1,125 @@
+---
+title: "Agent Control Plane MCP Server"
+description: "Manage your entire ModelsLab account via MCP: authentication, API keys, billing, subscriptions, teams, and more — all from your AI coding agent."
+---
+
+## What is the Agent Control Plane MCP Server?
+
+The Agent Control Plane MCP server lets AI agents manage a full ModelsLab account lifecycle without a browser. It exposes the [Agents API (Control Plane)](/agents-api/overview) as MCP tools covering authentication, profile management, API keys, usage analytics, model discovery, billing, wallet, subscriptions, teams, training, servers, and uploads.
+
+This is separate from the [Generation MCP server](/mcp-web-api/overview) which handles image/video/audio/LLM generation. Together, these two servers give an AI agent complete access to ModelsLab.
+
+<CardGroup cols={2}>
+  <Card title="Generation Server" icon="wand-magic-sparkles" href="/mcp-web-api/overview">
+    Image, video, audio, LLM generation (24 tools). Auth: API key.
+  </Card>
+  <Card title="Control Plane Server" icon="gear">
+    Account management (10 tools). Auth: Bearer token.
+  </Card>
+</CardGroup>
+
+## Endpoint
+
+```
+https://modelslab.com/mcp/agents
+```
+
+## Authentication
+
+The Agent Control Plane uses Sanctum bearer tokens (not API keys). Unauthenticated actions like signup and login work without a token.
+
+<Tabs>
+  <Tab title="Authorization Header (Recommended)">
+    ```http
+    Authorization: Bearer YOUR_AGENT_ACCESS_TOKEN
+    ```
+  </Tab>
+  <Tab title="X-Agent-Token Header">
+    ```http
+    X-Agent-Token: YOUR_AGENT_ACCESS_TOKEN
+    ```
+  </Tab>
+</Tabs>
+
+### Getting a Token
+
+Use the `agent-auth` tool with the `login` action to get a bearer token:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "agent-auth",
+    "arguments": {
+      "action": "login",
+      "email": "you@example.com",
+      "password": "your-password"
+    }
+  }
+}
+```
+
+The response includes an `access_token` to use for all subsequent requests.
+
+<Info>
+  You do **not** need to install anything. The server is hosted — just configure your IDE with the URL and token. See [Agent Integration](/mcp-web-api/agent-cp-integration) for setup guides.
+</Info>
+
+## Available Tools
+
+| Tool | Actions | Description |
+|------|---------|-------------|
+| `agent-auth` | signup, login, logout, logout-all, forgot-password, reset-password, resend-verification | Authentication and account creation |
+| `agent-tokens` | list, revoke, revoke-others, switch-account | Manage access tokens and team account context |
+| `agent-profile` | get, update, update-password, update-socials, update-preferences | Profile and preferences management |
+| `agent-api-keys` | list, create, get, update, delete | Manage API keys for generation endpoints |
+| `agent-usage` | summary, products, history | Usage analytics and generation history |
+| `agent-models` | search, filters, tags, providers, detail | Discover 50,000+ AI models |
+| `agent-billing` | overview, payment-methods, add/set-default/remove-payment-method, billing-info, update-billing-info, invoices, invoice-detail, invoice-pdf | Billing and payment management |
+| `agent-wallet` | fund, auto-funding, disable-auto-funding, withdraw, validate-coupon, redeem-coupon | Wallet funding and coupon operations |
+| `agent-subscriptions` | list, create, update, pause, resume, reset-cycle, charge-amount, fix-payment | Subscription lifecycle management |
+| `agent-teams` | list, create, get, update, delete, resend-invite, accept-invite | Team member and invite management |
+
+<Card title="View Complete Tools Reference" icon="book" href="/mcp-web-api/agent-cp-tools-reference">
+  See detailed documentation for all 10 tools, their actions, parameters, and examples.
+</Card>
+
+## Typical Agent Workflow
+
+```text
+1. agent-auth (login)         → Get bearer token
+2. agent-api-keys (list)      → Get API key for generation
+3. agent-models (search)      → Find a model to use
+4. agent-usage (summary)      → Check remaining credits
+5. agent-wallet (fund)        → Top up wallet if needed
+6. Use generation MCP server  → Generate images/video/audio with the API key
+```
+
+See the [Headless Agent Flow](/agents-api/headless-flow) for a complete 6-step walkthrough from signup to generation with no browser required.
+
+## Server Information
+
+- **Name:** `modelslab-agent-control-plane`
+- **Version:** `1.0.0`
+- **Protocol:** MCP (Model Context Protocol)
+- **Transport:** HTTP with JSON-RPC 2.0 / SSE
+- **Local server name:** `agent-control-plane` (for stdio transport)
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Tools Reference" icon="wrench" href="/mcp-web-api/agent-cp-tools-reference">
+    Complete documentation for all 10 agent control plane tools
+  </Card>
+  <Card title="Integration Guide" icon="robot" href="/mcp-web-api/agent-cp-integration">
+    Setup guides for Claude Code, Cursor, VS Code, and other agents
+  </Card>
+  <Card title="Agents REST API" icon="code" href="/agents-api/overview">
+    Direct REST API documentation for the control plane
+  </Card>
+  <Card title="Generation MCP Server" icon="wand-magic-sparkles" href="/mcp-web-api/overview">
+    MCP server for AI generation (image, video, audio, LLM)
+  </Card>
+</CardGroup>

@@ -65,6 +65,7 @@
             "group": "Get Started",
             "pages": [
               "index",
+              "index-full",
               "quickstart",
               "agent-skills",
               "authentication",
@@ -78,7 +79,24 @@
             "pages": [
               "mcp-web-api/overview",
               "mcp-web-api/tools-reference",
-              "mcp-web-api/agent-integration"
+              "mcp-web-api/agent-integration",
+              "mcp-web-api/agent-control-plane",
+              "mcp-web-api/agent-cp-tools-reference",
+              "mcp-web-api/agent-cp-integration"
+            ]
+          },
+          {
+            "group": "Agents API (Control Plane)",
+            "pages": [
+              "agents-api/overview",
+              "agents-api/authentication",
+              "agents-api/profile-and-api-keys",
+              "agents-api/usage-and-models",
+              "agents-api/billing-and-wallet",
+              "agents-api/subscriptions",
+              "agents-api/teams",
+              "agents-api/headless-flow",
+              "agents-api/compatibility-notes"
             ]
           },
           {
@@ -132,7 +150,6 @@
                   "video-api/video-to-video",
                   "video-api/text-to-video-ultra",
                   "video-api/image-to-video-ultra",
-                  "video-api/scene-maker",
                   "video-api/base64-to-url",
                   "video-api/fetch-video"
                 ]
@@ -297,7 +314,6 @@
                   "general-api/base64-to-url",
                   "general-api/buy-model",
                   "general-api/buy-subscription",
-                  "general-api/cancel-subscription",
                   "general-api/clear-cache",
                   "general-api/delete-image",
                   "general-api/nsfw-image-check",

@@ -1,0 +1,32 @@
+---
+title: "Teams"
+description: "Manage team members and invitations via the Agents control plane APIs."
+---
+
+## Endpoints
+
+| Method | Endpoint | Auth | Purpose |
+|---|---|---|---|
+| `GET` | `/api/agents/v1/teams` | Bearer token | List team members and pending invites |
+| `POST` | `/api/agents/v1/teams` | Bearer token | Send invite |
+| `GET` | `/api/agents/v1/teams/{id}` | Bearer token | Team member details |
+| `PUT` | `/api/agents/v1/teams/{id}` | Bearer token | Update role/permissions/status |
+| `DELETE` | `/api/agents/v1/teams/{id}` | Bearer token | Remove team member |
+| `POST` | `/api/agents/v1/teams/{id}/resend-invite` | Bearer token | Resend invite |
+| `POST` | `/api/agents/v1/teams/invitations/{inviteId}/accept` | Bearer token | Accept invitation |
+
+### Send invite example
+
+```bash
+curl --request POST 'https://modelslab.com/api/agents/v1/teams' \
+  --header 'Authorization: Bearer <agent_access_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{"email": "teammate@example.com"}'
+```
+
+### Accept invite example
+
+```bash
+curl --request POST 'https://modelslab.com/api/agents/v1/teams/invitations/<invite-id>/accept' \
+  --header 'Authorization: Bearer <agent_access_token>'
+```
