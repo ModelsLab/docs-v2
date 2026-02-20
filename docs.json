@@ -78,7 +78,23 @@
             "pages": [
               "mcp-web-api/overview",
               "mcp-web-api/tools-reference",
-              "mcp-web-api/agent-integration"
+              "mcp-web-api/agent-integration",
+              "mcp-web-api/agent-control-plane",
+              "mcp-web-api/agent-cp-tools-reference",
+              "mcp-web-api/agent-cp-integration"
+            ]
+          },
+          {
+            "group": "Agents API (Control Plane)",
+            "pages": [
+              "agents-api/overview",
+              "agents-api/authentication",
+              "agents-api/profile-and-api-keys",
+              "agents-api/usage-and-models",
+              "agents-api/billing-and-wallet",
+              "agents-api/subscriptions",
+              "agents-api/teams",
+              "agents-api/compatibility-notes"
             ]
           },
           {

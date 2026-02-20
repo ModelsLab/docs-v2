@@ -25,7 +25,9 @@ Usage history query parameters:
 | `GET` | `/api/agents/v1/models/filters` | Bearer token | Filter metadata (sorts/types/base models/features) |
 | `GET` | `/api/agents/v1/models/tags` | Bearer token | Active model tags |
 | `GET` | `/api/agents/v1/models/providers` | Bearer token | Providers list |
-| `GET` | `/api/agents/v1/models/{modelId}` | Bearer token | Model details |
+| `GET` | `/api/agents/v1/models/{modelId}` | Bearer token | Model details (includes `parameters` JSON Schema) |
+
+The model detail endpoint returns endpoint configurations with a `parameters` object — a JSON Schema describing each endpoint's accepted parameters (types, constraints, defaults, enums). This provides a clean, machine-readable alternative to the raw UI `config` array.
 
 Common model query parameters:
 

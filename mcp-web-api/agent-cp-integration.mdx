@@ -1,0 +1,419 @@
+---
+title: "Agent Control Plane Integration"
+description: "Setup guides for connecting the ModelsLab Agent Control Plane MCP server to Claude Code, Cursor, VS Code, and other AI agents."
+---
+
+Connect your AI coding agent to ModelsLab's account management capabilities. The Agent Control Plane MCP server is hosted — no installation required. Just add the URL and your bearer token.
+
+## Overview
+
+The Agent Control Plane MCP server works with any client that supports the [Model Context Protocol](https://modelcontextprotocol.io/) over HTTP:
+
+- **Claude Code** - Anthropic's CLI coding assistant
+- **Claude Desktop** - Claude's desktop application
+- **Cursor** - AI-powered code editor
+- **VS Code** - Via GitHub Copilot agent mode
+- **Windsurf** - Codeium's AI editor
+- **OpenCode** - Open-source AI coding agent
+- **Continue** - Open-source AI code assistant
+
+<Note>
+  Unlike the [Generation MCP server](/mcp-web-api/agent-integration) which uses API keys, the Agent Control Plane uses **Sanctum bearer tokens**. Get a token by calling the `agent-auth` tool with the `login` action, or via the [REST API](/agents-api/authentication).
+</Note>
+
+## Getting Your Bearer Token
+
+Before configuring your IDE, get a bearer token:
+
+```bash
+curl -X POST https://modelslab.com/api/agents/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"you@example.com","password":"your-password"}'
+```
+
+Copy the `access_token` from the response.
+
+<Tip>
+  You can also use the MCP server itself to log in — the `agent-auth` tool's `login` and `signup` actions work without authentication.
+</Tip>
+
+## Using Both MCP Servers Together
+
+For full ModelsLab access, configure **both** MCP servers:
+
+| Server | URL | Auth | Purpose |
+|--------|-----|------|---------|
+| Generation | `https://modelslab.com/mcp/v7` | API key | Image, video, audio, LLM generation |
+| Agent Control Plane | `https://modelslab.com/mcp/agents` | Bearer token | Account, billing, subscriptions, teams |
+
+---
+
+## Claude Code
+
+<Tabs>
+  <Tab title="macOS / Linux">
+    Edit `~/.claude/settings.json`:
+
+    ```json settings.json
+    {
+      "mcpServers": {
+        "modelslab": {
+          "url": "https://modelslab.com/mcp/v7",
+          "headers": {
+            "Authorization": "Bearer YOUR_API_KEY"
+          }
+        },
+        "modelslab-agents": {
+          "url": "https://modelslab.com/mcp/agents",
+          "headers": {
+            "Authorization": "Bearer YOUR_AGENT_TOKEN"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Windows">
+    Edit `%USERPROFILE%\.claude\settings.json`:
+
+    ```json settings.json
+    {
+      "mcpServers": {
+        "modelslab": {
+          "url": "https://modelslab.com/mcp/v7",
+          "headers": {
+            "Authorization": "Bearer YOUR_API_KEY"
+          }
+        },
+        "modelslab-agents": {
+          "url": "https://modelslab.com/mcp/agents",
+          "headers": {
+            "Authorization": "Bearer YOUR_AGENT_TOKEN"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Usage
+
+```bash
+claude "Check my ModelsLab usage summary and wallet balance"
+```
+
+```bash
+claude "Search for the best flux image models on ModelsLab"
+```
+
+```bash
+claude "Create a new API key named 'production' on my ModelsLab account"
+```
+
+---
+
+## Claude Desktop
+
+<Tabs>
+  <Tab title="macOS">
+    Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
+
+    ```json claude_desktop_config.json
+    {
+      "mcpServers": {
+        "modelslab-agents": {
+          "url": "https://modelslab.com/mcp/agents",
+          "headers": {
+            "Authorization": "Bearer YOUR_AGENT_TOKEN"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Windows">
+    Edit `%APPDATA%\Claude\claude_desktop_config.json`:
+
+    ```json claude_desktop_config.json
+    {
+      "mcpServers": {
+        "modelslab-agents": {
+          "url": "https://modelslab.com/mcp/agents",
+          "headers": {
+            "Authorization": "Bearer YOUR_AGENT_TOKEN"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+Restart Claude Desktop after updating the configuration.
+
+---
+
+## Cursor
+
+Add to your Cursor MCP settings or edit `.cursor/mcp.json` in your project:
+
+```json mcp.json
+{
+  "servers": {
+    "modelslab-agents": {
+      "type": "http",
+      "url": "https://modelslab.com/mcp/agents",
+      "headers": {
+        "Authorization": "Bearer YOUR_AGENT_TOKEN"
+      }
+    }
+  }
+}
+```
+
+---
+
+## VS Code (Copilot Agent Mode)
+
+Edit `.vscode/mcp.json` in your workspace:
+
+```json mcp.json
+{
+  "inputs": [
+    {
+      "id": "modelslab-agent-token",
+      "type": "promptString",
+      "description": "ModelsLab Agent Bearer Token",
+      "password": true
+    }
+  ],
+  "servers": {
+    "modelslab-agents": {
+      "type": "sse",
+      "url": "https://modelslab.com/mcp/agents",
+      "headers": {
+        "Authorization": "Bearer ${input:modelslab-agent-token}"
+      }
+    }
+  }
+}
+```
+
+---
+
+## Windsurf
+
+Edit `~/.codeium/windsurf/mcp_config.json`:
+
+```json mcp_config.json
+{
+  "mcpServers": {
+    "modelslab-agents": {
+      "serverUrl": "https://modelslab.com/mcp/agents",
+      "transport": "sse",
+      "headers": {
+        "Authorization": "Bearer YOUR_AGENT_TOKEN"
+      }
+    }
+  }
+}
+```
+
+---
+
+## OpenCode
+
+<Tabs>
+  <Tab title="Project-level">
+    Edit `opencode.json` in your project root:
+
+    ```json opencode.json
+    {
+      "mcp": {
+        "servers": {
+          "modelslab-agents": {
+            "type": "http",
+            "url": "https://modelslab.com/mcp/agents",
+            "headers": {
+              "Authorization": "Bearer YOUR_AGENT_TOKEN"
+            }
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Global">
+    Edit `~/.config/opencode/config.json`:
+
+    ```json config.json
+    {
+      "mcp": {
+        "servers": {
+          "modelslab-agents": {
+            "type": "http",
+            "url": "https://modelslab.com/mcp/agents",
+            "headers": {
+              "Authorization": "Bearer YOUR_AGENT_TOKEN"
+            }
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Continue
+
+Edit `~/.continue/config.json`:
+
+```json config.json
+{
+  "mcpServers": [
+    {
+      "name": "modelslab-agents",
+      "transport": {
+        "type": "http",
+        "url": "https://modelslab.com/mcp/agents",
+        "headers": {
+          "Authorization": "Bearer YOUR_AGENT_TOKEN"
+        }
+      }
+    }
+  ]
+}
+```
+
+---
+
+## Generic MCP Client
+
+For any MCP-compatible client:
+
+```json
+{
+  "servers": {
+    "modelslab-agents": {
+      "transport": "http",
+      "url": "https://modelslab.com/mcp/agents",
+      "headers": {
+        "Authorization": "Bearer YOUR_AGENT_TOKEN"
+      }
+    }
+  }
+}
+```
+
+---
+
+## Environment Variables
+
+For security, use environment variables instead of hardcoding tokens:
+
+<Tabs>
+  <Tab title="macOS / Linux">
+    Add to your shell profile (`~/.bashrc`, `~/.zshrc`):
+
+    ```bash
+    export MODELSLAB_AGENT_TOKEN="your_agent_token_here"
+    ```
+
+    Then reference in config:
+
+    ```json
+    {
+      "mcpServers": {
+        "modelslab-agents": {
+          "url": "https://modelslab.com/mcp/agents",
+          "headers": {
+            "Authorization": "Bearer ${MODELSLAB_AGENT_TOKEN}"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Windows">
+    ```powershell
+    setx MODELSLAB_AGENT_TOKEN "your_agent_token_here"
+    ```
+  </Tab>
+</Tabs>
+
+<Warning>
+  Environment variable substitution support varies by client. Check your specific client's documentation.
+</Warning>
+
+---
+
+## Verification
+
+After configuring, verify the integration:
+
+### Test Connection
+
+Ask your AI agent:
+
+```
+Check my ModelsLab profile using the agent control plane
+```
+
+### Test Model Discovery
+
+```
+Search for realistic image generation models on ModelsLab
+```
+
+### Check for Errors
+
+If the integration is not working, check:
+
+1. **Token**: Ensure your bearer token is valid and not expired
+2. **URL**: Verify the endpoint is `https://modelslab.com/mcp/agents`
+3. **Headers**: Confirm the `Authorization: Bearer` format
+4. **Client support**: Ensure your MCP client supports HTTP/SSE transport
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="401 Unauthorized errors">
+    - Your bearer token may have expired. Get a new one via `agent-auth` login
+    - Ensure the header format is `Bearer <token>` (with space after Bearer)
+    - Some actions (signup, login, forgot-password) don't need a token
+  </Accordion>
+
+  <Accordion title="Tools not appearing">
+    - Restart your MCP client after configuration changes
+    - Check the configuration file syntax (valid JSON)
+    - Verify the config file is in the correct location
+  </Accordion>
+
+  <Accordion title="Connection timeout">
+    - Verify the endpoint URL is correct
+    - Check your network connection and firewall rules
+  </Accordion>
+
+  <Accordion title="Difference between API key and bearer token">
+    - **API key**: Used for generation endpoints (`/mcp/v7`). Get from dashboard or `agent-api-keys` tool
+    - **Bearer token**: Used for control plane (`/mcp/agents`). Get from `agent-auth` login
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Tools Reference" icon="wrench" href="/mcp-web-api/agent-cp-tools-reference">
+    Complete documentation for all 10 control plane tools
+  </Card>
+  <Card title="Agents REST API" icon="code" href="/agents-api/overview">
+    Direct REST API documentation for the control plane
+  </Card>
+</CardGroup>

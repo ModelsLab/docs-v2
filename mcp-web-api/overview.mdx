@@ -1,15 +1,35 @@
 ---
 title: "MCP Web API"
-description: "Connect AI agents like Claude Code, OpenCode, and other MCP-compatible clients to ModelsLab's powerful AI generation capabilities."
+description: "Connect AI agents to ModelsLab via two hosted MCP servers: Generation (image/video/audio/LLM) and Agent Control Plane (account management)."
 ---
 
 ## What is the MCP Web API?
 
-The ModelsLab MCP (Model Context Protocol) Web API enables AI assistants and applications to interact with the ModelsLab V7 API for AI-powered generation capabilities including images, videos, audio, and chat completions.
+ModelsLab provides **two hosted MCP servers** that give AI agents complete access to the platform — no local installation required:
 
-Unlike the [open-source MCP Server](/open-source/modelslab-mcp/overview) which requires local installation, the MCP Web API is a hosted solution that works directly over HTTP, making it easy to integrate with any MCP-compatible client.
+<CardGroup cols={2}>
+  <Card title="Generation Server" icon="wand-magic-sparkles" href="/mcp-web-api/tools-reference">
+    24 tools for image, video, audio, and LLM generation. Auth: API key.
+  </Card>
+  <Card title="Agent Control Plane" icon="gear" href="/mcp-web-api/agent-control-plane">
+    10 tools for account management — auth, billing, subscriptions, teams, and more. Auth: Bearer token.
+  </Card>
+</CardGroup>
 
-## Key Features
+Both servers use the [Model Context Protocol](https://modelcontextprotocol.io/) specification over HTTP with JSON-RPC 2.0 and SSE transport.
+
+## Endpoints
+
+| Server | URL | Auth | Purpose |
+|--------|-----|------|---------|
+| Generation | `https://modelslab.com/mcp/v7` | API key | Image, video, audio, LLM generation |
+| Agent Control Plane | `https://modelslab.com/mcp/agents` | Bearer token | Account, billing, subscriptions, teams |
+
+## Generation Server
+
+The Generation MCP server enables AI assistants to interact with the ModelsLab V7 API for AI-powered generation capabilities including images, videos, audio, and chat completions.
+
+### Key Features
 
 <CardGroup cols={2}>
   <Card title="Image Generation" icon="image">
@@ -26,13 +46,7 @@ Unlike the [open-source MCP Server](/open-source/modelslab-mcp/overview) which r
   </Card>
 </CardGroup>
 
-## Endpoint
-
-```
-https://modelslab.com/mcp/v7
-```
-
-## Authentication
+### Authentication
 
 All requests must include your ModelsLab API key using one of the following methods:
 
@@ -91,9 +105,7 @@ The MCP Web API uses the [Model Context Protocol](https://modelcontextprotocol.i
 }
 ```
 
-## Available Tools
-
-The MCP Web API provides a comprehensive set of tools organized by category:
+### Available Tools (Generation Server)
 
 | Category | Tools | Description |
 |----------|-------|-------------|
@@ -104,7 +116,15 @@ The MCP Web API provides a comprehensive set of tools organized by category:
 | **LLM** | `chat-completion` | Chat with AI language models |
 
 <Card title="View Complete Tool Reference" icon="book" href="/mcp-web-api/tools-reference">
-  See detailed documentation for all available tools, parameters, and examples.
+  See detailed documentation for all 24 generation tools, parameters, and examples.
+</Card>
+
+## Agent Control Plane Server
+
+The Agent Control Plane MCP server lets AI agents manage an entire ModelsLab account lifecycle — signup, authentication, API keys, billing, subscriptions, and teams — without a browser.
+
+<Card title="Agent Control Plane Documentation" icon="gear" href="/mcp-web-api/agent-control-plane">
+  Full documentation for all 10 account management tools, setup guides, and examples.
 </Card>
 
 ## Quick Example
@@ -189,18 +209,27 @@ Errors are returned in standard JSON-RPC 2.0 format:
 
 ## Server Information
 
-- **Name:** `modelslab-v7-api`
-- **Version:** `1.0.0`
-- **Protocol:** MCP (Model Context Protocol)
-- **Transport:** HTTP with JSON-RPC 2.0
+| | Generation Server | Agent Control Plane |
+|---|---|---|
+| **Name** | `modelslab-v7-api` | `modelslab-agent-control-plane` |
+| **Version** | `1.0.0` | `1.0.0` |
+| **Protocol** | MCP (Model Context Protocol) | MCP (Model Context Protocol) |
+| **Transport** | HTTP with JSON-RPC 2.0 / SSE | HTTP with JSON-RPC 2.0 / SSE |
+| **Local name** | `v7-api` | `agent-control-plane` |
 
 ## Next Steps
 
 <CardGroup cols={2}>
-  <Card title="Tools Reference" icon="wrench" href="/mcp-web-api/tools-reference">
-    Complete documentation for all available MCP tools
+  <Card title="Generation Tools Reference" icon="wrench" href="/mcp-web-api/tools-reference">
+    Complete documentation for all 24 generation MCP tools
   </Card>
-  <Card title="Agent Integration" icon="robot" href="/mcp-web-api/agent-integration">
-    Setup guides for Claude Code, OpenCode, and other AI agents
+  <Card title="Generation Integration" icon="robot" href="/mcp-web-api/agent-integration">
+    Setup guides for Claude Code, Cursor, VS Code, and other AI agents
+  </Card>
+  <Card title="Agent Control Plane" icon="gear" href="/mcp-web-api/agent-control-plane">
+    Account management MCP server with 10 tools
+  </Card>
+  <Card title="Control Plane Integration" icon="plug" href="/mcp-web-api/agent-cp-integration">
+    Setup the account management MCP server in your IDE
   </Card>
 </CardGroup>

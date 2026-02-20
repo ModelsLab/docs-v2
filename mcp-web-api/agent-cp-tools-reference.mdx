@@ -1,0 +1,546 @@
+---
+title: "Agent Control Plane Tools Reference"
+description: "Complete reference for all 10 agent control plane MCP tools including actions, parameters, and examples."
+---
+
+Each tool uses an `action` parameter to select the specific operation. All tools communicate via JSON-RPC 2.0 over the MCP endpoint at `https://modelslab.com/mcp/agents`.
+
+## Authentication
+
+### agent-auth
+
+Authentication and account creation. Signup, login, forgot-password, reset-password, and resend-verification do not require a bearer token.
+
+<ParamField path="action" type="string" required>
+  `signup`, `login`, `logout`, `logout-all`, `forgot-password`, `reset-password`, `resend-verification`
+</ParamField>
+
+<ParamField path="email" type="string">
+  Email address (required for signup, login, forgot-password, reset-password, resend-verification)
+</ParamField>
+
+<ParamField path="password" type="string">
+  Password (required for signup, login, reset-password)
+</ParamField>
+
+<ParamField path="password_confirmation" type="string">
+  Password confirmation (required for reset-password)
+</ParamField>
+
+<ParamField path="name" type="string">
+  User name (optional for signup)
+</ParamField>
+
+<ParamField path="device_name" type="string">
+  Device name for the token (optional for login, default: `agent-control-plane`)
+</ParamField>
+
+<ParamField path="token" type="string">
+  Reset token (required for reset-password)
+</ParamField>
+
+<ParamField path="token_expiry" type="string">
+  Token expiry: `1_week`, `1_month` (default), `3_months`, `never`
+</ParamField>
+
+<Accordion title="Login Example">
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "agent-auth",
+    "arguments": {
+      "action": "login",
+      "email": "agent@example.com",
+      "password": "secret123",
+      "token_expiry": "1_month"
+    }
+  }
+}
+```
+</Accordion>
+
+<Accordion title="Signup Example">
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "agent-auth",
+    "arguments": {
+      "action": "signup",
+      "email": "newuser@example.com",
+      "password": "secret123",
+      "name": "Agent Runner"
+    }
+  }
+}
+```
+</Accordion>
+
+---
+
+### agent-tokens
+
+Manage Sanctum access tokens. All actions require authentication.
+
+<ParamField path="action" type="string" required>
+  `list`, `revoke`, `revoke-others`, `switch-account`
+</ParamField>
+
+<ParamField path="token_id" type="integer">
+  Token ID (required for revoke)
+</ParamField>
+
+<ParamField path="account_username" type="string">
+  Target team account username (required for switch-account)
+</ParamField>
+
+<ParamField path="device_name" type="string">
+  Device name for new token (optional for switch-account)
+</ParamField>
+
+<ParamField path="token_expiry" type="string">
+  Token expiry: `1_week`, `1_month`, `3_months`, `never`
+</ParamField>
+
+---
+
+## Profile & Account
+
+### agent-profile
+
+Manage the authenticated user's profile. All actions require authentication.
+
+<ParamField path="action" type="string" required>
+  `get`, `update`, `update-password`, `update-socials`, `update-preferences`
+</ParamField>
+
+<ParamField path="name" type="string">
+  Display name (for update)
+</ParamField>
+
+<ParamField path="username" type="string">
+  Username (for update)
+</ParamField>
+
+<ParamField path="about_me" type="string">
+  Bio/about text (for update)
+</ParamField>
+
+<ParamField path="current_password" type="string">
+  Current password (required for update-password)
+</ParamField>
+
+<ParamField path="password" type="string">
+  New password (required for update-password)
+</ParamField>
+
+<ParamField path="password_confirmation" type="string">
+  New password confirmation (required for update-password)
+</ParamField>
+
+<ParamField path="facebook" type="string">
+  Facebook URL (for update-socials)
+</ParamField>
+
+<ParamField path="github" type="string">
+  GitHub URL (for update-socials)
+</ParamField>
+
+<ParamField path="twitter" type="string">
+  Twitter/X URL (for update-socials)
+</ParamField>
+
+<ParamField path="instagram" type="string">
+  Instagram URL (for update-socials)
+</ParamField>
+
+<ParamField path="discord" type="string">
+  Discord handle (for update-socials)
+</ParamField>
+
+<ParamField path="nsfw_content" type="boolean">
+  Enable NSFW content (for update-preferences)
+</ParamField>
+
+<ParamField path="wallet_notification_enabled" type="boolean">
+  Enable wallet balance notifications (for update-preferences)
+</ParamField>
+
+<ParamField path="wallet_notification_threshold" type="number">
+  Wallet notification threshold amount (for update-preferences)
+</ParamField>
+
+<Accordion title="Get Profile Example">
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "agent-profile",
+    "arguments": {
+      "action": "get"
+    }
+  }
+}
+```
+</Accordion>
+
+---
+
+## API Keys
+
+### agent-api-keys
+
+Manage API keys for generation endpoints (`/api/v6`, `/api/v7`, `/api/v8`). All actions require authentication.
+
+<ParamField path="action" type="string" required>
+  `list`, `create`, `get`, `update`, `delete`
+</ParamField>
+
+<ParamField path="key_id" type="integer">
+  API key ID (required for get, update, delete)
+</ParamField>
+
+<ParamField path="name" type="string">
+  API key name (required for create, optional for update)
+</ParamField>
+
+<ParamField path="notes" type="string">
+  Notes about the API key (optional)
+</ParamField>
+
+<Accordion title="Create API Key Example">
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "agent-api-keys",
+    "arguments": {
+      "action": "create",
+      "name": "production-key"
+    }
+  }
+}
+```
+</Accordion>
+
+---
+
+## Usage & Analytics
+
+### agent-usage
+
+View API usage analytics. All actions require authentication.
+
+<ParamField path="action" type="string" required>
+  `summary`, `products`, `history`
+</ParamField>
+
+<ParamField path="from" type="string">
+  Start date filter, YYYY-MM-DD (optional for history)
+</ParamField>
+
+<ParamField path="to" type="string">
+  End date filter, YYYY-MM-DD (optional for history)
+</ParamField>
+
+<ParamField path="limit" type="integer">
+  Max items to return, 1-200, default 100 (optional for history)
+</ParamField>
+
+---
+
+## Model Discovery
+
+### agent-models
+
+Search and discover 50,000+ AI models. All actions require authentication.
+
+The `detail` action returns endpoint configurations with a `parameters` JSON Schema object describing each endpoint's accepted parameters (types, constraints, defaults, enums) alongside the raw `config` array, making it easy for agents to understand what parameters an endpoint accepts without parsing UI widget definitions.
+
+<ParamField path="action" type="string" required>
+  `search`, `filters`, `tags`, `providers`, `detail`
+</ParamField>
+
+<ParamField path="model_id" type="string">
+  Model ID (required for detail)
+</ParamField>
+
+<ParamField path="search" type="string">
+  Search query (for search)
+</ParamField>
+
+<ParamField path="feature" type="string">
+  Filter by feature: `imagen`, `video_fusion`, `audio_gen`, `llmaster`, etc.
+</ParamField>
+
+<ParamField path="provider" type="string">
+  Filter by provider name
+</ParamField>
+
+<ParamField path="model_type" type="string">
+  Filter by model type
+</ParamField>
+
+<ParamField path="model_subcategory" type="string">
+  Filter by model subcategory
+</ParamField>
+
+<ParamField path="base_model" type="string">
+  Filter by base model
+</ParamField>
+
+<ParamField path="tags" type="string">
+  Comma-separated tags to filter by
+</ParamField>
+
+<ParamField path="sort" type="string">
+  Sort: `recommended` (default), `newest`, `popular`
+</ParamField>
+
+<ParamField path="per_page" type="integer">
+  Results per page (default: 20)
+</ParamField>
+
+<Accordion title="Search Models Example">
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "agent-models",
+    "arguments": {
+      "action": "search",
+      "search": "flux",
+      "feature": "imagen",
+      "sort": "recommended",
+      "per_page": 10
+    }
+  }
+}
+```
+</Accordion>
+
+---
+
+## Billing & Payments
+
+### agent-billing
+
+Manage billing, payment methods, and invoices. All actions require authentication.
+
+<ParamField path="action" type="string" required>
+  `overview`, `payment-methods`, `add-payment-method`, `set-default-payment-method`, `remove-payment-method`, `billing-info`, `update-billing-info`, `invoices`, `invoice-detail`, `invoice-pdf`
+</ParamField>
+
+<ParamField path="payment_method_id" type="string">
+  Stripe payment method ID (for add/set-default/remove-payment-method)
+</ParamField>
+
+<ParamField path="make_default" type="boolean">
+  Make the payment method default (for add-payment-method, default: true)
+</ParamField>
+
+<ParamField path="name" type="string">
+  Billing name (for update-billing-info)
+</ParamField>
+
+<ParamField path="email" type="string">
+  Billing email (for update-billing-info)
+</ParamField>
+
+<ParamField path="tax_id" type="string">
+  Tax ID value (for update-billing-info)
+</ParamField>
+
+<ParamField path="tax_id_type" type="string">
+  Tax ID type, e.g. `eu_vat`, `us_ein` (required with tax_id)
+</ParamField>
+
+<ParamField path="address_line1" type="string">
+  Address line 1 (for update-billing-info)
+</ParamField>
+
+<ParamField path="address_line2" type="string">
+  Address line 2 (for update-billing-info)
+</ParamField>
+
+<ParamField path="address_city" type="string">
+  City (for update-billing-info)
+</ParamField>
+
+<ParamField path="address_state" type="string">
+  State/province (for update-billing-info)
+</ParamField>
+
+<ParamField path="address_postal_code" type="string">
+  Postal/zip code (for update-billing-info)
+</ParamField>
+
+<ParamField path="address_country" type="string">
+  Country code (for update-billing-info)
+</ParamField>
+
+<ParamField path="invoice_id" type="string">
+  Invoice ID (for invoice-detail, invoice-pdf)
+</ParamField>
+
+---
+
+## Wallet
+
+### agent-wallet
+
+Manage wallet balance, auto-recharge, and coupons. All actions require authentication.
+
+<ParamField path="action" type="string" required>
+  `fund`, `auto-funding`, `disable-auto-funding`, `withdraw`, `validate-coupon`, `redeem-coupon`
+</ParamField>
+
+<ParamField path="amount" type="number">
+  Amount in USD (required for fund, withdraw)
+</ParamField>
+
+<ParamField path="payment_method_id" type="string">
+  Stripe payment method ID (optional for fund — charges immediately; required for bonus coupon redeem)
+</ParamField>
+
+<ParamField path="auto_charge_amount" type="number">
+  Auto charge amount, min $5 (required for auto-funding)
+</ParamField>
+
+<ParamField path="charge_threshold" type="number">
+  Balance threshold to trigger auto charge, min $1 (required for auto-funding)
+</ParamField>
+
+<ParamField path="coupon_code" type="string">
+  Coupon code (required for validate-coupon, redeem-coupon)
+</ParamField>
+
+<ParamField path="purchase_amount" type="number">
+  Purchase amount for bonus coupons (optional for validate-coupon, required for bonus coupon redeem)
+</ParamField>
+
+<Accordion title="Fund Wallet Example">
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "agent-wallet",
+    "arguments": {
+      "action": "fund",
+      "amount": 50,
+      "payment_method_id": "pm_..."
+    }
+  }
+}
+```
+</Accordion>
+
+---
+
+## Subscriptions
+
+### agent-subscriptions
+
+Manage subscriptions. All actions require authentication.
+
+<ParamField path="action" type="string" required>
+  `list`, `create`, `update`, `cancel`, `pause`, `resume`, `reset-cycle`, `charge-amount`, `offer-cancelation`, `reverse-cancelation`, `fix-payment`
+</ParamField>
+
+<ParamField path="subscription_id" type="integer">
+  Subscription ID (required for update, cancel, pause, resume, reset-cycle, offer-cancelation, reverse-cancelation, fix-payment)
+</ParamField>
+
+<ParamField path="plan_id" type="integer">
+  Plan ID (required for create)
+</ParamField>
+
+<ParamField path="new_plan_id" type="integer">
+  New plan ID (required for update)
+</ParamField>
+
+<ParamField path="success_url" type="string">
+  Redirect URL after successful checkout (optional for create)
+</ParamField>
+
+<ParamField path="cancel_url" type="string">
+  Redirect URL if checkout is cancelled (optional for create)
+</ParamField>
+
+<ParamField path="amount" type="number">
+  Charge amount, $5-$10000 (required for charge-amount)
+</ParamField>
+
+<ParamField path="plan_category" type="string">
+  Plan category: `enterprise`, `imagen`, `addon`, `normal`
+</ParamField>
+
+<ParamField path="stripe_subscription_id" type="string">
+  Stripe subscription ID override
+</ParamField>
+
+---
+
+## Teams
+
+### agent-teams
+
+Manage team members and invites. All actions require authentication.
+
+<ParamField path="action" type="string" required>
+  `list`, `create`, `get`, `update`, `delete`, `resend-invite`, `accept-invite`
+</ParamField>
+
+<ParamField path="member_id" type="integer">
+  Team member ID (required for get, update, delete, resend-invite)
+</ParamField>
+
+<ParamField path="invite_id" type="string">
+  Invite UUID (required for accept-invite)
+</ParamField>
+
+<ParamField path="email" type="string">
+  Email address to invite (required for create)
+</ParamField>
+
+<ParamField path="role" type="string">
+  Member role (for update)
+</ParamField>
+
+<ParamField path="permissions" type="array">
+  Permissions array (for update)
+</ParamField>
+
+<ParamField path="invite_status" type="string">
+  Invite status: `pending`, `accepted` (for update)
+</ParamField>
+
+<Accordion title="Invite Team Member Example">
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "agent-teams",
+    "arguments": {
+      "action": "create",
+      "email": "teammate@example.com"
+    }
+  }
+}
+```
+</Accordion>
