@@ -275,14 +275,6 @@
                 ]
               },
               {
-                "group": "Uncensored Chat API",
-                "pages": [
-                  "uncensored-chat-api/overview",
-                  "uncensored-chat-api/chat-completions",
-                  "uncensored-chat-api/uncensored-chat"
-                ]
-              },
-              {
                 "group": "Interior API",
                 "pages": [
                   "interior-api/overview",
@@ -573,16 +565,6 @@
                   "enterprise-api/text-to-speech/restart-server",
                   "enterprise-api/text-to-speech/system-details",
                   "enterprise-api/text-to-speech/update-server"
-                ]
-              },
-              {
-                "group": "Uncensored Chat API",
-                "pages": [
-                  "enterprise-api/uncensored-chat/overview",
-                  "enterprise-api/uncensored-chat/start",
-                  "enterprise-api/uncensored-chat/clear-cache",
-                  "enterprise-api/uncensored-chat/clear-queue",
-                  "enterprise-api/uncensored-chat/restart-server"
                 ]
               },
               {
