@@ -543,7 +543,7 @@ The Agent Control Plane provides headless account management, billing, and subsc
 
 **Authentication:** Use `Authorization: Bearer <access_token>` header. Get a token via `POST /auth/login` or `POST /auth/signup` + `POST /auth/verify`.
 
-**Stripe Publishable Key (for card tokenization):** Fetch dynamically via `GET /billing/stripe-config` or use `pk_live_51JfPKxSDo1BGXG2xQS6wNZlCIoNBJFBINvJXrzKFYHiJW6wOfInnLRKuKSbPcJj7QEBd9bVzLXIiXW6TW2nT0FJF006u7qX9kH`
+**Stripe Publishable Key (for card tokenization):** Fetch dynamically via `GET /billing/stripe-config` — returns `{ "publishable_key": "pk_live_..." }`. Always use this endpoint to get the current key.
 
 Agents create PaymentMethods by calling `POST https://api.stripe.com/v1/payment_methods` with the publishable key and card details. Then pass the `payment_method_id` to ModelsLab endpoints. Card data never touches ModelsLab servers.
 

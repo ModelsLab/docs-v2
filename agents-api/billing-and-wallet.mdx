@@ -50,7 +50,7 @@ Example response:
 ```
 
 <Tip>
-  While the publishable key can be hardcoded (it is safe to embed in agent code), using this endpoint ensures you always have the correct key without redeploying when it rotates.
+  Always use this endpoint to fetch the publishable key — it handles key rotation automatically so your agent never needs redeploying.
 </Tip>
 
 ### Create payment link (Human-Assisted flow)
@@ -111,15 +111,17 @@ Example response:
 
 Create a Stripe PaymentMethod directly using the ModelsLab publishable key. Card data goes to Stripe only — ModelsLab never sees raw card numbers.
 
-**Stripe Publishable Key:**
-```
-pk_live_51JfPKxSDo1BGXG2xQS6wNZlCIoNBJFBINvJXrzKFYHiJW6wOfInnLRKuKSbPcJj7QEBd9bVzLXIiXW6TW2nT0FJF006u7qX9kH
+**Step 1 — Fetch the Stripe publishable key:**
+```bash
+curl --request GET 'https://modelslab.com/api/agents/v1/billing/stripe-config' \
+  --header 'Authorization: Bearer <agent_access_token>'
+# Returns: { "publishable_key": "pk_live_...", "instructions": "..." }
 ```
 
-**Step 1 — Create PaymentMethod via Stripe API:**
+**Step 2 — Create PaymentMethod via Stripe API:**
 ```bash
 curl --request POST 'https://api.stripe.com/v1/payment_methods' \
-  --user 'pk_live_51JfPKxSDo1BGXG2xQS6wNZlCIoNBJFBINvJXrzKFYHiJW6wOfInnLRKuKSbPcJj7QEBd9bVzLXIiXW6TW2nT0FJF006u7qX9kH:' \
+  --user '<publishable_key_from_step_1>:' \
   --data 'type=card' \
   --data 'card[number]=4242424242424242' \
   --data 'card[exp_month]=12' \
@@ -129,7 +131,7 @@ curl --request POST 'https://api.stripe.com/v1/payment_methods' \
 
 Response includes a `payment_method_id` (e.g., `pm_1Xyz...`).
 
-**Step 2 — Use `payment_method_id` with ModelsLab endpoints:**
+**Step 3 — Use `payment_method_id` with ModelsLab endpoints:**
 ```bash
 # Fund wallet
 curl --request POST 'https://modelslab.com/api/agents/v1/wallet/fund' \

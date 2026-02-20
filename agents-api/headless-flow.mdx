@@ -13,19 +13,13 @@ The Headless Agent Flow allows an AI agent or automation script to go from zero 
 
 ## Stripe Publishable Key
 
-Agents create Stripe PaymentMethods directly using the ModelsLab publishable key. This is safe to embed in agent code — publishable keys can only create tokens, never charge directly.
+Agents fetch the Stripe publishable key via the API, then create PaymentMethods directly with Stripe. Card data never touches ModelsLab servers.
 
-**Option A — Fetch dynamically (recommended):**
 ```bash
 curl --request GET 'https://modelslab.com/api/agents/v1/billing/stripe-config' \
   --header 'Authorization: Bearer <agent_access_token>'
 ```
-Returns `{ "publishable_key": "pk_live_...", "instructions": "..." }`. This ensures your agent always uses the current key without redeploying when it rotates.
-
-**Option B — Hardcode the current key:**
-```
-pk_live_51JfPKxSDo1BGXG2xQS6wNZlCIoNBJFBINvJXrzKFYHiJW6wOfInnLRKuKSbPcJj7QEBd9bVzLXIiXW6TW2nT0FJF006u7qX9kH
-```
+Returns `{ "publishable_key": "pk_live_...", "instructions": "..." }`. Always use this endpoint to get the current key — it handles key rotation automatically.
 
 ## The 5-Step Flow
 
@@ -54,10 +48,10 @@ pk_live_51JfPKxSDo1BGXG2xQS6wNZlCIoNBJFBINvJXrzKFYHiJW6wOfInnLRKuKSbPcJj7QEBd9bV
     Returns `access_token` and `api_key` directly.
   </Step>
   <Step title="Create Payment Method via Stripe">
-    Call the Stripe API directly with the ModelsLab publishable key to tokenize card details. Card data never touches ModelsLab servers.
+    Use the publishable key from Step 1 of the flow (fetched via `GET /billing/stripe-config`) to tokenize card details. Card data never touches ModelsLab servers.
     ```bash
     curl --request POST 'https://api.stripe.com/v1/payment_methods' \
-      --user 'pk_live_51JfPKxSDo1BGXG2xQS6wNZlCIoNBJFBINvJXrzKFYHiJW6wOfInnLRKuKSbPcJj7QEBd9bVzLXIiXW6TW2nT0FJF006u7qX9kH:' \
+      --user '<publishable_key>:' \
       --data 'type=card' \
       --data 'card[number]=4242424242424242' \
       --data 'card[exp_month]=12' \

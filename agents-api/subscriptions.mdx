@@ -69,19 +69,23 @@ Use the `id` from a plan in `subscription_plans` as the `plan_id` when creating 
 
 Create a subscription using a `payment_method_id` obtained from the Stripe API. No browser redirect needed.
 
-First, create a PaymentMethod via the Stripe API using the ModelsLab publishable key (see [Headless Agent Flow](/agents-api/headless-flow) for details):
+First, fetch the publishable key via `GET /billing/stripe-config`, then create a PaymentMethod via the Stripe API (see [Headless Agent Flow](/agents-api/headless-flow) for details):
 
 ```bash
-# Step 1: Create PM via Stripe (card data stays with Stripe)
+# Step 1: Fetch Stripe publishable key
+STRIPE_PK=$(curl -s 'https://modelslab.com/api/agents/v1/billing/stripe-config' \
+  -H 'Authorization: Bearer <agent_access_token>' | jq -r '.publishable_key')
+
+# Step 2: Create PM via Stripe (card data stays with Stripe)
 curl --request POST 'https://api.stripe.com/v1/payment_methods' \
-  --user 'pk_live_51JfPKxSDo1BGXG2xQS6wNZlCIoNBJFBINvJXrzKFYHiJW6wOfInnLRKuKSbPcJj7QEBd9bVzLXIiXW6TW2nT0FJF006u7qX9kH:' \
+  --user "$STRIPE_PK:" \
   --data 'type=card' \
   --data 'card[number]=4242424242424242' \
   --data 'card[exp_month]=12' \
   --data 'card[exp_year]=2027' \
   --data 'card[cvc]=123'
 
-# Step 2: Subscribe with the pm_id
+# Step 3: Subscribe with the pm_id
 curl --request POST 'https://modelslab.com/api/agents/v1/subscriptions' \
   --header 'Authorization: Bearer <agent_access_token>' \
   --header 'Content-Type: application/json' \
