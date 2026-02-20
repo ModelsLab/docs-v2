@@ -457,11 +457,11 @@ Manage wallet balance, auto-recharge, and coupons. All actions require authentic
 Manage subscriptions. All actions require authentication. Use `list-plans` first to discover available subscription plans and pay-as-you-go options.
 
 <ParamField path="action" type="string" required>
-  `list-plans`, `list`, `create`, `update`, `cancel`, `pause`, `resume`, `reset-cycle`, `charge-amount`, `offer-cancelation`, `reverse-cancelation`, `fix-payment`
+  `list-plans`, `list`, `create`, `update`, `pause`, `resume`, `reset-cycle`, `charge-amount`, `fix-payment`
 </ParamField>
 
 <ParamField path="subscription_id" type="integer">
-  Subscription ID (required for update, cancel, pause, resume, reset-cycle, offer-cancelation, reverse-cancelation, fix-payment)
+  Subscription ID (required for update, pause, resume, reset-cycle, fix-payment)
 </ParamField>
 
 <ParamField path="plan_id" type="integer">

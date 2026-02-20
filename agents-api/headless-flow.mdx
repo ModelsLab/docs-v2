@@ -15,6 +15,14 @@ The Headless Agent Flow allows an AI agent or automation script to go from zero 
 
 Agents create Stripe PaymentMethods directly using the ModelsLab publishable key. This is safe to embed in agent code — publishable keys can only create tokens, never charge directly.
 
+**Option A — Fetch dynamically (recommended):**
+```bash
+curl --request GET 'https://modelslab.com/api/agents/v1/billing/stripe-config' \
+  --header 'Authorization: Bearer <agent_access_token>'
+```
+Returns `{ "publishable_key": "pk_live_...", "instructions": "..." }`. This ensures your agent always uses the current key without redeploying when it rotates.
+
+**Option B — Hardcode the current key:**
 ```
 pk_live_51JfPKxSDo1BGXG2xQS6wNZlCIoNBJFBINvJXrzKFYHiJW6wOfInnLRKuKSbPcJj7QEBd9bVzLXIiXW6TW2nT0FJF006u7qX9kH
 ```
@@ -109,6 +117,35 @@ pk_live_51JfPKxSDo1BGXG2xQS6wNZlCIoNBJFBINvJXrzKFYHiJW6wOfInnLRKuKSbPcJj7QEBd9bV
 4. POST /wallet/fund or /subscriptions  --> pay-as-you-go or subscription (headless, no redirect)
 5. Use /api/v6, /api/v7, /api/v8        --> generate content with the api_key from step 2
 ```
+
+## Alternative: Human-Assisted Payment
+
+If your agent does not have access to card details or the card requires 3D Secure, use the **Human-Assisted** flow instead. The agent creates a Stripe-hosted payment link and forwards it to a human:
+
+```bash
+curl --request POST 'https://modelslab.com/api/agents/v1/billing/payment-link' \
+  --header 'Authorization: Bearer <access_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{"purpose": "fund", "amount": 25}'
+```
+
+The human completes payment on Stripe Checkout, is redirected to ModelsLab's success page with a `session_id`, and relays it to the agent. The agent then confirms:
+
+```bash
+# For wallet funding
+curl --request POST 'https://modelslab.com/api/agents/v1/wallet/confirm-checkout' \
+  --header 'Authorization: Bearer <access_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{"session_id": "cs_live_..."}'
+
+# For subscriptions
+curl --request POST 'https://modelslab.com/api/agents/v1/subscriptions/confirm-checkout' \
+  --header 'Authorization: Bearer <access_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{"session_id": "cs_live_..."}'
+```
+
+See [Billing & Wallet](/agents-api/billing-and-wallet#create-payment-link-human-assisted-flow) for full details on the three payment paths.
 
 ## Handling Card Failures
 

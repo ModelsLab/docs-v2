@@ -13,7 +13,6 @@ description: "Create and manage plan subscriptions from the Agents control plane
 | `POST` | `/api/agents/v1/subscriptions/confirm-checkout` | Bearer token | Confirm a Stripe Checkout subscription session |
 | `GET` | `/api/agents/v1/subscriptions/{id}/status` | Bearer token | Check subscription status |
 | `PUT` | `/api/agents/v1/subscriptions/{id}` | Bearer token | Change subscription plan |
-| `POST` | `/api/agents/v1/subscriptions/{id}/cancel` | Bearer token | Cancel subscription |
 | `POST` | `/api/agents/v1/subscriptions/{id}/pause` | Bearer token | Pause subscription |
 | `POST` | `/api/agents/v1/subscriptions/{id}/resume` | Bearer token | Resume subscription |
 | `POST` | `/api/agents/v1/subscriptions/{id}/reset-cycle` | Bearer token | Reset billing cycle anchor |
@@ -125,12 +124,54 @@ Example response (headless):
   If the card requires 3D Secure, the response returns HTTP 402 with `decline_code` details. Cards requiring authentication should be handled via `modelslab.com/pricing` instead.
 </Note>
 
+### Confirm subscription checkout (Human-Assisted flow)
+
+After a human completes a subscription payment via a Stripe Checkout URL (created with `POST /billing/payment-link` with `purpose: "subscribe"`), the agent confirms the session to activate the subscription. The human is redirected to ModelsLab's success page after payment, where the `session_id` is displayed for them to copy and relay back to the agent.
+
+```bash
+curl --request POST 'https://modelslab.com/api/agents/v1/subscriptions/confirm-checkout' \
+  --header 'Authorization: Bearer <agent_access_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "session_id": "cs_live_..."
+  }'
+```
+
+Parameters:
+
+- `session_id` (required, string): The Stripe Checkout session ID from `POST /billing/payment-link` response or copied by the human from the success page
+
+<Tip>
+  If the payment hasn't completed yet (human hasn't finished checkout), poll this endpoint with a short delay. Once the session is confirmed, the subscription becomes active immediately.
+</Tip>
+
 ### Check subscription status
 
 ```bash
 curl --request GET 'https://modelslab.com/api/agents/v1/subscriptions/45/status' \
   --header 'Authorization: Bearer <agent_access_token>'
 ```
+
+Example response:
+
+```json
+{
+  "data": {
+    "id": 45,
+    "plan_id": 10,
+    "status": "active",
+    "stripe_subscription_id": "sub_xxx",
+    "current_period_start": "2026-02-20T00:00:00Z",
+    "current_period_end": "2026-03-20T00:00:00Z"
+  },
+  "error": null,
+  "meta": {
+    "request_id": "..."
+  }
+}
+```
+
+Possible `status` values: `active`, `past_due`, `canceled`, `paused`, `trialing`.
 
 ### Update subscription plan example
 

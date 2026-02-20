@@ -246,7 +246,6 @@ Endpoint prefix: `https://modelslab.com/api/v6/`
 - [Base64 to URL](https://docs.modelslab.com/general-api/base64-to-url): Convert base64 to temporary hosted URL.
 - [Buy Model](https://docs.modelslab.com/general-api/buy-model): Purchase a LoRA model.
 - [Buy Subscription](https://docs.modelslab.com/general-api/buy-subscription): Purchase an API key plan.
-- [Cancel Subscription](https://docs.modelslab.com/general-api/cancel-subscription): Cancel a plan for an API key.
 - [Clear Cache](https://docs.modelslab.com/general-api/clear-cache): Clear user cache.
 - [Delete Image](https://docs.modelslab.com/general-api/delete-image): Delete uploaded assets.
 - [NSFW Image Check](https://docs.modelslab.com/general-api/nsfw-image-check): Check if an image contains NSFW content.
@@ -544,9 +543,11 @@ The Agent Control Plane provides headless account management, billing, and subsc
 
 **Authentication:** Use `Authorization: Bearer <access_token>` header. Get a token via `POST /auth/login` or `POST /auth/signup` + `POST /auth/verify`.
 
-**Stripe Publishable Key (for card tokenization):** `pk_live_51JfPKxSDo1BGXG2xQS6wNZlCIoNBJFBINvJXrzKFYHiJW6wOfInnLRKuKSbPcJj7QEBd9bVzLXIiXW6TW2nT0FJF006u7qX9kH`
+**Stripe Publishable Key (for card tokenization):** Fetch dynamically via `GET /billing/stripe-config` or use `pk_live_51JfPKxSDo1BGXG2xQS6wNZlCIoNBJFBINvJXrzKFYHiJW6wOfInnLRKuKSbPcJj7QEBd9bVzLXIiXW6TW2nT0FJF006u7qX9kH`
 
 Agents create PaymentMethods by calling `POST https://api.stripe.com/v1/payment_methods` with the publishable key and card details. Then pass the `payment_method_id` to ModelsLab endpoints. Card data never touches ModelsLab servers.
+
+**Three payment paths:** (1) Headless: `GET /billing/stripe-config` -> tokenize card via Stripe -> pass `payment_method_id` to `/wallet/fund` or `/subscriptions`. (2) Setup Intent: `POST /billing/setup-intent` -> confirm via Stripe -> reuse payment_method_id. (3) Human-Assisted: `POST /billing/payment-link` -> forward URL to human -> human pays -> agent confirms via `POST /wallet/confirm-checkout` or `POST /subscriptions/confirm-checkout`.
 
 **Rate limits:** `agent-auth` 20/min, `agent-billing` 15/min, `agent-general` 120/min. All responses include `X-RateLimit-Remaining` and `X-RateLimit-Reset` headers.
 
@@ -556,7 +557,7 @@ Agents create PaymentMethods by calling `POST https://api.stripe.com/v1/payment_
 - [Authentication](https://docs.modelslab.com/agents-api/authentication): Signup, login, email verification, password reset, token management.
 - [Profile & API Keys](https://docs.modelslab.com/agents-api/profile-api-keys): View/update profile, manage API keys.
 - [Billing & Wallet](https://docs.modelslab.com/agents-api/billing-and-wallet): Payment methods, wallet funding, invoices, coupons, payment status.
-- [Subscriptions](https://docs.modelslab.com/agents-api/subscriptions): List plans, create/cancel/pause/resume subscriptions headlessly.
+- [Subscriptions](https://docs.modelslab.com/agents-api/subscriptions): List plans, create/pause/resume subscriptions headlessly.
 - [Usage & Analytics](https://docs.modelslab.com/agents-api/usage-analytics): Usage summaries, product subscriptions, generation history.
 - [Model Discovery](https://docs.modelslab.com/agents-api/model-discovery): Search and browse AI models with filters.
 - [Teams](https://docs.modelslab.com/agents-api/teams): Team management and invitations.
@@ -569,12 +570,16 @@ Agents create PaymentMethods by calling `POST https://api.stripe.com/v1/payment_
 ```
 
 Key billing endpoints:
-- `GET /wallet/balance` — Quick balance check
+- `GET /billing/stripe-config` — Get Stripe publishable key for card tokenization
+- `POST /billing/payment-link` — Create Stripe-hosted payment URL for human-assisted payments (params: purpose, amount/plan_id)
+- `GET /wallet/balance` — Quick balance check (returns balance + currency)
 - `POST /wallet/fund` — Fund wallet with payment_method_id
-- `GET /payments/{id}/status` — Check payment status
+- `POST /wallet/confirm-checkout` — Confirm Stripe Checkout session for wallet funding (param: session_id)
+- `GET /payments/{id}/status` — Check payment status (succeeded/pending/failed)
 - `GET /subscriptions/plans` — Discover available plans
 - `POST /subscriptions` — Create subscription (headless with pm_id, or Checkout redirect)
-- `GET /subscriptions/{id}/status` — Check subscription status
+- `POST /subscriptions/confirm-checkout` — Confirm Stripe Checkout session for subscription (param: session_id)
+- `GET /subscriptions/{id}/status` — Check subscription status (active/past_due/canceled/paused/trialing)
 - `GET /wallet/coupons/validate?coupon_code=CODE` — Validate coupon
 
 ## Release Notes

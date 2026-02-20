@@ -322,7 +322,6 @@
                   "general-api/base64-to-url",
                   "general-api/buy-model",
                   "general-api/buy-subscription",
-                  "general-api/cancel-subscription",
                   "general-api/clear-cache",
                   "general-api/delete-image",
                   "general-api/nsfw-image-check",
