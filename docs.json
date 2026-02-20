@@ -65,6 +65,7 @@
             "group": "Get Started",
             "pages": [
               "index",
+              "index-full",
               "quickstart",
               "agent-skills",
               "authentication",
