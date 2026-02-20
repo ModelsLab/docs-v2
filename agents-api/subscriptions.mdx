@@ -7,6 +7,7 @@ description: "Create and manage plan subscriptions from the Agents control plane
 
 | Method | Endpoint | Auth | Purpose |
 |---|---|---|---|
+| `GET` | `/api/agents/v1/subscriptions/plans` | Bearer token | List available subscription plans and pay-as-you-go options |
 | `GET` | `/api/agents/v1/subscriptions` | Bearer token | List user subscriptions |
 | `POST` | `/api/agents/v1/subscriptions` | Bearer token | Create subscription checkout session |
 | `PUT` | `/api/agents/v1/subscriptions/{id}` | Bearer token | Change subscription plan |
@@ -15,6 +16,54 @@ description: "Create and manage plan subscriptions from the Agents control plane
 | `POST` | `/api/agents/v1/subscriptions/{id}/resume` | Bearer token | Resume subscription |
 | `POST` | `/api/agents/v1/subscriptions/{id}/reset-cycle` | Bearer token | Reset billing cycle anchor |
 
+### Discover available plans
+
+Use this endpoint to list all subscription plans and learn about pay-as-you-go options before creating a subscription.
+
+```bash
+curl --request GET 'https://modelslab.com/api/agents/v1/subscriptions/plans' \
+  --header 'Authorization: Bearer <agent_access_token>' \
+  --header 'Accept: application/json'
+```
+
+**Response structure:**
+
+```json
+{
+  "data": {
+    "subscription_plans": [
+      {
+        "id": 10,
+        "name": "Basic Enterprise",
+        "category": "enterprise",
+        "period": "monthly",
+        "type": "basic",
+        "price": 249.0,
+        "api_call_limit": 0,
+        "rate_limit": 0,
+        "features": ["Unlimited Images", "No Rate Limiter", "..."]
+      }
+    ],
+    "pay_as_you_go": {
+      "available": true,
+      "description": "Pay only for what you use with wallet-based billing. No subscription required.",
+      "minimum_topup_usd": 10.00,
+      "currency": "USD",
+      "auto_payments": {
+        "supported": true,
+        "description": "Automatically top up your wallet when balance drops below a threshold.",
+        "configure_endpoint": "PUT /api/agents/v1/wallet/auto-funding",
+        "disable_endpoint": "DELETE /api/agents/v1/wallet/auto-funding"
+      },
+      "fund_endpoint": "POST /api/agents/v1/wallet/fund"
+    },
+    "count": 37
+  }
+}
+```
+
+Use the `id` from a plan in `subscription_plans` as the `plan_id` when creating a subscription. Alternatively, use the pay-as-you-go option by funding your wallet directly.
+
 ### Create subscription example
 
 ```bash
@@ -22,7 +71,7 @@ curl --request POST 'https://modelslab.com/api/agents/v1/subscriptions' \
   --header 'Authorization: Bearer <agent_access_token>' \
   --header 'Content-Type: application/json' \
   --data '{
-    "plan_id": 123,
+    "plan_id": 10,
     "success_url": "https://your-app.com/billing/success",
     "cancel_url": "https://your-app.com/billing/cancel"
   }'
