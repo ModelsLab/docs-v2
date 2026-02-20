@@ -1,9 +1,9 @@
 ---
 title: "Agents API (Control Plane)"
-description: "Manage full ModelsLab account lifecycle via API: signup, auth, API keys, usage, model discovery, billing, wallet, subscriptions, and teams."
+description: "Manage the full ModelsLab account lifecycle via API: signup, auth, training, billing, wallet, subscriptions, servers, and more."
 ---
 
-The Agents API is the control plane for programmatic account management.
+The Agents API is the control plane for programmatic account management. It supports a fully headless workflow from signup to API key creation with no browser required. For content generation, use the existing generation APIs (`/api/v6`, `/api/v7`, `/api/v8`) with your API key.
 
 ## Base URL
 
@@ -25,7 +25,7 @@ Token issuance supports `token_expiry` on login:
 
 <Note>
   Use a Bearer token to manage account and billing operations.
-  Use API keys for generation requests.
+  Use API keys for generation requests via `/api/v6`, `/api/v7`, `/api/v8`.
 </Note>
 
 ## Standard Response Envelope (Agents API)
@@ -58,17 +58,17 @@ Error shape:
 
 ## Rate Limiting
 
-Agents API uses dedicated limiters:
+Agents API uses dedicated limiters. All responses include `X-RateLimit-Remaining` and `X-RateLimit-Reset` headers.
 
 - `agent-auth`: signup/login/forgot/reset/resend verification
-- `agent-billing`: payment methods, wallet funding, coupon redemption, subscription mutations
+- `agent-billing`: payment methods, wallet funding, coupon redemption, subscription mutations, server deployment
 - `agent-general`: authenticated control-plane endpoints
 
 ## Endpoint Groups
 
 <CardGroup cols={2}>
   <Card title="Authentication" href="/agents-api/authentication">
-    Signup, login, logout, password reset, and email verification.
+    Signup, login, logout, headless email verification, token refresh, and password reset.
   </Card>
   <Card title="Profile & API Keys" href="/agents-api/profile-and-api-keys">
     Read/update profile and manage API keys.
@@ -77,13 +77,25 @@ Agents API uses dedicated limiters:
     Usage summaries/history and model discovery APIs.
   </Card>
   <Card title="Billing & Wallet" href="/agents-api/billing-and-wallet">
-    Payment methods, billing info, invoices, and wallet operations.
+    Payment methods, SetupIntent for headless card tokenization, billing info, invoices, wallet transactions, and wallet funding.
   </Card>
   <Card title="Subscriptions" href="/agents-api/subscriptions">
-    Discover plans, pay-as-you-go options, and create/update/cancel/pause/resume subscriptions.
+    Discover plans, pay-as-you-go options, direct headless subscriptions, and manage subscription lifecycle.
+  </Card>
+  <Card title="Training" href="/agents-api/training">
+    Start and monitor model training and fine-tuning jobs.
+  </Card>
+  <Card title="Servers" href="/agents-api/servers">
+    Deploy and manage custom/enterprise dedicated servers.
+  </Card>
+  <Card title="Uploads" href="/agents-api/uploads">
+    Presigned URL and base64 file uploads for training and generation.
   </Card>
   <Card title="Teams" href="/agents-api/teams">
     Team members, invites, and invitation acceptance.
+  </Card>
+  <Card title="Headless Agent Flow" href="/agents-api/headless-flow">
+    Complete account-to-generation walkthrough in 6 steps with no browser.
   </Card>
   <Card title="Compatibility Notes" href="/agents-api/compatibility-notes">
     Verification compatibility route and removed legacy endpoints.

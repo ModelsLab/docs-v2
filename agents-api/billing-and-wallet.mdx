@@ -8,6 +8,7 @@ description: "Manage payment methods, billing profile, invoices, and wallet oper
 | Method | Endpoint | Auth | Purpose |
 |---|---|---|---|
 | `GET` | `/api/agents/v1/billing/overview` | Bearer token | Wallet summary, cards, subscriptions, invoice count |
+| `POST` | `/api/agents/v1/billing/setup-intent` | Bearer token | Create Stripe SetupIntent for headless card tokenization |
 | `GET` | `/api/agents/v1/billing/payment-methods` | Bearer token | List payment methods |
 | `POST` | `/api/agents/v1/billing/payment-methods` | Bearer token | Attach payment method |
 | `PUT` | `/api/agents/v1/billing/payment-methods/{id}/default` | Bearer token | Set default payment method |
@@ -21,9 +22,50 @@ description: "Manage payment methods, billing profile, invoices, and wallet oper
 ### Card Data Policy
 
 <Warning>
-  Raw card PAN/CVV is not accepted on Agents API endpoints.
-  Use Stripe `payment_method_id` / SetupIntent outputs only.
+  Raw card PAN/CVV is **never** accepted on ModelsLab API endpoints.
+  Agents must tokenize cards directly with the Stripe API using the ModelsLab publishable key, then pass the resulting `payment_method_id` to ModelsLab endpoints.
 </Warning>
+
+### Headless Card Tokenization (Recommended for Agents)
+
+Create a Stripe PaymentMethod directly using the ModelsLab publishable key. Card data goes to Stripe only — ModelsLab never sees raw card numbers.
+
+**Stripe Publishable Key:**
+```
+pk_live_51JfPKxSDo1BGXG2xQS6wNZlCIoNBJFBINvJXrzKFYHiJW6wOfInnLRKuKSbPcJj7QEBd9bVzLXIiXW6TW2nT0FJF006u7qX9kH
+```
+
+**Step 1 — Create PaymentMethod via Stripe API:**
+```bash
+curl --request POST 'https://api.stripe.com/v1/payment_methods' \
+  --user 'pk_live_51JfPKxSDo1BGXG2xQS6wNZlCIoNBJFBINvJXrzKFYHiJW6wOfInnLRKuKSbPcJj7QEBd9bVzLXIiXW6TW2nT0FJF006u7qX9kH:' \
+  --data 'type=card' \
+  --data 'card[number]=4242424242424242' \
+  --data 'card[exp_month]=12' \
+  --data 'card[exp_year]=2027' \
+  --data 'card[cvc]=123'
+```
+
+Response includes a `payment_method_id` (e.g., `pm_1Xyz...`).
+
+**Step 2 — Use `payment_method_id` with ModelsLab endpoints:**
+```bash
+# Fund wallet
+curl --request POST 'https://modelslab.com/api/agents/v1/wallet/fund' \
+  --header 'Authorization: Bearer <agent_access_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{"amount": 25, "payment_method_id": "pm_1Xyz..."}'
+
+# Or subscribe to a plan
+curl --request POST 'https://modelslab.com/api/agents/v1/subscriptions' \
+  --header 'Authorization: Bearer <agent_access_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{"plan_id": 10, "payment_method_id": "pm_1Xyz..."}'
+```
+
+<Tip>
+  The publishable key is safe to embed in agent code — it can only create tokens, never charge directly.
+</Tip>
 
 ### Attach payment method example
 
@@ -32,7 +74,7 @@ curl --request POST 'https://modelslab.com/api/agents/v1/billing/payment-methods
   --header 'Authorization: Bearer <agent_access_token>' \
   --header 'Content-Type: application/json' \
   --data '{
-    "payment_method_id": "pm_xxx",
+    "payment_method_id": "pm_1Xyz...",
     "make_default": true
   }'
 ```
@@ -41,21 +83,103 @@ curl --request POST 'https://modelslab.com/api/agents/v1/billing/payment-methods
 
 | Method | Endpoint | Auth | Purpose |
 |---|---|---|---|
+| `GET` | `/api/agents/v1/wallet/balance` | Bearer token | Quick wallet balance check |
+| `GET` | `/api/agents/v1/wallet/transactions` | Bearer token | Wallet ledger (deposits, charges, refunds) with filters |
 | `POST` | `/api/agents/v1/wallet/fund` | Bearer token | Fund wallet (payment method / checkout flow) |
+| `POST` | `/api/agents/v1/wallet/confirm-checkout` | Bearer token | Confirm a Stripe Checkout wallet funding session |
 | `PUT` | `/api/agents/v1/wallet/auto-funding` | Bearer token | Set auto-funding settings |
 | `DELETE` | `/api/agents/v1/wallet/auto-funding` | Bearer token | Disable auto-funding |
 | `POST` | `/api/agents/v1/wallet/withdraw` | Bearer token | Withdraw (reseller-only) |
-| `POST` | `/api/agents/v1/wallet/coupons/validate` | Bearer token | Validate coupon |
+| `GET` | `/api/agents/v1/wallet/coupons/validate` | Bearer token | Validate coupon |
 | `POST` | `/api/agents/v1/wallet/coupons/redeem` | Bearer token | Redeem coupon |
+| `GET` | `/api/agents/v1/payments/{id}/status` | Bearer token | Check payment intent status |
+
+### Wallet transactions example
+
+Query the wallet ledger with optional filters for transaction type, limit, and offset.
+
+```bash
+curl --request GET 'https://modelslab.com/api/agents/v1/wallet/transactions?type=credit&limit=20&offset=0' \
+  --header 'Authorization: Bearer <agent_access_token>'
+```
+
+Query parameters:
+
+- `type` (optional): `credit` or `debit`
+- `limit` (optional, integer, max 200, default 50)
+- `offset` (optional, integer, default 0)
+
+Example response:
+
+```json
+{
+  "data": {
+    "items": [
+      {
+        "id": 456,
+        "source": "stripe",
+        "transaction_id": "pi_xxx",
+        "type": "credit",
+        "amount": 25.00,
+        "status": "success",
+        "usecase": "wallet_funding",
+        "created_at": "2026-02-15T10:00:00Z"
+      }
+    ],
+    "count": 1,
+    "total": 12,
+    "wallet": {
+      "balance": 75.50,
+      "currency": "USD",
+      "total_credited": 150.00,
+      "amount_used": 74.50
+    }
+  },
+  "error": null,
+  "meta": {
+    "request_id": "..."
+  }
+}
+```
+
+### Wallet balance example
+
+Quick check of wallet balance without the full transaction ledger:
+
+```bash
+curl --request GET 'https://modelslab.com/api/agents/v1/wallet/balance' \
+  --header 'Authorization: Bearer <agent_access_token>'
+```
 
 ### Wallet fund example
+
+Fund wallet with a `payment_method_id` obtained from the Stripe API (see [Headless Card Tokenization](#headless-card-tokenization-recommended-for-agents) above).
 
 ```bash
 curl --request POST 'https://modelslab.com/api/agents/v1/wallet/fund' \
   --header 'Authorization: Bearer <agent_access_token>' \
   --header 'Content-Type: application/json' \
+  --header 'Idempotency-Key: fund-25-20260220-abc' \
   --data '{
     "amount": 25,
-    "payment_method_id": "pm_xxx"
+    "payment_method_id": "pm_1Xyz..."
   }'
+```
+
+### Coupon validate example
+
+Validate a coupon before redeeming (note: this is a GET request):
+
+```bash
+curl --request GET 'https://modelslab.com/api/agents/v1/wallet/coupons/validate?coupon_code=WELCOME50' \
+  --header 'Authorization: Bearer <agent_access_token>'
+```
+
+### Payment status example
+
+Check the status of a Stripe PaymentIntent (useful after wallet funding):
+
+```bash
+curl --request GET 'https://modelslab.com/api/agents/v1/payments/pi_xxx/status' \
+  --header 'Authorization: Bearer <agent_access_token>'
 ```

@@ -5,7 +5,7 @@ description: "Manage your entire ModelsLab account via MCP: authentication, API 
 
 ## What is the Agent Control Plane MCP Server?
 
-The Agent Control Plane MCP server lets AI agents manage a full ModelsLab account lifecycle without a browser. It exposes the [Agents API (Control Plane)](/agents-api/overview) as 10 MCP tools covering authentication, profile management, API keys, usage analytics, model discovery, billing, wallet, subscriptions, and teams.
+The Agent Control Plane MCP server lets AI agents manage a full ModelsLab account lifecycle without a browser. It exposes the [Agents API (Control Plane)](/agents-api/overview) as MCP tools covering authentication, profile management, API keys, usage analytics, model discovery, billing, wallet, subscriptions, teams, training, servers, and uploads.
 
 This is separate from the [Generation MCP server](/mcp-web-api/overview) which handles image/video/audio/LLM generation. Together, these two servers give an AI agent complete access to ModelsLab.
 
@@ -96,6 +96,8 @@ The response includes an `access_token` to use for all subsequent requests.
 5. agent-wallet (fund)        → Top up wallet if needed
 6. Use generation MCP server  → Generate images/video/audio with the API key
 ```
+
+See the [Headless Agent Flow](/agents-api/headless-flow) for a complete 6-step walkthrough from signup to generation with no browser required.
 
 ## Server Information
 

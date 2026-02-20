@@ -8,8 +8,10 @@ description: "Create and manage plan subscriptions from the Agents control plane
 | Method | Endpoint | Auth | Purpose |
 |---|---|---|---|
 | `GET` | `/api/agents/v1/subscriptions/plans` | Bearer token | List available subscription plans and pay-as-you-go options |
-| `GET` | `/api/agents/v1/subscriptions` | Bearer token | List user subscriptions |
-| `POST` | `/api/agents/v1/subscriptions` | Bearer token | Create subscription checkout session |
+| `GET` | `/api/agents/v1/subscriptions` | Bearer token | List user subscriptions (addon, enterprise, normal) |
+| `POST` | `/api/agents/v1/subscriptions` | Bearer token | Create subscription — headless with `payment_method_id` or Checkout redirect |
+| `POST` | `/api/agents/v1/subscriptions/confirm-checkout` | Bearer token | Confirm a Stripe Checkout subscription session |
+| `GET` | `/api/agents/v1/subscriptions/{id}/status` | Bearer token | Check subscription status |
 | `PUT` | `/api/agents/v1/subscriptions/{id}` | Bearer token | Change subscription plan |
 | `POST` | `/api/agents/v1/subscriptions/{id}/cancel` | Bearer token | Cancel subscription |
 | `POST` | `/api/agents/v1/subscriptions/{id}/pause` | Bearer token | Pause subscription |
@@ -64,17 +66,70 @@ curl --request GET 'https://modelslab.com/api/agents/v1/subscriptions/plans' \
 
 Use the `id` from a plan in `subscription_plans` as the `plan_id` when creating a subscription. Alternatively, use the pay-as-you-go option by funding your wallet directly.
 
-### Create subscription example
+### Create subscription (Headless — Recommended for Agents)
+
+Create a subscription using a `payment_method_id` obtained from the Stripe API. No browser redirect needed.
+
+First, create a PaymentMethod via the Stripe API using the ModelsLab publishable key (see [Headless Agent Flow](/agents-api/headless-flow) for details):
 
 ```bash
+# Step 1: Create PM via Stripe (card data stays with Stripe)
+curl --request POST 'https://api.stripe.com/v1/payment_methods' \
+  --user 'pk_live_51JfPKxSDo1BGXG2xQS6wNZlCIoNBJFBINvJXrzKFYHiJW6wOfInnLRKuKSbPcJj7QEBd9bVzLXIiXW6TW2nT0FJF006u7qX9kH:' \
+  --data 'type=card' \
+  --data 'card[number]=4242424242424242' \
+  --data 'card[exp_month]=12' \
+  --data 'card[exp_year]=2027' \
+  --data 'card[cvc]=123'
+
+# Step 2: Subscribe with the pm_id
 curl --request POST 'https://modelslab.com/api/agents/v1/subscriptions' \
   --header 'Authorization: Bearer <agent_access_token>' \
   --header 'Content-Type: application/json' \
+  --header 'Idempotency-Key: sub-plan10-20260220' \
   --data '{
     "plan_id": 10,
-    "success_url": "https://your-app.com/billing/success",
-    "cancel_url": "https://your-app.com/billing/cancel"
+    "payment_method_id": "pm_1Xyz..."
   }'
+```
+
+Parameters:
+
+- `plan_id` (required, integer): The plan ID from the `/subscriptions/plans` endpoint
+- `payment_method_id` (optional, string): Stripe PM ID from the Stripe API. If omitted, falls back to Stripe Checkout redirect.
+- `success_url` / `cancel_url` (optional): Only used when `payment_method_id` is omitted (Checkout redirect flow).
+
+Example response (headless):
+
+```json
+{
+  "data": {
+    "message": "Subscription created.",
+    "subscription": {
+      "id": 45,
+      "plan_id": 10,
+      "feature": "enterprise",
+      "status": "active"
+    },
+    "stripe_subscription_id": "sub_xxx",
+    "status": "active"
+  },
+  "error": null,
+  "meta": {
+    "request_id": "..."
+  }
+}
+```
+
+<Note>
+  If the card requires 3D Secure, the response returns HTTP 402 with `decline_code` details. Cards requiring authentication should be handled via `modelslab.com/pricing` instead.
+</Note>
+
+### Check subscription status
+
+```bash
+curl --request GET 'https://modelslab.com/api/agents/v1/subscriptions/45/status' \
+  --header 'Authorization: Bearer <agent_access_token>'
 ```
 
 ### Update subscription plan example

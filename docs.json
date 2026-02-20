@@ -95,6 +95,7 @@
               "agents-api/billing-and-wallet",
               "agents-api/subscriptions",
               "agents-api/teams",
+              "agents-api/headless-flow",
               "agents-api/compatibility-notes"
             ]
           },

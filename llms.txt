@@ -536,6 +536,47 @@ Enterprise APIs provide dedicated server infrastructure with additional manageme
 - [System Details](https://docs.modelslab.com/enterprise-api/flux-2-dev/system-details): Server status.
 - [Update Server](https://docs.modelslab.com/enterprise-api/flux-2-dev/update-server): Update configuration.
 
+## Agent Control Plane API
+
+Base URL: `https://modelslab.com/api/agents/v1/`
+
+The Agent Control Plane provides headless account management, billing, and subscription APIs for AI agents. Agents can manage everything programmatically — no browser needed.
+
+**Authentication:** Use `Authorization: Bearer <access_token>` header. Get a token via `POST /auth/login` or `POST /auth/signup` + `POST /auth/verify`.
+
+**Stripe Publishable Key (for card tokenization):** `pk_live_51JfPKxSDo1BGXG2xQS6wNZlCIoNBJFBINvJXrzKFYHiJW6wOfInnLRKuKSbPcJj7QEBd9bVzLXIiXW6TW2nT0FJF006u7qX9kH`
+
+Agents create PaymentMethods by calling `POST https://api.stripe.com/v1/payment_methods` with the publishable key and card details. Then pass the `payment_method_id` to ModelsLab endpoints. Card data never touches ModelsLab servers.
+
+**Rate limits:** `agent-auth` 20/min, `agent-billing` 15/min, `agent-general` 120/min. All responses include `X-RateLimit-Remaining` and `X-RateLimit-Reset` headers.
+
+**Idempotency:** Billing mutations accept an `Idempotency-Key` header to prevent duplicate charges on retries.
+
+- [Headless Agent Flow](https://docs.modelslab.com/agents-api/headless-flow): Complete 5-step account-to-generation workflow without a browser.
+- [Authentication](https://docs.modelslab.com/agents-api/authentication): Signup, login, email verification, password reset, token management.
+- [Profile & API Keys](https://docs.modelslab.com/agents-api/profile-api-keys): View/update profile, manage API keys.
+- [Billing & Wallet](https://docs.modelslab.com/agents-api/billing-and-wallet): Payment methods, wallet funding, invoices, coupons, payment status.
+- [Subscriptions](https://docs.modelslab.com/agents-api/subscriptions): List plans, create/cancel/pause/resume subscriptions headlessly.
+- [Usage & Analytics](https://docs.modelslab.com/agents-api/usage-analytics): Usage summaries, product subscriptions, generation history.
+- [Model Discovery](https://docs.modelslab.com/agents-api/model-discovery): Search and browse AI models with filters.
+- [Teams](https://docs.modelslab.com/agents-api/teams): Team management and invitations.
+
+### Headless Payment Flow (for AI agents)
+
+```text
+1. Agent → POST https://api.stripe.com/v1/payment_methods (with publishable key + card) → pm_id
+2. Agent → POST /wallet/fund or POST /subscriptions (with pm_id) → payment complete
+```
+
+Key billing endpoints:
+- `GET /wallet/balance` — Quick balance check
+- `POST /wallet/fund` — Fund wallet with payment_method_id
+- `GET /payments/{id}/status` — Check payment status
+- `GET /subscriptions/plans` — Discover available plans
+- `POST /subscriptions` — Create subscription (headless with pm_id, or Checkout redirect)
+- `GET /subscriptions/{id}/status` — Check subscription status
+- `GET /wallet/coupons/validate?coupon_code=CODE` — Validate coupon
+
 ## Release Notes
 
 - [Overview](https://docs.modelslab.com/release-notes/overview): Latest updates and changelog.
