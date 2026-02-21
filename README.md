@@ -1,64 +1,118 @@
-# Mintlify Starter Kit
+# ModelsLab API Documentation
 
-Click on `Use this template` to copy the Mintlify starter kit. The starter kit contains examples including
+<div align="center">
+  <a href="https://discord.gg/ujtGyjY2">
+    <img src="https://img.shields.io/badge/Discord-Join%20Us-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord">
+  </a>
+  <a href="https://x.com/ModelsLabAI">
+    <img src="https://img.shields.io/badge/X-@ModelsLabAI-000000?style=for-the-badge&logo=twitter&logoColor=white" alt="X/Twitter">
+  </a>
+  <a href="https://github.com/ModelsLab">
+    <img src="https://img.shields.io/badge/GitHub-ModelsLab-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+  </a>
+</div>
 
-- Guide pages
-- Navigation
-- Customizations
-- API Reference pages
-- Use of popular components
+This is the official documentation source for the [ModelsLab API](https://modelslab.com), built with [Mintlify](https://mintlify.com). The live docs are available at [docs.modelslab.com](https://docs.modelslab.com).
 
-### Development
+## What this repo contains
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the documentation changes locally. To install, use the following command
+Documentation for the full ModelsLab API surface, organized by product area:
 
+| Directory | Description |
+|---|---|
+| `image-generation/` | Text to image, Flux, ControlNet, community models, real-time SD |
+| `image-editing/` | Inpainting, outpainting, super resolution, background removal, face generation |
+| `video-api/` | Text to video, image to video, video to video, watermark removal |
+| `voice-cloning/` | TTS, STT, voice cloning, music generation, song generator, dubbing |
+| `deepfake-api/` | Face swap (image and video) |
+| `3d-api/` | Text to 3D, image to 3D |
+| `interior-api/` | Interior design, room decoration, floor planning |
+| `general-api/` | Account, billing, subscriptions, cache, NSFW checks |
+| `enterprise-api/` | Enterprise-tier endpoints across all product areas |
+| `mcp-web-api/` | MCP server integration and agent control plane |
+| `workflows-api/` | Workflow execution and management |
+| `sdk/` | SDK references for Python, TypeScript, Go, PHP, Dart |
+| `agents-api/` | Agent authentication, billing, and team management |
+| `open-source/` | Open source projects (ModelQ, ModelsLab MCP) |
+| `guides/` | End-to-end guides for specific use cases |
+| `release-notes/` | API and playground changelog |
+
+Top-level pages include `quickstart.mdx`, `authentication.mdx`, `webhooks.mdx`, `rate-limits.mdx`, and `error-codes.mdx`.
+
+## Local development
+
+Install the Mintlify CLI:
+
+```bash
+npm install -g mintlify
 ```
-npm i -g mintlify
-```
 
-Run the following command at the root of your documentation (where docs.json is)
+Start the local preview server from the root of this repo (where `docs.json` lives):
 
-```
+```bash
 mintlify dev
 ```
 
-### Publishing Changes
+If the dev server fails to start, run `mintlify install` to reinstall dependencies.
 
-Install our Github App to auto propagate changes from your repo to your deployment. Changes will be deployed to production automatically after pushing to the default branch. Find the link to install on your dashboard. 
+## Contributing
 
-### Mintlify CLI Commands
+### Editing existing pages
 
-#### Check for Broken Links
+Each page is an `.mdx` file in the corresponding API directory. Edit the file directly and the changes will reflect in the local preview immediately.
+
+### Adding a new page
+
+1. Create a new `.mdx` file in the relevant directory.
+2. Add it to the `navigation` section in `docs.json` under the correct group.
+3. Preview locally to confirm it renders correctly.
+
+### Page structure
+
+Pages follow this general structure:
+
+```mdx
+---
+title: "Endpoint Name"
+description: "Short description of what this endpoint does."
+---
+
+## Request
+...
+
+## Body
+...
+
+## Body Attributes
+...
+
+## Response
+...
+```
+
+### Useful CLI commands
+
+Check for broken internal links:
 ```bash
 mintlify broken-links
 ```
-Check for broken internal links in your Mintlify project.
 
-#### Rename Files
+Validate an OpenAPI file:
+```bash
+mintlify openapi-check <filename-or-url>
+```
+
+Rename a file and update all internal references:
 ```bash
 mintlify rename <from> <to>
 ```
-Rename a file in a Mintlify project and update all internal link references.
 
-#### OpenAPI Validation
-```bash
-mintlify openapi-check <openapiFilenameOrUrl>
-```
-Check your OpenAPI file for errors. You can pass in a filename (e.g. ./openapi.yaml) or a URL (e.g. https://petstore3.swagger.io/api/v3/openapi.json).
+## Deployment
 
-#### Update CLI
-```bash
-mintlify update
-```
-Updates to the most recent version of the Mintlify CLI.
+Changes pushed to the default branch are automatically deployed to [docs.modelslab.com](https://docs.modelslab.com) via the Mintlify GitHub integration.
 
-#### Upgrade Configuration
-```bash
-mintlify upgrade
-```
-Upgrade from mint.json to docs.json. This command creates a docs.json file.
+## Support
 
-#### Troubleshooting
-
-- Mintlify dev isn't running - Run `mintlify install` it'll re-install dependencies.
-- Page loads as a 404 - Make sure you are running in a folder with `docs.json`
+For API support, visit [modelslab.com/support](https://modelslab.com/support) or email support@modelslab.com.
+For documentation issues, open an issue in this repository.
+To request new features, join the [Discord](https://discord.com/invite/modelslab-1033301189254729748).
