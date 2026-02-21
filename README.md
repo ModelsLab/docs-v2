@@ -1,6 +1,6 @@
-# ModelsLab API Documentation
-
 <div align="center">
+  <img width="1360" height="465" alt="ModelsLab API Documentation" src="https://github.com/user-attachments/assets/f458857b-2afe-4dd5-ac27-42e6df756db2" />
+  <br /><br />
   <a href="https://discord.gg/ujtGyjY2">
     <img src="https://img.shields.io/badge/Discord-Join%20Us-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord">
   </a>
