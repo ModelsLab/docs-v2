@@ -39,12 +39,6 @@
   "head": {
     "scripts": [
       {
-        "src": "scripts/tawk.js",
-        "async": true,
-        "charset": "UTF-8",
-        "crossorigin": "*"
-      },
-      {
         "src": "/scripts/jsonld.js",
         "defer": true
       }
