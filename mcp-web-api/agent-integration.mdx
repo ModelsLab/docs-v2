@@ -232,6 +232,66 @@ Alternatively, edit `.cursor/mcp.json` in your project:
 
 ---
 
+## VS Code (Copilot Agent Mode)
+
+[VS Code](https://code.visualstudio.com/) supports MCP servers through Copilot Agent Mode.
+
+### Configuration
+
+Create or edit `.vscode/mcp.json` in your project:
+
+```json mcp.json
+{
+  "servers": {
+    "modelslab-v7": {
+      "type": "sse",
+      "url": "https://modelslab.com/mcp/v7",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+### Usage
+
+Once configured, use ModelsLab tools in Copilot Agent Mode:
+
+```
+@workspace Generate a product image using ModelsLab's text-to-image tool
+```
+
+---
+
+## Windsurf
+
+[Windsurf](https://codeium.com/windsurf) is an AI-powered IDE by Codeium with MCP support.
+
+### Configuration
+
+Edit `~/.codeium/windsurf/mcp_config.json`:
+
+```json mcp_config.json
+{
+  "mcpServers": {
+    "modelslab-v7": {
+      "serverUrl": "https://modelslab.com/mcp/v7",
+      "transport": "sse",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+### Restart Required
+
+After updating the configuration, restart Windsurf for the changes to take effect.
+
+---
+
 ## Continue
 
 [Continue](https://continue.dev) is an open-source AI code assistant that works with VS Code and JetBrains IDEs.

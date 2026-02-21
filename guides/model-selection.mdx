@@ -1,0 +1,258 @@
+---
+title: "Model Selection Guide"
+description: "How to discover, choose, and use the right AI model for your generation requests across image, video, audio, and LLM endpoints"
+---
+
+# Model Selection Guide
+
+Every generation request on ModelsLab requires a `model_id` parameter that tells the API which AI model to use. With 50,000+ models available, this guide helps you discover and choose the right one.
+
+---
+
+## How model_id Works
+
+The `model_id` is a string identifier you pass in your API request body. It determines which model processes your generation.
+
+```python
+import requests
+
+response = requests.post(
+    "https://modelslab.com/api/v7/images/text-to-image",
+    json={
+        "key": "your_api_key",
+        "model_id": "flux",        # <-- this selects the model
+        "prompt": "a red apple on a white table",
+        "width": 512,
+        "height": 512
+    }
+)
+```
+
+```bash
+curl -X POST "https://modelslab.com/api/v7/images/text-to-image" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "key": "your_api_key",
+    "model_id": "flux",
+    "prompt": "a red apple on a white table",
+    "width": 512,
+    "height": 512
+  }'
+```
+
+---
+
+## Three Ways to Discover Models
+
+### 1. API: Models Endpoint
+
+Query the models API to search programmatically:
+
+```bash
+# Search by name
+curl "https://modelslab.com/api/v7/models?search=flux&key=your_api_key"
+
+# Filter by feature
+curl "https://modelslab.com/api/v7/models?feature=imagen&key=your_api_key"
+```
+
+### 2. CLI: modelslab models
+
+The CLI provides rich model discovery commands:
+
+```bash
+# Search by name
+modelslab models search --search "flux"
+
+# Filter by feature category
+modelslab models search --feature imagen         # Image models
+modelslab models search --feature video_fusion   # Video models
+modelslab models search --feature audio_gen      # Audio models
+modelslab models search --feature llmaster       # LLM/chat models
+
+# Get full details about a model
+modelslab models detail --id flux
+
+# JSON output for scripting
+modelslab models search --search "flux" --output json --jq '.[].model_id'
+```
+
+### 3. Web: Model Browser
+
+Browse and filter all models visually at [modelslab.com/models](https://modelslab.com/models).
+
+---
+
+## Models by Category
+
+### Image Generation
+
+Use with `/api/v7/images/text-to-image`, `/api/v7/images/image-to-image`, and `/api/v7/images/inpaint`.
+
+| model_id | Name | Best For |
+|----------|------|----------|
+| `flux` | Flux Dev | Fast, high-quality general images |
+| `midjourney` | MidJourney | Artistic, stylized images |
+| `sdxl` | Stable Diffusion XL | Versatile base model |
+| `imagen-3` | Google Imagen 3 | Premium photorealistic images |
+| `imagen-4` | Google Imagen 4 | Latest Google image model |
+
+<Note>
+For image-to-image and inpainting with SD/SDXL models (e.g., `midjourney`), include the `scheduler` parameter. Flux models don't require it.
+</Note>
+
+### Video Generation
+
+Use with `/api/v7/video-fusion/text-to-video` and `/api/v7/video-fusion/image-to-video`.
+
+| model_id | Name | Type |
+|----------|------|------|
+| `seedance-t2v` | Seedance Text-to-Video | Text to video |
+| `seedance-i2v` | Seedance Image-to-Video | Image to video |
+| `wan2.1` | Wan 2.1 | Text/image to video |
+| `wan2.6-t2v` | Wan 2.6 Text-to-Video | Text to video |
+| `wan2.6-i2v` | Wan 2.6 Image-to-Video | Image to video |
+| `veo2` | Google Veo 2 | Premium video |
+| `veo3` | Google Veo 3 | Latest Google video |
+| `sora-2` | OpenAI Sora 2 | Premium video |
+
+<Note>
+Video generation is asynchronous. The API returns a `processing` status with an `id` — use `/api/v7/video-fusion/fetch/{id}` to poll for results.
+</Note>
+
+### Audio & Voice
+
+Use with `/api/v7/voice/*` endpoints.
+
+| model_id | Name | Endpoint |
+|----------|------|----------|
+| `eleven_multilingual_v2` | ElevenLabs Multilingual v2 | text-to-speech |
+| `eleven_english_sts_v2` | ElevenLabs Voice Changer | speech-to-speech |
+| `scribe_v1` | ElevenLabs Scribe | speech-to-text |
+| `eleven_sound_effect` | ElevenLabs SFX | sound-generation |
+| `music_v1` | ElevenLabs Music | music-gen |
+| `inworld-tts-1` | Inworld TTS | text-to-speech |
+
+<Warning>
+Text-to-speech uses the `prompt` parameter (not `text`) and requires a valid ElevenLabs `voice_id` (e.g., `21m00Tcm4TlvDq8ikWAM` for Rachel).
+</Warning>
+
+### LLM / Chat
+
+Use with `/api/v7/llm/chat/completions` (OpenAI-compatible format).
+
+| model_id | Name | Provider |
+|----------|------|----------|
+| `meta-llama-3-8B-instruct` | Llama 3 8B Instruct | Meta |
+| `meta-llama-Llama-3.3-70B-Instruct-Turbo` | Llama 3.3 70B Turbo | Meta |
+| `meta-llama-Meta-Llama-3.1-405B-Instruct-Turbo` | Llama 3.1 405B Turbo | Meta |
+| `deepseek-ai-DeepSeek-R1-Distill-Llama-70B` | DeepSeek R1 | DeepSeek |
+| `deepseek-ai-DeepSeek-V3` | DeepSeek V3 | DeepSeek |
+| `gemini-2.0-flash-001` | Gemini 2.0 Flash | Google |
+| `gemini-2.5-pro` | Gemini 2.5 Pro | Google |
+| `Qwen-Qwen2.5-72B-Instruct-Turbo` | Qwen 2.5 72B Turbo | Qwen |
+| `mistralai-Mixtral-8x7B-Instruct-v0.1` | Mixtral 8x7B | Mistral |
+
+<Note>
+The chat completions endpoint accepts both `model_id` and `model` (OpenAI-compatible alias). The `messages` array follows the standard OpenAI format.
+</Note>
+
+---
+
+## Code Examples
+
+### Image Generation (Python)
+
+```python
+import requests
+
+response = requests.post(
+    "https://modelslab.com/api/v7/images/text-to-image",
+    json={
+        "key": "your_api_key",
+        "model_id": "flux",
+        "prompt": "a futuristic cityscape at sunset, highly detailed",
+        "width": 1024,
+        "height": 1024,
+        "samples": 1
+    }
+)
+
+data = response.json()
+if data["status"] == "success":
+    print(f"Image URL: {data['output'][0]}")
+```
+
+### Chat Completion (Python)
+
+```python
+response = requests.post(
+    "https://modelslab.com/api/v7/llm/chat/completions",
+    json={
+        "key": "your_api_key",
+        "model_id": "meta-llama-3-8B-instruct",
+        "messages": [
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": "Explain quantum computing briefly."}
+        ],
+        "max_tokens": 200,
+        "temperature": 0.7
+    }
+)
+
+data = response.json()
+print(data["choices"][0]["message"]["content"])
+```
+
+### Chat Completion (OpenAI SDK Compatible)
+
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://modelslab.com/api/v7/llm",
+    api_key="your_api_key"
+)
+
+response = client.chat.completions.create(
+    model="meta-llama-3-8B-instruct",
+    messages=[{"role": "user", "content": "Hello!"}],
+    max_tokens=50
+)
+
+print(response.choices[0].message.content)
+```
+
+### CLI Examples
+
+```bash
+# Generate image with specific model
+modelslab generate image --prompt "sunset over mountains" --model flux
+
+# Chat with an LLM
+modelslab generate chat --message "Explain AI" --model meta-llama-3-8B-instruct
+
+# Generate video
+modelslab generate video --prompt "ocean waves" --model seedance-t2v
+
+# Set a default model
+modelslab config set generation.default_model flux
+```
+
+---
+
+## Tips for Choosing the Right Model
+
+1. **Start with popular models** — `flux` for images, `meta-llama-3-8B-instruct` for chat
+2. **Use feature filters** — `modelslab models search --feature imagen` narrows results
+3. **Check model details** — `modelslab models detail --id <model_id>` shows supported parameters
+4. **Consider provider** — models from different providers (Google, Meta, ElevenLabs) have different capabilities and pricing
+5. **Test with small requests first** — use low resolution/token counts while experimenting
+
+---
+
+## Resources
+
+- [Model Browser](https://modelslab.com/models) — Visual model discovery
+- [API Reference](/api-reference) — Full endpoint documentation
+- [CLI Installation](https://github.com/ModelsLab/modelslab-cli) — Install the CLI tool

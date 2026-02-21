@@ -107,7 +107,8 @@
           {
             "group": "Guides",
             "pages": [
-              "guides/song-generation-guide"
+              "guides/song-generation-guide",
+              "guides/model-selection"
             ]
           }
         ]
@@ -315,6 +316,14 @@
                   "general-api/subscribed-product",
                   "general-api/check-requests",
                   "general-api/assets-generated"
+                ]
+              },
+              {
+                "group": "Chat API",
+                "pages": [
+                  "uncensored-chat-api/overview",
+                  "uncensored-chat-api/uncensored-chat",
+                  "uncensored-chat-api/chat-completions"
                 ]
               }
             ]
