@@ -86,13 +86,12 @@ console.log(client.fetchTimeout);  // Timeout in seconds
 ## Available APIs
 
 ```javascript
-import { Community, Audio, Video, DeepFake, ImageEditing } from "modelslab";
+import { Community, Audio, Video, ImageEditing } from "modelslab";
 
 // Create instances with your API key
 const community = new Community(client.key);
 const audio = new Audio(client.key);
 const video = new Video(client.key);
-const deepfake = new DeepFake(client.key);
 const imageEditing = new ImageEditing(client.key);
 ```
 
@@ -382,72 +381,6 @@ const result = await video.imageToVideo({
 });
 
 console.log("Result:", result);
-```
-
----
-
-## DeepFake API
-
-### Specific Face Swap (Image)
-
-Swap a specific face in an image:
-
-```javascript
-import { Client, DeepFake } from "modelslab";
-
-const client = new Client("your-api-key");
-const deepfake = new DeepFake(client.key);
-
-const result = await deepfake.specificFaceSwap({
-  key: client.key,
-  init_image: "https://example.com/target-photo.jpg",
-  target_image: "https://example.com/face-to-swap.jpg"
-});
-
-console.log("Face swap result:", result.output[0]);
-```
-
-### Multiple Face Swap
-
-Swap all faces in an image:
-
-```javascript
-const result = await deepfake.multipleFaceSwap({
-  key: client.key,
-  init_image: "https://example.com/group-photo.jpg",
-  target_image: "https://example.com/new-face.jpg"
-});
-
-console.log("Multiple face swap:", result.output[0]);
-```
-
-### Single Video Swap
-
-Swap all faces in a video:
-
-```javascript
-const result = await deepfake.singleVideoSwap({
-  key: client.key,
-  init_video: "https://example.com/video.mp4",
-  target_image: "https://example.com/face.jpg"
-});
-
-console.log("Video swap result:", result);
-```
-
-### Specific Video Swap
-
-Swap a specific face in a video:
-
-```javascript
-const result = await deepfake.specificVideoSwap({
-  key: client.key,
-  init_video: "https://example.com/video.mp4",
-  target_image: "https://example.com/new-face.jpg",
-  source_image: "https://example.com/face-to-replace.jpg"
-});
-
-console.log("Specific video swap:", result);
 ```
 
 ---

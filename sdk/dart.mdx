@@ -71,36 +71,6 @@ Future<Map<String, dynamic>> response = api.controlnet(schema);
 
 ```
 
-## DeepFake Api Usage
-
-```dart
-import 'package:modelslab/core/apis/deepfake.dart';
-import 'package:modelslab/core/apis/base.dart';
-import 'package:modelslab/schemas/deepfake.dart';
-import 'package:modelslab/core/client.dart';
-
-var client = Client(key: "Your api key");
-var api = DeepFake(client: client);
-
-//for specific face swap api.
-
-var schema = SpecificFaceSwap(...)
-Future<Map<String, dynamic>> response = api.specificFaceSwap(schema);
-
-//for multiple face swap api.
-
-var schema = MultipleFaceSwap(...)
-Future<Map<String, dynamic>> response = api.multipleFaceSwap(schema);
-
-//for multiple video swap api.
-var schema = MultipleFaceSwap(...)
-Future<Map<String, dynamic>> response = api.multipleFaceSwap(schema);
-
-//for single video swap api.
-var schema = SingleVideoSwap(...)
-Future<Map<String, dynamic>> response = api.singleVideoSwap(schema);
-```
-
 ## Interior Api Usage
 
 ```dart

@@ -105,7 +105,6 @@ api = Realtime(client=client, enterprise=True)
   </Accordion>
 
   <Accordion title="Other APIs">
-    - **DeepFake** - Face swapping in images and videos
     - **Interior** - Interior design and room transformation
     - **Three_D** - Generate 3D models from text or images
   </Accordion>
@@ -497,62 +496,6 @@ schema = Speech2Text(
 
 response = api.speech_to_text(schema)
 print(f"Transcription: {response['text']}")
-```
-
----
-
-## DeepFake / Face Swap
-
-### Single Face Swap (Image)
-
-```python
-from modelslab_py.core.client import Client
-from modelslab_py.core.apis.deepfake import DeepFake
-from modelslab_py.schemas.deepfake import SpecificFaceSwap, MultipleFaceSwap
-
-client = Client(api_key="your_api_key")
-api = DeepFake(client=client, enterprise=False)
-
-schema = SpecificFaceSwap(
-    init_image="https://example.com/target-photo.jpg",
-    target_image="https://example.com/face-to-swap.jpg"
-)
-
-response = api.specific_face_swap(schema)
-print(response)
-```
-
-### Multiple Face Swap
-
-```python
-schema = MultipleFaceSwap(
-    init_image="https://example.com/group-photo.jpg",
-    target_image="https://example.com/new-face.jpg"
-)
-
-response = api.multiple_face_swap(schema)
-print(response)
-```
-
-### Video Face Swap
-
-```python
-from modelslab_py.schemas.deepfake import SingleVideoSwap, SpecificVideoSwap
-
-# Swap all faces in video
-schema = SingleVideoSwap(
-    init_video="https://example.com/video.mp4",
-    target_image="https://example.com/face.jpg"
-)
-response = api.single_video_swap(schema)
-
-# Swap specific face in video
-schema = SpecificVideoSwap(
-    init_video="https://example.com/video.mp4",
-    target_image="https://example.com/face.jpg",
-    source_image="https://example.com/face-to-replace.jpg"
-)
-response = api.multiple_video_swap(schema)
 ```
 
 ---
