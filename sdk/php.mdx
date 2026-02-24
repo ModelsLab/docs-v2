@@ -297,44 +297,6 @@ echo json_encode($response, JSON_PRETTY_PRINT);
 
 ---
 
-## DeepFake / Face Swap
-
-### Single Video Swap
-
-```php
-<?php
-use ModelsLab\ModelsLab;
-use ModelsLab\Schemas\DeepfakeSchema;
-
-$modelslab = new ModelsLab('your-api-key');
-
-$deepfake = new DeepfakeSchema([
-    'init_image' => 'https://example.com/face.jpg',
-    'init_video' => 'https://example.com/video.mp4',
-    'output_format' => 'mp4'
-]);
-
-$response = $modelslab->deepfake()->singleVideoSwap($deepfake);
-echo json_encode($response, JSON_PRETTY_PRINT);
-```
-
-### Face Swap (Image)
-
-```php
-<?php
-use ModelsLab\Schemas\FaceSwapSchema;
-
-$faceSwap = new FaceSwapSchema([
-    'init_image' => 'https://example.com/target-photo.jpg',
-    'target_image' => 'https://example.com/face-to-swap.jpg'
-]);
-
-$response = $modelslab->deepfake()->specificFaceSwap($faceSwap);
-echo json_encode($response, JSON_PRETTY_PRINT);
-```
-
----
-
 ## Image Editing
 
 ### Background Removal
@@ -519,7 +481,6 @@ function generateVideoWithPolling($modelslab, $prompt, $timeout = 300) {
 | **Community** | `textToImage()`, `imageToImage()`, `inpainting()`, `controlnet()` |
 | **Video** | `textToVideo()`, `imageToVideo()` |
 | **Audio** | `textToSpeech()`, `musicGen()`, `voice2Voice()`, `sfxGen()`, `speechToText()` |
-| **DeepFake** | `singleVideoSwap()`, `specificFaceSwap()`, `multipleFaceSwap()` |
 | **ImageEditing** | `backgroundRemover()`, `superResolution()`, `objectRemover()`, `outpainting()` |
 | **ThreeD** | `textTo3D()`, `imageTo3D()` |
 | **Interior** | `interior()`, `roomDecorator()`, `exterior()` |
