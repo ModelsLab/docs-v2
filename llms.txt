@@ -193,16 +193,16 @@ Endpoint prefix: `https://modelslab.com/api/v6/voice/`
 - [Upload Voice](https://docs.modelslab.com/voice-cloning/upload-voice): Upload custom voice samples. `POST /voice/upload_voice`
 - [Base64 to URL](https://docs.modelslab.com/voice-cloning/base64-to-url): Convert base64 audio to hosted URL.
 
-## Deepfake API
+## Face Swap API
 
-Endpoint prefix: `https://modelslab.com/api/v6/deepfake/`
+Endpoint prefix: `https://modelslab.com/api/v6/faceswap/`
 
-- [Overview](https://docs.modelslab.com/deepfake-api/overview): Face swap tools for images and videos.
-- [Specific Face Swap](https://docs.modelslab.com/deepfake-api/specific-face-swap): Swap a specific face in an image. `POST /deepfake/single_face_swap`. Params: `init_image`, `target_image`, `reference_image`.
-- [Multiple Face Swap](https://docs.modelslab.com/deepfake-api/multiple-face-swap): Swap multiple faces in batch. `POST /deepfake/multi_face_swap`
-- [Single Video Swap](https://docs.modelslab.com/deepfake-api/single-video-swap): Swap face in a video. `POST /deepfake/single_video_swap`
-- [Specific Video Swap](https://docs.modelslab.com/deepfake-api/specific-video-swap): Swap a specific face in a video. `POST /deepfake/specific_video_swap`
-- [Fetch](https://docs.modelslab.com/deepfake-api/fetch): Retrieve async deepfake results. `POST /deepfake/fetch/{request_id}`
+- [Overview](https://docs.modelslab.com/faceswap-api/overview): Face swap tools for images and videos.
+- [Specific Face Swap](https://docs.modelslab.com/faceswap-api/specific-face-swap): Swap a specific face in an image. `POST /faceswap/single_face_swap`. Params: `init_image`, `target_image`, `reference_image`.
+- [Multiple Face Swap](https://docs.modelslab.com/faceswap-api/multiple-face-swap): Swap multiple faces in batch. `POST /faceswap/multi_face_swap`
+- [Single Video Swap](https://docs.modelslab.com/faceswap-api/single-video-swap): Swap face in a video. `POST /faceswap/single_video_swap`
+- [Specific Video Swap](https://docs.modelslab.com/faceswap-api/specific-video-swap): Swap a specific face in a video. `POST /faceswap/specific_video_swap`
+- [Fetch](https://docs.modelslab.com/faceswap-api/fetch): Retrieve async face swap results. `POST /faceswap/fetch/{request_id}`
 
 ## 3D API
 
