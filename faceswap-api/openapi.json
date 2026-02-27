@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "ModelsLab Deepfake API",
-    "description": "AI-powered face swap and deepfake API supporting image and video face swapping with advanced controls",
+    "title": "ModelsLab Face Swap API",
+    "description": "AI-powered face swap API supporting image and video face swapping with advanced controls",
     "license": {
       "name": "MIT"
     },
@@ -15,7 +15,7 @@
     }
   ],
   "paths": {
-    "/deepfake/single_face_swap": {
+    "/faceswap/single_face_swap": {
       "post": {
         "summary": "Specific face swap in image",
         "description": "Swaps faces in a single image by providing the initial image, target image, and reference image for specific face identification",
@@ -36,8 +36,8 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    {"$ref": "#/components/schemas/SuccessDeepfakeResponse"},
-                    {"$ref": "#/components/schemas/ProcessingDeepfakeResponse"}
+                    {"$ref": "#/components/schemas/SuccessFaceSwapResponse"},
+                    {"$ref": "#/components/schemas/ProcessingFaceSwapResponse"}
                   ]
                 }
               }
@@ -56,7 +56,7 @@
         }
       }
     },
-    "/deepfake/multiple_face_swap": {
+    "/faceswap/multiple_face_swap": {
       "post": {
         "summary": "Multiple face swap in image",
         "description": "Swaps all detected faces in a single image with faces from a target image",
@@ -77,8 +77,8 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    {"$ref": "#/components/schemas/SuccessDeepfakeResponse"},
-                    {"$ref": "#/components/schemas/ProcessingDeepfakeResponse"}
+                    {"$ref": "#/components/schemas/SuccessFaceSwapResponse"},
+                    {"$ref": "#/components/schemas/ProcessingFaceSwapResponse"}
                   ]
                 }
               }
@@ -97,7 +97,7 @@
         }
       }
     },
-    "/deepfake/single_video_swap": {
+    "/faceswap/single_video_swap": {
       "post": {
         "summary": "Face swap in video",
         "description": "Swaps all detected faces in a video with faces from an input image. Videos must be less than 1 minute long",
@@ -118,8 +118,8 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    {"$ref": "#/components/schemas/SuccessVideoDeepfakeResponse"},
-                    {"$ref": "#/components/schemas/ProcessingVideoDeepfakeResponse"}
+                    {"$ref": "#/components/schemas/SuccessVideoFaceSwapResponse"},
+                    {"$ref": "#/components/schemas/ProcessingVideoFaceSwapResponse"}
                   ]
                 }
               }
@@ -138,7 +138,7 @@
         }
       }
     },
-    "/deepfake/specific_video_swap": {
+    "/faceswap/specific_video_swap": {
       "post": {
         "summary": "Specific face swap in video",
         "description": "Swaps specific faces in a video based on a reference image identification",
@@ -159,8 +159,8 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    {"$ref": "#/components/schemas/SuccessVideoDeepfakeResponse"},
-                    {"$ref": "#/components/schemas/ProcessingVideoDeepfakeResponse"}
+                    {"$ref": "#/components/schemas/SuccessVideoFaceSwapResponse"},
+                    {"$ref": "#/components/schemas/ProcessingVideoFaceSwapResponse"}
                   ]
                 }
               }
@@ -179,10 +179,10 @@
         }
       }
     },
-    "/deepfake/fetch/{id}": {
+    "/faceswap/fetch/{id}": {
       "post": {
-        "summary": "Fetch deepfake result",
-        "description": "Retrieves queued or already generated deepfake videos/images by ID",
+        "summary": "Fetch face swap result",
+        "description": "Retrieves queued or already generated face swap videos/images by ID",
         "parameters": [
           {
             "name": "id",
@@ -191,7 +191,7 @@
             "schema": {
               "type": "integer"
             },
-            "description": "The ID of the deepfake generation to fetch"
+            "description": "The ID of the face swap generation to fetch"
           }
         ],
         "requestBody": {
@@ -211,8 +211,8 @@
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    {"$ref": "#/components/schemas/SuccessDeepfakeResponse"},
-                    {"$ref": "#/components/schemas/ProcessingDeepfakeResponse"}
+                    {"$ref": "#/components/schemas/SuccessFaceSwapResponse"},
+                    {"$ref": "#/components/schemas/ProcessingFaceSwapResponse"}
                   ]
                 }
               }
@@ -418,7 +418,7 @@
           }
         }
       },
-      "SuccessDeepfakeResponse": {
+      "SuccessFaceSwapResponse": {
         "type": "object",
         "properties": {
           "status": {
@@ -488,7 +488,7 @@
           }
         }
       },
-      "ProcessingDeepfakeResponse": {
+      "ProcessingFaceSwapResponse": {
         "type": "object",
         "properties": {
           "status": {
@@ -537,7 +537,7 @@
           }
         }
       },
-      "SuccessVideoDeepfakeResponse": {
+      "SuccessVideoFaceSwapResponse": {
         "type": "object",
         "properties": {
           "status": {
@@ -607,7 +607,7 @@
           }
         }
       },
-      "ProcessingVideoDeepfakeResponse": {
+      "ProcessingVideoFaceSwapResponse": {
         "type": "object",
         "properties": {
           "status": {

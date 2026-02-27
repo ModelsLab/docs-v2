@@ -266,14 +266,14 @@
                 ]
               },
               {
-                "group": "Deepfake API",
+                "group": "Face Swap API",
                 "pages": [
-                  "deepfake-api/overview",
-                  "deepfake-api/specific-face-swap",
-                  "deepfake-api/multiple-face-swap",
-                  "deepfake-api/single-video-swap",
-                  "deepfake-api/specific-video-swap",
-                  "deepfake-api/fetch"
+                  "faceswap-api/overview",
+                  "faceswap-api/specific-face-swap",
+                  "faceswap-api/multiple-face-swap",
+                  "faceswap-api/single-video-swap",
+                  "faceswap-api/specific-video-swap",
+                  "faceswap-api/fetch"
                 ]
               },
               {

@@ -24,7 +24,7 @@ Documentation for the full ModelsLab API surface, organized by product area:
 | `image-editing/` | Inpainting, outpainting, super resolution, background removal, face generation |
 | `video-api/` | Text to video, image to video, video to video, watermark removal |
 | `voice-cloning/` | TTS, STT, voice cloning, music generation, song generator, dubbing |
-| `deepfake-api/` | Face swap (image and video) |
+| `faceswap-api/` | Face swap (image and video) |
 | `3d-api/` | Text to 3D, image to 3D |
 | `interior-api/` | Interior design, room decoration, floor planning |
 | `general-api/` | Account, billing, subscriptions, cache, NSFW checks |

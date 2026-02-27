@@ -1,9 +1,7 @@
 ---
 title: "Fetch Video"
-openapi : 'POST /deepfake/fetch/{id}'
+openapi : 'POST /faceswap/fetch/{id}'
 description: 'Fetch Queued Request API returns queued or generated videos, useful for delayed processing.'
-hidden: true
-noindex: true
 ---
 
 <Note>
@@ -13,7 +11,7 @@ noindex: true
 ## Request
 Send a `POST` request to below endpoint to return the corresponding queued videos, where `{id}` is the ID returned together with the URL in the response upon its generation.
 ```curl curl
---request POST 'https://modelslab.com/api/v6/deepfake/fetch/{id}' \
+--request POST 'https://modelslab.com/api/v6/faceswap/fetch/{id}' \
 ```
 
 ## Body
