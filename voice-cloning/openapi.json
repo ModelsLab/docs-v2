@@ -1062,10 +1062,6 @@
             "default": false,
             "description": "Use temporary links valid for 24 hours"
           },
-          "stream": {
-            "type": "boolean",
-            "description": "Stream response in base64 format"
-          },
           "webhook": {
             "type": "string",
             "format": "uri",
