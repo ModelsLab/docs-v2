@@ -367,19 +367,19 @@
                 ]
               },
               {
-                "group": "Deepfake API",
+                "group": "Face Swap API",
                 "pages": [
-                  "enterprise-api/deepfake/overview",
-                  "enterprise-api/deepfake/specific-face-swap",
-                  "enterprise-api/deepfake/multiple-face-swap",
-                  "enterprise-api/deepfake/single-video-swap",
-                  "enterprise-api/deepfake/specific-video-swap",
-                  "enterprise-api/deepfake/fetch",
-                  "enterprise-api/deepfake/clear-cache",
-                  "enterprise-api/deepfake/clear-queue",
-                  "enterprise-api/deepfake/restart-server",
-                  "enterprise-api/deepfake/system-details",
-                  "enterprise-api/deepfake/update-server"
+                  "enterprise-api/faceswap/overview",
+                  "enterprise-api/faceswap/specific-face-swap",
+                  "enterprise-api/faceswap/multiple-face-swap",
+                  "enterprise-api/faceswap/single-video-swap",
+                  "enterprise-api/faceswap/specific-video-swap",
+                  "enterprise-api/faceswap/fetch",
+                  "enterprise-api/faceswap/clear-cache",
+                  "enterprise-api/faceswap/clear-queue",
+                  "enterprise-api/faceswap/restart-server",
+                  "enterprise-api/faceswap/system-details",
+                  "enterprise-api/faceswap/update-server"
                 ]
               },
               {
