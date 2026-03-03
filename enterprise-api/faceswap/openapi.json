@@ -11,7 +11,7 @@
         }
     ],
     "paths": {
-        "/deepfake/system_details": {
+        "/faceswap/system_details": {
             "post": {
                 "summary": "Get System Details",
                 "description": "Returns information about your server.",
@@ -44,7 +44,7 @@
                 }
             }
         },
-        "/deepfake/update_server": {
+        "/faceswap/update_server": {
             "post": {
                 "summary": "Update Server",
                 "description": "Update your dedicated server to the latest version.",
@@ -77,7 +77,7 @@
                 }
             }
         },
-        "/deepfake/clear_cache": {
+        "/faceswap/clear_cache": {
             "post": {
                 "summary": "Clear API Cache",
                 "description": "Clear the API's cache.",
@@ -110,7 +110,7 @@
                 }
             }
         },
-        "/deepfake/clear_queue": {
+        "/faceswap/clear_queue": {
             "post": {
                 "summary": "Clear API Queue",
                 "description": "Clear the API's queue.",
@@ -143,7 +143,7 @@
                 }
             }
         },
-        "/deepfake/fetch": {
+        "/faceswap/fetch": {
             "post": {
                 "summary": "Fetch Queued Request",
                 "description": "Fetches a queued request result.",
@@ -184,7 +184,7 @@
                 }
             }
         },
-        "/deepfake/restart_server": {
+        "/faceswap/restart_server": {
             "post": {
                 "summary": "Restart Server",
                 "description": "Restart your dedicated server.",
