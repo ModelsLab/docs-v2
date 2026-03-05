@@ -315,7 +315,8 @@
                   "general-api/nsfw-prompt-check",
                   "general-api/subscribed-product",
                   "general-api/check-requests",
-                  "general-api/assets-generated"
+                  "general-api/assets-generated",
+                  "general-api/wallet-balance"
                 ]
               },
               {

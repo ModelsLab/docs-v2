@@ -1,0 +1,30 @@
+---
+title: "Check Wallet Balance"
+description: "Check your current wallet balance."
+---
+
+This endpoint allows users to check their current wallet balance.
+
+## Request
+Send a `POST` request to below endpoint.
+```curl curl
+--request POST 'https://modelslab.com/api/wallet_balance' \
+```
+
+## Body
+```json json
+{
+  "key": "your_api_key"
+}
+```
+
+## Response
+```json json
+{
+    "status": "success",
+    "data": {
+        "balance": 43.6,
+        "currency": "USD"
+    }
+}
+```
