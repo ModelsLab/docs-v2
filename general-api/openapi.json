@@ -465,6 +465,45 @@
           }
         }
       }
+    },
+    "/wallet_balance": {
+      "post": {
+        "summary": "Check wallet balance",
+        "description": "Check your current wallet balance",
+        "servers": [{ "url": "https://modelslab.com/api" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WalletBalanceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Wallet balance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WalletBalanceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -924,6 +963,40 @@
           "message": {
             "type": "string",
             "example": "Current processing request count retrieved successfully"
+          }
+        }
+      },
+      "WalletBalanceRequest": {
+        "type": "object",
+        "required": ["key"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          }
+        }
+      },
+      "WalletBalanceResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"]
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "balance": {
+                "type": "number",
+                "description": "Current wallet balance",
+                "example": 43.6
+              },
+              "currency": {
+                "type": "string",
+                "description": "Currency of the balance",
+                "example": "USD"
+              }
+            }
           }
         }
       },
