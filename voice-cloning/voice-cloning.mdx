@@ -15,39 +15,6 @@ Note: You can either pass `init_audio` or `voice_id`. However, if both are passe
 --request POST 'https://modelslab.com/api/v6/voice/text_to_audio' \
 ```
 
-
-## Language-Specific Guidelines
-<Note>
-When using the **Text-to-Audio API** for `Hindi` language generation, follow these best practices for accurate and natural-sounding output.
-</Note>
-
-<Tip>
-Best Practices for Hindi Language
-</Tip>
-<AccordionGroup>
-  <Accordion title="Voice Cloning">
-    * Use clear and well-structured Hindi sentences.
-    * Ensure proper punctuation for better clarity.
-  </Accordion>
-
-  <Accordion title="Handling Numbers and Dates">
-    * Write numbers in Hindi text format instead of digits.
-    * Correct: "दो हज़ार पच्चीस"
-    * Incorrect: 2025
-    * Correct: "पंद्रह अगस्त उन्नीस सौ सैंतालीस"
-    * Incorrect: 15/08/1947
-    * Always use expanded Hindi form for dates and numbers.
-  </Accordion>
-
-  <Accordion title="Handling Abbreviations">
-    * Convert English abbreviations to Hindi phonetic spelling.
-    * Correct: आईआईटी (for IIT)
-    * Correct: यूएसए (for USA)
-    * Correct: एमएल (for ML)
-    * Spell out abbreviations in Hindi script to improve pronunciation.
-  </Accordion>
-</AccordionGroup>
-
 ## Body 
 ```json json
 {    
