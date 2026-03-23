@@ -727,8 +727,8 @@
     }
   },
   "logo": {
-    "light": "/logo/light.png",
-    "dark": "/logo/dark.png"
+    "light": "/logo/logo_new_light.png",
+    "dark": "/logo/logo_new_dark.png"
   },
   "navbar": {
     "links": [
