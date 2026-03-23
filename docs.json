@@ -660,6 +660,20 @@
                   "enterprise-api/flux-2-dev/system-details",
                   "enterprise-api/flux-2-dev/update-server"
                 ]
+              },
+              {
+                "group": "Flux Klein API",
+                "pages": [
+                  "enterprise-api/flux-klein/overview",
+                  "enterprise-api/flux-klein/text2img",
+                  "enterprise-api/flux-klein/img2img",
+                  "enterprise-api/flux-klein/fetch",
+                  "enterprise-api/flux-klein/clear-cache",
+                  "enterprise-api/flux-klein/clear-queue",
+                  "enterprise-api/flux-klein/restart-server",
+                  "enterprise-api/flux-klein/system-details",
+                  "enterprise-api/flux-klein/update-server"
+                ]
               }
             ]
           }
