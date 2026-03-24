@@ -45,7 +45,7 @@
     ]
   },
   "banner": {
-    "content": "🎵 NEW: Song Generator API powered by ACE-Step v1.5 - Create full songs with vocals in 50+ languages (30s-8min) 🎶 · [Try it now](/voice-cloning/song-generator) · [Read Guide](/guides/song-generation-guide)",
+    "content": "⚡ NEW: Flux Klein 9B — Faster inference, stunning quality · [Try Now](https://modelslab.com/models/modelslab/flux-klien-9B)",
     "dismissible": true,
     "animated": true
   },
