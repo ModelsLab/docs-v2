@@ -1,7 +1,10 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "willow",
   "name": "ModelsLab",
+  "fonts": {
+    "family": "Space Grotesk"
+  },
   "colors": {
     "primary": "#0260fa",
     "light": "#e8e8e8",
@@ -13,17 +16,9 @@
       "copy",
       "view",
       "chatgpt",
-      "perplexity",
       "grok",
       "mcp",
-      "cursor",
-      "vscode",
-      {
-        "title": "Feature Requests",
-        "description": "Join the discord to request a new feature.",
-        "icon": "discord",
-        "href": "https://discord.com/invite/modelslab-1033301189254729748"
-      }
+      "cursor"
     ]
   },
   "metadata": {
@@ -680,14 +675,12 @@
         ]
       },
       {
-        "tab": "Release Notes",
+        "tab": "Changelog",
         "groups": [
           {
-            "group": "Release Notes",
+            "group": "Changelog",
             "pages": [
-              "release-notes/overview",
-              "release-notes/api",
-              "release-notes/playground"
+              "changelog"
             ]
           }
         ]
@@ -733,21 +726,14 @@
   "navbar": {
     "links": [
       {
-        "label": "Login",
-        "href": "https://modelslab.com/login"
-      },
-      {
-        "label": "Support",
-        "href": "https://modelslab.com/support"
-      },
-      {
-        "label": "Discord",
+        "type": "discord",
         "href": "https://discord.com/invite/modelslab-1033301189254729748"
       }
     ],
     "primary": {
       "type": "button",
       "label": "modelslab.com",
+      "icon": "arrow-up-right-from-square",
       "href": "https://modelslab.com"
     }
   },

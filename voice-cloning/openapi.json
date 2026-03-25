@@ -763,7 +763,7 @@
       },
       "SongGeneratorRequest": {
         "type": "object",
-        "required": ["key", "init_audio"],
+        "required": ["key"],
         "properties": {
           "key": {
             "type": "string",
