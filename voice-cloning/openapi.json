@@ -723,6 +723,11 @@
           "track_id": {
             "type": "integer",
             "description": "Unique ID for identifying webhook responses"
+          },
+          "duration": {
+            "type": "integer",
+            "default": 30,
+            "description": "Duration of the generated music in seconds"
           }
         }
       },
