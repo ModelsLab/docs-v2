@@ -1,9 +1,9 @@
-/* Import Space Grotesk font from Google Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
+/* Import DM Sans font from Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
 
-/* Apply Space Grotesk font to all elements */
+/* Apply DM Sans font to all elements */
 * {
-  font-family: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif !important;
 }
 
@@ -14,7 +14,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif !important;
   font-weight: 600 !important;
 }
@@ -24,7 +24,7 @@ span,
 div,
 li,
 a {
-  font-family: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif !important;
   font-weight: 400 !important;
 }
@@ -33,15 +33,6 @@ code,
 pre {
   font-family: "Fira Code", "Monaco", "Cascadia Code", "Roboto Mono", Consolas,
     "Courier New", monospace !important;
-}
-
-/* Square cards */
-[class*="card"],
-[class*="Card"],
-[data-component="card"],
-.card-group > *,
-a[href][class*="group"] {
-  border-radius: 4px !important;
 }
 
 /* Existing styles */
