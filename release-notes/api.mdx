@@ -1,8 +1,24 @@
 ---
-title: "API"
+title: "Changelog"
 description: "Follow along with updates across ModelsLab API and Developer Console."
 rss: true
 ---
+
+<Update label="2026-03-27" description="MusicGen API: New Parameters">
+  ## MusicGen API: New Parameters
+
+  Added `duration`, `output_format`, and `bitrate` parameters to the [MusicGen API](/voice-cloning/music-gen).
+
+  #### API Endpoint
+
+  - **Standard API**: `POST /api/v6/voice/music_gen`
+
+  #### New Parameters
+
+  - **`duration`**: Set the length of generated music in seconds. Any value between 30 and 480. Default: `30`.
+  - **`output_format`**: Choose output format — `wav`, `mp3`, or `flac`. Default: `wav`.
+  - **`bitrate`**: Set audio bitrate — `128k`, `192k`, or `320k`. Default: `320k`.
+</Update>
 
 <Update label="2026-01-26" description="Video API: Scene Maker Deprecated">
   ## Video API: Scene Maker Endpoint Deprecated
@@ -249,22 +265,3 @@ rss: true
     - Controls sensitivity for NSFW detection in images/videos.
 </Update>
 
-<Update label="2025-06-06" description="v0.1.1">
-  <Frame>
-    <img
-      className="block"
-      src="https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/pdzkuYu2KSzjtJkxy2rVoCdbGcDXb6-metaM2RfcGxheWdyb3VuZC5wbmc=-.png"
-    />
-  </Frame>
-  ## v0.1.1 - New 3D Model Viewer
-  
-  New 3D Model Viewer in 3DVerse Playground.
-
-  #### Features
-
-  - Environment Presets
-  - Light Controls
-  - Bloom Intensity Control
-  - Orbit Controls
-  - Pivot Controls
-</Update>

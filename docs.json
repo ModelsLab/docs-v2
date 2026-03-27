@@ -680,14 +680,12 @@
         ]
       },
       {
-        "tab": "Release Notes",
+        "tab": "Changelog",
         "groups": [
           {
-            "group": "Release Notes",
+            "group": "Changelog",
             "pages": [
-              "release-notes/overview",
-              "release-notes/api",
-              "release-notes/playground"
+              "release-notes/api"
             ]
           }
         ]
