@@ -339,6 +339,20 @@
             "pages": [
               "enterprise-api/overview",
               {
+                "group": "Flux Klein API",
+                "pages": [
+                  "enterprise-api/flux-klein/overview",
+                  "enterprise-api/flux-klein/text2img",
+                  "enterprise-api/flux-klein/img2img",
+                  "enterprise-api/flux-klein/fetch",
+                  "enterprise-api/flux-klein/clear-cache",
+                  "enterprise-api/flux-klein/clear-queue",
+                  "enterprise-api/flux-klein/restart-server",
+                  "enterprise-api/flux-klein/system-details",
+                  "enterprise-api/flux-klein/update-server"
+                ]
+              },
+              {
                 "group": "3D API",
                 "pages": [
                   "enterprise-api/3d-api/overview",
@@ -660,20 +674,6 @@
                   "enterprise-api/flux-2-dev/system-details",
                   "enterprise-api/flux-2-dev/update-server"
                 ]
-              },
-              {
-                "group": "Flux Klein API",
-                "pages": [
-                  "enterprise-api/flux-klein/overview",
-                  "enterprise-api/flux-klein/text2img",
-                  "enterprise-api/flux-klein/img2img",
-                  "enterprise-api/flux-klein/fetch",
-                  "enterprise-api/flux-klein/clear-cache",
-                  "enterprise-api/flux-klein/clear-queue",
-                  "enterprise-api/flux-klein/restart-server",
-                  "enterprise-api/flux-klein/system-details",
-                  "enterprise-api/flux-klein/update-server"
-                ]
               }
             ]
           }
@@ -733,15 +733,7 @@
   "navbar": {
     "links": [
       {
-        "label": "Login",
-        "href": "https://modelslab.com/login"
-      },
-      {
-        "label": "Support",
-        "href": "https://modelslab.com/support"
-      },
-      {
-        "label": "Discord",
+        "type": "discord",
         "href": "https://discord.com/invite/modelslab-1033301189254729748"
       }
     ],
