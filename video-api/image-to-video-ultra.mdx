@@ -1,7 +1,7 @@
 ---
 title: "Image to Video Ultra"
 openapi: 'POST /video/img2video_ultra'
-description: "Generate high-definition videos from images using the Image to Video Ultra API."
+description: "Generate high-definition videos from images using the Image to Video Ultra API. Supported model_id are `wan2.2` and `ltx-2.3`. Any other models passed will be ignored and defauted to `wan2.2`"
 ---
 
 <video loop muted autoPlay className="w-full aspect-video rounded-lg" src="https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/HYR1qkH9ON3GwkqhSSxKdoBpQ97ILV-metaMzRhNGM1MTUtNGU5MC00ODU0LTljYzMtNmExNzY2MGI1NGZjLm1wNA==-.mp4" />
@@ -21,7 +21,7 @@ Make a `POST` request to below endpoint and pass the required parameters in the 
     "key":"your_api_key",
     "init_image":"https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/livewire-tmp/Vil4dkFzgFw0xyU7YsF4YqzJQXuGmr-metaNTliM2VmYTNmODE2NjdiMzljYjYzOTdlOGU5Nzg1OTAud2VicA==-.webp",
     "prompt":"moving character",
-    "model_id": "wan2.1",
+    "model_id": "wan2.2",
     "negative_prompt":"low quality",
     "resolution":480,
     "num_frames": 92,
@@ -35,5 +35,4 @@ Make a `POST` request to below endpoint and pass the required parameters in the 
 <Note>
 **Resolution Limits:**
 - **wan2.2**: Maximum resolution is **720p**
-- **wan2.1**: Maximum resolution is **480p**
 </Note>
