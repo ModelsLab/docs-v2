@@ -320,11 +320,16 @@
                 ]
               },
               {
-                "group": "Chat API",
+                "group": "LLM API",
                 "pages": [
-                  "uncensored-chat-api/overview",
-                  "uncensored-chat-api/uncensored-chat",
-                  "uncensored-chat-api/chat-completions"
+                  "llm-api/overview",
+                  "llm-api/chat-completions",
+                  "llm-api/messages",
+                  "llm-api/function-calling",
+                  "llm-api/advanced-parameters",
+                  "llm-api/count-tokens",
+                  "llm-api/list-models",
+                  "llm-api/coding-tools"
                 ]
               }
             ]

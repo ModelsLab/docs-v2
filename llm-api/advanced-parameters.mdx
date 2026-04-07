@@ -1,0 +1,176 @@
+---
+title: "Advanced Parameters"
+description: "Detailed reference for all LLM API parameters including sampling, penalties, streaming, and response formatting."
+---
+
+## Chat Completions Parameters
+
+These parameters are available on the [Chat Completions](/llm-api/chat-completions) endpoint (OpenAI-compatible).
+
+### Core Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `model` | string | Yes | — | Model ID to use. See [List Models](/llm-api/list-models) for available models. |
+| `messages` | array | Yes | — | Array of message objects with `role` and `content`. |
+| `max_tokens` | integer | No | 1000 | Maximum tokens to generate. Range: 1 to model's max context. |
+| `stream` | boolean | No | `false` | Enable Server-Sent Events streaming. |
+
+### Sampling Parameters
+
+| Parameter | Type | Range | Default | Description |
+|-----------|------|-------|---------|-------------|
+| `temperature` | float | 0–2 | 1.0 | Controls randomness. Lower values (0.1–0.3) produce focused, deterministic output. Higher values (0.8–1.5) increase creativity and variety. Set to 0 for greedy decoding. |
+| `top_p` | float | 0–1 | 1.0 | Nucleus sampling — only consider tokens with cumulative probability above this threshold. Lower values (0.1) make output more focused. Use either `temperature` or `top_p`, not both. |
+| `top_k` | integer | 1+ | — | Only sample from the top K most likely tokens. Lower values constrain output. Not all models support this. |
+
+<Warning>
+  Avoid setting both `temperature` and `top_p` at the same time. Use one or the other for best results.
+</Warning>
+
+### Penalty Parameters
+
+| Parameter | Type | Range | Default | Description |
+|-----------|------|-------|---------|-------------|
+| `presence_penalty` | float | -2 to 2 | 0 | Penalizes tokens that have appeared in the text so far. Positive values encourage the model to explore new topics. |
+| `frequency_penalty` | float | -2 to 2 | 0 | Penalizes tokens based on how often they've appeared. Positive values reduce repetition proportionally to frequency. |
+| `repetition_penalty` | float | 0.1–2 | 1.0 | Multiplicative penalty on repeated tokens. Values > 1 discourage repetition, < 1 encourage it. |
+
+### Stop Sequences
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `stop` | string or array | `null` | Up to 4 sequences where the API will stop generating. The stop sequence is not included in the output. |
+
+```json
+{
+  "stop": ["\n\n", "END", "```"]
+}
+```
+
+### Response Format
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `response_format` | object | — | Force the model to output in a specific format. |
+| `seed` | integer | — | Attempt deterministic output. Same seed + same input should produce same output. |
+| `n` | integer | 1 | Number of completions to generate. |
+
+**JSON mode:**
+```json
+{
+  "response_format": {"type": "json_object"}
+}
+```
+
+<Info>
+  When using JSON mode, you must also instruct the model to output JSON in your system or user message, e.g. "Respond in JSON format."
+</Info>
+
+### Function Calling
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `tools` | array | — | List of tools/functions the model can call. See [Function Calling](/llm-api/function-calling). |
+| `tool_choice` | string or object | `"auto"` | Controls tool usage: `"auto"`, `"none"`, `"required"`, or a specific tool. |
+| `parallel_tool_calls` | boolean | `true` | Whether the model can call multiple tools in one turn. |
+
+---
+
+## Messages Parameters
+
+These parameters are available on the [Messages](/llm-api/messages) endpoint (Anthropic-compatible).
+
+### Core Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `model` | string | Yes | — | Model ID to use. |
+| `messages` | array | Yes | — | Input messages. Roles: `user` and `assistant` only (system goes in `system` param). |
+| `max_tokens` | integer | Yes | — | Maximum tokens to generate. Required for Anthropic format. |
+| `system` | string | No | — | System prompt. Passed separately, not as a message. |
+| `stream` | boolean | No | `false` | Enable streaming via Server-Sent Events. |
+
+### Sampling Parameters
+
+| Parameter | Type | Range | Default | Description |
+|-----------|------|-------|---------|-------------|
+| `temperature` | float | 0–1 | 1.0 | Controls randomness. Note: Anthropic format caps at 1.0, not 2.0. |
+| `top_p` | float | 0–1 | — | Nucleus sampling threshold. |
+| `top_k` | integer | 1+ | — | Only sample from the top K tokens. |
+
+### Stop Sequences
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `stop_sequences` | array | — | Custom stop sequences. |
+
+### Tool Use
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `tools` | array | — | Tools the model can use. Uses `input_schema` instead of `parameters`. See [Function Calling](/llm-api/function-calling). |
+| `tool_choice` | object | `{"type": "auto"}` | Controls tool usage: `{"type": "auto"}`, `{"type": "any"}`, or `{"type": "tool", "name": "..."}`. |
+
+---
+
+## Common Patterns
+
+### Deterministic Output
+
+For reproducible results, use low temperature with a seed:
+
+```json
+{
+  "temperature": 0,
+  "seed": 42
+}
+```
+
+### Creative Writing
+
+For creative, varied output:
+
+```json
+{
+  "temperature": 1.2,
+  "presence_penalty": 0.6,
+  "frequency_penalty": 0.3
+}
+```
+
+### Structured Extraction
+
+For extracting structured data:
+
+```json
+{
+  "temperature": 0,
+  "response_format": {"type": "json_object"},
+  "max_tokens": 2000
+}
+```
+
+### Code Generation
+
+For code generation tasks:
+
+```json
+{
+  "temperature": 0.2,
+  "top_p": 0.95,
+  "stop": ["\n\n\n", "```"]
+}
+```
+
+### Conversational
+
+For natural, engaging conversations:
+
+```json
+{
+  "temperature": 0.8,
+  "presence_penalty": 0.5,
+  "max_tokens": 500
+}
+```
