@@ -1,12 +1,10 @@
 ---
 title: "Text to Video"
 openapi: 'POST /video/text2video'
-description: "Generate videos from text descriptions using AI video generation models."
+description: "Generate videos from text descriptions using AI video generation models. Supported model_id are `wan2.2` and `ltx-2.3`. Any other models passed will be ignored and defauted to `wan2.2` "
 ---
 
 ![Text to Video Example](/images/video-api/assets/images/Text-to-video-059ae4e254324cdd6b271d791167cb35.jpg)
-
-Generate videos from text descriptions using state-of-the-art video generation models like CogVideoX. Perfect for creating short-form content, animations, and visual storytelling.
 
 ## Request
 
@@ -20,7 +18,6 @@ POST https://modelslab.com/api/v6/video/text2video
 ```json json
 {
     "key": "your_api_key",
-    "model_id": "cogvideox",
     "prompt": "A majestic space station orbiting Earth, with the sun rising behind it, cinematic, 4K",
     "negative_prompt": "low quality, blurry, static",
     "height": 512,
@@ -48,7 +45,6 @@ def generate_video(prompt, api_key):
         "https://modelslab.com/api/v6/video/text2video",
         json={
             "key": api_key,
-            "model_id": "cogvideox",
             "prompt": prompt,
             "num_frames": 25
         }
