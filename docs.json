@@ -45,7 +45,7 @@
     ]
   },
   "banner": {
-    "content": "🎵 NEW: Song Generator API powered by ACE-Step v1.5 - Create full songs with vocals in 50+ languages (30s-8min) 🎶 · [Try it now](/voice-cloning/song-generator) · [Read Guide](/guides/song-generation-guide)",
+    "content": "⚡ NEW: Flux Klein 9B — Faster inference, stunning quality · [Try Now](https://modelslab.com/models/modelslab/flux-klien-9B)",
     "dismissible": true,
     "animated": true
   },
@@ -315,15 +315,21 @@
                   "general-api/nsfw-prompt-check",
                   "general-api/subscribed-product",
                   "general-api/check-requests",
-                  "general-api/assets-generated"
+                  "general-api/assets-generated",
+                  "general-api/wallet-balance"
                 ]
               },
               {
-                "group": "Chat API",
+                "group": "LLM API",
                 "pages": [
-                  "uncensored-chat-api/overview",
-                  "uncensored-chat-api/uncensored-chat",
-                  "uncensored-chat-api/chat-completions"
+                  "llm-api/overview",
+                  "llm-api/chat-completions",
+                  "llm-api/messages",
+                  "llm-api/function-calling",
+                  "llm-api/advanced-parameters",
+                  "llm-api/count-tokens",
+                  "llm-api/list-models",
+                  "llm-api/coding-tools"
                 ]
               }
             ]
@@ -337,6 +343,20 @@
             "group": "Enterprise APIs",
             "pages": [
               "enterprise-api/overview",
+              {
+                "group": "Flux Klein API",
+                "pages": [
+                  "enterprise-api/flux-klein/overview",
+                  "enterprise-api/flux-klein/text2img",
+                  "enterprise-api/flux-klein/img2img",
+                  "enterprise-api/flux-klein/fetch",
+                  "enterprise-api/flux-klein/clear-cache",
+                  "enterprise-api/flux-klein/clear-queue",
+                  "enterprise-api/flux-klein/restart-server",
+                  "enterprise-api/flux-klein/system-details",
+                  "enterprise-api/flux-klein/update-server"
+                ]
+              },
               {
                 "group": "3D API",
                 "pages": [
@@ -367,19 +387,19 @@
                 ]
               },
               {
-                "group": "Deepfake API",
+                "group": "Face Swap API",
                 "pages": [
-                  "enterprise-api/deepfake/overview",
-                  "enterprise-api/deepfake/specific-face-swap",
-                  "enterprise-api/deepfake/multiple-face-swap",
-                  "enterprise-api/deepfake/single-video-swap",
-                  "enterprise-api/deepfake/specific-video-swap",
-                  "enterprise-api/deepfake/fetch",
-                  "enterprise-api/deepfake/clear-cache",
-                  "enterprise-api/deepfake/clear-queue",
-                  "enterprise-api/deepfake/restart-server",
-                  "enterprise-api/deepfake/system-details",
-                  "enterprise-api/deepfake/update-server"
+                  "enterprise-api/faceswap/overview",
+                  "enterprise-api/faceswap/specific-face-swap",
+                  "enterprise-api/faceswap/multiple-face-swap",
+                  "enterprise-api/faceswap/single-video-swap",
+                  "enterprise-api/faceswap/specific-video-swap",
+                  "enterprise-api/faceswap/fetch",
+                  "enterprise-api/faceswap/clear-cache",
+                  "enterprise-api/faceswap/clear-queue",
+                  "enterprise-api/faceswap/restart-server",
+                  "enterprise-api/faceswap/system-details",
+                  "enterprise-api/faceswap/update-server"
                 ]
               },
               {
@@ -665,14 +685,12 @@
         ]
       },
       {
-        "tab": "Release Notes",
+        "tab": "Changelog",
         "groups": [
           {
-            "group": "Release Notes",
+            "group": "Changelog",
             "pages": [
-              "release-notes/overview",
-              "release-notes/api",
-              "release-notes/playground"
+              "release-notes/api"
             ]
           }
         ]
@@ -712,21 +730,13 @@
     }
   },
   "logo": {
-    "light": "/logo/light.png",
-    "dark": "/logo/dark.png"
+    "light": "/logo/logo_new_light.png",
+    "dark": "/logo/logo_new_dark.png"
   },
   "navbar": {
     "links": [
       {
-        "label": "Login",
-        "href": "https://modelslab.com/login"
-      },
-      {
-        "label": "Support",
-        "href": "https://modelslab.com/support"
-      },
-      {
-        "label": "Discord",
+        "type": "discord",
         "href": "https://discord.com/invite/modelslab-1033301189254729748"
       }
     ],

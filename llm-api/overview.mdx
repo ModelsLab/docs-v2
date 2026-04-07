@@ -1,0 +1,110 @@
+---
+title: "LLM API"
+description: "Access 200+ large language models through a unified API. OpenAI and Anthropic SDK compatible — use Claude Code, ChatGPT clients, and more with a single API key."
+---
+
+ModelsLab's LLM API gives you access to 200+ large language models through a single, unified API. It's fully compatible with both **OpenAI** and **Anthropic** SDKs, so you can use tools like **Claude Code**, ChatGPT-compatible clients, and any OpenAI/Anthropic SDK with minimal configuration changes.
+
+## Base URL
+
+```
+https://modelslab.com/api/v7/llm
+```
+
+## Authentication
+
+All endpoints use **Bearer token** authentication. Pass your ModelsLab API key in the `Authorization` header:
+
+```
+Authorization: Bearer YOUR_MODELSLAB_API_KEY
+```
+
+## Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Chat Completions" href="/llm-api/chat-completions" icon="comments">
+    OpenAI-compatible chat completions endpoint. Works with OpenAI SDKs, LangChain, and any OpenAI-compatible client.
+  </Card>
+  <Card title="Messages" href="/llm-api/messages" icon="message">
+    Anthropic-compatible messages endpoint. Works with the Anthropic SDK, Claude Code, and any Anthropic-compatible client.
+  </Card>
+  <Card title="Function Calling" href="/llm-api/function-calling" icon="wrench">
+    Enable models to call functions and tools. Supports both OpenAI and Anthropic tool use formats.
+  </Card>
+  <Card title="Advanced Parameters" href="/llm-api/advanced-parameters" icon="sliders">
+    Detailed reference for sampling, penalties, streaming, response formatting, and more.
+  </Card>
+  <Card title="Count Tokens" href="/llm-api/count-tokens" icon="calculator">
+    Count the number of tokens in a message before sending it. Useful for managing costs and context windows.
+  </Card>
+  <Card title="List Models" href="/llm-api/list-models" icon="list">
+    Retrieve the list of all available LLM models and their capabilities.
+  </Card>
+  <Card title="Coding Tools Integration" href="/llm-api/coding-tools" icon="code">
+    Use ModelsLab with Claude Code, Codex, Cursor, Continue, Aider, and other AI coding assistants.
+  </Card>
+</CardGroup>
+
+## SDK Compatibility
+
+ModelsLab's LLM API is designed as a **drop-in replacement** for both OpenAI and Anthropic APIs. Just change the base URL and API key:
+
+<Tabs>
+  <Tab title="OpenAI SDK">
+    ```python
+    from openai import OpenAI
+
+    client = OpenAI(
+        api_key="YOUR_MODELSLAB_API_KEY",
+        base_url="https://modelslab.com/api/v7/llm",
+    )
+
+    response = client.chat.completions.create(
+        model="Qwen/Qwen2.5-VL-72B-Instruct-together",
+        messages=[
+            {"role": "user", "content": "Hello!"}
+        ],
+    )
+
+    print(response.choices[0].message.content)
+    ```
+  </Tab>
+  <Tab title="Anthropic SDK">
+    ```python
+    from anthropic import Anthropic
+
+    client = Anthropic(
+        api_key="YOUR_MODELSLAB_API_KEY",
+        base_url="https://modelslab.com/api/v7/llm",
+    )
+
+    message = client.messages.create(
+        model="Qwen/Qwen2.5-VL-72B-Instruct-together",
+        max_tokens=1024,
+        messages=[
+            {"role": "user", "content": "Hello!"}
+        ],
+    )
+
+    print(message.content[0].text)
+    ```
+  </Tab>
+  <Tab title="Claude Code (CLI)">
+    ```bash
+    ANTHROPIC_BASE_URL="https://modelslab.com/api/v7/llm" \
+    ANTHROPIC_AUTH_TOKEN="YOUR_MODELSLAB_API_KEY" \
+    claude --model "Qwen/Qwen2.5-VL-72B-Instruct-together"
+    ```
+  </Tab>
+</Tabs>
+
+## Supported Models
+
+Browse all available LLM models at [modelslab.com/models/category/llmaster](https://modelslab.com/models/category/llmaster), or use the [List Models](/llm-api/list-models) endpoint to fetch them programmatically.
+
+Popular models include:
+- **Qwen 2.5 VL 72B** — Vision-language model with strong reasoning
+- **DeepSeek R1** — Advanced reasoning model
+- **Llama 3.1 70B/405B** — Meta's open-source flagship models
+- **Mistral Large** — Mistral AI's most capable model
+- And 200+ more...

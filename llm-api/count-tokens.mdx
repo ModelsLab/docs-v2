@@ -1,0 +1,71 @@
+---
+title: "Count Tokens"
+openapi: 'POST /v1/messages/count_tokens'
+description: "Count the number of tokens in a message before sending it. Useful for cost estimation and context window management."
+---
+
+## Request
+
+```bash
+POST https://modelslab.com/api/v7/llm/v1/messages/count_tokens
+```
+
+```bash
+curl -X POST https://modelslab.com/api/v7/llm/v1/messages/count_tokens \
+  -H "x-api-key: $MODELSLAB_API_KEY" \
+  -H "Content-Type: application/json" \
+  -H "anthropic-version: 2023-06-01" \
+  -d '{
+    "model": "Qwen/Qwen2.5-VL-72B-Instruct-together",
+    "messages": [
+      {"role": "user", "content": "What is the capital of France?"}
+    ]
+  }'
+```
+
+## Body
+
+```json
+{
+  "model": "Qwen/Qwen2.5-VL-72B-Instruct-together",
+  "messages": [
+    {"role": "user", "content": "What is the capital of France?"}
+  ],
+  "system": "You are a helpful assistant."
+}
+```
+
+## Response
+
+```json
+{
+  "input_tokens": 15
+}
+```
+
+## Use Cases
+
+- **Cost estimation**: Calculate the cost of a request before sending it
+- **Context window management**: Ensure your messages fit within the model's context window
+- **Token budgeting**: Allocate token budgets across multiple requests
+
+## Example
+
+```python
+from anthropic import Anthropic
+
+client = Anthropic(
+    api_key="YOUR_MODELSLAB_API_KEY",
+    base_url="https://modelslab.com/api/v7/llm",
+)
+
+# Count tokens before sending
+token_count = client.messages.count_tokens(
+    model="Qwen/Qwen2.5-VL-72B-Instruct-together",
+    messages=[
+        {"role": "user", "content": "Write a detailed essay about AI"}
+    ],
+)
+
+print(f"Input tokens: {token_count.input_tokens}")
+```

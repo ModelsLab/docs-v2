@@ -728,9 +728,9 @@
           },
           "model_id": {
             "type": "string",
-            "enum": ["wan2.2", "wan2.1"],
-            "default": "wan2.1",
-            "description": "The model ID to use for video generation. wan2.2 or wan2.1"
+            "enum": ["wan2.2", "ltx-2.3"],
+            "default": "wan2.2",
+            "description": "The model ID to use for video generation. wan2.2 or ltx-2.3"
           },
           "prompt": {
             "type": "string",
@@ -952,9 +952,9 @@
           },
           "model_id": {
             "type": "string",
-            "enum": ["wan2.2", "wan2.1"],
-            "default": "wan2.1",
-            "description": "The model ID to use for video generation. wan2.2 or wan2.1"
+            "enum": ["wan2.2", "ltx-2.3"],
+            "default": "wan2.2",
+            "description": "The model ID to use for video generation. wan2.2 or ltx-2.3"
           },
           "prompt": {
             "type": "string",
@@ -975,7 +975,7 @@
           },
           "resolution": {
             "type": "integer",
-            "description": "Output video resolution. For wan2.2 maximum resolution is 720p and for wan2.1 maximum resolution is 480p."
+            "description": "Output video resolution. For wan2.2 maximum resolution is 720p"
           },
           "num_frames": {
             "type": "integer",

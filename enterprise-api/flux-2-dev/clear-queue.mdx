@@ -12,7 +12,18 @@ Send a `POST` request to below endpoint to clear the API's cache.
 
 ## Body
 ```json json
-{ 
-    "key": "enterprise_api_key"
+{
+    "key": "enterprise_api_key",
+    "deploy_type": "flux_2_dev"
 }
 ```
+
+## Body Attributes
+
+<ParamField body="key" type="string" required>
+  Your enterprise API Key used for request authorization.
+</ParamField>
+
+<ParamField body="deploy_type" type="string">
+  This is the server type you are making request from. Use `flux_2_dev` for Flux 2 Dev servers.
+</ParamField>

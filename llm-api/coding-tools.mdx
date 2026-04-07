@@ -1,0 +1,186 @@
+---
+title: "Using with Coding Tools"
+description: "Use ModelsLab's LLM API with Claude Code, OpenAI Codex, Cursor, Continue, Aider, and other AI coding assistants."
+---
+
+ModelsLab's LLM API is compatible with popular AI coding tools. Since it supports both OpenAI and Anthropic API formats, you can use it as a drop-in backend for most AI coding assistants.
+
+## Claude Code
+
+[Claude Code](https://docs.anthropic.com/en/docs/claude-code) is Anthropic's agentic CLI coding tool. You can point it at ModelsLab's API to use any of 200+ LLM models.
+
+### Quick Start
+
+```bash
+ANTHROPIC_BASE_URL="https://modelslab.com/api/v7/llm" \
+ANTHROPIC_AUTH_TOKEN="YOUR_MODELSLAB_API_KEY" \
+claude --model "Qwen/Qwen2.5-VL-72B-Instruct-together"
+```
+
+### Persistent Configuration
+
+Add to your shell profile (`~/.bashrc`, `~/.zshrc`, etc.):
+
+```bash
+export ANTHROPIC_BASE_URL="https://modelslab.com/api/v7/llm"
+export ANTHROPIC_AUTH_TOKEN="YOUR_MODELSLAB_API_KEY"
+```
+
+Then run Claude Code with any model:
+
+```bash
+claude --model "Qwen/Qwen2.5-VL-72B-Instruct-together"
+claude --model "meta-llama/Llama-3.1-70B-Instruct"
+claude --model "deepseek-ai/DeepSeek-R1"
+```
+
+### Non-Interactive / Scripting
+
+```bash
+ANTHROPIC_BASE_URL="https://modelslab.com/api/v7/llm" \
+ANTHROPIC_AUTH_TOKEN="YOUR_MODELSLAB_API_KEY" \
+claude --model "Qwen/Qwen2.5-VL-72B-Instruct-together" \
+  -p "Explain this codebase" \
+  --dangerously-skip-permissions
+```
+
+---
+
+## OpenAI Codex CLI
+
+[Codex CLI](https://github.com/openai/codex) is OpenAI's open-source coding agent. It works with any OpenAI-compatible API.
+
+### Setup
+
+```bash
+OPENAI_API_KEY="YOUR_MODELSLAB_API_KEY" \
+OPENAI_BASE_URL="https://modelslab.com/api/v7/llm" \
+codex --model "Qwen/Qwen2.5-VL-72B-Instruct-together"
+```
+
+### With Environment Variables
+
+```bash
+export OPENAI_API_KEY="YOUR_MODELSLAB_API_KEY"
+export OPENAI_BASE_URL="https://modelslab.com/api/v7/llm"
+
+codex --model "Qwen/Qwen2.5-VL-72B-Instruct-together" "refactor this function"
+```
+
+---
+
+## Cursor
+
+[Cursor](https://cursor.sh) is an AI-powered code editor. You can configure it to use ModelsLab as a custom OpenAI-compatible provider.
+
+### Setup
+
+1. Open Cursor Settings (`Cmd+,` / `Ctrl+,`)
+2. Go to **Models** > **OpenAI API Key**
+3. Set your API key to your ModelsLab API key
+4. Set the base URL to `https://modelslab.com/api/v7/llm`
+5. Add your preferred model IDs (e.g., `Qwen/Qwen2.5-VL-72B-Instruct-together`)
+
+You can now select ModelsLab models from Cursor's model dropdown.
+
+---
+
+## Continue (VS Code / JetBrains)
+
+[Continue](https://continue.dev) is an open-source AI code assistant for VS Code and JetBrains.
+
+### Configuration
+
+Edit your `~/.continue/config.yaml`:
+
+```yaml
+models:
+  - name: ModelsLab Qwen 72B
+    provider: openai
+    model: Qwen/Qwen2.5-VL-72B-Instruct-together
+    apiBase: https://modelslab.com/api/v7/llm
+    apiKey: YOUR_MODELSLAB_API_KEY
+
+  - name: ModelsLab DeepSeek R1
+    provider: openai
+    model: deepseek-ai/DeepSeek-R1
+    apiBase: https://modelslab.com/api/v7/llm
+    apiKey: YOUR_MODELSLAB_API_KEY
+```
+
+---
+
+## Aider
+
+[Aider](https://aider.chat) is a terminal-based AI pair programming tool.
+
+### Setup
+
+```bash
+OPENAI_API_KEY="YOUR_MODELSLAB_API_KEY" \
+OPENAI_API_BASE="https://modelslab.com/api/v7/llm" \
+aider --model "openai/Qwen/Qwen2.5-VL-72B-Instruct-together"
+```
+
+### With `.aider.conf.yml`
+
+```yaml
+openai-api-key: YOUR_MODELSLAB_API_KEY
+openai-api-base: https://modelslab.com/api/v7/llm
+model: openai/Qwen/Qwen2.5-VL-72B-Instruct-together
+```
+
+---
+
+## LangChain
+
+Use ModelsLab as the LLM backend in your LangChain applications:
+
+```python
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(
+    model="Qwen/Qwen2.5-VL-72B-Instruct-together",
+    openai_api_key="YOUR_MODELSLAB_API_KEY",
+    openai_api_base="https://modelslab.com/api/v7/llm",
+    temperature=0.7,
+)
+
+response = llm.invoke("Explain the Builder pattern in Python")
+print(response.content)
+```
+
+---
+
+## LiteLLM
+
+[LiteLLM](https://litellm.ai) provides a unified API for 100+ LLM providers. Add ModelsLab as a custom provider:
+
+```python
+import litellm
+
+response = litellm.completion(
+    model="openai/Qwen/Qwen2.5-VL-72B-Instruct-together",
+    messages=[{"role": "user", "content": "Hello!"}],
+    api_key="YOUR_MODELSLAB_API_KEY",
+    api_base="https://modelslab.com/api/v7/llm",
+)
+
+print(response.choices[0].message.content)
+```
+
+---
+
+## General OpenAI-Compatible Tools
+
+Any tool that supports a custom OpenAI base URL works with ModelsLab:
+
+| Setting | Value |
+|---------|-------|
+| **API Key** | Your ModelsLab API key |
+| **Base URL** | `https://modelslab.com/api/v7/llm` |
+| **Model** | Any model from [List Models](/llm-api/list-models) |
+
+<Tip>
+  Browse all available models at [modelslab.com/models/category/llmaster](https://modelslab.com/models/category/llmaster) and use the model ID directly in any compatible tool.
+</Tip>

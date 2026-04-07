@@ -1,0 +1,150 @@
+---
+title: "Messages"
+openapi: 'POST /v1/messages'
+description: "Anthropic-compatible messages endpoint. Works with the Anthropic SDK, Claude Code, and any Anthropic-compatible client."
+---
+
+## Request
+
+```bash
+POST https://modelslab.com/api/v7/llm/v1/messages
+```
+
+Pass your API key in the `x-api-key` header or as a Bearer token.
+
+```bash
+curl -X POST https://modelslab.com/api/v7/llm/v1/messages \
+  -H "x-api-key: $MODELSLAB_API_KEY" \
+  -H "Content-Type: application/json" \
+  -H "anthropic-version: 2023-06-01" \
+  -d '{
+    "model": "Qwen/Qwen2.5-VL-72B-Instruct-together",
+    "max_tokens": 1024,
+    "messages": [
+      {"role": "user", "content": "What is the capital of France?"}
+    ]
+  }'
+```
+
+## Body
+
+```json
+{
+  "model": "Qwen/Qwen2.5-VL-72B-Instruct-together",
+  "max_tokens": 1024,
+  "messages": [
+    {"role": "user", "content": "What is the capital of France?"}
+  ],
+  "system": "You are a helpful assistant.",
+  "temperature": 0.7,
+  "top_p": 1,
+  "stream": false
+}
+```
+
+## Response
+
+```json
+{
+  "id": "msg_abc123",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "text",
+      "text": "The capital of France is Paris."
+    }
+  ],
+  "model": "Qwen/Qwen2.5-VL-72B-Instruct-together",
+  "stop_reason": "end_turn",
+  "usage": {
+    "input_tokens": 15,
+    "output_tokens": 8
+  }
+}
+```
+
+## Streaming
+
+Set `"stream": true` to receive Server-Sent Events:
+
+```bash
+curl -X POST https://modelslab.com/api/v7/llm/v1/messages \
+  -H "x-api-key: $MODELSLAB_API_KEY" \
+  -H "Content-Type: application/json" \
+  -H "anthropic-version: 2023-06-01" \
+  -d '{
+    "model": "Qwen/Qwen2.5-VL-72B-Instruct-together",
+    "max_tokens": 1024,
+    "messages": [{"role": "user", "content": "Write a haiku"}],
+    "stream": true
+  }'
+```
+
+## Anthropic SDK
+
+This endpoint is fully compatible with the Anthropic SDK. Just change the `base_url` and `api_key`:
+
+<Tabs>
+  <Tab title="Python">
+    ```python
+    from anthropic import Anthropic
+
+    client = Anthropic(
+        api_key="YOUR_MODELSLAB_API_KEY",
+        base_url="https://modelslab.com/api/v7/llm",
+    )
+
+    # Non-streaming
+    message = client.messages.create(
+        model="Qwen/Qwen2.5-VL-72B-Instruct-together",
+        max_tokens=1024,
+        messages=[
+            {"role": "user", "content": "Explain quantum computing"}
+        ],
+    )
+    print(message.content[0].text)
+
+    # Streaming
+    with client.messages.stream(
+        model="Qwen/Qwen2.5-VL-72B-Instruct-together",
+        max_tokens=1024,
+        messages=[{"role": "user", "content": "Write a story"}],
+    ) as stream:
+        for text in stream.text_stream:
+            print(text, end="")
+    ```
+  </Tab>
+  <Tab title="Node.js">
+    ```javascript
+    import Anthropic from '@anthropic-ai/sdk';
+
+    const client = new Anthropic({
+      apiKey: 'YOUR_MODELSLAB_API_KEY',
+      baseURL: 'https://modelslab.com/api/v7/llm',
+    });
+
+    const message = await client.messages.create({
+      model: 'Qwen/Qwen2.5-VL-72B-Instruct-together',
+      max_tokens: 1024,
+      messages: [
+        { role: 'user', content: 'Hello!' },
+      ],
+    });
+
+    console.log(message.content[0].text);
+    ```
+  </Tab>
+</Tabs>
+
+## Using with Claude Code
+
+You can use ModelsLab's LLM API as a backend for [Claude Code](https://claude.ai/claude-code), Anthropic's CLI coding assistant:
+
+```bash
+ANTHROPIC_BASE_URL="https://modelslab.com/api/v7/llm" \
+ANTHROPIC_AUTH_TOKEN="YOUR_MODELSLAB_API_KEY" \
+claude --model "Qwen/Qwen2.5-VL-72B-Instruct-together"
+```
+
+This lets you use any of ModelsLab's 200+ LLM models as the backend for Claude Code's agentic coding capabilities.

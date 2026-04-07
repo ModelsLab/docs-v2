@@ -1,0 +1,75 @@
+---
+title: "List Models"
+openapi: 'GET /v1/models'
+description: "Retrieve the list of all available LLM models and their capabilities."
+---
+
+## Request
+
+```bash
+GET https://modelslab.com/api/v7/llm/v1/models
+```
+
+```bash
+curl https://modelslab.com/api/v7/llm/v1/models \
+  -H "x-api-key: $MODELSLAB_API_KEY"
+```
+
+## Response
+
+```json
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "Qwen/Qwen2.5-VL-72B-Instruct-together",
+      "object": "model",
+      "created": 1712345678,
+      "owned_by": "Qwen"
+    },
+    {
+      "id": "meta-llama/Llama-3.1-70B-Instruct",
+      "object": "model",
+      "created": 1712345678,
+      "owned_by": "Meta"
+    }
+  ]
+}
+```
+
+## Usage with SDKs
+
+<Tabs>
+  <Tab title="OpenAI SDK">
+    ```python
+    from openai import OpenAI
+
+    client = OpenAI(
+        api_key="YOUR_MODELSLAB_API_KEY",
+        base_url="https://modelslab.com/api/v7/llm",
+    )
+
+    models = client.models.list()
+    for model in models.data:
+        print(model.id)
+    ```
+  </Tab>
+  <Tab title="Anthropic SDK">
+    ```python
+    import requests
+
+    response = requests.get(
+        "https://modelslab.com/api/v7/llm/v1/models",
+        headers={"x-api-key": "YOUR_MODELSLAB_API_KEY"},
+    )
+
+    models = response.json()
+    for model in models["data"]:
+        print(model["id"])
+    ```
+  </Tab>
+</Tabs>
+
+<Tip>
+  You can also browse all available models with details and playground access at [modelslab.com/models/category/llmaster](https://modelslab.com/models/category/llmaster).
+</Tip>

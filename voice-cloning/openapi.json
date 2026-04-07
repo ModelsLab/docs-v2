@@ -693,17 +693,24 @@
             "format": "uri",
             "description": "Conditioning melody URL for music generation (up to 30 seconds)"
           },
-          "sampling_rate": {
+          "duration": {
             "type": "integer",
-            "default": 32000,
-            "minimum": 10000,
-            "description": "Sampling rate of generated music"
+            "default": 30,
+            "minimum": 30,
+            "maximum": 480,
+            "description": "Duration of the generated music in seconds. Any arbitrary value between 30 and 480. Default: 30."
           },
-          "max_new_token": {
-            "type": "integer",
-            "minimum": 256,
-            "maximum": 1024,
-            "description": "Maximum number of new tokens for music generation"
+          "output_format": {
+            "type": "string",
+            "enum": ["wav", "mp3", "flac"],
+            "default": "wav",
+            "description": "Output format of the generated audio. Options: wav, mp3, flac. Default: wav."
+          },
+          "bitrate": {
+            "type": "string",
+            "enum": ["128k", "192k", "320k"],
+            "default": "320k",
+            "description": "Bitrate of the generated audio file. Options: 128k, 192k, 320k. Default: 320k."
           },
           "base64": {
             "type": "boolean",
