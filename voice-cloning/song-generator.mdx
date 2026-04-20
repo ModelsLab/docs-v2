@@ -1,129 +1,127 @@
 ---
 title: "Song Generator"
 openapi: 'POST /voice/song_generator'
-description: 'Generate songs in 50+ languages by providing lyrics along with reference audio using ACE-Step v1.5 model.'
+description: 'Generate full songs in 50+ languages by providing lyrics and a reference audio style using the ACE-Step v1.5 model.'
 ---
 
-<Note>
-This API uses the **ACE-Step v1.5** model for high-quality song generation with vocal synthesis.
-</Note>
+## Overview
+
+The Song Generator API lets you create complete, production-quality songs by combining your lyrics with a reference audio file that defines the style, mood, and instrumentation. You can also skip writing lyrics entirely and let the model generate them automatically from a prompt.
+
+<Steps>
+  <Step title="Write your lyrics and style">
+    Provide your lyrics directly or enable auto-generation with a `prompt`. Supply a `caption` describing the musical style : genre, instruments, vocal type, and mood.
+  </Step>
+  <Step title="Configure audio and duration">
+    Optionally attach a reference audio via `init_audio` to influence the style further. Set the `duration` between 30 and 480 seconds.
+  </Step>
+  <Step title="Receive your song">
+    The API returns a hosted audio URL once generation is complete, or fires a webhook to your endpoint if provided.
+  </Step>
+</Steps>
+
+---
 
 ## Request
 
-Make a `POST` request to below endpoint and pass the required parameters as a request body.
+Make a `POST` request to the endpoint below and pass the required parameters as a JSON body.
 
 ```curl curl
 --request POST 'https://modelslab.com/api/v6/voice/song_generator' \
 ```
 
+---
 
-## Body
+## Body Parameters
+
+<ParamField body="key" type="string" required>
+  Your API key.
+</ParamField>
+
+<ParamField body="lyrics_generation" type="boolean" default="false">
+  Set to `true` to auto-generate lyrics from `prompt`. When `false`, provide `lyrics` directly.
+</ParamField>
+
+<ParamField body="lyrics" type="string">
+  Song lyrics with section tags like `[Verse 1]`, `[Chorus]`, `[Bridge]`. Required if `lyrics_generation` is `false`.
+</ParamField>
+
+<ParamField body="prompt" type="string">
+  Topic or description for auto lyrics generation. Required if `lyrics_generation` is `true`.
+</ParamField>
+
+<ParamField body="caption" type="string">
+  Musical style descriptor : genre, instruments, vocal type, tempo, mood. E.g. `"female vocal, pop, piano, slow, emotional"`.
+</ParamField>
+
+<ParamField body="init_audio" type="string">
+  URL to a reference audio file (MP3/WAV) to influence the song's style.
+</ParamField>
+
+<ParamField body="duration" type="integer">
+  Song length in seconds. Range: **30–480** (0.5–8 minutes).
+</ParamField>
+
+<ParamField body="language" type="string">
+  Language code for lyrics and vocals. Defaults to auto-detection. See table below.
+</ParamField>
+
+<ParamField body="instrumental" type="boolean" default="false">
+  Set to `true` to generate a vocals-free instrumental track.
+</ParamField>
+
+<ParamField body="webhook" type="string">
+  URL to receive a POST callback when generation completes.
+</ParamField>
+
+<ParamField body="track_id" type="integer">
+  Custom ID sent with the webhook payload for request correlation.
+</ParamField>
+
+---
+
+## Example Requests
 
 <Tip>
-- Song duration can be between **30 seconds** and **480 seconds** (0.5 - 8 minutes)
-- If lyrics are not provided, set `lyrics_generation` to `true` and provide a `prompt` and `caption` instead
-- Set `instrumental` to `true` to generate an instrumental version without vocals
-- 50+ languages are supported (see table below)
+- Song duration must be between **30 and 480 seconds** (0.5–8 minutes)
+- If you don't have lyrics, set `lyrics_generation: true` and provide a `prompt` and `caption` instead
+- Set `instrumental: true` to generate a vocals-free track
+- 50+ languages are supported : see the table below
 </Tip>
 
 <Info>
-Sample request when `lyrics_generation` is `false`
+With manual lyrics (`lyrics_generation: false`)
 </Info>
 
 ```json json
-{       
-    "key":"your_api_key",   
-    "lyrics_generation":false,    
-    "lyrics":"[Intro: Sampled Vocal Loop]
-    (Oh-oh-oh-oh-oh-oh-oh-oh)
-    (Oh-oh-oh-oh-oh-oh-oh-oh)
-
-    [Chorus]
-    Esta noche todo te lo daré
-    Es libre ya no me amarraré
-    Grita mi nombre, dime que me quieres
-    Me pierdo en tus ojos como si fuera nieve
-    Esta noche todo te lo daré
-    Entre tus brazos me quedaré
-    Grita mi nombre, dime que me quieres
-    Me pierdo en tus ojos como si fuera nieve
-
-    [Verse 1]
-    Tus ojos me hipnotizan, me hacen suspirar
-    Tus labios me llaman, no puedo escapar
-    Tus manos me tocan, siento la pasión
-    Cada latido es una explosión
-    Acércate más, no me dejes caer
-    Bailamos juntos hasta el amanecer
-
-    [Pre-Chorus]
-    Tus labios me tocan, tus ojos me miran
-    No puedo escapar, mi alma se inspira
-
-    [Chorus]
-    Esta noche todo te lo daré
-    Esta noche todo te lo daré
-    Es libre ya no me amarraré
-    Grita mi nombre, dime que me quieres
-    Me pierdo en tus ojos como si fuera nieve
-    Esta noche todo te lo daré
-    Entre tus brazos me quedaré
-    Grita mi nombre, dime que me quieres
-    Me pierdo en tus ojos como si fuera nieve
-
-    [Verse 2]
-    Tus besos me alzan, me hacen volar
-    No hay dudas, no hay miedo, solo quiero amar
-    Tu voz me llama, tu cuerpo me arde
-    Con cada susurro todo se comparte
-    Juntos en el fuego, no hay que temer
-    Esta noche nunca lo vas a olvidar
-
-    [Bridge]
-    Solo un instante
-    Deja que te acerque, ven a mí
-    Solo un instante
-    Deja que te acerque, ven a mí
-    Solo un instante
-    Deja que te acerque, ven a mí
-    Solo un instante
-    Deja que te acerque, ven a mí
-    Solo un instante
-    Deja que te acerque, ven a mí
-    [Chorus]
-    Esta noche todo te lo daré
-    Es libre ya no me amarraré
-    Grita mi nombre, dime que me quieres
-    Me pierdo en tus ojos como si fuera nieve
-    Esta noche todo te lo daré
-    Entre tus brazos me quedaré
-    Grita mi nombre, dime que me quieres
-    Me pierdo en tus ojos como si fuera nieve
-    [Outro]
-    Solo una noche más
-    Hasta que me desvuelva
-    Y de que me quede sin nada",
-    "caption":"A modern reggaeton track with a strong flamenco influence, opening with a pitched and chopped vocal sample melody over a classic dembow beat. A clear, confident female vocal enters, singing in Spanish with a touch of reverb. The arrangement is built on a deep sub-bass, crisp drum machine percussion, and a distinctive plucked synth guitar riff that carries the main melodic hook. The chorus elevates the energy with layered vocals and a more intense delivery. The track breaks down into a more atmospheric bridge with filtered, introspective vocals before returning to the full chorus and concluding with a sparse, whispered outro that fades to silence.",
-    "duration": 199,
-    "webhook":null,
+{
+    "key": "your_api_key",
+    "lyrics_generation": false,
+    "lyrics": "[Verse 1]\nYour eyes hypnotize me, make me sigh\nYour lips call to me, I can't escape\n\n[Chorus]\nTonight I'll give you everything\nIn your arms I'll stay",
+    "caption": "female vocal, reggaeton, deep bass, drum machine, reverb",
+    "duration": 120,
+    "webhook": null,
     "track_id": null
 }
 ```
+
 <Info>
-Sample request when `lyrics_generation` is `true`
+With auto lyrics generation (`lyrics_generation: true`)
 </Info>
 
 ```json json
-{       
-    "key":"your_api_key",   
-    "lyrics_generation":true,    
-    "prompt":"A polished Cantopop track built on an ethereal foundation of layered female vocal harmonies that create atmospheric pads with wordless 'oohs' and 'aahs'. A crisp electronic drum machine provides a steady mid-tempo beat, complemented by clean synth keys and a subtle bassline. The lead female vocal is clear and melodic, sung entirely in Cantonese, guiding the listener through verses and into an uplifting chorus where her voice becomes more powerful and layered. The arrangement includes brief instrumental interludes featuring chime-like sound effects before concluding with a fade-out of the signature airy vocal textures.",    
-    "caption":"female vokal,folkmetal, Electro ,Violin,Piano,extinct,ad’ baseline,jane breakbeat; guitar,Harmonium,bass),child’s voice.",
-    "duration":199,
-    "webhook":null,     
+{
+    "key": "your_api_key",
+    "lyrics_generation": true,
+    "prompt": "A Cantopop track with layered female vocals and synth keys",
+    "caption": "female vocal, Cantopop, synth keys, mid-tempo, ethereal",
+    "duration": 180,
+    "webhook": null,
     "track_id": null
 }
 ```
+
+---
 
 ## Supported Languages
 
@@ -179,4 +177,3 @@ Sample request when `lyrics_generation` is `true`
 | Vietnamese | vi |
 | Cantonese | yue |
 | Chinese | zh |
-| Unknown | unknown |

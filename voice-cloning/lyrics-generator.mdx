@@ -1,25 +1,65 @@
 ---
 title: "Lyrics Generator"
 openapi: 'POST /voice/lyrics_generator'
-description: 'The Lyrics Generator endpoint allows you to generate song lyrics from a given prompt.'
+description: 'Generate song lyrics from a text prompt.'
+---
+
+## Overview
+
+Generate structured song lyrics from a simple text prompt. Great for quickly scaffolding lyrics before feeding them into the [Song Generator](/voice-cloning/song-generator).
+
+<Steps>
+  <Step title="Provide a prompt">
+    Describe the song topic, mood, or theme : e.g. `"tokyo"` or `"a rainy night in Mumbai"`.
+  </Step>
+  <Step title="Choose length">
+    Set `length` to `"short"` for a quick verse or `"long"` for full multi-section lyrics.
+  </Step>
+  <Step title="Receive lyrics">
+    The API returns structured lyrics ready to use in your song generation workflow.
+  </Step>
+</Steps>
+
+<Note>
+  Lyrics are generated in **English** only.
+</Note>
+
 ---
 
 ## Request
-
-Make a `POST` request to the endpoint below and pass the required parameters in the request body.
 
 ```curl curl
 --request POST 'https://modelslab.com/api/v6/voice/lyrics_generator' \
 ```
 
-<Note>
-  The `length` parameter allows you to specify whether you want short or long lyrics generated. Choose "short" for minimal lyrics or "long" for more extensive verses.
-</Note>
-<Note>
-  Lyrics will be generated in `English` language only.
-</Note>
+---
 
-### Body
+## Body Parameters
+
+<ParamField body="key" type="string" required>
+  Your API key.
+</ParamField>
+
+<ParamField body="prompt" type="string" required>
+  Topic or theme for the lyrics. E.g. `"tokyo"`, `"heartbreak"`, `"summer road trip"`.
+</ParamField>
+
+<ParamField body="length" type="string" default="short">
+  Length of the generated lyrics. `"short"` for a single verse, `"long"` for full multi-section lyrics.
+</ParamField>
+
+<ParamField body="webhook" type="string">
+  URL to receive a POST callback when generation completes.
+</ParamField>
+
+<ParamField body="track_id" type="integer">
+  Custom ID sent with the webhook payload for request correlation.
+</ParamField>
+
+---
+
+## Example Request
+
 ```json json
 {
   "key": "your_api_key",
