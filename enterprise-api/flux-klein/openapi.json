@@ -188,6 +188,51 @@
         }
       }
     },
+    "/flux_klein/img2img": {
+      "post": {
+        "summary": "Image to Image",
+        "description": "Generate images using an initial image as reference.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "key": { "type": "string", "description": "Your API key" },
+                  "prompt": { "type": "string", "description": "Text prompt for image generation" },
+                  "negative_prompt": { "type": "string", "description": "Items to avoid in the image" },
+                  "init_image": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "maxItems": 4,
+                    "description": "Array of initial image URLs. Max 4."
+                  },
+                  "width": { "type": "number", "description": "Width in px" },
+                  "height": { "type": "number", "description": "Height in px" }
+                },
+                "required": ["key", "prompt", "init_image"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Image generated successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "output": [
+                    "https://pub-8b49af329fae499aa563997f5d4068a4.r2.dev/generations/example.png"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/flux_klein/update_server": {
       "post": {
         "summary": "Update Server",
