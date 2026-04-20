@@ -535,6 +535,18 @@ Enterprise APIs provide dedicated server infrastructure with additional manageme
 - [System Details](https://docs.modelslab.com/enterprise-api/flux-2-dev/system-details): Server status.
 - [Update Server](https://docs.modelslab.com/enterprise-api/flux-2-dev/update-server): Update configuration.
 
+### Enterprise Flux Klein API
+
+- [Overview](https://docs.modelslab.com/enterprise-api/flux-klein/overview): Enterprise Flux Klein image generation.
+- [Text to Image](https://docs.modelslab.com/enterprise-api/flux-klein/text2img): Flux Klein text-to-image.
+- [Image to Image](https://docs.modelslab.com/enterprise-api/flux-klein/img2img): Flux Klein image-to-image. `init_image` accepts array of URLs (max 4).
+- [Fetch](https://docs.modelslab.com/enterprise-api/flux-klein/fetch): Retrieve results.
+- [Clear Cache](https://docs.modelslab.com/enterprise-api/flux-klein/clear-cache): Clear cache.
+- [Clear Queue](https://docs.modelslab.com/enterprise-api/flux-klein/clear-queue): Clear queue.
+- [Restart Server](https://docs.modelslab.com/enterprise-api/flux-klein/restart-server): Restart server.
+- [System Details](https://docs.modelslab.com/enterprise-api/flux-klein/system-details): Server status.
+- [Update Server](https://docs.modelslab.com/enterprise-api/flux-klein/update-server): Update configuration.
+
 ## Agent Control Plane API
 
 Base URL: `https://modelslab.com/api/agents/v1/`
