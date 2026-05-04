@@ -770,7 +770,7 @@
       },
       "SongGeneratorRequest": {
         "type": "object",
-        "required": ["key", "init_audio"],
+        "required": ["key"],
         "properties": {
           "key": {
             "type": "string",
@@ -819,7 +819,26 @@
             "type": "integer",
             "description": "ID for webhook identification"
           }
-        }
+        },
+        "oneOf": [
+          {
+            "title": "Auto-generate lyrics",
+            "required": ["lyrics_generation", "prompt", "caption"],
+            "properties": {
+              "lyrics_generation": {
+                "enum": [true]
+              }
+            }
+          },
+          {
+            "title": "Manual lyrics",
+            "properties": {
+              "lyrics_generation": {
+                "enum": [false]
+              }
+            }
+          }
+        ]
       },
       "SpeechToTextRequest": {
         "type": "object",
@@ -856,7 +875,7 @@
       },
       "TextToSpeechRequest": {
         "type": "object",
-        "required": ["key", "prompt", "voice_id"],
+        "required": ["key", "prompt", "voice_id", "language"],
         "properties": {
           "key": {
             "type": "string",
@@ -1009,7 +1028,7 @@
       },
       "TextToAudioRequest": {
         "type": "object",
-        "required": ["key", "prompt"],
+        "required": ["key", "prompt", "init_audio"],
         "properties": {
           "key": {
             "type": "string",
