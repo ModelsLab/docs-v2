@@ -819,26 +819,7 @@
             "type": "integer",
             "description": "ID for webhook identification"
           }
-        },
-        "oneOf": [
-          {
-            "title": "Auto-generate lyrics",
-            "required": ["lyrics_generation", "prompt", "caption"],
-            "properties": {
-              "lyrics_generation": {
-                "enum": [true]
-              }
-            }
-          },
-          {
-            "title": "Manual lyrics",
-            "properties": {
-              "lyrics_generation": {
-                "enum": [false]
-              }
-            }
-          }
-        ]
+        }
       },
       "SpeechToTextRequest": {
         "type": "object",
