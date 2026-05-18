@@ -179,7 +179,19 @@
                       "image-generation/community-models/dreambooth-lora",
                       "image-generation/community-models/dreambooth-lora-multi",
                       "image-generation/community-models/dreambooth-reload-model",
-                      "image-generation/community-models/dreambooth-fetch-queue-image"
+                      "image-generation/community-models/dreambooth-fetch-queue-image",
+                      {
+                        "group": "Testing Models",
+                        "pages": [
+                          "image-generation/community-models/testing-models-overview",
+                          "image-generation/community-models/hidream-o1-text-to-image",
+                          "image-generation/community-models/hidream-o1-image-to-image",
+                          "image-generation/community-models/hidream-o1-multi-reference",
+                          "image-generation/community-models/nanobanana-lite-text-to-image",
+                          "image-generation/community-models/nanobanana-lite-image-to-image",
+                          "image-generation/community-models/nanobanana-lite-multi-reference"
+                        ]
+                      }
                     ]
                   },
                   {
@@ -577,6 +589,18 @@
                   "enterprise-api/text-to-image/system-details",
                   "enterprise-api/text-to-image/restart-server",
                   "enterprise-api/text-to-image/update-server"
+                ]
+              },
+              {
+                "group": "Testing Models API",
+                "pages": [
+                  "image-generation/community-models/testing-models-overview",
+                  "image-generation/community-models/hidream-o1-text-to-image",
+                  "image-generation/community-models/hidream-o1-image-to-image",
+                  "image-generation/community-models/hidream-o1-multi-reference",
+                  "image-generation/community-models/nanobanana-lite-text-to-image",
+                  "image-generation/community-models/nanobanana-lite-image-to-image",
+                  "image-generation/community-models/nanobanana-lite-multi-reference"
                 ]
               },
               {

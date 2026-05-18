@@ -1,0 +1,118 @@
+---
+title: "Testing Models"
+description: "Experimental image generation models available for testing through a dedicated inference server."
+---
+
+<Info>
+These models route to an external testing server for experimental inference. They are available for public API use but may have different latency or availability characteristics than production models.
+</Info>
+
+## Available Models
+
+| Model | Model ID | Capabilities |
+|---|---|---|
+| **hidream-O1** | `hidream-o1` | Text-to-image, Image-to-image, Multi-reference |
+| **NanoBanana Lite – Pretrained** | `nanobanana-lite-pretrained` | Text-to-image, Image-to-image, Multi-reference |
+
+## Endpoints
+
+### hidream-O1
+
+<CardGroup cols={2}>
+  <Card title="Text to Image" icon="image" href="/image-generation/community-models/hidream-o1-text-to-image">
+    Generate images from text prompts.
+  </Card>
+  <Card title="Image to Image" icon="images" href="/image-generation/community-models/hidream-o1-image-to-image">
+    Transform existing images with a prompt.
+  </Card>
+  <Card title="Multi Reference" icon="layer-group" href="/image-generation/community-models/hidream-o1-multi-reference">
+    Generate images using multiple reference images.
+  </Card>
+</CardGroup>
+
+### NanoBanana Lite – Pretrained
+
+<CardGroup cols={2}>
+  <Card title="Text to Image" icon="image" href="/image-generation/community-models/nanobanana-lite-text-to-image">
+    Generate images from text prompts.
+  </Card>
+  <Card title="Image to Image" icon="images" href="/image-generation/community-models/nanobanana-lite-image-to-image">
+    Transform existing images with a prompt.
+  </Card>
+  <Card title="Multi Reference" icon="layer-group" href="/image-generation/community-models/nanobanana-lite-multi-reference">
+    Generate images using multiple reference images.
+  </Card>
+</CardGroup>
+
+## Inference Server
+
+All requests are forwarded to:
+
+```
+https://fpuinklnizer-3754.proxy.gpulab.ai
+```
+
+The inference server supports three operations per model:
+
+| Operation | Path | Description |
+|---|---|---|
+| Text to Image | `/run` | Generate from a text prompt |
+| Image to Image | `/img2img` | Transform an input image |
+| Multi Reference | `/multi_ref` | Use multiple reference images |
+
+## Common Parameters
+
+All testing model endpoints accept the following parameters:
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `key` | `string` | Yes | — | Your ModelsLab API key |
+| `model_id` | `string` | Yes | — | Model ID (`hidream-o1` or `nanobanana-lite-pretrained`) |
+| `prompt` | `string` | Yes | — | Text description of the desired output |
+| `negative_prompt` | `string` | No | `(worst quality:2), (low quality:2), blurry, nsfw` | Things to avoid |
+| `width` | `integer` | No | `1024` | Output width (`512`–`2048`, step `8`) |
+| `height` | `integer` | No | `1024` | Output height (`512`–`2048`, step `8`) |
+| `samples` | `integer` | No | `1` | Number of images (`1`–`4`) |
+| `webhook` | `string` | No | — | URL to receive a callback when generation completes |
+
+## Fetch Result
+
+After submitting a request, poll the fetch endpoint to retrieve the final image:
+
+```bash
+curl -X POST "https://modelslab.com/api/v8/images/fetch/{id}" \
+  -H "Content-Type: application/json" \
+  -d '{"key": "your-api-key"}'
+```
+
+## Response Format
+
+### Processing
+
+```json
+{
+  "status": "processing",
+  "id": "123456789",
+  "eta": 40,
+  "message": "Try to fetch request after seconds estimated",
+  "tip": "Your image is processing in background, you can get this image using fetch API",
+  "fetch_result": "https://modelslab.com/api/v8/images/fetch/123456789",
+  "meta": {},
+  "future_links": []
+}
+```
+
+### Success
+
+```json
+{
+  "status": "success",
+  "id": "123456789",
+  "generationTime": 35,
+  "output": [
+    "https://pub-...r2.dev/generations/xxx.png"
+  ],
+  "proxy_links": [],
+  "meta": {}
+}
+```

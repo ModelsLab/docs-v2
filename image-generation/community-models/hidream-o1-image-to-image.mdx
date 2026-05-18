@@ -1,0 +1,109 @@
+---
+title: "hidream-O1 Image to Image"
+description: "Transform existing images using the hidream-O1 testing model."
+---
+
+<Info>
+This endpoint routes to the testing inference server at `fpuinklnizer-3754.proxy.gpulab.ai`.
+</Info>
+
+## Request
+
+```bash
+POST https://modelslab.com/api/v8/images/hidream-o1-img2img
+```
+
+## Body
+
+```json
+{
+  "key": "your-api-key",
+  "model_id": "hidream-o1",
+  "prompt": "Convert this photo into an oil painting",
+  "init_image": ["https://example.com/photo.jpg"],
+  "strength": 0.7,
+  "negative_prompt": "(worst quality:2), (low quality:2), blurry, nsfw",
+  "width": 1024,
+  "height": 1024,
+  "samples": 1,
+  "webhook": null
+}
+```
+
+## Body Attributes
+
+<ParamField body="key" type="string" required>
+  Your ModelsLab API key.
+</ParamField>
+
+<ParamField body="model_id" type="string" required>
+  Must be `hidream-o1`.
+</ParamField>
+
+<ParamField body="prompt" type="string" required>
+  Text description of the desired transformation.
+</ParamField>
+
+<ParamField body="init_image" type="array" required>
+  Array of image URLs to transform. Maximum `3` items.
+</ParamField>
+
+<ParamField body="strength" type="number" default="0.7">
+  How much to transform the input image. Range: `0` to `1` (step `0.1`). `0` = minimal change, `1` = complete change.
+</ParamField>
+
+<ParamField body="negative_prompt" type="string" default="(worst quality:2), (low quality:2), blurry, nsfw">
+  Things to avoid in the generated image.
+</ParamField>
+
+<ParamField body="width" type="integer" default="1024">
+  Image width. Must be between `512` and `2048` (step `8`).
+</ParamField>
+
+<ParamField body="height" type="integer" default="1024">
+  Image height. Must be between `512` and `2048` (step `8`).
+</ParamField>
+
+<ParamField body="samples" type="integer" default="1">
+  Number of images to generate. Must be between `1` and `4`.
+</ParamField>
+
+<ParamField body="webhook" type="string">
+  URL to receive a webhook callback when generation completes.
+</ParamField>
+
+## Response
+
+### Processing
+
+```json
+{
+  "status": "processing",
+  "id": "123456790",
+  "eta": 40,
+  "message": "Try to fetch request after seconds estimated",
+  "tip": "Your image is processing in background, you can get this image using fetch API",
+  "fetch_result": "https://modelslab.com/api/v8/images/fetch/123456790",
+  "meta": {
+    "prompt": "Convert this photo into an oil painting",
+    "init_image": ["https://example.com/photo.jpg"],
+    "strength": 0.7
+  },
+  "future_links": []
+}
+```
+
+### Success — Fetch Result
+
+```json
+{
+  "status": "success",
+  "id": "123456790",
+  "generationTime": 35,
+  "output": [
+    "https://pub-...r2.dev/generations/xxx.png"
+  ],
+  "proxy_links": [],
+  "meta": {}
+}
+```
