@@ -179,19 +179,23 @@
                       "image-generation/community-models/dreambooth-lora",
                       "image-generation/community-models/dreambooth-lora-multi",
                       "image-generation/community-models/dreambooth-reload-model",
-                      "image-generation/community-models/dreambooth-fetch-queue-image",
-                      {
-                        "group": "Testing Models",
-                        "pages": [
-                          "image-generation/community-models/testing-models-overview",
-                          "image-generation/community-models/hidream-o1-text-to-image",
-                          "image-generation/community-models/hidream-o1-image-to-image",
-                          "image-generation/community-models/hidream-o1-multi-reference",
-                          "image-generation/community-models/nanobanana-lite-text-to-image",
-                          "image-generation/community-models/nanobanana-lite-image-to-image",
-                          "image-generation/community-models/nanobanana-lite-multi-reference"
-                        ]
-                      }
+                      "image-generation/community-models/dreambooth-fetch-queue-image"
+                    ]
+                  },
+                  {
+                    "group": "hidream-O1",
+                    "pages": [
+                      "image-generation/community-models/hidream-o1-text-to-image",
+                      "image-generation/community-models/hidream-o1-image-to-image",
+                      "image-generation/community-models/hidream-o1-multi-reference"
+                    ]
+                  },
+                  {
+                    "group": "NanoBanana Lite",
+                    "pages": [
+                      "image-generation/community-models/nanobanana-lite-text-to-image",
+                      "image-generation/community-models/nanobanana-lite-image-to-image",
+                      "image-generation/community-models/nanobanana-lite-multi-reference"
                     ]
                   },
                   {
@@ -592,12 +596,16 @@
                 ]
               },
               {
-                "group": "Testing Models API",
+                "group": "hidream-O1",
                 "pages": [
-                  "image-generation/community-models/testing-models-overview",
                   "image-generation/community-models/hidream-o1-text-to-image",
                   "image-generation/community-models/hidream-o1-image-to-image",
-                  "image-generation/community-models/hidream-o1-multi-reference",
+                  "image-generation/community-models/hidream-o1-multi-reference"
+                ]
+              },
+              {
+                "group": "NanoBanana Lite",
+                "pages": [
                   "image-generation/community-models/nanobanana-lite-text-to-image",
                   "image-generation/community-models/nanobanana-lite-image-to-image",
                   "image-generation/community-models/nanobanana-lite-multi-reference"
