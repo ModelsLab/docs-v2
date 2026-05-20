@@ -170,6 +170,22 @@
                     ]
                   },
                   {
+                    "group": "HiDream O1",
+                    "pages": [
+                      "image-generation/hidream-o1/overview",
+                      "image-generation/hidream-o1/text-to-image",
+                      "image-generation/hidream-o1/image-to-image"
+                    ]
+                  },
+                  {
+                    "group": "NanoBanana Lite",
+                    "pages": [
+                      "image-generation/nanobanana-lite-pretrained/overview",
+                      "image-generation/nanobanana-lite-pretrained/text-to-image",
+                      "image-generation/nanobanana-lite-pretrained/image-to-image"
+                    ]
+                  },
+                  {
                     "group": "Community Models",
                     "pages": [
                       "image-generation/community-models/overview",
