@@ -1,0 +1,22 @@
+---
+title: "Text to Image"
+openapi: 'POST /text2img'
+description: 'Create high quality images from text using the HiDream O1 model.'
+---
+
+Generate photorealistic images from text descriptions using the HiDream O1 model. HiDream O1 excels at creating highly detailed, realistic images with excellent prompt adherence.
+
+<Note>
+Use `hidream-o1` as the `model_id` when calling this endpoint.
+</Note>
+
+## Related Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Image to Image" icon="image" href="/image-generation/hidream-o1/image-to-image">
+    Transform existing images with HiDream O1
+  </Card>
+  <Card title="Fetch Results" icon="download" href="/image-generation/community-models/dreambooth-fetch-queue-image">
+    Retrieve results for processing requests
+  </Card>
+</CardGroup>

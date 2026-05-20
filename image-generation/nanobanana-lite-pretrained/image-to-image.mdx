@@ -1,0 +1,26 @@
+---
+title: "Image to Image"
+openapi: 'POST /img2img'
+description: 'Transform existing images using the NanoBanana Lite Pretrained model.'
+---
+
+<Note>
+The dimensions of the generated image will be the same as the dimensions of the init_image.
+</Note>
+
+Transform existing images with text guidance using the NanoBanana Lite Pretrained model. Provide an initial image and a prompt to generate a new image that maintains the structure while applying your creative direction.
+
+<Note>
+Use `nanobanana-lite-pretrained` as the `model_id` when calling this endpoint.
+</Note>
+
+## Related Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Text to Image" icon="text" href="/image-generation/nanobanana-lite-pretrained/text-to-image">
+    Generate images from text with NanoBanana Lite
+  </Card>
+  <Card title="Fetch Results" icon="download" href="/image-generation/community-models/dreambooth-fetch-queue-image">
+    Retrieve results for processing requests
+  </Card>
+</CardGroup>

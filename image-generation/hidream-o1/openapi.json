@@ -1,0 +1,406 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ModelsLab HiDream O1 Image Generation API",
+    "description": "API for AI-driven image generation using the HiDream O1 model, including text-to-image and image-to-image capabilities.",
+    "license": {
+      "name": "MIT"
+    },
+    "version": "6.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://modelslab.com/api/v6/images",
+      "description": "HiDream O1 Image Generation API v6 server"
+    }
+  ],
+  "paths": {
+    "/text2img": {
+      "post": {
+        "summary": "Text-to-Image",
+        "description": "Creates an image from a text prompt using the HiDream O1 model.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TextToImageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Text-to-image generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ImageGenerationSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageGenerationProcessingResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageGenerationErrorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/StandardErrorResponse" },
+          "401": { "$ref": "#/components/responses/StandardErrorResponse" },
+          "500": { "$ref": "#/components/responses/StandardErrorResponse" }
+        }
+      }
+    },
+    "/img2img": {
+      "post": {
+        "summary": "Image-to-Image",
+        "description": "Generates an image from an initial image using the HiDream O1 model. You can also add a text description (prompt) and negative prompt. The dimensions of the generated image will be the same as the dimensions of the initial image.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImageToImageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Image-to-image generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ImageGenerationSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageGenerationProcessingResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ImageGenerationErrorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/StandardErrorResponse" },
+          "401": { "$ref": "#/components/responses/StandardErrorResponse" },
+          "500": { "$ref": "#/components/responses/StandardErrorResponse" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TextToImageRequest": {
+        "type": "object",
+        "required": ["key", "model_id", "prompt"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization."
+          },
+          "model_id": {
+            "type": "string",
+            "description": "The ID of the model to be used. Use `hidream-o1` for the HiDream O1 model."
+          },
+          "prompt": {
+            "type": "string",
+            "description": "A text description of what you want in the generated image."
+          },
+          "negative_prompt": {
+            "type": "string",
+            "description": "Items you don't want in the image."
+          },
+          "width": {
+            "type": "integer",
+            "default": 512,
+            "maximum": 1024,
+            "description": "The width of the image in pixels. Must be between 256-1024 and divisible by 8."
+          },
+          "height": {
+            "type": "integer",
+            "default": 512,
+            "maximum": 1024,
+            "description": "The height of the image in pixels. Must be between 256-1024 and divisible by 8."
+          },
+          "samples": {
+            "type": "integer",
+            "default": 1,
+            "maximum": 4,
+            "description": "The number of images to be returned in response. Maximum is 4."
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "default": 30,
+            "minimum": 20,
+            "maximum": 50,
+            "description": "Number of denoising steps. Higher values produce more detailed images but take longer."
+          },
+          "guidance_scale": {
+            "type": "number",
+            "default": 7.5,
+            "minimum": 1,
+            "maximum": 20,
+            "description": "How closely to follow the prompt. Higher values = more literal interpretation."
+          },
+          "safety_checker": {
+            "type": "string",
+            "default": "yes",
+            "enum": ["yes", "no"],
+            "description": "Enable NSFW content filter."
+          },
+          "seed": {
+            "oneOf": [{ "type": "integer" }, { "type": "null" }],
+            "description": "Random seed for reproducible results. Pass null for a random number."
+          },
+          "clip_skip": {
+            "type": "integer",
+            "default": 2,
+            "minimum": 1,
+            "maximum": 4,
+            "description": "Number of CLIP layers to skip. Affects style interpretation."
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive a POST API call once image generation is complete."
+          },
+          "track_id": {
+            "type": "string",
+            "description": "Unique ID used in webhook response to identify the request."
+          }
+        }
+      },
+      "ImageToImageRequest": {
+        "type": "object",
+        "required": ["key", "model_id", "prompt", "init_image"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization."
+          },
+          "model_id": {
+            "type": "string",
+            "description": "The ID of the model to be used. Use `hidream-o1` for the HiDream O1 model."
+          },
+          "prompt": {
+            "type": "string",
+            "description": "A text description of what you want in the generated image."
+          },
+          "init_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL of the initial image to be used as a reference."
+          },
+          "negative_prompt": {
+            "type": "string",
+            "description": "Items you don't want in the image."
+          },
+          "strength": {
+            "type": "number",
+            "default": 0.7,
+            "minimum": 0,
+            "maximum": 1,
+            "description": "How much to transform the init image. 0.0 = no change, 1.0 = complete transformation."
+          },
+          "width": {
+            "type": "integer",
+            "default": 512,
+            "maximum": 1024,
+            "description": "The width of the image in pixels. Must be between 256-1024 and divisible by 8."
+          },
+          "height": {
+            "type": "integer",
+            "default": 512,
+            "maximum": 1024,
+            "description": "The height of the image in pixels. Must be between 256-1024 and divisible by 8."
+          },
+          "samples": {
+            "type": "integer",
+            "default": 1,
+            "maximum": 4,
+            "description": "The number of images to be returned in response. Maximum is 4."
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "default": 30,
+            "minimum": 20,
+            "maximum": 50,
+            "description": "Number of denoising steps. Higher values produce more detailed images but take longer."
+          },
+          "guidance_scale": {
+            "type": "number",
+            "default": 7.5,
+            "minimum": 1,
+            "maximum": 20,
+            "description": "How closely to follow the prompt. Higher values = more literal interpretation."
+          },
+          "safety_checker": {
+            "type": "string",
+            "default": "yes",
+            "enum": ["yes", "no"],
+            "description": "Enable NSFW content filter."
+          },
+          "seed": {
+            "oneOf": [{ "type": "integer" }, { "type": "null" }],
+            "description": "Random seed for reproducible results. Pass null for a random number."
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive a POST API call once image generation is complete."
+          },
+          "track_id": {
+            "type": "string",
+            "description": "Unique ID used in webhook response to identify the request."
+          }
+        }
+      },
+      "ImageGenerationSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success"],
+            "description": "Status of the image generation."
+          },
+          "generationTime": {
+            "type": "number",
+            "description": "Time taken to generate the image in seconds."
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the image generation request."
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of generated image URLs."
+          },
+          "proxy_links": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of proxy image URLs."
+          },
+          "meta": {
+            "type": "object",
+            "description": "Metadata about the image generation including all parameters used.",
+            "additionalProperties": true
+          },
+          "nsfw_content_detected": {
+            "type": "boolean",
+            "description": "Indicates if NSFW content was detected in the generated image."
+          },
+          "webhook_status": {
+            "type": "string",
+            "description": "Status of the webhook notification."
+          },
+          "tip": {
+            "type": "string",
+            "description": "Additional information or tips for the user."
+          }
+        }
+      },
+      "ImageGenerationProcessingResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["processing"],
+            "description": "Status of the image generation."
+          },
+          "tip": {
+            "type": "string",
+            "description": "Information about faster processing options."
+          },
+          "tip_1": {
+            "type": "string",
+            "description": "Additional tip, usually pointing to the fetch API."
+          },
+          "eta": {
+            "type": "number",
+            "description": "Estimated time for completion in seconds."
+          },
+          "message": {
+            "type": "string",
+            "description": "Processing status message."
+          },
+          "webhook_status": {
+            "type": "string",
+            "description": "Status of the webhook notification."
+          },
+          "fetch_result": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to fetch the result when processing."
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the image generation request."
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Empty array during processing."
+          },
+          "meta": {
+            "type": "object",
+            "description": "Metadata about the image generation including all parameters used.",
+            "additionalProperties": true
+          },
+          "future_links": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of future image URLs for queued requests."
+          }
+        }
+      },
+      "ImageGenerationErrorResponse": {
+        "type": "object",
+        "required": ["status", "message"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["error"]
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message description."
+          }
+        }
+      }
+    },
+    "responses": {
+      "StandardErrorResponse": {
+        "description": "Bad request (invalid parameters), unauthorized (invalid API key), or internal server error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ImageGenerationErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  }
+}
