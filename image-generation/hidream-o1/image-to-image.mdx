@@ -1,5 +1,6 @@
 ---
 title: "Image to Image"
+openapi: 'POST /img2img'
 description: 'Transform existing images using the HiDream O1 model.'
 ---
 
@@ -16,68 +17,6 @@ Make a `POST` request to the endpoint below with the required parameters.
 ```bash
 POST https://modelslab.com/api/v6/images/img2img
 ```
-
-## Parameters
-
-<ParamField body="key" type="string" required>
-  Your API key for authentication. Get one from your [dashboard](https://modelslab.com/dashboard/api-keys).
-</ParamField>
-
-<ParamField body="model_id" type="string" required>
-  The model to use for generation. Use `hidream-o1` for the HiDream O1 model.
-</ParamField>
-
-<ParamField body="prompt" type="string" required>
-  Text description of the desired output.
-</ParamField>
-
-<ParamField body="init_image" type="string" required>
-  URL of the initial image to transform.
-</ParamField>
-
-<ParamField body="negative_prompt" type="string">
-  Things you don't want in the image.
-</ParamField>
-
-<ParamField body="strength" type="float" default="0.7">
-  How much to transform the init image. 0.0 = no change, 1.0 = complete transformation.
-</ParamField>
-
-<ParamField body="width" type="integer" default="512">
-  Image width in pixels. Must be between 256-1024 and divisible by 8.
-</ParamField>
-
-<ParamField body="height" type="integer" default="512">
-  Image height in pixels. Must be between 256-1024 and divisible by 8.
-</ParamField>
-
-<ParamField body="samples" type="integer" default="1">
-  Number of images to generate. Range: 1-4.
-</ParamField>
-
-<ParamField body="num_inference_steps" type="integer" default="30">
-  Number of denoising steps. Range: 20-50.
-</ParamField>
-
-<ParamField body="guidance_scale" type="float" default="7.5">
-  How closely to follow the prompt. Range: 1-20.
-</ParamField>
-
-<ParamField body="safety_checker" type="string" default="yes">
-  Enable NSFW content filter. Values: "yes" or "no".
-</ParamField>
-
-<ParamField body="seed" type="integer">
-  Random seed for reproducible results.
-</ParamField>
-
-<ParamField body="webhook" type="string">
-  URL to receive a POST request when generation completes. See [Webhooks](/webhooks).
-</ParamField>
-
-<ParamField body="track_id" type="string">
-  Your custom identifier to track this request.
-</ParamField>
 
 ## Request Example
 
@@ -170,54 +109,9 @@ curl -X POST "https://modelslab.com/api/v6/images/img2img" \
 
 </CodeGroup>
 
-## Response
-
-### Success Response
-
-```json
-{
-  "status": "success",
-  "generationTime": 2.45,
-  "id": 12345678,
-  "output": [
-    "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/abc123.png"
-  ],
-  "proxy_links": {
-    "0": "https://cdn.modelslab.com/generations/abc123.png"
-  },
-  "meta": {
-    "prompt": "a cat sitting on a bench, oil painting style",
-    "model_id": "hidream-o1",
-    "width": 512,
-    "height": 512,
-    "seed": 12345
-  }
-}
-```
-
-### Processing Response
-
-```json
-{
-  "status": "processing",
-  "id": 12345678,
-  "eta": 10,
-  "message": "Your request is being processed"
-}
-```
-
 <Tip>
 When you receive a processing response, use the [Fetch endpoint](/image-generation/community-models/dreambooth-fetch-queue-image) to poll for results.
 </Tip>
-
-### Error Response
-
-```json
-{
-  "status": "error",
-  "message": "init_image is required"
-}
-```
 
 ## Related Endpoints
 
