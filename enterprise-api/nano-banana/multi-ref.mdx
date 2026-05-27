@@ -1,0 +1,22 @@
+---
+title: "Multi Reference"
+description: "Generate images from text with multiple reference images using nano banana model."
+openapi: "POST /nano_banana/multi_ref"
+---
+
+Generate images from a text prompt combined with multiple reference images using the Nano Banana model.
+
+<Note>
+The `ref_image` parameter accepts an array of image URLs for multi-reference composition.
+</Note>
+
+## Related Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Text to Image" icon="text" href="/enterprise-api/nano-banana/text-to-img">
+    Generate images from text alone.
+  </Card>
+  <Card title="Image to Image" icon="image" href="/enterprise-api/nano-banana/img-to-img">
+    Generate images from a single reference image.
+  </Card>
+</CardGroup>

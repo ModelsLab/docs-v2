@@ -13,7 +13,6 @@
       "copy",
       "view",
       "chatgpt",
-      "grok",
       "mcp",
       "cursor",
       "vscode",
@@ -394,6 +393,21 @@
                 ]
               },
               {
+                "group": "Nano Banana API",
+                "pages": [
+                  "enterprise-api/nano-banana/overview",
+                  "enterprise-api/nano-banana/text-to-img",
+                  "enterprise-api/nano-banana/img-to-img",
+                  "enterprise-api/nano-banana/multi-ref",
+                  "enterprise-api/nano-banana/system-details",
+                  "enterprise-api/nano-banana/restart-server",
+                  "enterprise-api/nano-banana/update-server",
+                  "enterprise-api/nano-banana/clear-cache",
+                  "enterprise-api/nano-banana/clear-queue",
+                  "enterprise-api/nano-banana/fetch"
+                ]
+              },
+              {
                 "group": "Face Swap API",
                 "pages": [
                   "enterprise-api/faceswap/overview",
@@ -759,6 +773,7 @@
   "navbar": {
     "links": [
       {
+        "label": "",
         "type": "discord",
         "href": "https://discord.com/invite/modelslab-1033301189254729748"
       }

@@ -1,0 +1,22 @@
+---
+title: "Image to Image"
+description: "Generate high-definition image from text and reference image using nano banana model."
+openapi: "POST /nano_banana/img2img"
+---
+
+Generate high-definition images from a text prompt combined with a reference image using the Nano Banana model.
+
+<Note>
+The `ref_image` parameter accepts a single image URL. If no width/height is specified, it defaults to the reference image dimensions.
+</Note>
+
+## Related Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Text to Image" icon="text" href="/enterprise-api/nano-banana/text-to-img">
+    Generate images from text alone.
+  </Card>
+  <Card title="Multi Reference" icon="image" href="/enterprise-api/nano-banana/multi-ref">
+    Generate images from text with multiple reference images.
+  </Card>
+</CardGroup>
