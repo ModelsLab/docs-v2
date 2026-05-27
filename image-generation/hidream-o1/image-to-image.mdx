@@ -1,6 +1,6 @@
 ---
 title: "Image to Image"
-openapi: 'POST /img2img'
+openapi: 'image-generation/hidream-o1/openapi.json POST /img2img'
 description: 'Transform existing images using the HiDream O1 model.'
 ---
 
@@ -8,19 +8,33 @@ description: 'Transform existing images using the HiDream O1 model.'
 The dimensions of the generated image will be the same as the dimensions of the init_image.
 </Note>
 
-Transform existing images with text guidance using the HiDream O1 model. Provide an initial image and a prompt to generate a new image that maintains the structure while applying your creative direction.
+Transform existing images with text guidance using the HiDream O1 model.
 
-<Note>
-Use `hidream-o1` as the `model_id` when calling this endpoint.
-</Note>
+## Request
 
-## Related Endpoints
+Make a `POST` request to the endpoint below with the required parameters.
 
-<CardGroup cols={2}>
-  <Card title="Text to Image" icon="text" href="/image-generation/hidream-o1/text-to-image">
-    Generate images from text with HiDream O1
-  </Card>
-  <Card title="Fetch Results" icon="download" href="/image-generation/community-models/dreambooth-fetch-queue-image">
-    Retrieve results for processing requests
-  </Card>
-</CardGroup>
+```bash
+POST https://modelslab.com/api/v6/images/img2img
+```
+
+### Body
+```json json
+{
+    "key": "your_api_key",
+    "model_id": "hidream-o1",
+    "prompt": "a cat sitting on a bench, oil painting style",
+    "negative_prompt": "blurry, low quality",
+    "init_image": "https://raw.githubusercontent.com/CompVis/stable-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png",
+    "strength": 0.7,
+    "width": 512,
+    "height": 512,
+    "samples": 1,
+    "num_inference_steps": 31,
+    "safety_checker": "no",
+    "seed": null,
+    "guidance_scale": 7.5,
+    "webhook": null,
+    "track_id": null
+}
+```
