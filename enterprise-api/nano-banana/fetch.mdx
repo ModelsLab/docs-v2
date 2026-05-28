@@ -5,14 +5,3 @@ openapi: "POST /nano_banana/fetch/{id}"
 ---
 
 Send a `POST` request to retrieve the corresponding queued images. The `{id}` is the ID returned together with the image URL in the generation response. This endpoint does not generate new images — it returns already generated or queued images.
-
-## Related Endpoints
-
-<CardGroup cols={2}>
-  <Card title="Text to Image" icon="text" href="/enterprise-api/nano-banana/text-to-img">
-    Generate images from text.
-  </Card>
-  <Card title="Image to Image" icon="image" href="/enterprise-api/nano-banana/img-to-img">
-    Generate images from a reference image.
-  </Card>
-</CardGroup>
