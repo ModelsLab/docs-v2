@@ -178,14 +178,6 @@
                     ]
                   },
                   {
-                    "group": "NanoBanana Lite",
-                    "pages": [
-                      "image-generation/nanobanana-lite-pretrained/overview",
-                      "image-generation/nanobanana-lite-pretrained/text-to-image",
-                      "image-generation/nanobanana-lite-pretrained/image-to-image"
-                    ]
-                  },
-                  {
                     "group": "Community Models",
                     "pages": [
                       "image-generation/community-models/overview",
