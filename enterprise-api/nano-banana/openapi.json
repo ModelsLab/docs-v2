@@ -1,0 +1,201 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "ModelsLab Enterprise Nano Banana API",
+    "version": "1.0.0",
+    "description": "Server management endpoints for the Nano Banana enterprise API."
+  },
+  "servers": [
+    {
+      "url": "https://modelslab.com/api/v1/enterprise"
+    }
+  ],
+  "paths": {
+    "/nano_banana/fetch/{id}": {
+      "post": {
+        "summary": "Fetch Image",
+        "description": "Retrieve a queued or generated image by request ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "The request ID returned from the generation endpoint."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/KeyOnlyRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Fetched image response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "output": ["https://cdn.modelslab.com/generated/image.png"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nano_banana/system_details": {
+      "post": {
+        "summary": "System Details",
+        "description": "Returns information about your server.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/KeyOnlyRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "System details response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "data": {
+                    "server_version": "1.0.0",
+                    "uptime": "5d 12h 30m",
+                    "gpu_usage": "45%"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nano_banana/restart_server": {
+      "post": {
+        "summary": "Restart Server",
+        "description": "Restarts your dedicated server.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/KeyOnlyRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Server restart response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "message": "Server is restarting"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nano_banana/update_server": {
+      "post": {
+        "summary": "Update Server",
+        "description": "Updates your dedicated server to the latest version.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/KeyOnlyRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Server update response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "message": "Server updated successfully"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nano_banana/clear_cache": {
+      "post": {
+        "summary": "Clear Cache",
+        "description": "Clears the API's cache.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/KeyOnlyRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cache cleared successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "message": "Cache cleared successfully"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nano_banana/clear_queue": {
+      "post": {
+        "summary": "Clear Queue",
+        "description": "Clears the API's queue.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/KeyOnlyRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Queue cleared successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "message": "Queue cleared, server is restarting"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "KeyOnlyRequest": {
+        "type": "object",
+        "required": ["key"],
+        "properties": {
+          "key": { "type": "string", "description": "Your enterprise API key used for request authorization." }
+        }
+      }
+    }
+  }
+}
