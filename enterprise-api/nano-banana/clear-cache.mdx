@@ -4,4 +4,15 @@ description: "This endpoint is used to clear the API's cache."
 openapi: "POST /nano_banana/clear_cache"
 ---
 
-Send a `POST` request to clear the Nano Banana API's cache.
+## Request
+Send a `POST` request to below endpoint to clear the API's cache.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/nano_banana/clear_cache' \
+```
+
+## Body
+```json json
+{
+    "key": "enterprise_api_key"
+}
+```

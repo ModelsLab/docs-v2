@@ -4,4 +4,15 @@ description: "This endpoint returns information about your server."
 openapi: "POST /nano_banana/system_details"
 ---
 
-Send a `POST` request to get information about your dedicated Nano Banana server.
+## Request
+Send a `POST` request to below endpoint to get system details.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/nano_banana/system_details' \
+```
+
+## Body
+```json json
+{
+    "key": "enterprise_api_key"
+}
+```

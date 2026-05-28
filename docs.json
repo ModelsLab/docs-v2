@@ -350,6 +350,21 @@
             "pages": [
               "enterprise-api/overview",
               {
+                "group": "Nano Banana API",
+                "pages": [
+                  "enterprise-api/nano-banana/overview",
+                  "enterprise-api/nano-banana/text-to-img",
+                  "enterprise-api/nano-banana/img-to-img",
+                  "enterprise-api/nano-banana/multi-ref",
+                  "enterprise-api/nano-banana/fetch",
+                  "enterprise-api/nano-banana/clear-cache",
+                  "enterprise-api/nano-banana/clear-queue",
+                  "enterprise-api/nano-banana/restart-server",
+                  "enterprise-api/nano-banana/system-details",
+                  "enterprise-api/nano-banana/update-server"
+                ]
+              },
+              {
                 "group": "Flux Klein API",
                 "pages": [
                   "enterprise-api/flux-klein/overview",
@@ -390,21 +405,6 @@
                   "enterprise-api/qwen/clear-cache",
                   "enterprise-api/qwen/clear-queue",
                   "enterprise-api/qwen/fetch"
-                ]
-              },
-              {
-                "group": "Nano Banana API",
-                "pages": [
-                  "enterprise-api/nano-banana/overview",
-                  "enterprise-api/nano-banana/text-to-img",
-                  "enterprise-api/nano-banana/img-to-img",
-                  "enterprise-api/nano-banana/multi-ref",
-                  "enterprise-api/nano-banana/system-details",
-                  "enterprise-api/nano-banana/restart-server",
-                  "enterprise-api/nano-banana/update-server",
-                  "enterprise-api/nano-banana/clear-cache",
-                  "enterprise-api/nano-banana/clear-queue",
-                  "enterprise-api/nano-banana/fetch"
                 ]
               },
               {

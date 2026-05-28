@@ -3,7 +3,7 @@
   "info": {
     "title": "ModelsLab Enterprise Nano Banana API",
     "version": "1.0.0",
-    "description": "Enterprise endpoints for Nano Banana API including text-to-image, image-to-image, multi-reference, cache/queue management, fetch, and server management."
+    "description": "Server management endpoints for the Nano Banana enterprise API."
   },
   "servers": [
     {
@@ -11,90 +11,6 @@
     }
   ],
   "paths": {
-    "/nano_banana/text2img": {
-      "post": {
-        "summary": "Text to Image",
-        "description": "Generate high-definition image from text using nano banana model.",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TextToImageRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Text-to-image generation response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ImageGenerationResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/nano_banana/img2img": {
-      "post": {
-        "summary": "Image to Image",
-        "description": "Generate high-definition image from text and reference image using nano banana model.",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ImageToImageRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Image-to-image generation response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ImageGenerationResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/nano_banana/multi_ref": {
-      "post": {
-        "summary": "Multi Reference",
-        "description": "Generate images from text with multiple reference images using nano banana model.",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MultiRefRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Multi-reference generation response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ImageGenerationResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/nano_banana/fetch/{id}": {
       "post": {
         "summary": "Fetch Image",
@@ -104,9 +20,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            },
+            "schema": { "type": "string" },
             "description": "The request ID returned from the generation endpoint."
           }
         ],
@@ -114,13 +28,7 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "key": { "type": "string", "description": "Your enterprise API key" }
-                },
-                "required": ["key"]
-              }
+              "schema": { "$ref": "#/components/schemas/KeyOnlyRequest" }
             }
           }
         },
@@ -147,13 +55,7 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "key": { "type": "string", "description": "Your enterprise API key" }
-                },
-                "required": ["key"]
-              }
+              "schema": { "$ref": "#/components/schemas/KeyOnlyRequest" }
             }
           }
         },
@@ -184,13 +86,7 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "key": { "type": "string", "description": "Your enterprise API key" }
-                },
-                "required": ["key"]
-              }
+              "schema": { "$ref": "#/components/schemas/KeyOnlyRequest" }
             }
           }
         },
@@ -217,13 +113,7 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "key": { "type": "string", "description": "Your enterprise API key" }
-                },
-                "required": ["key"]
-              }
+              "schema": { "$ref": "#/components/schemas/KeyOnlyRequest" }
             }
           }
         },
@@ -250,13 +140,7 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "key": { "type": "string", "description": "Your enterprise API key" }
-                },
-                "required": ["key"]
-              }
+              "schema": { "$ref": "#/components/schemas/KeyOnlyRequest" }
             }
           }
         },
@@ -283,13 +167,7 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "key": { "type": "string", "description": "Your enterprise API key" }
-                },
-                "required": ["key"]
-              }
+              "schema": { "$ref": "#/components/schemas/KeyOnlyRequest" }
             }
           }
         },
@@ -311,57 +189,11 @@
   },
   "components": {
     "schemas": {
-      "ImageGenerationRequest": {
+      "KeyOnlyRequest": {
         "type": "object",
-        "required": ["key", "prompt"],
+        "required": ["key"],
         "properties": {
-          "key": { "type": "string", "description": "Your enterprise API key used for request authorization." },
-          "prompt": { "type": "string", "description": "Text prompt describing the image you want to generate." },
-          "negative_prompt": { "type": "string", "description": "Items you don't want in the image." },
-          "width": { "type": "integer", "minimum": 1024, "maximum": 2048, "default": 2048, "description": "Width of the generated image. Must be between 1024 and 2048 and divisible by 32." },
-          "height": { "type": "integer", "minimum": 1024, "maximum": 2048, "default": 2048, "description": "Height of the generated image. Must be between 1024 and 2048 and divisible by 32." },
-          "samples": { "type": "integer", "minimum": 1, "maximum": 4, "default": 1, "description": "Number of images to return. Maximum: 4." },
-          "seed": { "type": "integer", "description": "Seed for reproducible generation. 0 triggers a random seed." },
-          "noise_scale_start": { "type": "number", "minimum": 0, "maximum": 30, "default": 7.5, "description": "Starting noise scale for the generation process." },
-          "noise_scale_end": { "type": "number", "minimum": 0, "maximum": 30, "default": 7.5, "description": "Ending noise scale for the generation process." },
-          "noise_clip_std": { "type": "number", "minimum": 0, "maximum": 10, "default": 2.5, "description": "Noise clip standard deviation." },
-          "watermark": { "type": "string", "default": "no", "description": "Whether to add a watermark. Values: yes/no." },
-          "temp": { "type": "string", "default": "no", "description": "Store in temporary directory. Values: yes/no." },
-          "base64": { "type": "string", "default": "no", "description": "Return image as base64 encoded text. Values: yes/no." },
-          "webhook": { "type": "string", "format": "uri", "description": "A URL to receive a POST API call once the image generation is complete." },
-          "track_id": { "type": "string", "description": "A unique ID used in the webhook response to identify the request." }
-        }
-      },
-      "TextToImageRequest": {
-        "allOf": [
-          { "$ref": "#/components/schemas/ImageGenerationRequest" }
-        ]
-      },
-      "ImageToImageRequest": {
-        "allOf": [
-          { "$ref": "#/components/schemas/ImageGenerationRequest" }
-        ],
-        "required": ["ref_image"],
-        "properties": {
-          "ref_image": { "type": "string", "description": "Image URL to use as a reference image for the generation." },
-          "keep_original_aspect": { "type": "string", "default": "no", "description": "Keep the original aspect ratio of the reference image. Only applies when using a single reference image. Values: yes/no." }
-        }
-      },
-      "MultiRefRequest": {
-        "allOf": [
-          { "$ref": "#/components/schemas/ImageGenerationRequest" }
-        ],
-        "required": ["ref_image"],
-        "properties": {
-          "ref_image": { "type": "array", "items": { "type": "string", "format": "uri" }, "description": "Array of image URLs to use as reference images for multi-reference composition." }
-        }
-      },
-      "ImageGenerationResponse": {
-        "type": "object",
-        "properties": {
-          "status": { "type": "string", "description": "Status of the request." },
-          "output": { "type": "array", "items": { "type": "string" }, "description": "Generated image URLs." },
-          "id": { "type": "string", "description": "Request ID for fetching results." }
+          "key": { "type": "string", "description": "Your enterprise API key used for request authorization." }
         }
       }
     }

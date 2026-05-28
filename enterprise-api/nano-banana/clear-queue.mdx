@@ -4,4 +4,15 @@ description: "This endpoint is used to clear the API's queue."
 openapi: "POST /nano_banana/clear_queue"
 ---
 
-Send a `POST` request to clear the Nano Banana API's queue.
+## Request
+Send a `POST` request to below endpoint to clear the API's queue.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/nano_banana/clear_queue' \
+```
+
+## Body
+```json json
+{
+    "key": "enterprise_api_key"
+}
+```

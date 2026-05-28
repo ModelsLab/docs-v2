@@ -4,4 +4,15 @@ description: "This endpoint is used to restart your dedicated server."
 openapi: "POST /nano_banana/restart_server"
 ---
 
-Send a `POST` request to restart your dedicated Nano Banana server.
+## Request
+Send a `POST` request to below endpoint to restart your dedicated server.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/nano_banana/restart_server' \
+```
+
+## Body
+```json json
+{
+    "key": "enterprise_api_key"
+}
+```
