@@ -122,15 +122,17 @@
           },
           "width": {
             "type": "integer",
-            "default": 512,
-            "maximum": 1024,
-            "description": "The width of the image in pixels. Must be between 256-1024 and divisible by 8."
+            "default": 1024,
+            "minimum": 1024,
+            "maximum": 2048,
+            "description": "The width of the image in pixels. Must be between 1024-2048 and divisible by 8."
           },
           "height": {
             "type": "integer",
-            "default": 512,
-            "maximum": 1024,
-            "description": "The height of the image in pixels. Must be between 256-1024 and divisible by 8."
+            "default": 1024,
+            "minimum": 1024,
+            "maximum": 2048,
+            "description": "The height of the image in pixels. Must be between 1024-2048 and divisible by 8."
           },
           "samples": {
             "type": "integer",
@@ -214,15 +216,17 @@
           },
           "width": {
             "type": "integer",
-            "default": 512,
-            "maximum": 1024,
-            "description": "The width of the image in pixels. Must be between 256-1024 and divisible by 8."
+            "default": 2048,
+            "minimum": 1024,
+            "maximum": 2048,
+            "description": "The width of the image in pixels. Must be between 1024-2048 and divisible by 8."
           },
           "height": {
             "type": "integer",
-            "default": 512,
-            "maximum": 1024,
-            "description": "The height of the image in pixels. Must be between 256-1024 and divisible by 8."
+            "default": 2048,
+            "minimum": 1024,
+            "maximum": 2048,
+            "description": "The height of the image in pixels. Must be between 1024-2048 and divisible by 8."
           },
           "samples": {
             "type": "integer",
