@@ -1,0 +1,56 @@
+---
+title: "Enterprise Qwen Edit API"
+description: "Enterprise AI image editing powered by the Qwen model on dedicated GPU servers. Edit, transform, and enhance images with fashion try-on, outpainting, object removal, and more."
+---
+
+<Warning>
+  Make sure you add your [s3 details](/enterprise-api/general/update-s3-details) for `image_editing` server, so you can receive images generated in your bucket. Images generated without s3 details being added will be deleted after **24 hours**.
+</Warning>
+
+### Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Qwen Edit" icon="wand-magic-sparkles" href="/enterprise-api/qwen-edit/qwen-edit">
+    Edit images using the powerful Qwen AI model
+  </Card>
+
+  <Card title="Fashion" icon="shirt" href="/enterprise-api/qwen-edit/fashion">
+    Try on clothing items on existing model bodies
+  </Card>
+
+  <Card title="Magic Mix" icon="shuffle" href="/enterprise-api/qwen-edit/magic-mix">
+    Generate eye-catching image blends with text prompts
+  </Card>
+
+  <Card title="Object Removal" icon="eraser" href="/enterprise-api/qwen-edit/object-removal">
+    Remove unwanted objects from images
+  </Card>
+
+  <Card title="Outpainting" icon="expand" href="/enterprise-api/qwen-edit/outpainting">
+    Extend images beyond their original boundaries
+  </Card>
+
+  <Card title="Fetch Image" icon="download" href="/enterprise-api/qwen-edit/fetchimage">
+    Fetch queued image generation results
+  </Card>
+
+  <Card title="Clear Cache" icon="trash" href="/enterprise-api/qwen-edit/clear-cache">
+    Clear the server cache
+  </Card>
+
+  <Card title="Clear Queue" icon="list-check" href="/enterprise-api/qwen-edit/clear-queue">
+    Clear the server queue
+  </Card>
+
+  <Card title="Restart Server" icon="rotate" href="/enterprise-api/qwen-edit/restart-server">
+    Restart your dedicated server
+  </Card>
+
+  <Card title="System Details" icon="server" href="/enterprise-api/qwen-edit/system-details">
+    Get information about your server
+  </Card>
+
+  <Card title="Update Server" icon="arrow-up-from-bracket" href="/enterprise-api/qwen-edit/update-server">
+    Update your dedicated server
+  </Card>
+</CardGroup>
