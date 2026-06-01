@@ -18,19 +18,19 @@ Make a `POST` request to below endpoint and pass the required parameters in the 
 ```json json
 {
   "key": "enterprise_api_key",
-  "prompt": "Combine these reference images into a single cohesive scene",
+  "prompt": "Replace the outfit of the girl in Image 1 with the dress shown in Image 2 while maintaining her pose, facial features, hairstyle, and the overall background naturally",
   "ref_image": [
-    "https://assets.modelslab.ai/generations/a56df09f-4c7f-4172-8390-29a22b17877a.avif",
-    "https://assets.modelslab.ai/generations/c64f47e2-2e4e-43eb-b370-4d4d4b8a0113.webp"
+    "https://assets.modelslab.ai/generations/5866dedb-2347-40e7-a6e0-6743271d6242.jpg",
+    "https://assets.modelslab.ai/generations/02cfa5f9-58e0-4c2d-b50b-6944cf1f7e74.png"
   ],
   "samples": 1,
   "seed": 42,
+  "width": 2048,
+  "height": 2048,
   "negative_prompt": "blurry, low quality, distorted",
   "noise_scale_start": 7.5,
   "noise_scale_end": 7.5,
   "noise_clip_std": 2.5,
-  "width": 2048,
-  "height": 2048,
   "watermark": "no",
   "temp": "no",
   "base64": "no",
