@@ -1,0 +1,45 @@
+---
+title: "Schedulers"
+description: 'Available schedulers for Pony models.'
+---
+
+These are the available schedulers for Pony models.
+
+## Quick lookup: Civitai / ComfyUI name → request fields
+
+| Civitai / ComfyUI sampler   | `scheduler`                       | `algorithm_type`     | `use_karras_sigmas` |
+|-----------------------------|-----------------------------------|----------------------|---------------------|
+| Euler                       | `EulerDiscreteScheduler`          | —                    | `no`                |
+| Euler a (Euler Ancestral)   | `EulerAncestralDiscreteScheduler` | —                    | `no`                |
+| LMS                         | `LMSDiscreteScheduler`            | —                    | `no`                |
+| LMS Karras                  | `LMSDiscreteScheduler`            | —                    | `yes`               |
+| Heun                        | `HeunDiscreteScheduler`           | —                    | `no`                |
+| DPM2                        | `KDPM2DiscreteScheduler`          | —                    | `no`                |
+| DPM2 Karras                 | `KDPM2DiscreteScheduler`          | —                    | `yes`               |
+| DPM2 a                      | `KDPM2AncestralDiscreteScheduler` | —                    | `no`                |
+| DPM2 a Karras               | `KDPM2AncestralDiscreteScheduler` | —                    | `yes`               |
+| DPM++ 2M                    | `DPMSolverMultistepScheduler`     | —                    | `no`                |
+| DPM++ 2M Karras             | `DPMSolverMultistepScheduler`     | —                    | `yes`               |
+| DPM++ 2M SDE                | `DPMSolverMultistepScheduler`     | `sde-dpmsolver++`    | `no`                |
+| DPM++ 2M SDE Karras         | `DPMSolverMultistepScheduler`     | `sde-dpmsolver++`    | `yes`               |
+| DPM++ 3M SDE \*             | `DPMSolverMultistepScheduler`     | `sde-dpmsolver++`    | `no`                |
+| DPM++ 3M SDE Karras \*      | `DPMSolverMultistepScheduler`     | `sde-dpmsolver++`    | `yes`               |
+| DPM++ SDE                   | `DPMSolverSinglestepScheduler`    | `sde-dpmsolver++`    | `no`                |
+| DPM++ SDE Karras            | `DPMSolverSinglestepScheduler`    | `sde-dpmsolver++`    | `yes`               |
+| DDIM                        | `DDIMScheduler`                   | —                    | `no`                |
+| DDPM                        | `DDPMScheduler`                   | —                    | `no`                |
+| PLMS / PNDM                 | `PNDMScheduler`                   | —                    | `no`                |
+| UniPC                       | `UniPCMultistepScheduler`         | —                    | `no`                |
+| DEIS                        | `DEISMultistepScheduler`          | —                    | `no`                |
+| LCM                         | `LCMScheduler`                    | —                    | `no`                |
+| IPNDM                       | `IPNDMScheduler`                  | —                    | `no`                |
+
+A `—` in the `algorithm_type` column means: omit the field, or send `no`.
+
+Only the following diffusers schedulers honor `use_karras_sigmas=yes`:
+
+- `DPMSolverMultistepScheduler`
+- `DPMSolverSinglestepScheduler`
+- `KDPM2DiscreteScheduler`
+- `KDPM2AncestralDiscreteScheduler`
+- `LMSDiscreteScheduler`
