@@ -177,6 +177,16 @@
                     ]
                   },
                   {
+                    "group": "Pony Models",
+                    "pages": [
+                      "image-generation/pony-models/overview",
+                      "image-generation/pony-models/text-to-image",
+                      "image-generation/pony-models/image-to-image",
+                      "image-generation/pony-models/inpaint",
+                      "image-generation/pony-models/scheduler"
+                    ]
+                  },
+                  {
                     "group": "Community Models",
                     "pages": [
                       "image-generation/community-models/overview",

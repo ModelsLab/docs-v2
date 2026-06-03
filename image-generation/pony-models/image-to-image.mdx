@@ -1,0 +1,48 @@
+---
+title: "Image to Image"
+openapi: 'image-generation/pony-models/openapi.json POST /img2img'
+description: 'Transform existing images using Pony models.'
+---
+
+<Note>
+The dimensions of the generated image will be the same as the dimensions of the init_image.
+</Note>
+
+Transform existing images with text guidance using Pony models.
+
+<Note>
+  See available [schedulers](/image-generation/pony-models/scheduler) for Pony models.
+</Note>
+
+## Request
+
+Make a `POST` request to the endpoint below with the required parameters.
+
+```bash
+POST https://modelslab.com/api/v6/images/img2img
+```
+
+### Body
+```json json
+{
+    "key": "your_api_key",
+    "model_id": "pony_realism",
+    "prompt": "a cat sitting on a bench, oil painting style",
+    "negative_prompt": "blurry, low quality",
+    "init_image": "https://raw.githubusercontent.com/CompVis/stable-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png",
+    "strength": 0.7,
+    "width": 2048,
+    "height": 2048,
+    "samples": 1,
+    "num_inference_steps": 31,
+    "safety_checker": "no",
+    "seed": null,
+    "guidance_scale": 7.5,
+    "scheduler": "DPMSolverMultistepScheduler",
+    "use_karras_sigmas": "yes",
+    "algorithm_type": "sde-dpmsolver++",
+    "clip_skip": "2",
+    "webhook": null,
+    "track_id": null
+}
+```
