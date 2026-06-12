@@ -1,0 +1,29 @@
+---
+title: "Sync Model"
+description: "This endpoint allows users to sync models between two enterprise servers."
+---
+
+## Request
+Send a `POST` request to below endpoint to sync models of one enterprise server with another server
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/pony/sync_models' \
+```
+
+## Body Attributes
+
+<ParamField path="key" type="string" required>
+  Your enterprise API Key used for request authorization.
+</ParamField>
+
+<ParamField path="sync_key" type="string" required>
+  The enterprise API Key of the second server you want to sync with.
+</ParamField>
+
+
+## Body
+```json json
+{  
+    "key": "enterprise_api_key",  
+    "sync_key": "enterprise_api_key"
+}
+```

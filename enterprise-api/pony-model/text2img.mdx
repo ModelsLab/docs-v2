@@ -1,0 +1,186 @@
+---
+title: "Text to Image"
+description: "This endpoint allows users to generate images from text prompts."
+---
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/pony/txt2img' \
+```
+
+
+<Info>
+  To use the **load balancer**, you need to have **more than 1 server**. Pass the first server's API key, and it will handle the load balancing with the other servers.
+</Info>
+
+
+<Check>
+  You can find a list of the public models available and their IDs **[here](https://modelslab.com/models)**.
+</Check>
+
+## Schedulers
+This endpoint also supports schedulers. Use the "scheduler" parameter in the request body to pass a specific scheduler from the list below:
+
+* EulerDiscreteScheduler
+* EulerAncestralDiscreteScheduler
+* LMSDiscreteScheduler
+* HeunDiscreteScheduler
+* KDPM2DiscreteScheduler
+* KDPM2AncestralDiscreteScheduler
+* DPMSolverMultistepScheduler
+* DPMSolverSinglestepScheduler
+* DDIMScheduler
+* DDPMScheduler
+* PNDMScheduler
+* UniPCMultistepScheduler
+* DEISMultistepScheduler
+* LCMScheduler
+* IPNDMScheduler
+
+
+## Body
+```json json
+{  
+  "key": "enterprise_api_key",  
+  "model_id": "model_id",  
+  "prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner)), blue eyes, shaved side haircut, hyper detail, cinematic lighting, magic neon, dark red city, Canon EOS R3, nikon, f/1.4, ISO 200, 1/160s, 8K, RAW, unedited, symmetrical balance, in-frame, 8K",  "negative_prompt": "painting, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, deformed, ugly, blurry, bad anatomy, bad proportions, extra limbs, cloned face, skinny, glitchy, double torso, extra arms, extra hands, mangled fingers, missing lips, ugly face, distorted face, extra legs, anime",  
+  "width": "512",  
+  "height": "512",  
+  "samples": "1",  
+  "num_inference_steps": "20",  
+  "safety_checker": "no",  
+  "enhance_prompt": "yes",  
+  "seed": null,  
+  "guidance_scale": 7.5,  
+  "panorama": "no",  
+  "self_attention": "no",  
+  "upscale": "no",  
+  "lora_model": null,  
+  "clip_skip": "2",  
+  "tomesd": "yes",  
+  "use_karras_sigmas": "yes",  
+  "vae": null,  
+  "lora_strength": null,  
+  "scheduler": "UniPCMultistepScheduler",  
+  "webhook": null,  
+  "track_id": null
+}
+```
+## Body Attributes
+
+<ParamField path="key" type="string" required>
+  Your enterprise API Key used for request authorization.
+</ParamField>
+
+<ParamField path="model_id" type="string" required>
+  The ID of the model to be used. It can be public or your trained model.
+</ParamField>
+
+<ParamField path="prompt" type="string" required>
+  Text prompt describing the image you want to generate.
+</ParamField>
+
+<ParamField path="negative_prompt" type="string">
+  Items you don't want in the image.
+</ParamField>
+
+<ParamField path="width" type="number" max="1024" default="512">
+  Width of the generated image. Maximum: 1024.
+</ParamField>
+
+<ParamField path="height" type="number" max="1024" default="512">
+  Height of the generated image. Maximum: 1024.
+</ParamField>
+
+<ParamField path="samples" type="number" min="1" max="4" default="1">
+  Number of images to return. Maximum: 4.
+</ParamField>
+
+<ParamField path="num_inference_steps" type="number" enum='[21,31,41]' default="21">
+  Number of denoising steps. Allowed values: 21, 31, or 41.
+</ParamField>
+
+<ParamField path="safety_checker" type="string" enum='["yes","no"]' default="yes">
+  NSFW checker. If detected, replaces the image with blank. Default: yes.
+</ParamField>
+
+<ParamField path="safety_checker_type" type="string" enum='["blur","sensitive_content_text","pixelate","black"]' default="sensitive_content_text">
+  Action if NSFW content is detected. Default: sensitive_content_text.
+</ParamField>
+
+<ParamField path="enhance_prompt" type="string" enum='["yes","no"]' default="yes">
+  Enhance prompts for better results. Default: yes.
+</ParamField>
+
+<ParamField path="seed" type="number">
+  Seed for reproducibility. Pass null for random generation.
+</ParamField>
+
+<ParamField path="guidance_scale" type="number" min="1" max="20" default="7.5">
+  Scale for classifier-free guidance.
+</ParamField>
+
+<ParamField path="panorama" type="string" enum='["yes","no"]' default="no">
+  Generate a panorama image. Default: no.
+</ParamField>
+
+<ParamField path="self_attention" type="string" enum='["yes","no"]' default="no">
+  Enable self-attention for higher quality images (slower). Default: no.
+</ParamField>
+
+<ParamField path="upscale" type="string" enum='["yes","no"]' default="no">
+  Upscale generated images 2x. Default: no.
+</ParamField>
+
+<ParamField path="tomesd" type="string" enum='["yes","no"]' default="yes">
+  Enable ToMeSD for faster generation. Default: yes.
+</ParamField>
+
+<ParamField path="use_karras_sigmas" type="string" enum='["yes","no"]' default="yes">
+  Use Karras sigmas for improved results. Default: yes.
+</ParamField>
+
+<ParamField path="algorithm_type" type="string" enum='["none","dpmsolver+++"]' default="none">
+  Algorithm type used in DPMSolverMultistepScheduler. Default: none.
+</ParamField>
+
+<ParamField path="vae" type="string">
+  Custom VAE to use. Default: null.
+</ParamField>
+
+<ParamField path="lora_strength" type="string">
+  LoRa strength(s). Multiple values supported, comma-separated. Range: 0.1-1.
+</ParamField>
+
+<ParamField path="lora_model" type="string">
+  LoRa model(s) to use. Multiple supported, comma-separated. Example: contrast-fix,yae-miko-genshin.
+</ParamField>
+
+<ParamField path="scheduler" type="string">
+  Scheduler to use. See <a href="#schedulers">Schedulers</a>.
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  URL to receive a POST callback once image generation is complete.
+</ParamField>
+
+<ParamField path="track_id" type="string">
+  ID returned in webhook callback to identify the request.
+</ParamField>
+
+<ParamField path="clip_skip" type="number" min="1" max="8">
+  Clip Skip value. Range: 1-8.
+</ParamField>
+
+<ParamField path="base64" type="string" enum='["yes","no"]' default="no">
+  Return response as base64 string. Default: no.
+</ParamField>
+
+<ParamField path="highres_fix" type="string" enum='["yes","no"]' default="no">
+  Apply high-resolution fix for generated images. Default: no.
+</ParamField>
+
+<ParamField path="temp" type="string" enum='["yes","no"]' default="no">
+  Generate a temporary image link valid for 24 hours. Default: no.
+</ParamField>

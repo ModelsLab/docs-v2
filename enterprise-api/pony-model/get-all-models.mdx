@@ -1,0 +1,23 @@
+---
+title: "Get All Models"
+description: "This endpoint retrieves all available models."
+---
+<Info>
+This endpoint returns models' IDs and the date/time they have been loaded on your server.
+</Info>
+## Request
+Send a `POST` request to below endpoint to obtain a list with the available public models and their IDs.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/pony/get_all_models' \
+```
+## Body
+```json json
+{ 
+    "key": "enterprise_api_key"
+}
+```
+## Body Attributes
+    
+<ParamField query="key" type="string" required>
+    Your enterprise API Key used for request authorization.
+</ParamField>

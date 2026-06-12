@@ -1,0 +1,61 @@
+---
+title: "Super Resolution"
+description: "This endpoint returns a super resolution version of an image."
+---
+
+## Request
+Send a `POST` request to below endpoint to return an upscaled version of the initial image.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/pony/super_resolution' \
+```
+<Tip>
+  Want more upscale models? Request a custom model by contacting us at our [Discord](https://discord.gg/RjVZfAnhsq) server.
+</Tip>
+
+The following upscale models are supported:
+
+| Model ID                          | Description                 |
+| :-------------------------------- | :-------------------------- |
+| **RealESRGAN\_x4plus**            | 4x upscaling model          |
+| **RealESRNet\_x4plus**            | 4x upscaling model          |
+| **RealESRGAN\_x4plus\_anime\_6B** | 4x Anime upscaling model    |
+| **RealESRGAN\_x2plus**            | 2x upscaling model          |
+| **realesr-general-x4v3**          | 4x upscaling general model  |
+| **ultra\_resolution**             | 4K+ upscaling general model |
+
+## Body
+```json json
+{ 
+    "key": "enterprise_api_key", 
+    "url": "https://pub-8b49af329fae499aa563997f5d4068a4.r2.dev/generations/e5cd86d3-7305-47fc-82c1-7d1a3b130fa4-0.png", 
+    "scale": 3, 
+    "webhook": null, 
+    "face_enhance": true
+}
+```
+
+## Body Attributes
+
+<ParamField path="key" type="string" required>
+  Your API Key used for request authorization.
+</ParamField>
+
+<ParamField path="url" type="string" required>
+  The URL of the image you want to upscale to super resolution.
+</ParamField>
+
+<ParamField path="scale" type="number" min="1" max="4" required>
+  The scale factor for upscaling. Must be between 1 and 4.
+</ParamField>
+
+<ParamField path="model_id" type="string" default="realesr-general-x4v3">
+  The upscale model to use. Default: <code>realesr-general-x4v3</code>.
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  A webhook URL to receive a POST callback once the image generation is complete.
+</ParamField>
+
+<ParamField path="face_enhance" type="boolean" default="false">
+  Enable face enhancement in the upscaled image. Default: false.
+</ParamField>

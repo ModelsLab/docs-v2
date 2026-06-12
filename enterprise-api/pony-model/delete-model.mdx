@@ -1,0 +1,32 @@
+---
+title: "Delete Model"
+description: "This endpoint is used to delete a model from your dedicated server."
+---
+
+
+## Request
+Send a `POST` request to below endpoint. Specify the ID(name) of the model to be deleted by using the `model_id` parameter in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/pony/delete_model' \
+```
+
+
+## Body Attributes
+
+<ParamField query="key" type="string" required>
+  Your enterprise API Key used for request authorization.
+</ParamField>
+
+<ParamField query="model_id" type="string" required>
+  The ID of the model to be deleted.
+</ParamField>
+
+
+
+## Body
+```json json
+{ 
+    "key": "enterprise_api_key", 
+    "model_id": "ckpt-model"
+}
+```

@@ -1,0 +1,30 @@
+---
+title: "NSFW Image Check"
+description: "This endpoint is used to check if an image is NSFW."
+hidden: true
+noindex: true
+---
+
+
+## Request
+Send a `POST` request to below endpoint to check if an image is nsfw or not.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/pony/nsfw_image_check' \
+```
+## Body
+```json json
+{  
+    "key": "enterprise_api_key",  
+    "init_image": "http://your-image-url.com"
+}
+```
+
+## Attributes
+
+<ParamField path="key" type="string" required>
+  Your enterprise API Key used for request authorization.
+</ParamField>
+
+<ParamField path="init_image" type="string" required>
+  The image you want to check. Must be a valid image URL or base64-encoded string.
+</ParamField>
