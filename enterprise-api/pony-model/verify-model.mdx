@@ -1,0 +1,27 @@
+---
+title: "Verify Model"
+description: "This endpoint allows users to verify if a specific model exists."
+---
+
+## Request
+Send a `POST` request to below endpoint to verify if a certain model exists on your dedicated server. Specify the model by using the **model\_id** parameter in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/pony/verify_model' \
+```
+
+## Body Attributes
+<ParamField path="key" type="string" required>
+  Your enterprise API Key used for request authorization.
+</ParamField>
+
+<ParamField path="model_id" type="string" required>
+  The ID of the model to be verified.
+</ParamField>
+
+## Body
+```json json
+{  
+    "key": "enterprise_api_key",  
+    "model_id": "ckpt-model"
+}
+```

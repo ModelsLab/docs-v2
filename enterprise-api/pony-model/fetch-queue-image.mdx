@@ -1,0 +1,22 @@
+---
+title: "Fetch Image"
+description: "This endpoint is used to fetch images from the processing queue."
+openapi: "POST /enterprise/pony/fetch"
+---
+
+<Note>
+Complex image generation requests are queued, and results can be retrieved later with an estimated processing time provided by the eta parameter.
+</Note>
+## Request
+Send a `POST` request to below endpoint to return the corresponding queued images, specified by the `request_id` parameter in the request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/pony/fetch' \
+```
+
+## Body
+```json json
+{ 
+    "key": "enterprise_api_key", 
+    "request_id": "your_request_id"
+}
+```

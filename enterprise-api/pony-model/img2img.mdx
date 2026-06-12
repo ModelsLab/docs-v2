@@ -1,0 +1,127 @@
+---
+title: "Image to Image"
+description: "This endpoint generates an image from an image using trained or public models."
+---
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/pony/img2img' \
+```
+<Info>
+  To use the **load balancer**, you need to have **more than 1 server**. Pass the first server's API key, and it will handle the load balancing with the other servers.
+</Info>
+
+## Body
+```json json
+{  
+  "key": "enterprise_api_key",  
+  "model_id": "realistic-vision-51",  
+  "prompt": "women playing tennis",  
+  "negative_prompt": null,  
+  "init_image": "https://i.pinimg.com/736x/20/ab/3d/20ab3df5c180e1cae812020bcfeb3093.jpg",  
+  "samples": "1",  
+  "num_inference_steps": "31",  
+  "safety_checker": "yes",  
+  "enhance_prompt": "yes",  
+  "guidance_scale": 7.5,  
+  "strength": 0.7,  
+  "scheduler": "UniPCMultistepScheduler",  
+  "seed": null,  
+  "lora_model": null,  
+  "tomesd": "yes",  
+  "use_karras_sigmas": "yes",  
+  "vae": null,  
+  "lora_strength": null,  
+  "webhook": null,  
+  "track_id": null
+}
+```
+## Schedulers
+This endpoint also supports schedulers. Use the "scheduler" parameter in the request body to pass a specific scheduler from the list below:
+
+* EulerDiscreteScheduler
+* EulerAncestralDiscreteScheduler
+* LMSDiscreteScheduler
+* HeunDiscreteScheduler
+* KDPM2DiscreteScheduler
+* KDPM2AncestralDiscreteScheduler
+* DPMSolverMultistepScheduler
+* DPMSolverSinglestepScheduler
+* DDIMScheduler
+* DDPMScheduler
+* PNDMScheduler
+* UniPCMultistepScheduler
+* DEISMultistepScheduler
+* LCMScheduler
+* IPNDMScheduler
+
+
+## Body Attributes
+<ParamField path="key" type="string" required>
+  Your enterprise API Key used for request authorization.
+</ParamField>
+
+<ParamField path="model_id" type="string" required>
+  The ID of the model to be used. It can be public or your trained model.
+</ParamField>
+
+<ParamField path="prompt" type="string" required>
+  Text prompt with description of the things you want in the image to be generated.
+</ParamField>
+
+<ParamField path="negative_prompt" type="string">
+  Items you don't want in the image.
+</ParamField>
+
+<ParamField path="init_image" type="string">
+  Link to the initial image.
+</ParamField>
+
+<ParamField path="width" type="number" default="512">
+  Width of the image. Maximum: 1024.
+</ParamField>
+
+<ParamField path="height" type="number" default="512">
+  Height of the image. Maximum: 1024.
+</ParamField>
+
+<ParamField path="samples" type="number" default="1">
+  Number of images to return. Maximum: 4.
+</ParamField>
+
+<ParamField path="num_inference_steps" type="number" default="21">
+  Number of denoising steps. Allowed values: 21, 31, or 41.
+</ParamField>
+
+<ParamField path="safety_checker" type="string" default="yes">
+  NSFW image checker. If detected, replaces the image with blank. Options: yes/no.
+</ParamField>
+
+<ParamField path="safety_checker_type" type="string" default="sensitive_content_text">
+  Action to apply if NSFW content is detected. Options: blur, sensitive_content_text, pixelate, black.
+</ParamField>
+
+<ParamField path="guidance_scale" type="number" default="7.5">
+  Scale for classifier-free guidance (range: 1-20).
+</ParamField>
+
+<ParamField path="strength" type="number" default="0.7">
+  Prompt strength when using init_image. 1.0 fully overrides the init image.
+</ParamField>
+
+<ParamField path="clip_skip" type="number">
+  Clip Skip value. Range: 1-8.
+</ParamField>
+
+<ParamField path="seed" type="number">
+  Seed for reproducibility. Pass null for random generation.
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  URL to receive a POST callback once the image generation is complete.
+</ParamField>
+
+<ParamField path="track_id" type="string">
+  ID returned in webhook callback to identify the request.
+</ParamField>

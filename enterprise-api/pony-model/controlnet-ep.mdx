@@ -1,0 +1,233 @@
+---
+title: "Controlnet"
+description: "This endpoint is used to generate ControlNet images."
+---
+
+
+
+## Request
+Send a `POST` request to below endpoint.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/pony/controlnet' \
+```
+<Info>
+  To use the **load balancer**, you need to have **more than 1 server**. Pass the first server's API key, and it will handle the load balancing with the other servers.
+</Info>
+
+<Check>
+  You can also use multi ControlNet. Just make sure to pass comma saparated controlnet models to the `controlnet_model` as "canny,depth" and `init_image` in the request body.
+</Check>
+
+
+<Check>
+  You can also use this endpoint to inpaint images with ControlNet. Just make sure to pass the link to the `mask_image` in the request body. and use controlnet\_model as `inpaint`.
+</Check>
+
+
+## Body
+```json json
+{  
+  "key": "enterprise_api_key",  
+  "controlnet_model": "canny",  
+  "controlnet_type" :"canny",  
+  "model_id": "midjourney",  
+  "auto_hint": "yes",  
+  "guess_mode" : "no",  
+  "prompt": "a model doing photoshoot, ultra high resolution, 4K image",  
+  "negative_prompt": null,  
+  "init_image": "https://huggingface.co/datasets/diffusers/test-arrays/resolve/main/stable_diffusion_imgvar/input_image_vermeer.png",  
+  "mask_image": null,  
+  "width": "512",  
+  "height": "512",  
+  "samples": "1",  
+  "scheduler": "UniPCMultistepScheduler",  
+  "num_inference_steps": "30",  
+  "safety_checker": "no",  
+  "enhance_prompt": "yes",  
+  "guidance_scale": 7.5,  
+  "strength": 0.55,  
+  "seed": null,  
+  "webhook": null,  
+  "track_id": null
+}
+```
+
+## ControlNet Models
+ControlNet API using Controlnet 1.1 as default: Suported controlnet\_model:
+
+* canny
+* depth
+* hed
+* mlsd
+* normal
+* openpose
+* scribble
+* segmentation
+* inpaint
+* softedge
+* lineart
+* shuffle
+* tile
+* face\_detector
+* qrcode
+
+### Schedulers
+This endpoint also supports schedulers. Use the `scheduler` parameter in the request body to pass a specific scheduler from the list below:
+
+* EulerDiscreteScheduler
+* EulerAncestralDiscreteScheduler
+* LMSDiscreteScheduler
+* HeunDiscreteScheduler
+* KDPM2DiscreteScheduler
+* KDPM2AncestralDiscreteScheduler
+* DPMSolverMultistepScheduler
+* DPMSolverSinglestepScheduler
+* DDIMScheduler
+* DDPMScheduler
+* PNDMScheduler
+* UniPCMultistepScheduler
+* DEISMultistepScheduler
+* LCMScheduler
+* IPNDMScheduler
+
+## Body Attributes
+
+<ParamField query="key" type="string" required>
+  Your enterprise API Key used for request authorization.
+</ParamField>
+
+<ParamField query="model_id" type="string" required>
+  The ID of the model to be used. It can be a public model or your trained model.
+</ParamField>
+
+<ParamField query="controlnet_model" type="string">
+  ControlNet model ID. It can be from the <a href="#models">models</a> list or user trained.
+</ParamField>
+
+<ParamField query="controlnet_type" type="string">
+  ControlNet model type. It can be from the <a href="#models">models</a> list.
+</ParamField>
+
+<ParamField query="auto_hint" type="string" enum='["yes","no"]' default="no">
+  Auto hint image. Options: yes/no.
+</ParamField>
+
+<ParamField query="guess_mode" type="string" enum='["yes","no"]' default="no">
+  If set to yes and no prompt is passed, the model will attempt to guess what's in the <code>init_image</code> and create variations. Options: yes/no.
+</ParamField>
+
+<ParamField query="prompt" type="string">
+  Text prompt describing required image modifications. Make it detailed for best results.
+</ParamField>
+
+<ParamField query="negative_prompt" type="string">
+  Items you don't want in the image.
+</ParamField>
+
+<ParamField query="init_image" type="string">
+  Link to the initial image.
+</ParamField>
+
+<ParamField query="control_image" type="string">
+  Link to the ControlNet image.
+</ParamField>
+
+<ParamField query="mask_image" type="string">
+  Link to the mask image for inpainting.
+</ParamField>
+
+<ParamField query="width" type="integer" max="1024" default="512">
+  Width of the image. Maximum: 1024.
+</ParamField>
+
+<ParamField query="height" type="integer" max="1024" default="512">
+  Height of the image. Maximum: 1024.
+</ParamField>
+
+<ParamField query="samples" type="integer" min="1" max="4" default="1">
+  Number of images to return in the response. Maximum: 4.
+</ParamField>
+
+<ParamField query="scheduler" type="string">
+  The scheduler to use. See <a href="#schedulers">Schedulers</a>.
+</ParamField>
+
+<ParamField query="tomesd" type="string" enum='["yes","no"]' default="yes">
+  Enable ToMeSD for faster results. Default: yes.
+</ParamField>
+
+<ParamField query="use_karras_sigmas" type="string" enum='["yes","no"]' default="yes">
+  Use Karras sigmas for improved results. Default: yes.
+</ParamField>
+
+<ParamField query="algorithm_type" type="string" enum='["none","dpmsolver+++"]' default="none">
+  Used in DPMSolverMultistepScheduler. Default: none.
+</ParamField>
+
+<ParamField query="vae" type="string">
+  Custom VAE to use. Default: null.
+</ParamField>
+
+<ParamField query="lora_strength" type="string">
+  Strength values for LoRa models (comma-separated). Range: 0.1-1.
+</ParamField>
+
+<ParamField query="lora_model" type="string">
+  LoRa models to use (comma-separated). Example: contrast-fix,yae-miko-genshin
+</ParamField>
+
+<ParamField query="num_inference_steps" type="integer" enum='[21,31]' default="21">
+  Number of denoising steps. Allowed values: 21 or 31.
+</ParamField>
+
+<ParamField query="safety_checker" type="string" enum='["yes","no"]' default="yes">
+  NSFW checker. If detected, replaces image with blank. Default: yes.
+</ParamField>
+
+<ParamField query="enhance_prompt" type="string" enum='["yes","no"]' default="yes">
+  Enhance prompts for better results. Default: yes.
+</ParamField>
+
+<ParamField query="multi_lingual" type="string" enum='["yes","no"]' default="yes">
+  Enable multilingual input. Default: yes.
+</ParamField>
+
+<ParamField query="guidance_scale" type="number" min="1" max="20" default="7.5">
+  Scale for classifier-free guidance.
+</ParamField>
+
+<ParamField query="controlnet_conditioning_scale" type="number" min="1" max="20" default="1">
+  Scale for ControlNet guidance.
+</ParamField>
+
+<ParamField query="strength" type="number" min="0" max="1" default="0.7">
+  Prompt strength when using <code>init_image</code>. 1.0 fully overrides the init image.
+</ParamField>
+
+<ParamField query="seed" type="integer">
+  Seed for reproducibility. Pass null for random generation.
+</ParamField>
+
+<ParamField query="webhook" type="string" format="url">
+  URL to receive a POST callback when image generation is complete.
+</ParamField>
+
+<ParamField query="track_id" type="string">
+  ID returned in webhook callback to identify the request.
+</ParamField>
+
+<ParamField query="upscale" type="string" enum='["yes","no"]' default="no">
+  Set to yes to upscale the generated image 2x.
+</ParamField>
+
+<ParamField query="clip_skip" type="integer" min="1" max="8">
+  Clip skip value. Range: 1-8.
+</ParamField>
+
+<ParamField query="base64" type="string" enum='["yes","no"]' default="no">
+  Return response as base64. You can also pass init_image, mask_image, and control_image as base64. Default: no.
+</ParamField>
+
+<ParamField query="temp" type="string" enum='["yes","no"]' default="no">
+  Generate a temporary image link valid for 24 hours. Default: no.
+</ParamField>

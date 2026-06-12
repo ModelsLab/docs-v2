@@ -1,0 +1,23 @@
+---
+title: "List Schedulers"
+description: "This endpoint is used to get a list of all the available schedulers."
+---
+
+## Request
+Send a `POST` request to below endpoint to clear the API's cache.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/pony/schedulers_list' \
+```
+
+## Body Attributes
+
+<ParamField path="key" type="string" required>
+  Your enterprise API Key used for request authorization.
+</ParamField>
+
+## Body
+```json json
+{ 
+    "key": "enterprise_api_key"
+}
+```

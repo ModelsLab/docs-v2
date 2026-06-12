@@ -1,0 +1,43 @@
+---
+title: "Load Vae"
+description: "This endpoint is used to load a VAE model to your dedicated server."
+---
+
+## Request
+Send a `POST` request to below endpoint to load vae
+```json json
+--request POST 'https://modelslab.com/api/v1/enterprise/pony/load_vae' \
+```
+
+## Body
+```json json
+{    
+    "key": "enterprise_api_key",    
+    "webhook": "http://webhook-url.com",    
+    "vae_id": "vae-kl-f8-anime2",    
+    "vae_url": "bullhug/kl-f8-anime2",    
+    "vae_type": "diffusers"
+}
+```
+
+## Body Attributes
+
+<ParamField path="key" type="string" required>
+  Your enterprise API Key used for request authorization.
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  A webhook URL to receive a POST callback once the VAE load event completes.
+</ParamField>
+
+<ParamField path="vae_id" type="string" required>
+  The ID to assign to the VAE.
+</ParamField>
+
+<ParamField path="vae_url" type="string" required>
+  The URL of the VAE file.
+</ParamField>
+
+<ParamField path="vae_type" type="string" enum='["diffusers","safetensors","pt"]' required>
+  The type of the VAE file. Options: diffusers, safetensors, pt.
+</ParamField>

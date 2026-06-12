@@ -599,6 +599,33 @@
                 ]
               },
               {
+                "group": "Pony Model API",
+                "pages": [
+                  "enterprise-api/pony-model/overview",
+                  "enterprise-api/pony-model/text2img",
+                  "enterprise-api/pony-model/img2img",
+                  "enterprise-api/pony-model/inpainting",
+                  "enterprise-api/pony-model/load-model-v2",
+                  "enterprise-api/pony-model/controlnet-ep",
+                  "enterprise-api/pony-model/super-resolution",
+                  "enterprise-api/pony-model/load-model",
+                  "enterprise-api/pony-model/load-vae",
+                  "enterprise-api/pony-model/sync-model",
+                  "enterprise-api/pony-model/nsfw-image-check",
+                  "enterprise-api/pony-model/list-schedulers",
+                  "enterprise-api/pony-model/verify-model",
+                  "enterprise-api/pony-model/get-all-models",
+                  "enterprise-api/pony-model/delete-model",
+                  "enterprise-api/pony-model/upload-image",
+                  "enterprise-api/pony-model/fetch-queue-image",
+                  "enterprise-api/pony-model/clear-cache",
+                  "enterprise-api/pony-model/clear-queue",
+                  "enterprise-api/pony-model/system-details",
+                  "enterprise-api/pony-model/restart-server",
+                  "enterprise-api/pony-model/update-server"
+                ]
+              },
+              {
                 "group": "Text to Image API",
                 "pages": [
                   "enterprise-api/text-to-image/overview",

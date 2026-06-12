@@ -1,0 +1,96 @@
+---
+title: "Load Model V2"
+description: "This endpoint is updated V2 version of the load_model endpoint allows you to load models from Huggingface, Civitai, and custom trained models."
+---
+
+## Request
+Send a `POST` request to below endpoint.
+```
+--request POST 'https://modelslab.com/api/v1/enterprise/pony/load_model_v2' \
+```
+
+## ControlNet Model url and model\_id table
+| url                                       | model\_id |
+| :---------------------------------------- | :-------- |
+| lllyasviel/control\_v11p\_sd15\_inpaint   | inpaint   |
+| lllyasviel/control\_v11e\_sd15\_ip2p      | ip2p      |
+| lllyasviel/control\_v11f1e\_sd15\_tile    | tile      |
+| lllyasviel/control\_v11e\_sd15\_shuffle   | shuffle   |
+| lllyasviel/control\_v11p\_sd15\_softedge  | softedge  |
+| lllyasviel/control\_v11p\_sd15\_scribble  | scribble  |
+| lllyasviel/control\_v11p\_sd15\_lineart   | lineart   |
+| lllyasviel/control\_v11p\_sd15\_normalbae | normalbae |
+| lllyasviel/control\_v11f1p\_sd15\_depth   | depth     |
+| lllyasviel/control\_v11p\_sd15\_mlsd      | mlsd      |
+| lllyasviel/control\_v11p\_sd15\_canny     | canny     |
+
+
+## Load a .ckpt or .safetensors Model from Civitai
+```json json
+{  
+    "key": "enterprise_api_key",  
+    "url": "https://civitai.com/api/download/models/94640",  
+    "model_id": "majicmix-realistic",  
+    "model_category": "stable_diffusion",  
+    "model_format": "safetensors",  
+    "webhook": "https://modelslab.com",  
+    "revision": "fp16"
+}
+```
+
+## Load a Huggingface Model
+```json json
+{  
+    "key": "enterprise_api_key",  
+    "url": "wavymulder/Analog-Diffusion",  
+    "model_id": "analog-diffusion",  
+    "model_type": "huggingface",  
+    "from_safetensors": "no",  
+    "webhook": "https://modelslab.com",  
+    "revision": "fp32",  
+    "upcast_attention": "no"
+}
+```
+
+## Load a ControlNet Model
+```json json
+{  
+    "key": "enterprise_api_key",  
+    "url": "lllyasviel/control_v11p_sd15_canny",  
+    "model_id": "canny",  
+    "model_type": "controlnet",  
+    "webhook": "https://modelslab.com",  
+    "revision": "fp32",  
+    "upcast_attention": "no"
+}
+```
+
+## BodyAttributes
+
+<ParamField path="key" type="string" required>
+  Your enterprise API Key used for request authorization.
+</ParamField>
+
+<ParamField path="url" type="string" required>
+  The URL of the Hugging Face model, a <code>.ckpt</code> download link, or a trained model from our Dreambooth API.
+</ParamField>
+
+<ParamField path="model_id" type="string" required>
+  Unique name (ID) for your model. The model will be saved under this ID and can be referenced later when generating images.
+</ParamField>
+
+<ParamField path="model_category" type="string" enum='["lora","stable_diffusion","stable_diffusion_xl","controlnet"]' required>
+  The category of the model. Options: lora, stable_diffusion, stable_diffusion_xl, controlnet.
+</ParamField>
+
+<ParamField path="model_format" type="string" enum='["ckpt","safetensors","pt","diffusers"]' required>
+  The format of the model. Options: ckpt, safetensors, pt, diffusers.
+</ParamField>
+
+<ParamField path="revision" type="string" enum='["fp16","fp32"]' default="fp32">
+  Precision revision of the model. Options: fp16 or fp32. Default: fp32.
+</ParamField>
+
+<ParamField path="webhook" type="string">
+  A webhook URL to receive a POST callback when the model load event completes.
+</ParamField>
