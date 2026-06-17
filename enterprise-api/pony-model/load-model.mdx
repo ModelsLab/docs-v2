@@ -37,11 +37,9 @@ Send a `POST` request to below endpoint.
   "key": "enterprise_api_key",  
   "url": "https://civitai.com/api/download/models/94640",  
   "model_id": "majicmix-realistic",  
-  "model_type": "custom_ckpt",  
-  "from_safetensors": "yes",  
-  "webhook": "https://modelslab.com",  
-  "revision": "fp32",  
-  "upcast_attention": "no"
+  "model_category": "stable_diffusion",  
+  "model_format": "safetensors",  
+  "webhook": "https://modelslab.com"
 }
 ```
 
@@ -51,11 +49,9 @@ Send a `POST` request to below endpoint.
   "key": "enterprise_api_key",  
   "url": "wavymulder/Analog-Diffusion",  
   "model_id": "analog-diffusion",  
-  "model_type": "huggingface",  
-  "from_safetensors": "no",  
-  "webhook": "https://modelslab.com",  
-  "revision": "fp32",  
-  "upcast_attention": "no"
+  "model_category": "stable_diffusion",  
+  "model_format": "diffusers",  
+  "webhook": "https://modelslab.com"
 }
 ```
 
@@ -65,10 +61,9 @@ Send a `POST` request to below endpoint.
   "key": "enterprise_api_key",  
   "url": "lllyasviel/control_v11p_sd15_canny",  
   "model_id": "canny",  
-  "model_type": "controlnet",  
-  "webhook": "https://modelslab.com",  
-  "revision": "fp32",  
-  "upcast_attention": "no"
+  "model_category": "controlnet",  
+  "model_format": "diffusers",  
+  "webhook": "https://modelslab.com"
 }
 ```
 
@@ -86,22 +81,14 @@ Send a `POST` request to below endpoint.
   Unique name (ID) for your model. The model will be saved under this ID and can be referenced later when generating images.
 </ParamField>
 
-<ParamField path="from_safetensors" type="string" enum='["yes","no"]' default="no">
-  Set this to "yes" if loading a <code>.safetensors</code> file; otherwise use "no". Default: no.
+<ParamField path="model_category" type="string" enum='["lora","embeddings","stable_diffusion","stable_diffusion_xl","controlnet"]' required>
+  The category of the model to load. Options: lora, embeddings, stable_diffusion, stable_diffusion_xl, controlnet.
 </ParamField>
 
-<ParamField path="model_type" type="string" enum='["huggingface","api_trained","custom_ckpt","lora","controlnet"]' required>
-  The type of model to load. Options: huggingface, api_trained, custom_ckpt, lora, controlnet.
-</ParamField>
-
-<ParamField path="revision" type="string" enum='["fp16","fp32"]' default="fp32">
-  Precision revision of the model. Options: fp16 or fp32. Default: fp32.
+<ParamField path="model_format" type="string" enum='["ckpt","safetensors","pt","diffusers"]' required>
+  The format of the model to load. Options: ckpt, safetensors, pt, diffusers.
 </ParamField>
 
 <ParamField path="webhook" type="string">
   A webhook URL to receive a POST callback when the model load event completes.
-</ParamField>
-
-<ParamField path="upcast_attention" type="string" enum='["yes","no"]' default="no">
-  Set to "yes" only when loading a Stable Diffusion 2.1 model; otherwise leave as "no". Default: no.
 </ParamField>
