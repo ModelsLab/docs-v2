@@ -1,0 +1,92 @@
+---
+title: "Authentication"
+description: "Find your GGUF Cloud deployment's base URL and authenticate with your existing ModelsLab API key using the Authorization, x-api-key, or key header."
+---
+
+Every GGUF Cloud deployment is a private endpoint with its own base URL, authenticated with your existing ModelsLab API key. No separate key is required.
+
+## Base URL
+
+Each deployment has a unique base URL. The `{deployment_id}` is shown on the deployment's dashboard page at [modelslab.com/gguf-cloud](https://modelslab.com/gguf-cloud):
+
+```
+https://modelslab.com/api/gguf/{deployment_id}
+```
+
+### Choosing the right base_url
+
+The two SDK families expect the base URL in slightly different forms. Use the matching one:
+
+| SDK / Client | `base_url` value |
+|--------------|------------------|
+| OpenAI SDK (Python, Node, LangChain, …) | `https://modelslab.com/api/gguf/{deployment_id}/v1` |
+| Anthropic SDK / Claude Code | `https://modelslab.com/api/gguf/{deployment_id}` |
+
+<Note>
+  The OpenAI SDK appends paths like `/chat/completions` to the base URL, so the base URL ends in `/v1`. The Anthropic SDK appends `/v1/messages` itself, so its base URL is the **root** (no trailing `/v1`).
+</Note>
+
+## API key
+
+Authenticate with your existing **ModelsLab API key**. You can find or create one in your [API Keys Dashboard](https://modelslab.com/dashboard/api-keys). The gateway accepts the key in any of three headers, so SDKs from both ecosystems work unchanged:
+
+<ParamField header="Authorization" type="string">
+  Bearer token form used by OpenAI SDKs: `Authorization: Bearer YOUR_MODELSLAB_API_KEY`
+</ParamField>
+
+<ParamField header="x-api-key" type="string">
+  Header used by Anthropic SDKs and Claude Code: `x-api-key: YOUR_MODELSLAB_API_KEY`
+</ParamField>
+
+<ParamField header="key" type="string">
+  Plain header form: `key: YOUR_MODELSLAB_API_KEY`
+</ParamField>
+
+<Warning>
+  Never share your API key publicly or commit it to version control. Treat it like a password and use environment variables in production.
+</Warning>
+
+## Examples
+
+<CodeGroup>
+
+```python Python (OpenAI SDK)
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="YOUR_MODELSLAB_API_KEY",
+    base_url="https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID/v1",
+)
+```
+
+```python Python (Anthropic SDK)
+from anthropic import Anthropic
+
+client = Anthropic(
+    api_key="YOUR_MODELSLAB_API_KEY",
+    base_url="https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID",
+)
+```
+
+```bash cURL (Authorization)
+curl "https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID/v1/models" \
+  -H "Authorization: Bearer $MODELSLAB_API_KEY"
+```
+
+```bash cURL (x-api-key)
+curl "https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID/v1/models" \
+  -H "x-api-key: $MODELSLAB_API_KEY"
+```
+
+</CodeGroup>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Chat Completions" href="/gguf-cloud/chat-completions" icon="comments">
+    Call the OpenAI-compatible endpoints on your deployment.
+  </Card>
+  <Card title="Messages" href="/gguf-cloud/messages" icon="message">
+    Call the Anthropic-compatible endpoint, or point Claude Code at your deployment.
+  </Card>
+</CardGroup>

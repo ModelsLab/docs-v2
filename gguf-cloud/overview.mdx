@@ -1,0 +1,105 @@
+---
+title: "GGUF Cloud"
+description: "Deploy any GGUF / llama.cpp model on a dedicated single-tenant GPU. Each deployment is its own private endpoint that speaks both the OpenAI and Anthropic protocols natively."
+---
+
+**GGUF Cloud** lets you deploy any GGUF (llama.cpp) model on a **dedicated, single-tenant GPU**. Each deployment becomes its own private API endpoint, backed by [`llama.cpp`](https://github.com/ggml-org/llama.cpp) (`llama-server`), and speaks **both the OpenAI and Anthropic protocols natively** — so you can point the OpenAI SDK, the Anthropic SDK, **Claude Code**, or any compatible client at it with just a base URL change.
+
+Unlike the shared [LLM API](/llm-api/overview), a GGUF Cloud deployment runs **only your model on your own GPU**. There are no neighbors, the model stays loaded, and the endpoint is reachable exclusively with your ModelsLab API key.
+
+## How it works
+
+<Steps>
+  <Step title="Pick a GGUF model">
+    Choose any GGUF model (from Hugging Face, your own quantization, or one of our presets) at [modelslab.com/gguf-cloud](https://modelslab.com/gguf-cloud).
+  </Step>
+  <Step title="Deploy to a dedicated GPU">
+    We provision a single-tenant GPU pod running `llama-server` with your model loaded. Your deployment gets a unique `deployment_id`.
+  </Step>
+  <Step title="Call your endpoint">
+    Point the OpenAI SDK, Anthropic SDK, or Claude Code at your deployment's base URL using your existing ModelsLab API key.
+  </Step>
+</Steps>
+
+Get a deployment and find your `deployment_id` on the dashboard at [modelslab.com/gguf-cloud](https://modelslab.com/gguf-cloud).
+
+## Base URL
+
+Every deployment has its own base URL. The `{deployment_id}` is shown on the deployment's dashboard page:
+
+```
+https://modelslab.com/api/gguf/{deployment_id}
+```
+
+- **OpenAI SDKs** use the base URL with `/v1` appended → `https://modelslab.com/api/gguf/{deployment_id}/v1`
+- **Anthropic SDKs / Claude Code** use the base URL as-is → `https://modelslab.com/api/gguf/{deployment_id}`
+
+See [Authentication](/gguf-cloud/authentication) for the full details on base URLs and API keys.
+
+## Quickstart
+
+Authenticate with your existing ModelsLab API key. Because the deployment serves a single model, the `model` field can be `"local"` (or the model id you deployed) — it's always routed to your deployment's model.
+
+<CodeGroup>
+
+```python Python (OpenAI SDK)
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="YOUR_MODELSLAB_API_KEY",
+    base_url="https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID/v1",
+)
+
+response = client.chat.completions.create(
+    model="local",
+    messages=[{"role": "user", "content": "Hello!"}],
+)
+
+print(response.choices[0].message.content)
+```
+
+```python Python (Anthropic SDK)
+from anthropic import Anthropic
+
+client = Anthropic(
+    api_key="YOUR_MODELSLAB_API_KEY",
+    base_url="https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID",
+)
+
+message = client.messages.create(
+    model="local",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "Hello!"}],
+)
+
+print(message.content[0].text)
+```
+
+```bash cURL
+curl -X POST "https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID/v1/chat/completions" \
+  -H "Authorization: Bearer $MODELSLAB_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "local",
+    "messages": [{"role": "user", "content": "Hello!"}]
+  }'
+```
+
+</CodeGroup>
+
+## Explore
+
+<CardGroup cols={2}>
+  <Card title="Authentication" href="/gguf-cloud/authentication" icon="key">
+    Base URLs, your `deployment_id`, and the three accepted auth headers.
+  </Card>
+  <Card title="Chat Completions" href="/gguf-cloud/chat-completions" icon="comments">
+    OpenAI-compatible `/v1/chat/completions`, `/v1/completions`, `/v1/embeddings`, and `/v1/models`.
+  </Card>
+  <Card title="Messages" href="/gguf-cloud/messages" icon="message">
+    Anthropic-compatible `/v1/messages`. Works with the Anthropic SDK and Claude Code.
+  </Card>
+  <Card title="Errors" href="/gguf-cloud/errors" icon="triangle-exclamation">
+    Gateway error reference: 401, 404, 503, and 502 and how to handle them.
+  </Card>
+</CardGroup>

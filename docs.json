@@ -347,6 +347,16 @@
                   "llm-api/list-models",
                   "llm-api/coding-tools"
                 ]
+              },
+              {
+                "group": "GGUF Cloud",
+                "pages": [
+                  "gguf-cloud/overview",
+                  "gguf-cloud/authentication",
+                  "gguf-cloud/chat-completions",
+                  "gguf-cloud/messages",
+                  "gguf-cloud/errors"
+                ]
               }
             ]
           }

@@ -1,0 +1,215 @@
+---
+title: "Messages"
+description: "Anthropic-compatible messages endpoint served by your dedicated GGUF Cloud deployment. Works with the Anthropic SDK and Claude Code."
+---
+
+Your GGUF Cloud deployment also speaks the **Anthropic protocol** natively via the `/v1/messages` endpoint. Point the Anthropic SDK or **Claude Code** at your deployment's base URL — the **root** URL, with no `/v1` suffix, since the Anthropic SDK appends `/v1/messages` itself.
+
+## Request
+
+```bash
+POST https://modelslab.com/api/gguf/{deployment_id}/v1/messages
+```
+
+Pass your ModelsLab API key in the `x-api-key` header (see [Authentication](/gguf-cloud/authentication)).
+
+```bash
+curl -X POST "https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID/v1/messages" \
+  -H "x-api-key: $MODELSLAB_API_KEY" \
+  -H "Content-Type: application/json" \
+  -H "anthropic-version: 2023-06-01" \
+  -d '{
+    "model": "local",
+    "max_tokens": 1024,
+    "messages": [
+      {"role": "user", "content": "What is the capital of France?"}
+    ]
+  }'
+```
+
+## Body
+
+```json
+{
+  "model": "local",
+  "max_tokens": 1024,
+  "messages": [
+    {"role": "user", "content": "What is the capital of France?"}
+  ],
+  "system": "You are a helpful assistant.",
+  "temperature": 0.7,
+  "stream": false
+}
+```
+
+## Body Attributes
+
+<ParamField body="model" type="string" default="local">
+  The model to use. A deployment serves a **single** model, so this can be `"local"` or the model id you deployed — it is always routed to your deployment's model.
+</ParamField>
+
+<ParamField body="max_tokens" type="integer" required>
+  Maximum number of tokens to generate. Required in the Anthropic format.
+</ParamField>
+
+<ParamField body="messages" type="array" required>
+  Input messages. Roles are `user` and `assistant` only — the system prompt goes in the `system` parameter, not in `messages`.
+</ParamField>
+
+<ParamField body="system" type="string">
+  System prompt, passed separately from the message list.
+</ParamField>
+
+<ParamField body="temperature" type="number">
+  Sampling temperature. In the Anthropic format the range is `0.0`–`1.0`.
+</ParamField>
+
+<ParamField body="top_p" type="number">
+  Nucleus sampling threshold. Range: `0.0`–`1.0`.
+</ParamField>
+
+<ParamField body="stop_sequences" type="array">
+  Custom sequences where generation stops.
+</ParamField>
+
+<ParamField body="stream" type="boolean" default="false">
+  When `true`, responses are streamed as Server-Sent Events (`text/event-stream`).
+</ParamField>
+
+## Response
+
+```json
+{
+  "id": "msg_abc123",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "text",
+      "text": "The capital of France is Paris."
+    }
+  ],
+  "model": "local",
+  "stop_reason": "end_turn",
+  "usage": {
+    "input_tokens": 15,
+    "output_tokens": 8
+  }
+}
+```
+
+## Response Fields
+
+<ResponseField name="id" type="string">
+  Unique identifier for the message.
+</ResponseField>
+
+<ResponseField name="type" type="string">
+  The object type, `message`.
+</ResponseField>
+
+<ResponseField name="content" type="array">
+  The generated content blocks. Text responses contain `{"type": "text", "text": "..."}`.
+</ResponseField>
+
+<ResponseField name="stop_reason" type="string">
+  Why generation stopped, e.g. `end_turn` or `max_tokens`.
+</ResponseField>
+
+<ResponseField name="usage" type="object">
+  Token accounting: `input_tokens` and `output_tokens`.
+</ResponseField>
+
+## Streaming
+
+Set `"stream": true` to receive Server-Sent Events:
+
+```bash
+curl -X POST "https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID/v1/messages" \
+  -H "x-api-key: $MODELSLAB_API_KEY" \
+  -H "Content-Type: application/json" \
+  -H "anthropic-version: 2023-06-01" \
+  -d '{
+    "model": "local",
+    "max_tokens": 1024,
+    "messages": [{"role": "user", "content": "Write a haiku"}],
+    "stream": true
+  }'
+```
+
+## Anthropic SDK
+
+This endpoint is a drop-in replacement for the Anthropic API. Use the deployment **root** as the `base_url` (the SDK adds `/v1/messages`):
+
+<CodeGroup>
+
+```python Python
+from anthropic import Anthropic
+
+client = Anthropic(
+    api_key="YOUR_MODELSLAB_API_KEY",
+    base_url="https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID",
+)
+
+# Non-streaming
+message = client.messages.create(
+    model="local",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "Explain quantum computing"}],
+)
+print(message.content[0].text)
+
+# Streaming
+with client.messages.stream(
+    model="local",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "Write a story"}],
+) as stream:
+    for text in stream.text_stream:
+        print(text, end="")
+```
+
+```javascript JavaScript
+import Anthropic from '@anthropic-ai/sdk';
+
+const client = new Anthropic({
+  apiKey: 'YOUR_MODELSLAB_API_KEY',
+  baseURL: 'https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID',
+});
+
+const message = await client.messages.create({
+  model: 'local',
+  max_tokens: 1024,
+  messages: [{ role: 'user', content: 'Hello!' }],
+});
+
+console.log(message.content[0].text);
+```
+
+```bash cURL
+curl -X POST "https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID/v1/messages" \
+  -H "x-api-key: $MODELSLAB_API_KEY" \
+  -H "Content-Type: application/json" \
+  -H "anthropic-version: 2023-06-01" \
+  -d '{
+    "model": "local",
+    "max_tokens": 1024,
+    "messages": [{"role": "user", "content": "Hello!"}]
+  }'
+```
+
+</CodeGroup>
+
+## Using with Claude Code
+
+Because your deployment speaks the Anthropic protocol, you can use it as a backend for [Claude Code](https://claude.ai/claude-code). Point Claude Code at your deployment's root base URL and authenticate with your ModelsLab API key:
+
+```bash
+ANTHROPIC_BASE_URL="https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID" \
+ANTHROPIC_AUTH_TOKEN="YOUR_MODELSLAB_API_KEY" \
+claude --model "local"
+```
+
+<Note>
+  Claude Code sends the API key as `x-api-key`, which the GGUF Cloud gateway accepts. Your deployment serves a single model, so the `--model` value is routed to that model regardless of the name you pass.
+</Note>
