@@ -1,0 +1,289 @@
+---
+title: "Chat Completions"
+description: "OpenAI-compatible chat completions, completions, embeddings, and models endpoints served by your dedicated GGUF Cloud deployment."
+---
+
+Your GGUF Cloud deployment exposes the standard **OpenAI-compatible** routes, backed by your model's `llama-server`. Point any OpenAI SDK or compatible client at your deployment's base URL with `/v1` appended.
+
+## Endpoints
+
+| Method | Path | Description |
+|--------|------|-------------|
+| `POST` | `/v1/chat/completions` | Chat-style completions (messages array). |
+| `POST` | `/v1/completions` | Classic text completions (single `prompt`). |
+| `POST` | `/v1/embeddings` | Embeddings for the deployed model (when supported). |
+| `GET`  | `/v1/models` | List the model served by this deployment. |
+
+All paths are relative to your deployment base URL:
+
+```
+https://modelslab.com/api/gguf/{deployment_id}
+```
+
+## Request
+
+```bash
+POST https://modelslab.com/api/gguf/{deployment_id}/v1/chat/completions
+```
+
+Authenticate with your ModelsLab API key (see [Authentication](/gguf-cloud/authentication)).
+
+```bash
+curl -X POST "https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID/v1/chat/completions" \
+  -H "Authorization: Bearer $MODELSLAB_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "local",
+    "messages": [
+      {"role": "system", "content": "You are a helpful assistant."},
+      {"role": "user", "content": "What is the capital of France?"}
+    ],
+    "max_tokens": 256,
+    "temperature": 0.7
+  }'
+```
+
+## Body
+
+```json
+{
+  "model": "local",
+  "messages": [
+    {"role": "system", "content": "You are a helpful assistant."},
+    {"role": "user", "content": "What is the capital of France?"}
+  ],
+  "max_tokens": 256,
+  "temperature": 0.7,
+  "top_p": 0.95,
+  "stop": ["\n\n"],
+  "stream": false
+}
+```
+
+## Body Attributes
+
+<ParamField body="model" type="string" default="local">
+  The model to use. A deployment serves a **single** model, so this can be `"local"` or the model id you deployed — either way the request is routed to your deployment's model.
+</ParamField>
+
+<ParamField body="messages" type="array" required>
+  Array of message objects, each with a `role` (`system`, `user`, or `assistant`) and `content`. Used by `/v1/chat/completions`.
+</ParamField>
+
+<ParamField body="prompt" type="string">
+  A single text prompt. Used by the `/v1/completions` endpoint instead of `messages`.
+</ParamField>
+
+<ParamField body="max_tokens" type="integer" default="256">
+  Maximum number of tokens to generate. Range: `1` to the model's context limit.
+</ParamField>
+
+<ParamField body="temperature" type="number" default="0.8">
+  Sampling temperature. Lower values (`0.1`–`0.3`) produce focused, deterministic output; higher values increase creativity. Range: `0.0`–`2.0`.
+</ParamField>
+
+<ParamField body="top_p" type="number" default="0.95">
+  Nucleus sampling — only consider tokens with cumulative probability above this threshold. Range: `0.0`–`1.0`. Use either `temperature` or `top_p`.
+</ParamField>
+
+<ParamField body="top_k" type="integer">
+  Only sample from the top K most likely tokens (a llama.cpp sampling option).
+</ParamField>
+
+<ParamField body="repeat_penalty" type="number" default="1.1">
+  Penalty applied to repeated tokens. Values `> 1` discourage repetition (a llama.cpp sampling option).
+</ParamField>
+
+<ParamField body="presence_penalty" type="number" default="0">
+  Penalizes tokens that have already appeared, encouraging new topics. Range: `-2`–`2`.
+</ParamField>
+
+<ParamField body="frequency_penalty" type="number" default="0">
+  Penalizes tokens proportionally to how often they have appeared. Range: `-2`–`2`.
+</ParamField>
+
+<ParamField body="stop" type="string or array">
+  One or more sequences where generation stops. The stop sequence is not included in the output.
+</ParamField>
+
+<ParamField body="seed" type="integer">
+  Seed for reproducible sampling. The same seed and input produce the same output.
+</ParamField>
+
+<ParamField body="stream" type="boolean" default="false">
+  When `true`, responses are streamed as Server-Sent Events (`text/event-stream`). See [Streaming](#streaming).
+</ParamField>
+
+## Response
+
+```json
+{
+  "id": "chatcmpl-abc123",
+  "object": "chat.completion",
+  "created": 1712345678,
+  "model": "local",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "The capital of France is Paris."
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 25,
+    "completion_tokens": 8,
+    "total_tokens": 33
+  }
+}
+```
+
+## Response Fields
+
+<ResponseField name="id" type="string">
+  Unique identifier for the completion.
+</ResponseField>
+
+<ResponseField name="object" type="string">
+  The object type, e.g. `chat.completion` (or `chat.completion.chunk` while streaming).
+</ResponseField>
+
+<ResponseField name="model" type="string">
+  The model that produced the response (your deployment's model).
+</ResponseField>
+
+<ResponseField name="choices" type="array">
+  The generated choices. Each item contains an `index`, a `message` (with `role` and `content`), and a `finish_reason`.
+</ResponseField>
+
+<ResponseField name="usage" type="object">
+  Token accounting: `prompt_tokens`, `completion_tokens`, and `total_tokens`.
+</ResponseField>
+
+## Streaming
+
+Set `"stream": true` to receive Server-Sent Events (SSE) as tokens are generated:
+
+```bash
+curl -X POST "https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID/v1/chat/completions" \
+  -H "Authorization: Bearer $MODELSLAB_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "local",
+    "messages": [{"role": "user", "content": "Write a haiku"}],
+    "stream": true
+  }'
+```
+
+Each SSE event carries a `chat.completion.chunk` object, terminated by `data: [DONE]`:
+
+```
+data: {"id":"chatcmpl-abc123","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":"Silent"},"finish_reason":null}]}
+data: {"id":"chatcmpl-abc123","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":" snow"},"finish_reason":null}]}
+data: [DONE]
+```
+
+## SDK Examples
+
+This endpoint is a drop-in replacement for the OpenAI API. Just change the `base_url` and `api_key`:
+
+<CodeGroup>
+
+```python Python
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="YOUR_MODELSLAB_API_KEY",
+    base_url="https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID/v1",
+)
+
+# Non-streaming
+response = client.chat.completions.create(
+    model="local",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Explain quantum computing in simple terms"},
+    ],
+    max_tokens=256,
+)
+print(response.choices[0].message.content)
+
+# Streaming
+stream = client.chat.completions.create(
+    model="local",
+    messages=[{"role": "user", "content": "Write a story"}],
+    stream=True,
+)
+for chunk in stream:
+    if chunk.choices[0].delta.content:
+        print(chunk.choices[0].delta.content, end="")
+```
+
+```javascript JavaScript
+import OpenAI from 'openai';
+
+const client = new OpenAI({
+  apiKey: 'YOUR_MODELSLAB_API_KEY',
+  baseURL: 'https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID/v1',
+});
+
+const response = await client.chat.completions.create({
+  model: 'local',
+  messages: [
+    { role: 'system', content: 'You are a helpful assistant.' },
+    { role: 'user', content: 'Hello!' },
+  ],
+});
+
+console.log(response.choices[0].message.content);
+```
+
+```bash cURL
+curl -X POST "https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID/v1/chat/completions" \
+  -H "Authorization: Bearer $MODELSLAB_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "local",
+    "messages": [{"role": "user", "content": "Hello!"}]
+  }'
+```
+
+</CodeGroup>
+
+## Other OpenAI routes
+
+<CodeGroup>
+
+```bash List models
+curl "https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID/v1/models" \
+  -H "Authorization: Bearer $MODELSLAB_API_KEY"
+```
+
+```bash Text completions
+curl -X POST "https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID/v1/completions" \
+  -H "Authorization: Bearer $MODELSLAB_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "local",
+    "prompt": "Once upon a time",
+    "max_tokens": 128
+  }'
+```
+
+```bash Embeddings
+curl -X POST "https://modelslab.com/api/gguf/YOUR_DEPLOYMENT_ID/v1/embeddings" \
+  -H "Authorization: Bearer $MODELSLAB_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "local",
+    "input": "The quick brown fox"
+  }'
+```
+
+</CodeGroup>
+
+<Note>
+  `/v1/embeddings` is only available when the deployed model supports embeddings. If it does not, the endpoint returns an error from `llama-server`.
+</Note>

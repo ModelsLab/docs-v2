@@ -1,0 +1,131 @@
+---
+title: "Errors"
+description: "Error reference for the GGUF Cloud gateway — 401, 404, 503, and 502 responses, their JSON shape, and how to handle them."
+---
+
+The GGUF Cloud gateway authenticates your request, confirms the deployment is yours and ready, then proxies to your model's `llama-server`. Gateway-level errors are returned in a consistent JSON shape.
+
+## Error Response Format
+
+```json
+{
+  "error": {
+    "type": "authentication_error",
+    "message": "Human-readable error description"
+  }
+}
+```
+
+<Note>
+  This shape applies to errors raised by the **gateway** (auth, routing, readiness). Errors raised by the model server itself (for example an invalid sampling parameter) are passed through from `llama-server` and may use the standard OpenAI/Anthropic error shape.
+</Note>
+
+## HTTP Status Codes
+
+<AccordionGroup>
+  <Accordion title="401 - Unauthorized" icon="lock">
+    **Cause**: The API key is missing or invalid.
+
+    **Common Issues**:
+    - No key sent in the `Authorization`, `x-api-key`, or `key` header.
+    - The key is incorrect, revoked, or not a valid ModelsLab API key.
+
+    **Example Response**:
+    ```json
+    {
+      "error": {
+        "type": "authentication_error",
+        "message": "Invalid API key."
+      }
+    }
+    ```
+
+    **Solution**: Send your ModelsLab API key in one of the accepted headers (see [Authentication](/gguf-cloud/authentication)) and verify it hasn't been revoked in your [dashboard](https://modelslab.com/dashboard/api-keys).
+  </Accordion>
+
+  <Accordion title="404 - Not Found" icon="circle-xmark">
+    **Cause**: There is no deployment for this `deployment_id`, or it does not belong to your account.
+
+    **Example Response**:
+    ```json
+    {
+      "error": {
+        "type": "not_found_error",
+        "message": "No deployment found for this endpoint."
+      }
+    }
+    ```
+
+    **Solution**: Check the `deployment_id` in your base URL against the one on your [deployment dashboard](https://modelslab.com/gguf-cloud), and confirm the API key belongs to the same account that owns the deployment.
+  </Accordion>
+
+  <Accordion title="503 - Service Unavailable" icon="clock">
+    **Cause**: The deployment exists but is not ready — it is still deploying or has been paused.
+
+    **Example Response**:
+    ```json
+    {
+      "error": {
+        "type": "overloaded_error",
+        "message": "Endpoint is not ready (status: deploying). It may still be deploying or paused."
+      }
+    }
+    ```
+
+    **Solution**: Wait until the deployment shows **Ready** on the dashboard, then retry. If it is paused, resume it first.
+  </Accordion>
+
+  <Accordion title="502 - Bad Gateway" icon="server">
+    **Cause**: The deployment is marked ready but the model pod is currently unreachable — typically restarting or warming up after a config change.
+
+    **Example Response**:
+    ```json
+    {
+      "error": {
+        "type": "api_error",
+        "message": "The model endpoint is unreachable right now. It may be restarting — try again in a moment."
+      }
+    }
+    ```
+
+    **Solution**: This is transient. Retry shortly, ideally with exponential backoff. If it persists, check the deployment status on the dashboard.
+  </Accordion>
+</AccordionGroup>
+
+## Handling Errors
+
+Treat `503` and `502` as **retryable** — the endpoint is coming up or restarting. Retry with backoff and stop on `401`/`404`, which require a fix on your side.
+
+```python
+import time
+import httpx
+
+def call_with_retry(url, headers, payload, max_retries=4):
+    for attempt in range(max_retries):
+        response = httpx.post(url, headers=headers, json=payload, timeout=120)
+
+        if response.status_code == 200:
+            return response.json()
+
+        if response.status_code in (502, 503):
+            # Endpoint still deploying / restarting — retry with backoff
+            time.sleep(2 ** attempt)
+            continue
+
+        # 401 / 404 are not retryable — surface the gateway message
+        error = response.json().get("error", {})
+        raise Exception(f"{error.get('type')}: {error.get('message')}")
+
+    raise Exception("Max retries exceeded — endpoint did not become ready")
+```
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Authentication" href="/gguf-cloud/authentication" icon="key">
+    Base URLs and the accepted auth headers.
+  </Card>
+  <Card title="API Error Codes" href="/error-codes" icon="triangle-exclamation">
+    Error reference for the rest of the ModelsLab API.
+  </Card>
+</CardGroup>
