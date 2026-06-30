@@ -177,6 +177,13 @@
                     ]
                   },
                   {
+                    "group": "Krea 2 Turbo",
+                    "pages": [
+                      "image-generation/krea-2-turbo/overview",
+                      "image-generation/krea-2-turbo/text-to-image"
+                    ]
+                  },
+                  {
                     "group": "Pony Models",
                     "pages": [
                       "image-generation/pony-models/overview",
