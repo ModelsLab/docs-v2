@@ -222,10 +222,10 @@
         }
       }
     },
-    "/subscribed_products": {
-      "get": {
-        "summary": "Get subscribed products",
-        "description": "This endpoint allows you to see the list of all modelslab product you have subscribed to",
+    "/subscribed_plan": {
+      "post": {
+        "summary": "Get subscribed plan",
+        "description": "This endpoint allows you to see the current subscription plan you are on and your remaining balance",
         "servers": [{ "url": "https://modelslab.com/api" }],
         "requestBody": {
           "required": true,
