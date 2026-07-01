@@ -83,15 +83,15 @@
             "type": "integer",
             "default": 1024,
             "minimum": 1024,
-            "maximum": 2048,
-            "description": "The width of the image in pixels. Must be between 1024-2048 and divisible by 8."
+            "maximum": 1488,
+            "description": "The width of the image in pixels. Must be between 1024-1488 and divisible by 8. When set to 1488, height must be 1200 (1488x1488 is not supported)."
           },
           "height": {
             "type": "integer",
             "default": 1024,
             "minimum": 1024,
-            "maximum": 2048,
-            "description": "The height of the image in pixels. Must be between 1024-2048 and divisible by 8."
+            "maximum": 1488,
+            "description": "The height of the image in pixels. Must be between 1024-1488 and divisible by 8. When set to 1488, width must be 1200 (1488x1488 is not supported)."
           },
           "samples": {
             "type": "integer",
