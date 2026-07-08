@@ -1,0 +1,83 @@
+---
+title: "Subscription List"
+description: "This endpoint is used to get all your enterprise subscriptions."
+---
+
+## Request
+Send a `POST` request to the below endpoint to retrieve all subscriptions associated with your enterprise account.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/subscriptions' \
+```
+
+### Body
+
+```json json
+{
+  "key": "enterprise_api_key"
+}
+```
+
+## Body Attributes
+
+<ParamField body="key" type="string" required>
+  Your enterprise API Key used for request authorization.
+</ParamField>
+
+## Response
+
+```json json
+{
+  "status": "success",
+  "subscriptions": [
+    {
+      "plan": "premium",
+      "name": "Enterprise Premium",
+      "created_at": "2026-06-01 10:22:04",
+      "next_billing_date": "2026-07-01",
+      "server": { "name": "swift-falcon", "status": "live" }
+    }
+  ]
+}
+```
+
+## Response Attributes
+
+<ResponseField name="status" type="string">
+  The status of the request. Returns `success` when the subscriptions are retrieved successfully.
+</ResponseField>
+
+<ResponseField name="subscriptions" type="array">
+  A list of your enterprise subscriptions. Each item contains the following fields:
+
+  <Expandable title="subscription">
+    <ResponseField name="plan" type="string">
+      The plan identifier of the subscription (e.g. `premium`).
+    </ResponseField>
+
+    <ResponseField name="name" type="string">
+      The display name of the subscription plan.
+    </ResponseField>
+
+    <ResponseField name="created_at" type="string">
+      The date and time the subscription was created.
+    </ResponseField>
+
+    <ResponseField name="next_billing_date" type="string">
+      The date of the next billing cycle for the subscription.
+    </ResponseField>
+
+    <ResponseField name="server" type="object">
+      Details of the server associated with the subscription.
+
+      <Expandable title="server">
+        <ResponseField name="name" type="string">
+          The name of the server.
+        </ResponseField>
+
+        <ResponseField name="status" type="string">
+          The current status of the server (e.g. `live`).
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Expandable>
+</ResponseField>
