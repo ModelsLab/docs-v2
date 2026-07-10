@@ -8,6 +8,10 @@ description: 'Create high quality images from text using the FLUX model.'
 
 Generate photorealistic images from text descriptions using the FLUX model. FLUX excels at creating highly detailed, realistic images with excellent prompt adherence.
 
+<Check>
+  You can apply LoRA models to your FLUX generations using the `lora_model` parameter. To use multiple LoRAs, pass comma-separated LoRA model IDs to `lora_model` (e.g. `"more_details,animie"`) and matching comma-separated weights to `lora_strength` (e.g. `"0.8,0.6"`).
+</Check>
+
 ## Request
 
 Make a `POST` request to the endpoint below with the required parameters.
@@ -66,6 +70,14 @@ POST https://modelslab.com/api/v6/images/text2img
   Number of CLIP layers to skip. Affects style interpretation. Range: 1-4.
 </ParamField>
 
+<ParamField body="lora_model" type="string">
+  The LoRA model ID to apply during generation. For multiple LoRAs, pass comma-separated model IDs, e.g. `"more_details,animie"`.
+</ParamField>
+
+<ParamField body="lora_strength" type="string">
+  The strength (weight) applied to the LoRA model. For multiple LoRAs, pass comma-separated values matching the order of `lora_model`, e.g. `"0.8,0.6"`.
+</ParamField>
+
 <ParamField body="webhook" type="string">
   URL to receive a POST request when generation completes. See [Webhooks](/webhooks).
 </ParamField>
@@ -92,6 +104,8 @@ POST https://modelslab.com/api/v6/images/text2img
     "seed": null,
     "guidance_scale": 7.5,
     "clip_skip": 2,
+    "lora_model": "more_details",
+    "lora_strength": "0.8",
     "webhook": null,
     "track_id": null
 }
@@ -244,6 +258,13 @@ When you receive a processing response, use the [Fetch endpoint](/image-generati
     - **Lower (3-7)**: More creative, varied results
     - **Higher (8-15)**: More literal prompt adherence
     - **Default (7.5)**: Good balance for most use cases
+  </Accordion>
+
+  <Accordion title="Apply LoRA Models">
+    Use the `lora_model` parameter to apply a LoRA and fine-tune the style or subject of your generation:
+    - Pass a single LoRA ID, e.g. `"more_details"`.
+    - For multiple LoRAs, pass comma-separated IDs to `lora_model` and matching weights to `lora_strength`.
+    - Tune `lora_strength` (typically `0.6`–`1.0`) to control how strongly each LoRA is applied.
   </Accordion>
 </AccordionGroup>
 
