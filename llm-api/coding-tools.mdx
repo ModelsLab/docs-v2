@@ -1,9 +1,25 @@
 ---
 title: "Using with Coding Tools"
-description: "Use ModelsLab's LLM API with Claude Code, OpenAI Codex, Cursor, Continue, Aider, and other AI coding assistants."
+description: "Use ModelsLab's LLM API with Claude Code, Hermes Agent, Pi, OpenAI Codex, Cursor, Continue, Aider, and other AI coding assistants."
 ---
 
 ModelsLab's LLM API is compatible with popular AI coding tools. Since it supports both OpenAI and Anthropic API formats, you can use it as a drop-in backend for most AI coding assistants.
+
+Choose any model ID available on the [ModelsLab LLM catalog](https://modelslab.com/models/category/llmaster) or through the [List Models](/llm-api/list-models) endpoint. In the examples below, replace `YOUR_MODEL_ID` with the model you want to use.
+
+## Choose your coding agent
+
+<CardGroup cols={3}>
+  <Card title="Claude Code" icon="terminal" img="/images/llm-api/claude-code-card.jpg" href="#claude-code">
+    Use ModelsLab as Claude Code's Anthropic-compatible provider.
+  </Card>
+  <Card title="Hermes Agent" icon="robot" img="/images/llm-api/hermes-agent-card.png" href="#hermes-agent">
+    Configure ModelsLab as a custom OpenAI-compatible model provider.
+  </Card>
+  <Card title="Pi" icon="code" img="/images/llm-api/pi-card.png" href="#pi">
+    Add ModelsLab models through Pi's custom provider configuration.
+  </Card>
+</CardGroup>
 
 ## Claude Code
 
@@ -11,10 +27,13 @@ ModelsLab's LLM API is compatible with popular AI coding tools. Since it support
 
 ### Quick Start
 
+Run any supported model through Claude Code using ModelsLab as the API provider. `ANTHROPIC_AUTH_TOKEN` is preferred for interactive sessions. Use `--model` or `/model` to switch model IDs.
+
 ```bash
+CLAUDE_CODE_ATTRIBUTION_HEADER=0 \
 ANTHROPIC_BASE_URL="https://modelslab.com/api/v7/llm" \
 ANTHROPIC_AUTH_TOKEN="YOUR_MODELSLAB_API_KEY" \
-claude --model "Qwen/Qwen2.5-VL-72B-Instruct-together"
+claude --model "YOUR_MODEL_ID" --dangerously-skip-permissions
 ```
 
 ### Persistent Configuration
@@ -43,6 +62,82 @@ claude --model "Qwen/Qwen2.5-VL-72B-Instruct-together" \
   -p "Explain this codebase" \
   --dangerously-skip-permissions
 ```
+
+---
+
+## Hermes Agent
+
+[Hermes Agent](https://hermes-agent.nousresearch.com/) is Nous Research's open-source agent. Configure its custom OpenAI-compatible provider to run ModelsLab models.
+
+### Quick Start
+
+Run Hermes with the ModelsLab base URL, API key, and your selected model:
+
+```bash
+OPENAI_BASE_URL="https://modelslab.com/api/v7/llm" \
+OPENAI_API_KEY="YOUR_MODELSLAB_API_KEY" \
+hermes --provider custom --model "YOUR_MODEL_ID"
+```
+
+### Persistent Configuration
+
+Save the custom provider settings so future Hermes sessions use ModelsLab automatically:
+
+```bash
+hermes config set model.provider custom
+hermes config set model.base_url "https://modelslab.com/api/v7/llm"
+hermes config set OPENAI_API_KEY "YOUR_MODELSLAB_API_KEY"
+hermes config set model.default "YOUR_MODEL_ID"
+```
+
+Then start Hermes:
+
+```bash
+hermes
+```
+
+Use `hermes model` to select another configured model whenever you need to switch.
+
+---
+
+## Pi
+
+[Pi](https://pi.dev) is a terminal coding agent that supports custom OpenAI-compatible providers. Add ModelsLab to Pi's model configuration, then select it from Pi's model picker.
+
+### Configuration
+
+Create or update `~/.pi/agent/models.json`:
+
+```json
+{
+  "providers": {
+    "modelslab": {
+      "baseUrl": "https://modelslab.com/api/v7/llm",
+      "api": "openai-completions",
+      "apiKey": "$MODELSLAB_API_KEY",
+      "models": [
+        {
+          "id": "YOUR_MODEL_ID",
+          "name": "Your ModelsLab model",
+          "reasoning": true,
+          "input": ["text"],
+          "contextWindow": 128000,
+          "maxTokens": 16384
+        }
+      ]
+    }
+  }
+}
+```
+
+Set your API key and start Pi:
+
+```bash
+export MODELSLAB_API_KEY="YOUR_MODELSLAB_API_KEY"
+pi --provider modelslab --model "YOUR_MODEL_ID"
+```
+
+You can add additional ModelsLab model IDs to the `models` array. Open `/model` in Pi to choose between the configured models.
 
 ---
 
