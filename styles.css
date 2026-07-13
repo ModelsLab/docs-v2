@@ -1,20 +1,17 @@
-/* Import Space Grotesk font from Google Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap");
 
-/* Apply Space Grotesk font to all elements */
 * {
-  font-family: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif !important;
 }
 
-/* Specific font weights for better typography */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif !important;
   font-weight: 600 !important;
 }
@@ -24,14 +21,14 @@ span,
 div,
 li,
 a {
-  font-family: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif !important;
   font-weight: 400 !important;
 }
 
 code,
 pre {
-  font-family: "Fira Code", "Monaco", "Cascadia Code", "Roboto Mono", Consolas,
+  font-family: "Geist Mono", "Monaco", "Cascadia Code", "Roboto Mono", Consolas,
     "Courier New", monospace !important;
 }
 

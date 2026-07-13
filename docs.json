@@ -1,11 +1,41 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "aspen",
   "name": "ModelsLab",
   "colors": {
-    "primary": "#0260fa",
-    "light": "#e8e8e8",
-    "dark": "#202024"
+    "primary": "#2563EB",
+    "light": "#60A5FA",
+    "dark": "#1D4ED8"
+  },
+  "appearance": {
+    "default": "system"
+  },
+  "fonts": {
+    "family": "Geist",
+    "weight": 400,
+    "heading": {
+      "family": "Geist",
+      "weight": 600
+    },
+    "body": {
+      "family": "Geist",
+      "weight": 400
+    }
+  },
+  "background": {
+    "color": {
+      "light": "#FFFFFF",
+      "dark": "#111827"
+    }
+  },
+  "styling": {
+    "eyebrows": "breadcrumbs",
+    "codeblocks": {
+      "theme": {
+        "light": "github-light",
+        "dark": "github-dark"
+      }
+    }
   },
   "contextual": {
     "options": [
@@ -17,8 +47,8 @@
       "cursor",
       "vscode",
       {
-        "title": "Feature Requests",
-        "description": "Join the discord to request a new feature.",
+        "title": "Join our Discord",
+        "description": "Get help and share feature requests with the ModelsLab community.",
         "icon": "discord",
         "href": "https://discord.com/invite/modelslab-1033301189254729748"
       }
@@ -826,8 +856,10 @@
   "navbar": {
     "links": [
       {
-        "label": "",
+        "label": "Discord",
         "type": "discord",
+        "icon": "discord",
+        "iconType": "brands",
         "href": "https://discord.com/invite/modelslab-1033301189254729748"
       }
     ],
