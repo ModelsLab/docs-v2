@@ -1,18 +1,16 @@
 # ModelsLab API Documentation
 
-> ModelsLab is a developer-first AI API platform providing text-to-image, text-to-video, voice/audio, 3D generation, image editing, interior design, deepfake, and uncensored chat APIs. All APIs use JSON over HTTPS with POST requests.
+> ModelsLab is a developer-first AI API platform providing text-to-image, text-to-video, voice/audio, 3D generation, image editing, interior design, and face swap APIs. All APIs use JSON over HTTPS with POST requests.
 >
 > ## Quick Integration Reference
 >
 > **Base URLs:**
 > - Most APIs: `https://modelslab.com/api/v6/`
 > - Workflows: `https://modelslab.com/api/v1/workflows`
-> - Uncensored Chat (OpenAI-compatible): `https://modelslab.com/api/uncensored-chat/v1/`
 > - Enterprise APIs: Use your dedicated server URL provided at subscription
 >
 > **Authentication:**
 > - Standard APIs: Include `"key": "YOUR_API_KEY"` in the JSON request body
-> - Uncensored Chat: Use `Authorization: Bearer YOUR_API_KEY` header (OpenAI SDK compatible)
 > - Get your API key: https://modelslab.com/dashboard/api-keys
 >
 > **Request format:** All requests use `Content-Type: application/json` with POST method.
@@ -214,14 +212,6 @@ Endpoint prefix: `https://modelslab.com/api/v6/3d/`
 - [Fetch 3D](https://docs.modelslab.com/3d-api/fetch): Retrieve async 3D results. `POST /3d/fetch/{request_id}`
 - [Base64 to URL](https://docs.modelslab.com/3d-api/base64-to-url): Convert base64 3D files to hosted URL.
 
-## Uncensored Chat API
-
-Base URL: `https://modelslab.com/api/uncensored-chat/v1/` (OpenAI-compatible)
-
-- [Overview](https://docs.modelslab.com/uncensored-chat-api/overview): Uncensored chat endpoints, OpenAI SDK compatible.
-- [Chat Completions](https://docs.modelslab.com/uncensored-chat-api/chat-completions): OpenAI-compatible chat API. `POST /chat/completions`. Auth via `Authorization: Bearer` header. Model: `ModelsLab/Llama-3.1-8b-Uncensored-Dare`. Compatible with OpenAI Python/JS SDKs by changing `base_url`.
-- [Uncensored Chat](https://docs.modelslab.com/uncensored-chat-api/uncensored-chat): Web UI and direct usage.
-
 ## Interior API
 
 Endpoint prefix: `https://modelslab.com/api/v6/interior/`
@@ -248,8 +238,8 @@ Endpoint prefix: `https://modelslab.com/api/v6/`
 - [Buy Subscription](https://docs.modelslab.com/general-api/buy-subscription): Purchase an API key plan.
 - [Clear Cache](https://docs.modelslab.com/general-api/clear-cache): Clear user cache.
 - [Delete Image](https://docs.modelslab.com/general-api/delete-image): Delete uploaded assets.
-- [NSFW Image Check](https://docs.modelslab.com/general-api/nsfw-image-check): Check if an image contains NSFW content.
-- [NSFW Prompt Check](https://docs.modelslab.com/general-api/nsfw-prompt-check): Check prompts for NSFW/CP content.
+- [Image Safety Check](https://docs.modelslab.com/general-api/nsfw-image-check): Content-moderation check that flags unsafe images.
+- [Prompt Safety Check](https://docs.modelslab.com/general-api/nsfw-prompt-check): Content-moderation check that flags unsafe prompts.
 - [Subscribed Products](https://docs.modelslab.com/general-api/subscribed-product): View subscribed products.
 - [Check Requests](https://docs.modelslab.com/general-api/check-requests): Get current processing request count.
 - [Assets Generated](https://docs.modelslab.com/general-api/assets-generated): View generated assets history.
@@ -291,7 +281,7 @@ Enterprise APIs provide dedicated server infrastructure with additional manageme
 - [Clear Queue](https://docs.modelslab.com/enterprise-api/qwen/clear-queue): Clear queue.
 - [Fetch](https://docs.modelslab.com/enterprise-api/qwen/fetch): Retrieve results.
 
-### Enterprise Deepfake API
+### Enterprise Face Swap API
 
 - [Overview](https://docs.modelslab.com/enterprise-api/deepfake/overview): Enterprise face swap.
 - [Specific Face Swap](https://docs.modelslab.com/enterprise-api/deepfake/specific-face-swap): Swap specific face.
@@ -307,7 +297,7 @@ Enterprise APIs provide dedicated server infrastructure with additional manageme
 
 ### Enterprise Deepseek Chat API
 
-- [Overview](https://docs.modelslab.com/enterprise-api/deepseek-chat/overview): Enterprise Deepseek uncensored chat.
+- [Overview](https://docs.modelslab.com/enterprise-api/deepseek-chat/overview): Enterprise Deepseek chat.
 - [Start](https://docs.modelslab.com/enterprise-api/deepseek-chat/start): Start chat endpoint.
 - [Restart Server](https://docs.modelslab.com/enterprise-api/deepseek-chat/restart-server): Restart server.
 - [Clear Cache](https://docs.modelslab.com/enterprise-api/deepseek-chat/clear-cache): Clear cache.
@@ -475,13 +465,6 @@ Enterprise APIs provide dedicated server infrastructure with additional manageme
 - [System Details](https://docs.modelslab.com/enterprise-api/text-to-speech/system-details): Server status.
 - [Update Server](https://docs.modelslab.com/enterprise-api/text-to-speech/update-server): Update configuration.
 
-### Enterprise Uncensored Chat API
-
-- [Overview](https://docs.modelslab.com/enterprise-api/uncensored-chat/overview): Enterprise uncensored chat.
-- [Start](https://docs.modelslab.com/enterprise-api/uncensored-chat/start): Start chat endpoint.
-- [Clear Cache](https://docs.modelslab.com/enterprise-api/uncensored-chat/clear-cache): Clear cache.
-- [Clear Queue](https://docs.modelslab.com/enterprise-api/uncensored-chat/clear-queue): Clear queue.
-- [Restart Server](https://docs.modelslab.com/enterprise-api/uncensored-chat/restart-server): Restart server.
 
 ### Enterprise Video API
 
