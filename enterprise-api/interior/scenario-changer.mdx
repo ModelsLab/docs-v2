@@ -16,6 +16,7 @@ Make a `POST` request to below endpoint and pass the required parameters in the 
     "init_image": "https://assets.modelslab.ai/generations/076185f5-4e80-4300-b7b7-bcf79f53149d", 
     "seed": 0,  
     "scenario": "beach",
+    "prompt": "A beautiful house in the snow",
     "guidance_scale": 8,  
     "strength": 0.99,  
     "num_inference_steps": 51,  
@@ -38,6 +39,10 @@ Make a `POST` request to below endpoint and pass the required parameters in the 
 
 <ParamField query="scenario" type="string" enum="[beach, desert, plain, taiga]">
   The scenario to apply. Options: `beach`, `desert`, `plain`, `taiga`.
+</ParamField>
+
+<ParamField query="prompt" type="string">
+  A text description of the desired scenario or surroundings for the image.
 </ParamField>
 
 <ParamField query="negative_prompt" type="string">
