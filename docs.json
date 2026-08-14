@@ -436,6 +436,19 @@
                 ]
               },
               {
+                "group": "Krea 2 Turbo API",
+                "pages": [
+                  "enterprise-api/krea-2-turbo/overview",
+                  "enterprise-api/krea-2-turbo/text2img",
+                  "enterprise-api/krea-2-turbo/fetch",
+                  "enterprise-api/krea-2-turbo/clear-cache",
+                  "enterprise-api/krea-2-turbo/clear-queue",
+                  "enterprise-api/krea-2-turbo/restart-server",
+                  "enterprise-api/krea-2-turbo/system-details",
+                  "enterprise-api/krea-2-turbo/update-server"
+                ]
+              },
+              {
                 "group": "3D API",
                 "pages": [
                   "enterprise-api/3d-api/overview",
