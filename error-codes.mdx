@@ -10,13 +10,66 @@ When an error occurs, the API returns a JSON response with the following structu
 ```json
 {
   "status": "error",
+  "code": "invalid_api_key",
   "message": "Human-readable error description"
 }
 ```
 
+<Warning>
+  **Generation endpoints return HTTP 200 for failures.** `/api/v6`, `/api/v7` and
+  `/api/v8` answer errors with a `200` status line and `"status": "error"` in the
+  body. Branch on the body's `status` and `code` — never on the HTTP status code
+  alone, or a failed generation reads as a success.
+</Warning>
+
+Branch on `code`, not on `message`: `code` is a stable token, while `message` is
+prose that gets reworded and is sometimes forwarded verbatim from a third-party
+provider.
+
+### Error codes
+
+| Code | Meaning |
+|---|---|
+| `validation_error` | The request payload failed validation. See `errors` for per-field detail. |
+| `invalid_api_key` | The API key is missing, malformed, or does not belong to an active account. |
+| `unauthenticated` | Authentication is required for this endpoint. |
+| `forbidden` | Authenticated but not entitled to this endpoint or model. |
+| `no_subscription` | No active subscription. A paid plan is required. |
+| `insufficient_balance` | Plan allowance exhausted and the wallet cannot cover this request. |
+| `not_found` | The endpoint, model or request id does not exist. |
+| `rate_limited` | Rate window or concurrency limit exhausted. See the `RateLimit-*` headers. |
+| `provider_error` | An upstream model provider refused or failed the request. `message` is forwarded from the provider. |
+| `upstream_unavailable` | A ModelsLab service or GPU worker could not be reached. Not billed — retry. |
+| `server_error` | Unexpected server-side failure. Retry, then contact support with the request id. |
+
+The same list is published as `x-error-model.codes` in
+[`openapi.json`](https://modelslab.com/openapi.json), typed as the
+`GenerationError` schema.
+
 <Note>
 Some legacy endpoints may return `messege` instead of `message`. Handle both fields for compatibility.
 </Note>
+
+### Control-plane errors
+
+The agent control plane (`/api/agents/v1`) uses real HTTP status codes and a
+different envelope — every response, success or failure, has the same three keys:
+
+```json
+{
+  "data": null,
+  "error": {
+    "code": "insufficient_scope",
+    "message": "This token does not have the required scope: wallet:read.",
+    "details": { "required_scope": "wallet:read", "granted_scopes": ["models:read"] }
+  },
+  "meta": { "request_id": "0f8f6b1e-7a4a-4a3f-9a1b-2c9c1d0e5f21" }
+}
+```
+
+On success `error` is `null` and `data` carries the payload. Quote `meta.request_id`
+when reporting a failure. Typed as `AgentErrorEnvelope` in
+[`agents-openapi.json`](https://modelslab.com/agents-openapi.json).
 
 ## HTTP Status Codes
 

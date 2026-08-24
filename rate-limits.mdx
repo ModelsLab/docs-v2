@@ -1,6 +1,6 @@
 ---
 title: "Rate Limits"
-description: "Understanding ModelsLab API rate limits, request queuing, and concurrency limits for Free, Starter, Pro, and Enterprise subscription plans."
+description: "Understanding ModelsLab API rate limits, the RateLimit response headers, request queuing, and concurrency limits across subscription plans."
 ---
 
 <Info>
@@ -30,6 +30,60 @@ Our API uses request queue limits to manage server load and ensure optimal perfo
     Designed for enterprise applications and high-volume usage scenarios.
   </Card>
 </CardGroup>
+
+## Rate Limit Response Headers
+
+Every ModelsLab API response carries its own rate-limit state, so you can
+throttle against the real remaining budget instead of discovering a limit by
+exceeding it.
+
+| Header | Meaning |
+|---|---|
+| `RateLimit-Limit` | Requests permitted in the current window. |
+| `RateLimit-Remaining` | Requests still available. **Throttle against this.** |
+| `RateLimit-Reset` | Seconds until the window resets. |
+| `RateLimit-Policy` | Structured field: `"<policy>";q=<quota>;w=<window seconds>`. |
+| `RateLimit` | Structured field: `"<policy>";r=<remaining>;t=<reset seconds>`. |
+| `Retry-After` | Seconds to wait. Sent when the limit is exhausted. |
+
+The legacy `X-RateLimit-Limit` and `X-RateLimit-Remaining` headers are still sent
+alongside these and are not going away.
+
+```bash
+curl -sD - -o /dev/null https://modelslab.com/api/agents/v1/changelog | grep -i ratelimit
+```
+
+```text
+RateLimit-Limit: 120
+RateLimit-Remaining: 119
+RateLimit-Reset: 60
+RateLimit-Policy: "default";q=120;w=60
+RateLimit: "default";r=119;t=60
+```
+
+<Note>
+  These headers are present on unauthenticated responses too, including `401`, so
+  an agent can read its budget before it holds a credential.
+</Note>
+
+### Control-plane policies
+
+| Surface | Limit |
+|---|---|
+| Authenticated control plane | 120 requests/minute |
+| Billing and wallet mutations | 15 requests/minute |
+| Auth endpoints | 20 requests/minute per IP and email |
+| Signup | 3/minute, 10/hour, 20/day per client IP |
+
+Buckets are keyed per credential, so two tokens on one account do not consume
+each other's budget.
+
+<Warning>
+  Generation endpoints (`/api/v6`, `/api/v7`, `/api/v8`) signal a rate-limit
+  refusal as **HTTP 200** with `"status": "error"` and `"code": "rate_limited"` in
+  the body — not as a `429`. Branch on the body, not the HTTP status. See
+  [Error Codes](/error-codes).
+</Warning>
 
 ## How Request Queuing Works
 

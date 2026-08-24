@@ -1,0 +1,136 @@
+---
+title: "Token Scopes"
+description: "Least-privilege scopes for ModelsLab agent control-plane tokens. Request only the access your agent needs, and see exactly what each scope grants."
+---
+
+Control-plane tokens support **least-privilege scopes**. An agent that only reads
+the model catalogue should not hold a credential that can also cancel the
+subscription and drain the wallet.
+
+<Note>
+  Scopes are opt-in. A token minted **without** a `scopes` array is issued with
+  `*` and behaves exactly as before, so every credential already in use keeps
+  working. Nothing here is a breaking change.
+</Note>
+
+## Requesting a scoped token
+
+Send a `scopes` array on login:
+
+```bash
+curl --request POST 'https://modelslab.com/api/agents/v1/auth/login' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "email": "agent@example.com",
+    "password": "secret123",
+    "device_name": "catalogue-reader",
+    "scopes": ["models:read", "usage:read"]
+  }'
+```
+
+The response echoes the granted scopes:
+
+```json
+{
+  "data": {
+    "access_token": "<bearer-token>",
+    "token_type": "Bearer",
+    "scopes": ["models:read", "usage:read"],
+    "expires_at": "2026-09-24T00:00:00+00:00"
+  },
+  "error": null,
+  "meta": { "request_id": "0f8f6b1e-7a4a-4a3f-9a1b-2c9c1d0e5f21" }
+}
+```
+
+An unknown scope is rejected with `422` rather than silently dropped, so you
+never receive a token wider than the one you asked for.
+
+## Available scopes
+
+| Scope | Grants |
+|---|---|
+| `*` | Full account access. The default when `scopes` is omitted. |
+| `profile:read` | Read the account profile, email and preferences. |
+| `profile:write` | Update the account profile, password, socials and preferences. |
+| `tokens:read` | List the access tokens issued for this account. |
+| `tokens:write` | Revoke access tokens, log out, and switch account context. |
+| `api-keys:read` | List and inspect generation API keys. |
+| `api-keys:write` | Create, rename and delete generation API keys. |
+| `usage:read` | Read usage summaries, per-product usage and request history. |
+| `models:read` | Browse the model catalogue, filters, tags and providers. |
+| `files:write` | Upload files and base64 payloads for use as generation inputs. |
+| `billing:read` | Read billing info, invoices, payment methods and the Stripe publishable key. |
+| `billing:write` | Add and remove payment methods, update billing info and create payment links. |
+| `wallet:read` | Read the wallet balance, coupon validity and payment status. |
+| `wallet:write` | Fund the wallet, withdraw, redeem coupons and change auto-funding. |
+| `subscriptions:read` | Read plans, current subscriptions and subscription status. |
+| `subscriptions:write` | Buy, change, pause, resume and repair subscriptions. |
+| `teams:read` | List teams and team members. |
+| `teams:write` | Create and modify teams, invite members and accept invitations. |
+
+The list is also available unauthenticated at
+[`GET /api/agents/v1/auth/scopes`](https://modelslab.com/api/agents/v1/auth/scopes)
+and in `scopes_supported` at
+[`/.well-known/oauth-authorization-server`](https://modelslab.com/.well-known/oauth-authorization-server),
+so an agent can read it before it holds a credential.
+
+## Working out the minimum set
+
+Every operation in
+[`agents-openapi.json`](https://modelslab.com/agents-openapi.json) declares the
+scope it requires as `x-required-scope`. You can compute the exact set your
+workflow needs before authenticating:
+
+```bash
+curl -s https://modelslab.com/agents-openapi.json \
+  | jq -r '.paths | to_entries[] | .key as $p | .value | to_entries[]
+           | select(.value["x-required-scope"])
+           | "\(.key|ascii_upcase) \($p) -> \(.value["x-required-scope"])"'
+```
+
+## When a call is out of scope
+
+```json
+{
+  "data": null,
+  "error": {
+    "code": "insufficient_scope",
+    "message": "This token does not have the required scope: wallet:read.",
+    "details": {
+      "required_scope": "wallet:read",
+      "granted_scopes": ["models:read"]
+    }
+  },
+  "meta": { "request_id": "0f8f6b1e-7a4a-4a3f-9a1b-2c9c1d0e5f21" }
+}
+```
+
+The response is `403`, and the required scope is named in both the body and the
+`WWW-Authenticate` header (RFC 6750):
+
+```text
+WWW-Authenticate: Bearer realm="modelslab", error="insufficient_scope", scope="wallet:read"
+```
+
+Re-authenticate requesting that scope. Do not retry the same call.
+
+## Two rules worth knowing
+
+<AccordionGroup>
+  <Accordion title="Switching account context can never widen scopes">
+    `POST /api/agents/v1/auth/switch-account` issues a token for another account
+    in your team. The scopes it grants are the **intersection** of what you ask
+    for and what the token performing the switch already holds, so a context
+    switch can never be used as a privilege-escalation path. Ask for more than
+    you hold and you get `403 insufficient_scope`.
+  </Accordion>
+  <Accordion title="Self-revocation is never scope-gated">
+    `POST /api/agents/v1/auth/logout` revokes the token making the call, and works
+    on any token however narrow. A credential you can only destroy by holding a
+    wider one is a credential you cannot safely hand out.
+
+    `logout-all` and `DELETE /auth/tokens/{id}` act on **other** tokens and do
+    require `tokens:write`.
+  </Accordion>
+</AccordionGroup>
