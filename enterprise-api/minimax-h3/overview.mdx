@@ -1,0 +1,57 @@
+---
+title: "Enterprise MiniMax H3 API"
+description: "Run MiniMax H3 video models on dedicated enterprise GPU servers. Text-to-video, first-and-last-frame animation and reference-driven video with full server control."
+---
+
+<Tip>
+    Not on Enterprise yet? Get your enterprise plan at [ModelsLab](https://modelslab.com/enterprise)
+</Tip>
+
+MiniMax H3 runs directly on your own enterprise container — requests are posted straight at your
+dedicated server instead of going through the shared queue.
+
+The model exposes three capabilities across two generation endpoints:
+
+| Capability | Endpoint | `model_id` |
+| --- | --- | --- |
+| Text to video | `/minimax_h3/text2video` | not required |
+| First & last frame to video | `/minimax_h3/img2video` | `h3-minimax-start-end-frame` |
+| Reference to video | `/minimax_h3/img2video` | `h3-minimax-r2v` |
+
+Text to video has an endpoint to itself, so it takes no `model_id`. Both image-to-video modes share
+one endpoint and nothing in the payload separates them, so `model_id` is **required** there.
+
+## Available Endpoints
+<CardGroup>
+  <Card title="Text to Video" href="/enterprise-api/minimax-h3/text2video">
+    This endpoint generates a video from a text prompt using the MiniMax H3 model.
+  </Card>
+
+  <Card title="Image to Video" href="/enterprise-api/minimax-h3/img2video">
+    This endpoint animates between a first and a last frame, or generates a video from image, video and audio references.
+  </Card>
+
+  <Card title="Fetch Queued Videos" href="/enterprise-api/minimax-h3/fetch">
+    This endpoint fetches already generated or queued videos by ID.
+  </Card>
+
+  <Card title="Clear Server Cache" href="/enterprise-api/minimax-h3/clear-cache">
+    This endpoint clears the server cache.
+  </Card>
+
+  <Card title="Clear Server Queue" href="/enterprise-api/minimax-h3/clear-queue">
+    This endpoint clears the server queue.
+  </Card>
+
+  <Card title="Restart Server" href="/enterprise-api/minimax-h3/restart-server">
+    This endpoint restarts the server.
+  </Card>
+
+  <Card title="System Details" href="/enterprise-api/minimax-h3/system-details">
+    This endpoint retrieves system and server details.
+  </Card>
+
+  <Card title="Update Server" href="/enterprise-api/minimax-h3/update-server">
+    This endpoint updates the server to the latest version.
+  </Card>
+</CardGroup>

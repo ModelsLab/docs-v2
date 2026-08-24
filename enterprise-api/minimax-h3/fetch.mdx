@@ -1,0 +1,18 @@
+---
+title: "Fetch Video"
+description: "Fetch Queued Videos API fetches queued videos for MiniMax H3."
+openapi: "POST /minimax_h3/fetch/{id}"
+---
+
+## Request
+Send a `POST` request to below endpoint to return the corresponding queued videos. Where `{id}` is the ID returned together with the video URL in the response upon its generation. This endpoint does not generate a new video, it returns already generated/queued videos.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/minimax_h3/fetch/{id}' \
+```
+
+## Body
+```json json
+{ 
+    "key": "enterprise_api_key"
+}
+```
