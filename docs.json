@@ -450,6 +450,20 @@
                 ]
               },
               {
+                "group": "MiniMax H3 API",
+                "pages": [
+                  "enterprise-api/minimax-h3/overview",
+                  "enterprise-api/minimax-h3/text2video",
+                  "enterprise-api/minimax-h3/img2video",
+                  "enterprise-api/minimax-h3/fetch",
+                  "enterprise-api/minimax-h3/clear-cache",
+                  "enterprise-api/minimax-h3/clear-queue",
+                  "enterprise-api/minimax-h3/restart-server",
+                  "enterprise-api/minimax-h3/system-details",
+                  "enterprise-api/minimax-h3/update-server"
+                ]
+              },
+              {
                 "group": "3D API",
                 "pages": [
                   "enterprise-api/3d-api/overview",

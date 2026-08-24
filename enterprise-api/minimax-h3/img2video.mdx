@@ -1,0 +1,268 @@
+---
+title: "Image to Video"
+description: "This endpoint animates between a first and a last frame, or generates a video from image, video and audio references, using the MiniMax H3 model."
+---
+
+<Warning>
+  Make sure you add your [s3 details](/enterprise-api/general/update-s3-details.mdx) for the `minimax_h3` server, so you can receive the video generated in your bucket.
+  Videos generated without s3 details being added will be deleted after **24 hours**.
+</Warning>
+
+MiniMax H3 serves two image-to-video capabilities from this single endpoint, and nothing else in the
+payload tells them apart — a single `init_image` is a valid request to either — so `model_id` is
+**required** here:
+
+| `model_id` | What it does |
+| --- | --- |
+| `h3-minimax-start-end-frame` | Animates between a first and a last frame. |
+| `h3-minimax-r2v` | Generates a video from a list of image, video and audio references. |
+
+A request without a valid `model_id` is rejected with:
+
+```json json
+{
+  "status": "error",
+  "message": "model_id is required for image to video: send h3-minimax-start-end-frame to animate between a first and a last frame, or h3-minimax-r2v to generate from references."
+}
+```
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/minimax_h3/img2video' \
+```
+
+<Tabs>
+  <Tab title="First & Last Frame">
+
+Animates between two frames. Both are sent in `init_image` as a list of **exactly two** images — the
+first frame, then the last frame. One image is not enough, and a third would be silently dropped, so
+anything other than two is refused.
+
+## Body
+```json json
+{
+  "key": "enterprise_api_key",
+  "model_id": "h3-minimax-start-end-frame",
+  "prompt": "the camera pushes in slowly as the doors open",
+  "init_image": [
+    "https://assets.modelslab.ai/generations/first-frame.png",
+    "https://assets.modelslab.ai/generations/last-frame.png"
+  ],
+  "width": 1024,
+  "height": 576,
+  "duration": 5,
+  "num_frames": 120,
+  "num_inference_steps": 30,
+  "seed": null,
+  "instant_response": false,
+  "temp": false,
+  "base64": false,
+  "webhook": null,
+  "track_id": null
+}
+```
+
+## Body Attributes
+
+<ParamField query="key" type="string" required placeholder="Your API key">
+  Your API Key used for request authorization.
+</ParamField>
+
+<ParamField query="model_id" type="string" required default="h3-minimax-start-end-frame">
+  Must be <code>h3-minimax-start-end-frame</code> for this mode.
+</ParamField>
+
+<ParamField query="prompt" type="string" required placeholder="Description of the motion">
+  Text prompt with a description of the motion you want between the two frames.
+</ParamField>
+
+<ParamField query="init_image" type="array" required placeholder="Exactly 2 image URLs">
+  A list of **exactly two** images — the first frame, then the last frame. Each entry is a link to a valid PNG, JPEG or other image format file, or a base64 string.
+</ParamField>
+
+<ParamField query="width" type="number" placeholder="Max 1536">
+  Width of the generated frame. Must be a multiple of **32** and at most **1536**. Must be sent together with `height`.
+</ParamField>
+
+<ParamField query="height" type="number" placeholder="Max 1536">
+  Height of the generated frame. Must be a multiple of **32** and at most **1536**. Must be sent together with `width`.
+</ParamField>
+
+<ParamField query="duration" type="number" placeholder="5-15">
+  Length of the generated video in seconds. Minimum is `5`, maximum is `15`.
+</ParamField>
+
+<ParamField query="num_frames" type="number" placeholder="120-345">
+  The number of frames in the generated video. Minimum is `120`, maximum is `345`.
+</ParamField>
+
+<ParamField query="num_inference_steps" type="number" placeholder="1-50">
+  Number of denoising steps. Minimum is `1`, maximum is `50`.
+</ParamField>
+
+<ParamField query="seed" type="number" placeholder="Seed number or null">
+  Seed is used to reproduce results. The same seed will give you the same video again. Pass <em>null</em> for a random number.
+</ParamField>
+
+<ParamField query="instant_response" type="boolean" default="false">
+  Queue response instantly before processing finishes instead of waiting a minimum amount of time. <strong>default</strong>: <code>false</code>, <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="temp" type="boolean" default="false">
+  If true, stores the video in temporary storage which is cleaned every 24 hours. <strong>default</strong>: <code>false</code>, <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="base64" type="boolean" default="false">
+  Set to `true` when the images in `init_image` are sent as base64 strings instead of URLs. <strong>default</strong>: <code>false</code>, <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="webhook" type="string" placeholder="Webhook URL">
+  Set a URL to get a POST API call once the video generation is complete.
+</ParamField>
+
+<ParamField query="track_id" type="string" placeholder="Tracking ID">
+  This ID is returned in the response to the webhook API call. This will be used to identify the webhook request.
+</ParamField>
+
+  </Tab>
+  <Tab title="Reference to Video">
+
+Generates a video from references. Images carry identity and style, videos carry motion and camera
+work, and audio carries timbre or dialogue — any one of them is enough on its own, so at least one of
+`init_image`, `init_video` or `init_audio` is required. The prompt is optional in this mode: with an
+identity to follow, the references carry the shot.
+
+Each field takes a single reference as a string, or several as a list:
+
+| Field | Max references |
+| --- | --- |
+| `init_image` | 9 |
+| `init_video` | 3 |
+| `init_audio` | 3 |
+| **All fields combined** | **12** |
+
+<Note>
+  A data URI (`data:image/png;base64,...`) contains a comma of its own and cannot be combined with
+  other references in the same field. Send a single data URI per field, or send the references as
+  raw base64 strings or URLs.
+</Note>
+
+## Body
+```json json
+{
+  "key": "enterprise_api_key",
+  "model_id": "h3-minimax-r2v",
+  "prompt": "she turns to face the camera and smiles",
+  "init_image": [
+    "https://assets.modelslab.ai/generations/reference-1.png",
+    "https://assets.modelslab.ai/generations/reference-2.png"
+  ],
+  "init_video": "https://assets.modelslab.ai/generations/motion-reference.mp4",
+  "init_audio": null,
+  "width": 1024,
+  "height": 576,
+  "resolution": 720,
+  "adaptive_resolution": true,
+  "duration": 5,
+  "num_frames": 120,
+  "num_inference_steps": 30,
+  "num_samples": 1,
+  "safety_checker": false,
+  "seed": null,
+  "instant_response": false,
+  "temp": false,
+  "base64": false,
+  "webhook": null,
+  "track_id": null
+}
+```
+
+## Body Attributes
+
+<ParamField query="key" type="string" required placeholder="Your API key">
+  Your API Key used for request authorization.
+</ParamField>
+
+<ParamField query="model_id" type="string" required default="h3-minimax-r2v">
+  Must be <code>h3-minimax-r2v</code> for this mode.
+</ParamField>
+
+<ParamField query="prompt" type="string" placeholder="Description of the video">
+  Text prompt with a description of the things you want in the video. Optional in this mode — the model falls back to a prompt of its own when the references carry the shot.
+</ParamField>
+
+<ParamField query="init_image" type="string | array" placeholder="Up to 9 image references">
+  One image reference, or a list of up to **9**. Carries identity and style. Each entry is a link to a valid PNG, JPEG or other image format file, or a base64 string.
+</ParamField>
+
+<ParamField query="init_video" type="string | array" placeholder="Up to 3 video references">
+  One video reference, or a list of up to **3**. Carries motion and camera work.
+</ParamField>
+
+<ParamField query="init_audio" type="string | array" placeholder="Up to 3 audio references">
+  One audio reference, or a list of up to **3**. Carries timbre or dialogue.
+</ParamField>
+
+<ParamField query="width" type="number" placeholder="Max 1536">
+  Width of the generated frame. Must be a multiple of **32** and at most **1536**. Must be sent together with `height`.
+</ParamField>
+
+<ParamField query="height" type="number" placeholder="Max 1536">
+  Height of the generated frame. Must be a multiple of **32** and at most **1536**. Must be sent together with `width`.
+</ParamField>
+
+<ParamField query="resolution" type="number" placeholder="320-1536">
+  Resolution of the generated output. Minimum is `320`, maximum is `1536`.
+</ParamField>
+
+<ParamField query="adaptive_resolution" type="boolean" default="true">
+  Let the model pick the output resolution from the references instead of holding it fixed. <strong>default</strong>: <code>true</code>, <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="duration" type="number" placeholder="5-15">
+  Length of the generated video in seconds. Minimum is `5`, maximum is `15`.
+</ParamField>
+
+<ParamField query="num_frames" type="number" placeholder="120-345">
+  The number of frames in the generated video. Minimum is `120`, maximum is `345`.
+</ParamField>
+
+<ParamField query="num_inference_steps" type="number" placeholder="1-50">
+  Number of denoising steps. Minimum is `1`, maximum is `50`.
+</ParamField>
+
+<ParamField query="num_samples" type="number" default="1" placeholder="1-4">
+  Number of videos to be returned in the response. The maximum value is `4`.
+</ParamField>
+
+<ParamField query="safety_checker" type="boolean" default="false">
+  A checker for NSFW outputs. If such an output is detected, it will be replaced by a blank one. <strong>default</strong>: <code>false</code>, <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="seed" type="number" placeholder="Seed number or null">
+  Seed is used to reproduce results. The same seed will give you the same video again. Pass <em>null</em> for a random number.
+</ParamField>
+
+<ParamField query="instant_response" type="boolean" default="false">
+  Queue response instantly before processing finishes instead of waiting a minimum amount of time. <strong>default</strong>: <code>false</code>, <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="temp" type="boolean" default="false">
+  If true, stores the video in temporary storage which is cleaned every 24 hours. <strong>default</strong>: <code>false</code>, <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="base64" type="boolean" default="false">
+  Set to `true` when the references are sent as base64 strings instead of URLs. <strong>default</strong>: <code>false</code>, <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="webhook" type="string" placeholder="Webhook URL">
+  Set a URL to get a POST API call once the video generation is complete.
+</ParamField>
+
+<ParamField query="track_id" type="string" placeholder="Tracking ID">
+  This ID is returned in the response to the webhook API call. This will be used to identify the webhook request.
+</ParamField>
+
+  </Tab>
+</Tabs>

@@ -1,0 +1,83 @@
+---
+title: "Text to Video"
+description: "This endpoint generates a video from a text prompt using the MiniMax H3 model."
+---
+
+<Warning>
+  Make sure you add your [s3 details](/enterprise-api/general/update-s3-details.mdx) for the `minimax_h3` server, so you can receive the video generated in your bucket.
+  Videos generated without s3 details being added will be deleted after **24 hours**.
+</Warning>
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/minimax_h3/text2video' \
+```
+
+## Body
+```json json
+{
+  "key": "enterprise_api_key",
+  "prompt": "a lone astronaut walking across a red dune at sunset, cinematic wide shot",
+  "width": 1024,
+  "height": 576,
+  "duration": 5,
+  "num_frames": 120,
+  "num_inference_steps": 30,
+  "seed": null,
+  "instant_response": false,
+  "temp": false,
+  "webhook": null,
+  "track_id": null
+}
+```
+
+## Body Attributes
+
+<ParamField query="key" type="string" required placeholder="Your API key">
+  Your API Key used for request authorization.
+</ParamField>
+
+<ParamField query="prompt" type="string" required placeholder="Description of the video">
+  Text prompt with a description of the things you want in the video to be generated. The prompt is the only thing this endpoint has to work from, so it is required.
+</ParamField>
+
+<ParamField query="width" type="number" placeholder="Max 1536">
+  Width of the generated frame. Must be a multiple of **32** and at most **1536**. Must be sent together with `height`.
+</ParamField>
+
+<ParamField query="height" type="number" placeholder="Max 1536">
+  Height of the generated frame. Must be a multiple of **32** and at most **1536**. Must be sent together with `width`.
+</ParamField>
+
+<ParamField query="duration" type="number" placeholder="5-15">
+  Length of the generated video in seconds. Minimum is `5`, maximum is `15`.
+</ParamField>
+
+<ParamField query="num_frames" type="number" placeholder="120-345">
+  The number of frames in the generated video. Minimum is `120`, maximum is `345`.
+</ParamField>
+
+<ParamField query="num_inference_steps" type="number" placeholder="1-50">
+  Number of denoising steps. Minimum is `1`, maximum is `50`.
+</ParamField>
+
+<ParamField query="seed" type="number" placeholder="Seed number or null">
+  Seed is used to reproduce results. The same seed will give you the same video again. Pass <em>null</em> for a random number.
+</ParamField>
+
+<ParamField query="instant_response" type="boolean" default="false">
+  Queue response instantly before processing finishes instead of waiting a minimum amount of time. <strong>default</strong>: <code>false</code>, <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="temp" type="boolean" default="false">
+  If true, stores the video in temporary storage which is cleaned every 24 hours. <strong>default</strong>: <code>false</code>, <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="webhook" type="string" placeholder="Webhook URL">
+  Set a URL to get a POST API call once the video generation is complete.
+</ParamField>
+
+<ParamField query="track_id" type="string" placeholder="Tracking ID">
+  This ID is returned in the response to the webhook API call. This will be used to identify the webhook request.
+</ParamField>
