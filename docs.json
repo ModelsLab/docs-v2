@@ -112,6 +112,7 @@
             "pages": [
               "agents-api/overview",
               "agents-api/authentication",
+              "agents-api/scopes",
               "agents-api/profile-and-api-keys",
               "agents-api/usage-and-models",
               "agents-api/billing-and-wallet",

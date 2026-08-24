@@ -21,7 +21,12 @@ Token issuance supports `token_expiry` on login:
 - `1_week`
 - `1_month` (default)
 - `3_months`
+- `6_months`
+- `1_year`
 - `never`
+
+Login also accepts a `scopes` array, so an agent can request only the access it
+needs instead of a full-access token. See [Token Scopes](/agents-api/scopes).
 
 <Note>
   Use a Bearer token to manage account and billing operations.

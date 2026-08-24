@@ -8,11 +8,16 @@ description: "Agent signup, login/logout, password reset, email verification, an
 | Method | Endpoint | Auth | Notes |
 |---|---|---|---|
 | `POST` | `/api/agents/v1/auth/signup` | None | Create user, create Stripe customer, send verification email |
-| `POST` | `/api/agents/v1/auth/login` | None | Returns Bearer token. Supports `token_expiry` selector |
-| `POST` | `/api/agents/v1/auth/verify-email` | None | Verify email with `verification_code` (no browser required). Returns `access_token` + `api_key` |
-| `POST` | `/api/agents/v1/auth/refresh` | Bearer token | Refresh/rotate access token without re-login |
-| `POST` | `/api/agents/v1/auth/logout` | Bearer token | Revokes current token |
-| `POST` | `/api/agents/v1/auth/logout-all` | Bearer token | Revokes all user tokens |
+| `POST` | `/api/agents/v1/auth/login` | None | Returns Bearer token. Supports `token_expiry` and `scopes` |
+| `POST` | `/api/agents/v1/auth/verify` | None | Verify email with `verification_code` (no browser required). Returns `access_token` + `api_key` |
+| `POST` | `/api/agents/v1/auth/google-sign-in` | None | Sign in with a Google ID token. Returns Bearer token |
+| `GET` | `/api/agents/v1/auth/scopes` | None | Lists every requestable scope and what it grants |
+| `POST` | `/api/agents/v1/auth/logout` | Bearer token | Revokes current token. Never scope-gated |
+| `POST` | `/api/agents/v1/auth/logout-all` | Bearer token | Revokes all user tokens. Requires `tokens:write` |
+| `GET` | `/api/agents/v1/auth/tokens` | Bearer token | Lists tokens with their granted scopes. Requires `tokens:read` |
+| `DELETE` | `/api/agents/v1/auth/tokens/{id}` | Bearer token | Revokes one token. Requires `tokens:write` |
+| `POST` | `/api/agents/v1/auth/tokens/revoke-others` | Bearer token | Revokes every token except the current one. Requires `tokens:write` |
+| `POST` | `/api/agents/v1/auth/switch-account` | Bearer token | Issues a token for another account in your team. Requires `tokens:write` |
 | `POST` | `/api/agents/v1/auth/resend-verification` | None | Resends verification email |
 | `POST` | `/api/agents/v1/auth/forgot-password` | None | Sends password reset email |
 | `POST` | `/api/agents/v1/auth/reset-password` | None | Resets password with token |
@@ -48,7 +53,16 @@ Supported `token_expiry` values:
 - `1_week`
 - `1_month` (default)
 - `3_months`
+- `6_months`
+- `1_year`
 - `never`
+
+Account policy may cap what you asked for. Check `token_lifetime_capped` and
+`expires_at` in the response rather than assuming you got the lifetime you
+requested.
+
+Login also accepts an optional `scopes` array to mint a least-privilege token.
+Omit it and the token is issued with `*`. See [Token Scopes](/agents-api/scopes).
 
 Example response:
 
