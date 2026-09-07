@@ -464,6 +464,20 @@
                 ]
               },
               {
+                "group": "LTX 2.3 API",
+                "pages": [
+                  "enterprise-api/ltx-2-3/overview",
+                  "enterprise-api/ltx-2-3/text2video",
+                  "enterprise-api/ltx-2-3/img2video",
+                  "enterprise-api/ltx-2-3/fetch",
+                  "enterprise-api/ltx-2-3/clear-cache",
+                  "enterprise-api/ltx-2-3/clear-queue",
+                  "enterprise-api/ltx-2-3/restart-server",
+                  "enterprise-api/ltx-2-3/system-details",
+                  "enterprise-api/ltx-2-3/update-server"
+                ]
+              },
+              {
                 "group": "3D API",
                 "pages": [
                   "enterprise-api/3d-api/overview",

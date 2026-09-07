@@ -1,0 +1,100 @@
+---
+title: "Text to Video"
+description: "This endpoint generates a video from a text prompt using the LTX 2.3 model."
+---
+
+<Warning>
+  Make sure you add your [s3 details](/enterprise-api/general/update-s3-details.mdx) for the `ltx_2_3` server, so you can receive the video generated in your bucket.
+  Videos generated without s3 details being added will be deleted after **24 hours**.
+</Warning>
+
+The prompt is the only thing this endpoint has to work from, so it is required. Frame size comes
+from `resolution`, which is an **aspect ratio** (`1:1`, `16:9` or `9:16`) rather than a pixel value.
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/ltx_2_3/text2video' \
+```
+
+## Body
+```json json
+{
+  "key": "enterprise_api_key",
+  "prompt": "a lone astronaut walking across a red dune at sunset, cinematic wide shot",
+  "resolution": "16:9",
+  "duration": 5,
+  "num_frames": 81,
+  "num_inference_steps": 4,
+  "output_type": "mp4",
+  "seed": null,
+  "watermark": "no",
+  "instant_response": false,
+  "temp": false,
+  "base64": false,
+  "webhook": null,
+  "track_id": null
+}
+```
+
+## Body Attributes
+
+<ParamField query="key" type="string" required placeholder="Your API key">
+  Your API Key used for request authorization.
+</ParamField>
+
+<ParamField query="prompt" type="string" required placeholder="Description of the video">
+  Text prompt with a description of the things you want in the video to be generated. The prompt is the only thing this endpoint has to work from, so it is required.
+</ParamField>
+
+<ParamField query="resolution" type="string" default="16:9">
+  Aspect ratio of the generated video, <strong>not</strong> a pixel size. <strong>options</strong>: <code>1:1</code>, <code>16:9</code> or <code>9:16</code>. Any other value is refused.
+</ParamField>
+
+<ParamField query="duration" type="number" default="5" placeholder="5-12">
+  Length of the generated video in seconds. Minimum is `5`, maximum is `12`.
+</ParamField>
+
+<ParamField query="num_frames" type="number" default="81" placeholder="1-81">
+  The number of frames in the generated video. Maximum is `81`, which is also the default.
+</ParamField>
+
+<ParamField query="num_inference_steps" type="number" default="4" placeholder="1-50">
+  Number of denoising steps. LTX 2.3 is distilled to generate in **4** steps, so raising this costs time without adding much detail. Minimum is `1`, maximum is `50`.
+</ParamField>
+
+<ParamField query="output_type" type="string" default="mp4">
+  Format of the generated video. <strong>options</strong>: <code>mp4</code> or <code>gif</code>.
+</ParamField>
+
+<ParamField query="model_id" type="string" placeholder="ltx-2.3">
+  Optional model identifier forwarded to your server. Your LTX 2.3 container serves one model, so this can be left out.
+</ParamField>
+
+<ParamField query="seed" type="number" placeholder="Seed number or null">
+  Seed is used to reproduce results. The same seed will give you the same video again. Pass <em>null</em> for a random number.
+</ParamField>
+
+<ParamField query="watermark" type="string" default="no">
+  Whether to watermark the generated video. <strong>options</strong>: <code>yes</code> or <code>no</code>.
+</ParamField>
+
+<ParamField query="instant_response" type="boolean" default="false">
+  Queue response instantly before processing finishes instead of waiting a minimum amount of time. <strong>default</strong>: <code>false</code>, <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="temp" type="boolean" default="false">
+  If true, stores the video in temporary storage which is cleaned every 24 hours. <strong>default</strong>: <code>false</code>, <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="base64" type="boolean" default="false">
+  Set to `true` when you are sending or expecting base64 rather than URLs. <strong>default</strong>: <code>false</code>, <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="webhook" type="string" placeholder="Webhook URL">
+  Set a URL to get a POST API call once the video generation is complete.
+</ParamField>
+
+<ParamField query="track_id" type="string" placeholder="Tracking ID">
+  This ID is returned in the response to the webhook API call. This will be used to identify the webhook request.
+</ParamField>
