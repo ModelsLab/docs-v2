@@ -1,0 +1,57 @@
+---
+title: "Enterprise LTX 2.3 API"
+description: "Run LTX 2.3 video generation on dedicated enterprise GPU servers. Text-to-video, image-to-video and full server control."
+---
+
+<Tip>
+    Not on Enterprise yet? Get your enterprise plan at [ModelsLab](https://modelslab.com/enterprise)
+</Tip>
+
+LTX 2.3 runs directly on your own enterprise container — requests are posted straight at your
+dedicated server instead of going through the shared queue.
+
+The model is distilled to generate in **4 steps**, so videos come back far faster than the step
+count of a standard diffusion video model would suggest.
+
+| Capability | Endpoint |
+| --- | --- |
+| Text to video | `/ltx_2_3/text2video` |
+| Image to video | `/ltx_2_3/img2video` |
+
+Both endpoints take `resolution` as an **aspect ratio** — `1:1`, `16:9` or `9:16` — not a pixel
+width or height. Any other value is refused.
+
+## Available Endpoints
+<CardGroup>
+  <Card title="Text to Video" href="/enterprise-api/ltx-2-3/text2video">
+    This endpoint generates a video from a text prompt using the LTX 2.3 model.
+  </Card>
+
+  <Card title="Image to Video" href="/enterprise-api/ltx-2-3/img2video">
+    This endpoint animates a single still image into a video.
+  </Card>
+
+  <Card title="Fetch Queued Videos" href="/enterprise-api/ltx-2-3/fetch">
+    This endpoint fetches already generated or queued videos by ID.
+  </Card>
+
+  <Card title="Clear Server Cache" href="/enterprise-api/ltx-2-3/clear-cache">
+    This endpoint clears the server cache.
+  </Card>
+
+  <Card title="Clear Server Queue" href="/enterprise-api/ltx-2-3/clear-queue">
+    This endpoint clears the server queue.
+  </Card>
+
+  <Card title="Restart Server" href="/enterprise-api/ltx-2-3/restart-server">
+    This endpoint restarts the server.
+  </Card>
+
+  <Card title="System Details" href="/enterprise-api/ltx-2-3/system-details">
+    This endpoint retrieves system and server details.
+  </Card>
+
+  <Card title="Update Server" href="/enterprise-api/ltx-2-3/update-server">
+    This endpoint updates the server to the latest version.
+  </Card>
+</CardGroup>
