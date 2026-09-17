@@ -1,0 +1,78 @@
+---
+title: "Fetch Video Batch"
+openapi: 'POST /video/batch/fetch/{id}'
+description: "Retrieve every video of a batch at once using the batch ID returned by the Video Batch API."
+---
+
+## Request
+Send a `POST` request to below endpoint to return every request of a batch. Where `{id}` is the `batch_id` returned by the [Video Batch](/video-api/video-batch) endpoint. This endpoint does not generate new video, it reports the current state of the batch.
+
+```curl curl
+--request POST 'https://modelslab.com/api/v6/video/batch/fetch/{id}' \
+```
+
+## Body
+```json json
+{
+    "key": "your_api_key"
+}
+```
+
+## Response
+`status` is `processing` while any request is still running, `success` once every request has succeeded, and `failed` once every request has failed. `output` collects every finished video across the batch, in request order, so it grows as videos land. Each entry in `results` is the same body the single [Fetch Video](/video-api/fetch-video) endpoint returns for that request, plus its `index` and `track_id`.
+
+```json json
+{
+    "status": "processing",
+    "id": 48213,
+    "batch_id": 48213,
+    "message": "1 of 3 requests still processing. Try Again",
+    "tip": "Get 20x faster image generation using enterprise plan. Click here : https://modelslab.com/enterprise",
+    "output": [
+        "https://cdn2.modelslab.com/generations/48214.mp4"
+    ],
+    "request_counts": { "total": 3, "processing": 1, "succeeded": 1, "failed": 1 },
+    "results": [
+        {
+            "index": 0,
+            "track_id": "shot-1",
+            "status": "success",
+            "id": 48214,
+            "output": ["https://cdn2.modelslab.com/generations/48214.mp4"],
+            "proxy_links": {}
+        },
+        {
+            "index": 1,
+            "track_id": "shot-2",
+            "status": "processing",
+            "message": "Try Again",
+            "output": "",
+            "tip": "Get 20x faster image generation using enterprise plan. Click here : https://modelslab.com/enterprise"
+        },
+        {
+            "index": 2,
+            "track_id": "shot-3",
+            "status": "failed",
+            "id": 48216,
+            "message": "Timed out after 8 minutes",
+            "output": "",
+            "refunded": true
+        }
+    ]
+}
+```
+
+A failed entry carries `refunded: true` when its charge was reversed, which is the case for every request the 8-minute batch timeout fails.
+
+An unknown `batch_id`, or one that belongs to another account, answers:
+
+```json json
+{
+    "status": "failed",
+    "id": "",
+    "batch_id": "",
+    "message": "Batch not found",
+    "output": "",
+    "results": []
+}
+```

@@ -557,6 +557,121 @@
           }
         }
       }
+    },
+    "/video/batch": {
+      "post": {
+        "summary": "Generate many videos in one batch",
+        "description": "Submits 3 to 20 text-to-video / image-to-video requests under one model. Every request is charged at 50% of its single-request price and is failed and refunded if it has not finished within 8 minutes. The batch is validated as a whole: one invalid entry refuses all of them before anything is queued or charged. A batch of N counts as N queued requests against your concurrency limit.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VideoBatchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Batch accepted, or refused whole (validation_error, insufficient_balance, rate_limited). Always HTTP 200.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/VideoBatchResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/VideoBatchError"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/video/batch/fetch/{id}": {
+      "post": {
+        "summary": "Fetch every video of a batch",
+        "description": "Reports the current state of every request in a batch. status is processing while any request is still running, success once all succeeded, failed once all failed. output collects every finished video across the batch in request order.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The batch_id returned by POST /video/batch",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FetchVideoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Batch status. An unknown batch id answers status failed with message \"Batch not found\".",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoBatchResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1252,6 +1367,342 @@
           "message": {
             "type": "string",
             "description": "Error message description"
+          }
+        }
+      },
+      "VideoBatchRequest": {
+        "type": "object",
+        "required": [
+          "key",
+          "model_id",
+          "requests"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "model_id": {
+            "type": "string",
+            "enum": [
+              "wan2.2",
+              "ltx-2.3",
+              "h3-minimax-t2v",
+              "h3-minimax-r2v",
+              "h3-minimax-start-end-frame"
+            ],
+            "default": "wan2.2",
+            "description": "The video model every request in the batch runs on"
+          },
+          "requests": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 20,
+            "items": {
+              "$ref": "#/components/schemas/VideoBatchEntry"
+            },
+            "description": "3 to 20 requests. Each takes the same parameters as the single text-to-video / image-to-video endpoint for the chosen model; an entry with init_image takes the image-to-video path"
+          },
+          "defaults": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Parameters merged under every entry. A value set on an entry wins over the same key here"
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "Called once per request as it finishes, with that request's id and track_id"
+          },
+          "track_id": {
+            "type": "string",
+            "description": "Inherited by every entry that does not set its own"
+          }
+        }
+      },
+      "VideoBatchEntry": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "description": "Text prompt describing the video content. Required for text-to-video"
+          },
+          "init_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "Initial image URL (or base64 with base64: true). Present: the entry is image-to-video"
+          },
+          "negative_prompt": {
+            "type": "string",
+            "description": "Items you don't want in the video"
+          },
+          "track_id": {
+            "type": "string",
+            "description": "This entry's correlation id, returned in its result and webhook"
+          },
+          "seed": {
+            "oneOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Seed for reproducible results"
+          },
+          "num_frames": {
+            "type": "integer",
+            "description": "Number of frames in the video"
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "description": "Number of denoising steps"
+          },
+          "guidance_scale": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 8.0,
+            "description": "Scale for classifier-free guidance"
+          },
+          "fps": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 25,
+            "description": "Frames per second rate"
+          },
+          "duration": {
+            "type": "number",
+            "minimum": 1,
+            "description": "Video length in seconds. The price scales with it"
+          },
+          "portrait": {
+            "type": "boolean",
+            "default": false,
+            "description": "Portrait mode gives output in 9:16 aspect ratio"
+          },
+          "sample_shift": {
+            "type": "integer",
+            "description": "Controls the sampling shift in the generation process"
+          },
+          "base64": {
+            "type": "boolean",
+            "default": false,
+            "description": "init_image is base64 rather than a URL"
+          },
+          "temp": {
+            "type": "boolean",
+            "default": false,
+            "description": "Store in temporary storage"
+          }
+        }
+      },
+      "VideoBatchResult": {
+        "type": "object",
+        "description": "One request of the batch: the same body the single endpoint returns for it, plus its position and correlation id",
+        "additionalProperties": true,
+        "properties": {
+          "index": {
+            "type": "integer",
+            "description": "Position in the submitted requests array"
+          },
+          "track_id": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "processing",
+              "success",
+              "failed",
+              "error"
+            ]
+          },
+          "id": {
+            "type": "integer",
+            "description": "This request's own video id, usable on /video/fetch/{id}"
+          },
+          "output": {
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "The finished video URL(s); empty until then"
+          },
+          "future_links": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "fetch_result": {
+            "type": "string",
+            "format": "uri"
+          },
+          "eta": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "refunded": {
+            "type": "boolean",
+            "description": "On a failed result: whether its charge was reversed"
+          }
+        }
+      },
+      "VideoBatchResponse": {
+        "type": "object",
+        "description": "Keyed like a single video response (status, id, output, message, tip) with the batch fields on top",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "processing",
+              "success",
+              "failed"
+            ],
+            "description": "processing on submit and while any request is still running; success once all succeeded; failed once all failed"
+          },
+          "id": {
+            "type": "integer",
+            "description": "The batch id. Same value as batch_id; drawn from the same counter as video ids so the two never collide"
+          },
+          "batch_id": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "tip": {
+            "type": "string"
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Every finished video across the batch in request order; empty on submit"
+          },
+          "future_links": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "On submit: the URL every request will publish to, in request order"
+          },
+          "fetch_result": {
+            "type": "string",
+            "format": "uri",
+            "description": "On submit: URL to poll the whole batch"
+          },
+          "eta": {
+            "type": "integer",
+            "description": "On submit: the largest per-request estimate, in seconds"
+          },
+          "meta": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "On submit: the envelope inputs (model_id, track_id, webhook)"
+          },
+          "timeout_minutes": {
+            "type": "integer",
+            "description": "On submit: requests not finished by then are failed and refunded"
+          },
+          "discount": {
+            "type": "number",
+            "description": "On submit: fraction taken off every request's single-request price"
+          },
+          "request_counts": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "integer"
+              },
+              "processing": {
+                "type": "integer"
+              },
+              "succeeded": {
+                "type": "integer"
+              },
+              "failed": {
+                "type": "integer"
+              }
+            }
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoBatchResult"
+            }
+          }
+        }
+      },
+      "VideoBatchError": {
+        "type": "object",
+        "required": [
+          "status",
+          "code",
+          "message"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "error"
+            ]
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "validation_error",
+              "insufficient_balance",
+              "rate_limited"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "index": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "On validation_error: every invalid entry"
+          },
+          "estimated_cost": {
+            "type": "number",
+            "description": "On insufficient_balance: the discounted total the batch would have cost"
+          },
+          "available_slots": {
+            "type": "integer",
+            "description": "On rate_limited: queued-request slots currently free"
           }
         }
       }
