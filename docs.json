@@ -175,7 +175,9 @@
                   "video-api/text-to-video-ultra",
                   "video-api/image-to-video-ultra",
                   "video-api/base64-to-url",
-                  "video-api/fetch-video"
+                  "video-api/video-batch",
+                  "video-api/fetch-video",
+                  "video-api/fetch-video-batch"
                 ]
               },
               {

@@ -1,0 +1,130 @@
+---
+title: "Video Batch"
+openapi: 'POST /video/batch'
+description: "Submit many text-to-video and image-to-video requests under one model in a single call. Every request in a batch is charged at 50% of its single-request price."
+---
+
+### Video Batch
+Generate several videos with one request. A batch takes **3 to 20** requests that all run on the same `model_id`, queues each one as its own video, and returns one `batch_id` you can poll for all of them together.
+
+Each request in a batch is billed at **half** the price the matching single endpoint ([Text to Video Ultra](/video-api/text-to-video-ultra) or [Image to Video Ultra](/video-api/image-to-video-ultra)) would charge. In exchange, a request that has not finished **8 minutes** after submission is failed and refunded automatically.
+
+<Note>
+Supported `model_id` values are `wan2.2`, `ltx-2.3`, `h3-minimax-t2v`, `h3-minimax-r2v` and `h3-minimax-start-end-frame`. Requests with an `init_image` take the image-to-video path; the rest take text-to-video. Both kinds can be mixed in one batch.
+</Note>
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+
+```curl curl
+--request POST 'https://modelslab.com/api/v6/video/batch' \
+```
+
+## Body
+```json json
+{
+    "key": "your_api_key",
+    "model_id": "wan2.2",
+    "track_id": "campaign-42",
+    "webhook": null,
+    "defaults": {
+        "negative_prompt": "blurry, low quality, watermark",
+        "num_inference_steps": 20,
+        "fps": 16
+    },
+    "requests": [
+        { "track_id": "shot-1", "prompt": "A golden retriever running along a beach at sunset, slow motion" },
+        { "track_id": "shot-2", "prompt": "Aerial drone shot over a misty pine forest at dawn" },
+        { "track_id": "shot-3", "prompt": "The camera slowly pushes in", "init_image": "https://assets.modelslab.ai/generations/91c519f4-20fe-4834-ac47-fe5c39c44b34" }
+    ]
+}
+```
+
+- `requests` — 3 to 20 entries. Each entry accepts the same parameters as the single text-to-video / image-to-video endpoint for the chosen model.
+- `defaults` — optional. Merged under every entry; a value set on an entry wins over the same key in `defaults`.
+- `track_id` — an entry's own `track_id` is used for its webhook and result; entries without one inherit the top-level value.
+- `webhook` — called once per request as it finishes, exactly as the single endpoints do, with that request's `id` and `track_id`.
+
+## Validation
+The batch is validated as a whole before anything is queued. If any entry is invalid, the entire batch is refused, nothing is queued and nothing is charged. The error names the first failing entry and `errors` lists every one:
+
+```json json
+{
+    "status": "error",
+    "code": "validation_error",
+    "message": "requests.1: The prompt field is required.",
+    "errors": [
+        { "index": 1, "message": "The prompt field is required." }
+    ]
+}
+```
+
+## Billing
+Every request in a batch is charged at **50% of its single-request price**, at submission. The estimate is computed per entry — so a 10-second request costs twice a 5-second one, then both are halved — and the batch is only accepted if your plan allowance or wallet covers the discounted total:
+
+```json json
+{
+    "status": "error",
+    "code": "insufficient_balance",
+    "message": "Your balance does not cover this batch, please top up or upgrade your plan",
+    "estimated_cost": 0.9375
+}
+```
+
+A request still processing **8 minutes** after submission is marked failed and its charge is refunded. The refund is the discounted amount that was actually taken, and the result reports `refunded: true`. A request that finishes later than that is not delivered.
+
+## Concurrency
+A batch of N counts as N queued requests against your plan's [request queue limit](/rate-limits). The whole batch must fit in the slots you have free at submission — a plan with 10 slots and 4 videos already processing can submit a batch of at most 6:
+
+```json json
+{
+    "status": "error",
+    "code": "rate_limited",
+    "message": "Batch of 8 exceeds your available concurrency slots",
+    "available_slots": 6
+}
+```
+
+It also counts as N requests in the hourly window. The `RateLimit-*` response headers reflect the full weight.
+
+## Response
+The response is keyed like a single video response — `status`, `id`, `output`, `message`, `tip` — with the batch fields on top. `id` and `batch_id` are the same integer, drawn from the same counter as video ids, so a batch id never collides with a video id. Each entry in `results` is the same body the matching single endpoint would have returned for that request, plus its `index` and `track_id`.
+
+```json json
+{
+    "status": "processing",
+    "id": 48213,
+    "batch_id": 48213,
+    "message": "Batch queued for processing. Try to fetch request after estimated seconds.",
+    "tip": "Get 20x faster image generation using enterprise plan. Click here : https://modelslab.com/enterprise",
+    "eta": 80,
+    "fetch_result": "https://modelslab.com/api/v6/video/batch/fetch/48213",
+    "output": [],
+    "future_links": [
+        "https://cdn2.modelslab.com/generations/48214.mp4",
+        "https://cdn2.modelslab.com/generations/48215.mp4",
+        "https://cdn2.modelslab.com/generations/48216.mp4"
+    ],
+    "meta": { "model_id": "wan2.2", "track_id": "campaign-42", "webhook": null },
+    "timeout_minutes": 8,
+    "discount": 0.5,
+    "request_counts": { "total": 3, "processing": 3, "succeeded": 0, "failed": 0 },
+    "results": [
+        {
+            "index": 0,
+            "track_id": "shot-1",
+            "status": "processing",
+            "id": 48214,
+            "eta": 80,
+            "fetch_result": "https://modelslab.com/api/v6/video/fetch/48214",
+            "output": [],
+            "future_links": ["https://cdn2.modelslab.com/generations/48214.mp4"],
+            "meta": { "prompt": "A golden retriever running along a beach at sunset, slow motion", "..." : "..." }
+        },
+        { "index": 1, "track_id": "shot-2", "status": "processing", "id": 48215, "...": "..." },
+        { "index": 2, "track_id": "shot-3", "status": "processing", "id": 48216, "...": "..." }
+    ]
+}
+```
+
+Poll the whole batch on [Fetch Video Batch](/video-api/fetch-video-batch) with `batch_id`, or any single request on [Fetch Video](/video-api/fetch-video) with its own `id`.
