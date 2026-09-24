@@ -1,0 +1,28 @@
+---
+title: "List Models"
+description: "Show the model that your Enterprise LLM Endpoint uses."
+---
+
+## Request
+
+Send a `GET` request with your enterprise API key as a Bearer token. The list always holds one model: the model that your plan uses.
+
+```curl curl
+--request GET 'https://modelslab.com/api/v1/enterprise/proxy/v1/models' \
+--header 'Authorization: Bearer ENTERPRISE_API_KEY'
+```
+
+## Response
+
+```json json
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "xiaomi/mimo-v2.6-pro",
+      "object": "model",
+      "owned_by": "modelslab"
+    }
+  ]
+}
+```

@@ -1,0 +1,43 @@
+---
+title: "Errors"
+description: "Status codes that the Enterprise LLM Endpoint returns, and what to do about each one."
+---
+
+The Enterprise LLM Endpoint uses standard HTTP status codes, so OpenAI SDKs raise their normal exceptions, for example `AuthenticationError` for `401`.
+
+## Status codes
+
+| Status | Meaning | What to do |
+|---|---|---|
+| `400` | The model rejected the request body, for example an unsupported parameter. | Read `error.message`, then correct the request. |
+| `401` | The API key is missing, wrong, or belongs to a different enterprise server. | Send your enterprise API key as `Authorization: Bearer <key>`. |
+| `402` | The enterprise plan is stopped because of a payment problem. | Update your payment in the [ModelsLab dashboard](https://modelslab.com/dashboard). |
+| `403` | The plan is not active: the trial expired, or the plan was cancelled or paused. | Buy or renew your [enterprise plan](https://modelslab.com/enterprise), or contact support. |
+| `404` | The path is not one of the endpoints that your plan allows. | Use `chat/completions`, `completions`, or `models`. |
+| `429` | Too many requests reached the model at the same time. | Wait, then try again with backoff. |
+| `502` | The model did not respond in time. | Try again. For long outputs, set `"stream": true`. |
+| `503` | The endpoint is not set up yet. | Contact support. |
+| `5xx` | The model had an error. | Try again with backoff. |
+
+## Error body
+
+Errors from the endpoint and from the model use the OpenAI error format:
+
+```json json
+{
+  "error": {
+    "message": "This enterprise plan is not active",
+    "type": "modelslab_proxy_error",
+    "code": 403
+  }
+}
+```
+
+Errors about the API key (`401`), payment (`402`), and an expired trial (`403`) use a short ModelsLab format:
+
+```json json
+{
+  "status": "error",
+  "message": "Invalid enterprise API key for proxy server"
+}
+```
