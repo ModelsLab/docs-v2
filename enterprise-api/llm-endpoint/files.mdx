@@ -1,0 +1,200 @@
+---
+title: "Files, Images and PDFs"
+description: "Send images, PDFs and audio to your Enterprise LLM Endpoint in the chat messages, as a URL or as base64."
+---
+
+You send files **inside the chat messages**, in the standard OpenAI content-part format. There is no separate upload step. Put each file in a message's `content` list, next to your text.
+
+<Info>
+  The model must accept the file type. Images and audio go to the model directly. PDFs are converted to text first, so every model can read them.
+</Info>
+
+## Supported file types
+
+| File | Content part | Send it as |
+|---|---|---|
+| Image (PNG, JPEG, WebP, GIF) | `image_url` | A public URL or a base64 data URL |
+| PDF | `file` | A public URL or a base64 data URL |
+| Audio (WAV, MP3, FLAC, OGG, M4A and more) | `input_audio` | Base64 only. URLs are not accepted |
+
+## Images
+
+<CodeGroup>
+
+```python Python
+import base64
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://modelslab.com/api/v1/enterprise/proxy/v1",
+    api_key="YOUR_ENTERPRISE_API_KEY",
+)
+
+with open("chart.png", "rb") as f:
+    image = base64.b64encode(f.read()).decode()
+
+response = client.chat.completions.create(
+    model="default",
+    messages=[{
+        "role": "user",
+        "content": [
+            {"type": "text", "text": "What does this chart show?"},
+            {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{image}"}},
+        ],
+    }],
+)
+print(response.choices[0].message.content)
+```
+
+```javascript Node.js
+import fs from "node:fs";
+import OpenAI from "openai";
+
+const client = new OpenAI({
+  baseURL: "https://modelslab.com/api/v1/enterprise/proxy/v1",
+  apiKey: "YOUR_ENTERPRISE_API_KEY",
+});
+
+const image = fs.readFileSync("chart.png").toString("base64");
+
+const response = await client.chat.completions.create({
+  model: "default",
+  messages: [{
+    role: "user",
+    content: [
+      { type: "text", text: "What does this chart show?" },
+      { type: "image_url", image_url: { url: `data:image/png;base64,${image}` } },
+    ],
+  }],
+});
+console.log(response.choices[0].message.content);
+```
+
+```bash cURL
+curl https://modelslab.com/api/v1/enterprise/proxy/v1/chat/completions \
+  -H "Authorization: Bearer $ENTERPRISE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "default",
+    "messages": [{
+      "role": "user",
+      "content": [
+        {"type": "text", "text": "What is in this image?"},
+        {"type": "image_url", "image_url": {"url": "https://example.com/photo.jpg"}}
+      ]
+    }]
+  }'
+```
+
+</CodeGroup>
+
+To send more than one image, add more `image_url` parts to the same message.
+
+## PDFs
+
+Send a PDF as a `file` part with a `filename` and the `file_data`. `file_data` is a public URL or a base64 data URL that starts with `data:application/pdf;base64,`.
+
+<CodeGroup>
+
+```python Python
+import base64
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://modelslab.com/api/v1/enterprise/proxy/v1",
+    api_key="YOUR_ENTERPRISE_API_KEY",
+)
+
+with open("contract.pdf", "rb") as f:
+    pdf = base64.b64encode(f.read()).decode()
+
+response = client.chat.completions.create(
+    model="default",
+    messages=[{
+        "role": "user",
+        "content": [
+            {"type": "text", "text": "List the payment terms in this contract."},
+            {"type": "file", "file": {
+                "filename": "contract.pdf",
+                "file_data": f"data:application/pdf;base64,{pdf}",
+            }},
+        ],
+    }],
+)
+print(response.choices[0].message.content)
+```
+
+```bash cURL
+curl https://modelslab.com/api/v1/enterprise/proxy/v1/chat/completions \
+  -H "Authorization: Bearer $ENTERPRISE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "default",
+    "messages": [{
+      "role": "user",
+      "content": [
+        {"type": "text", "text": "Summarise this report."},
+        {"type": "file", "file": {"filename": "report.pdf", "file_data": "https://example.com/report.pdf"}}
+      ]
+    }]
+  }'
+```
+
+</CodeGroup>
+
+**How PDFs are read.** The endpoint converts every PDF to text (markdown) before the model reads it. This works well for PDFs that contain text, such as reports, contracts and exported documents. A **scanned PDF** (a photo of each page, with no text layer) gives little or no text. For scanned pages, send each page as an **image** instead.
+
+The endpoint always uses this conversion. If you send a `plugins` setting that asks for another PDF engine, the endpoint replaces it.
+
+## Audio
+
+Send audio as an `input_audio` part with base64 `data` and its `format`. Audio URLs are not accepted.
+
+```python Python
+import base64
+
+with open("call.mp3", "rb") as f:
+    audio = base64.b64encode(f.read()).decode()
+
+response = client.chat.completions.create(
+    model="default",
+    messages=[{
+        "role": "user",
+        "content": [
+            {"type": "text", "text": "Transcribe this call and list the action items."},
+            {"type": "input_audio", "input_audio": {"data": audio, "format": "mp3"}},
+        ],
+    }],
+)
+```
+
+## Size limit
+
+A request can be at most **30 MB**, including all text and files. Base64 makes a file about 33% larger, so the largest file you can send inline is about **22 MB**.
+
+- For a larger image or PDF, send a **URL** instead of base64. A URL adds almost nothing to the request size.
+- A request over the limit returns `413`:
+
+```json json
+{
+  "error": {
+    "message": "The request body is larger than 30 MB. Send large files as a URL instead of base64.",
+    "type": "modelslab_proxy_error",
+    "code": 413
+  }
+}
+```
+
+## Privacy and security
+
+- **Your files are not stored.** The endpoint forwards each request and does not save your messages or files. If a request fails, our error logs can keep a short excerpt of its text to help us fix the problem. Files are never logged.
+- **Only providers that do not collect data.** The endpoint sends every request only to model providers that do not store or train on your data. You cannot turn this off.
+- **PDFs are converted by a document parser** before the model reads them. The parser gets the PDF only to convert it.
+- **Use short-lived URLs.** The model provider downloads a file URL directly, so the URL must be public. For private files, use a signed URL that expires after a few minutes, such as an S3 or R2 presigned URL.
+- **Base64 for confidential files.** A base64 file travels only inside your HTTPS request, and no public URL exists.
+
+## Tips
+
+- Put the text instruction first and the files after it in the same message.
+- Every file adds input tokens. For a long PDF, ask about specific sections, or send only the pages you need.
+- When you ask several questions about one file, send the file again with each request. The endpoint does not keep files between requests.

@@ -414,6 +414,7 @@
                 "pages": [
                   "enterprise-api/llm-endpoint/overview",
                   "enterprise-api/llm-endpoint/chat-completions",
+                  "enterprise-api/llm-endpoint/files",
                   "enterprise-api/llm-endpoint/list-models",
                   "enterprise-api/llm-endpoint/errors"
                 ]
