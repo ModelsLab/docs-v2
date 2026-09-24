@@ -1,0 +1,156 @@
+---
+title: "Chat Completions"
+description: "Send a conversation to your Enterprise LLM Endpoint and get the model's reply. OpenAI-compatible, with streaming."
+---
+
+## Request
+
+Send a `POST` request with your enterprise API key as a Bearer token.
+
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/proxy/v1/chat/completions' \
+--header 'Authorization: Bearer ENTERPRISE_API_KEY' \
+--header 'Content-Type: application/json'
+```
+
+## Body
+
+```json json
+{
+  "model": "default",
+  "messages": [
+    {"role": "system", "content": "You are a helpful assistant."},
+    {"role": "user", "content": "What is the capital of France?"}
+  ],
+  "max_tokens": 500,
+  "temperature": 0.7,
+  "stream": false
+}
+```
+
+## Body Attributes
+
+The body follows the OpenAI Chat Completions format. The server sends every field to the model without changes, except `model`, `models`, `route`, and `preset`.
+
+<ParamField body="model" type="string" required>
+  Required by most SDKs. Send any value: the server always uses your plan's model.
+</ParamField>
+
+<ParamField body="messages" type="array" required>
+  The conversation, as a list of `{ "role", "content" }` objects. Roles are `system`, `user`, `assistant`, and `tool`. `content` can be a string or a list of content parts, such as text parts with `cache_control` or image parts if the model accepts images.
+</ParamField>
+
+<ParamField body="stream" type="boolean" default="false">
+  Set to `true` to get the reply as Server-Sent Events while the model generates it. Use streaming for long outputs: a request that is not streamed must finish in about 110 seconds.
+</ParamField>
+
+<ParamField body="max_tokens" type="integer">
+  The maximum number of tokens in the reply.
+</ParamField>
+
+<ParamField body="temperature" type="number">
+  The sampling temperature. Higher values make the output more random.
+</ParamField>
+
+<ParamField body="top_p" type="number">
+  Nucleus sampling: the model picks the next token only from tokens whose total probability is `top_p`.
+</ParamField>
+
+<ParamField body="tools" type="array">
+  Functions the model can call, in the OpenAI `tools` format. Use `tool_choice` to control when the model calls them.
+</ParamField>
+
+<ParamField body="response_format" type="object">
+  Ask for JSON output, for example `{ "type": "json_object" }` or a `json_schema`, if the model supports it.
+</ParamField>
+
+<ParamField body="stop" type="string | array">
+  One or more sequences where the model stops.
+</ParamField>
+
+## Response
+
+```json json
+{
+  "id": "gen-abc123",
+  "object": "chat.completion",
+  "created": 1790000000,
+  "model": "xiaomi/mimo-v2.6-pro",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "The capital of France is Paris."
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 25,
+    "completion_tokens": 8,
+    "total_tokens": 33,
+    "prompt_tokens_details": { "cached_tokens": 0 }
+  }
+}
+```
+
+## Streaming
+
+With `"stream": true`, the response is `text/event-stream`. Each event is a `data:` line that holds one chunk, and the stream ends with `data: [DONE]`.
+
+<CodeGroup>
+
+```python Python
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://modelslab.com/api/v1/enterprise/proxy/v1",
+    api_key="YOUR_ENTERPRISE_API_KEY",
+)
+
+stream = client.chat.completions.create(
+    model="default",
+    messages=[{"role": "user", "content": "Tell me a short story."}],
+    stream=True,
+)
+for chunk in stream:
+    if chunk.choices and chunk.choices[0].delta.content:
+        print(chunk.choices[0].delta.content, end="", flush=True)
+```
+
+```bash cURL
+curl -N https://modelslab.com/api/v1/enterprise/proxy/v1/chat/completions \
+  -H "Authorization: Bearer $ENTERPRISE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"model": "default", "stream": true, "messages": [{"role": "user", "content": "Tell me a short story."}]}'
+```
+
+</CodeGroup>
+
+```text
+data: {"id":"gen-abc123","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":"Once"}}]}
+
+data: {"id":"gen-abc123","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":" upon"}}]}
+
+data: [DONE]
+```
+
+## Prompt caching
+
+If the model supports prompt caching, mark a long, repeated part of the prompt with `cache_control`. The next requests that start with the same prefix read it from the cache. `usage.prompt_tokens_details.cached_tokens` shows how many tokens came from the cache.
+
+```json json
+{
+  "model": "default",
+  "messages": [
+    {
+      "role": "system",
+      "content": [
+        {"type": "text", "text": "<long reference document>", "cache_control": {"type": "ephemeral"}}
+      ]
+    },
+    {"role": "user", "content": "Summarise section 2."}
+  ]
+}
+```

@@ -1,0 +1,95 @@
+---
+title: "Enterprise LLM Endpoint"
+description: "A dedicated, OpenAI-compatible LLM endpoint for one model at a fixed enterprise price. Use any OpenAI SDK by changing only the base URL and API key."
+---
+
+An Enterprise LLM Endpoint gives your team one large language model behind a private API key, at a fixed enterprise price. The endpoint is **OpenAI-compatible**: any OpenAI SDK, framework, or tool works when you change the base URL and the API key.
+
+<Info>
+  Your plan is set to **one model**. The server always uses that model, whatever value you send in `model`. The response's `model` field shows the model that answered.
+</Info>
+
+## Quick start
+
+| Setting | Value |
+|---|---|
+| Base URL | `https://modelslab.com/api/v1/enterprise/proxy/v1` |
+| API key | Your enterprise API key, sent as `Authorization: Bearer <key>` |
+| Model | Any value. The server uses your plan's model |
+
+<CodeGroup>
+
+```python Python
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://modelslab.com/api/v1/enterprise/proxy/v1",
+    api_key="YOUR_ENTERPRISE_API_KEY",
+)
+
+response = client.chat.completions.create(
+    model="default",
+    messages=[{"role": "user", "content": "Write a haiku about GPUs."}],
+)
+print(response.choices[0].message.content)
+```
+
+```javascript Node.js
+import OpenAI from "openai";
+
+const client = new OpenAI({
+  baseURL: "https://modelslab.com/api/v1/enterprise/proxy/v1",
+  apiKey: "YOUR_ENTERPRISE_API_KEY",
+});
+
+const response = await client.chat.completions.create({
+  model: "default",
+  messages: [{ role: "user", content: "Write a haiku about GPUs." }],
+});
+console.log(response.choices[0].message.content);
+```
+
+```bash cURL
+curl https://modelslab.com/api/v1/enterprise/proxy/v1/chat/completions \
+  -H "Authorization: Bearer $ENTERPRISE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "default",
+    "messages": [{"role": "user", "content": "Write a haiku about GPUs."}]
+  }'
+```
+
+</CodeGroup>
+
+## What you get
+
+- **The full request body passes through.** Streaming, tools and function calling, structured output (`response_format`), reasoning settings, and prompt caching (`cache_control`) all work as the model supports them.
+- **Streaming** with `"stream": true` returns Server-Sent Events as the model generates tokens.
+- **Usage in every response.** The `usage` object reports prompt, completion, and cached tokens.
+- **A fixed price.** Your enterprise plan sets the price. You do not pay per token.
+
+## What you cannot change
+
+- **The model.** The server replaces `model` with your plan's model. It also removes the fields that pick other models (`models`, `route`) and saved presets (`preset`).
+- **The endpoints.** By default the endpoint accepts `chat/completions`, `completions`, and `models`. Other paths return `404`.
+
+## Limits
+
+- A request that is **not streamed** must finish in about **110 seconds**. For long outputs, set `"stream": true`.
+- A trial plan stops at its expiry date. After that, requests return `403`. See [Errors](/enterprise-api/llm-endpoint/errors).
+
+## Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Chat Completions" icon="message" href="/enterprise-api/llm-endpoint/chat-completions">
+    Send messages and get a reply, with or without streaming.
+  </Card>
+
+  <Card title="List Models" icon="list" href="/enterprise-api/llm-endpoint/list-models">
+    Show the model that your plan uses.
+  </Card>
+
+  <Card title="Errors" icon="triangle-exclamation" href="/enterprise-api/llm-endpoint/errors">
+    Status codes and what to do about each one.
+  </Card>
+</CardGroup>
