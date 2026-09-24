@@ -64,6 +64,7 @@ curl https://modelslab.com/api/v1/enterprise/proxy/v1/chat/completions \
 ## What you get
 
 - **The full request body passes through.** Streaming, tools and function calling, structured output (`response_format`), reasoning settings, and prompt caching (`cache_control`) all work as the model supports them.
+- **Files, images and PDFs** in the messages, as a URL or base64. See [Files, Images and PDFs](/enterprise-api/llm-endpoint/files).
 - **Streaming** with `"stream": true` returns Server-Sent Events as the model generates tokens.
 - **Usage in every response.** The `usage` object reports prompt, completion, and cached tokens.
 - **A fixed price.** Your enterprise plan sets the price. You do not pay per token.
@@ -76,6 +77,7 @@ curl https://modelslab.com/api/v1/enterprise/proxy/v1/chat/completions \
 ## Limits
 
 - A request that is **not streamed** must finish in about **110 seconds**. For long outputs, set `"stream": true`.
+- A request can be at most **30 MB**, including files sent as base64.
 - A trial plan stops at its expiry date. After that, requests return `403`. See [Errors](/enterprise-api/llm-endpoint/errors).
 
 ## Endpoints
@@ -83,6 +85,10 @@ curl https://modelslab.com/api/v1/enterprise/proxy/v1/chat/completions \
 <CardGroup cols={2}>
   <Card title="Chat Completions" icon="message" href="/enterprise-api/llm-endpoint/chat-completions">
     Send messages and get a reply, with or without streaming.
+  </Card>
+
+  <Card title="Files, Images and PDFs" icon="file" href="/enterprise-api/llm-endpoint/files">
+    Send images, PDFs and audio in your messages.
   </Card>
 
   <Card title="List Models" icon="list" href="/enterprise-api/llm-endpoint/list-models">

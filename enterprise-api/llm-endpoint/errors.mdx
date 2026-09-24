@@ -14,6 +14,7 @@ The Enterprise LLM Endpoint uses standard HTTP status codes, so OpenAI SDKs rais
 | `402` | The enterprise plan is stopped because of a payment problem. | Update your payment in the [ModelsLab dashboard](https://modelslab.com/dashboard). |
 | `403` | The plan is not active: the trial expired, or the plan was cancelled or paused. | Buy or renew your [enterprise plan](https://modelslab.com/enterprise), or contact support. |
 | `404` | The path is not one of the endpoints that your plan allows. | Use `chat/completions`, `completions`, or `models`. |
+| `413` | The request is larger than 30 MB. | Send large files as a URL instead of base64. See [Files, Images and PDFs](/enterprise-api/llm-endpoint/files#size-limit). |
 | `429` | Too many requests reached the model at the same time. | Wait, then try again with backoff. |
 | `502` | The model did not respond in time. | Try again. For long outputs, set `"stream": true`. |
 | `503` | The endpoint is not set up yet. | Contact support. |
