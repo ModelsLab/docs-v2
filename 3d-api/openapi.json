@@ -204,9 +204,9 @@
           },
           "output_format": {
             "type": "string",
-            "enum": ["obj", "stl", "ply", "glb"],
+            "enum": ["glb"],
             "default": "glb",
-            "description": "Specifies the format of the generated 3D object"
+            "description": "Format of the generated 3D object. Only `glb` is supported."
           },
           "render": {
             "type": "boolean",
@@ -307,9 +307,9 @@
           },
           "output_format": {
             "type": "string",
-            "enum": ["obj", "stl", "ply", "glb"],
+            "enum": ["glb"],
             "default": "glb",
-            "description": "Format of the generated 3D model"
+            "description": "Format of the generated 3D model. Only `glb` is supported."
           },
           "render": {
             "type": "boolean",
@@ -413,8 +413,8 @@
           },
           "init_obj": {
             "type": "string",
-            "description": "The base64 format of the 3D object file to be uploaded",
-            "pattern": "^data:model\\/[a-zA-Z0-9]+;base64,[A-Za-z0-9+\\/]+=*$"
+            "description": "The base64-encoded GLB file to be uploaded. Only `glb` is supported.",
+            "pattern": "^data:model\\/gltf-binary;base64,[A-Za-z0-9+\\/]+=*$"
           }
         }
       },
