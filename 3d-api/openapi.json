@@ -204,9 +204,9 @@
           },
           "output_format": {
             "type": "string",
-            "enum": ["glb"],
+            "enum": ["glb", "obj", "stl", "ply"],
             "default": "glb",
-            "description": "Format of the generated 3D object. Only `glb` is supported."
+            "description": "Format of the generated 3D object: `glb`, `obj`, `stl` or `ply`. Defaults to `glb`."
           },
           "render": {
             "type": "boolean",
@@ -307,9 +307,9 @@
           },
           "output_format": {
             "type": "string",
-            "enum": ["glb"],
+            "enum": ["glb", "obj", "stl", "ply"],
             "default": "glb",
-            "description": "Format of the generated 3D model. Only `glb` is supported."
+            "description": "Format of the generated 3D model: `glb`, `obj`, `stl` or `ply`. Defaults to `glb`."
           },
           "render": {
             "type": "boolean",
