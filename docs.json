@@ -490,6 +490,20 @@
                 ]
               },
               {
+                "group": "Qwen Edit 2.1 API",
+                "pages": [
+                  "enterprise-api/qwen-2-1/overview",
+                  "enterprise-api/qwen-2-1/text2img",
+                  "enterprise-api/qwen-2-1/img2img",
+                  "enterprise-api/qwen-2-1/fetch",
+                  "enterprise-api/qwen-2-1/clear-cache",
+                  "enterprise-api/qwen-2-1/clear-queue",
+                  "enterprise-api/qwen-2-1/restart-server",
+                  "enterprise-api/qwen-2-1/system-details",
+                  "enterprise-api/qwen-2-1/update-server"
+                ]
+              },
+              {
                 "group": "3D API",
                 "pages": [
                   "enterprise-api/3d-api/overview",

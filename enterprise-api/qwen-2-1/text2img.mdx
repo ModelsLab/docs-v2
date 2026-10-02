@@ -1,0 +1,114 @@
+---
+title: "Text to Image"
+description: "This endpoint generates an image from a text prompt using the Qwen Edit 2.1 model."
+---
+
+<Warning>
+  Make sure you add your [s3 details](/enterprise-api/general/update-s3-details.mdx) for the `qwen_edit_2_1` server, so you can receive the image generated in your bucket.
+  Images generated without s3 details being added will be deleted after **24 hours**.
+</Warning>
+
+## Request
+Make a `POST` request to below endpoint and pass the required parameters as a request body.
+```curl curl
+--request POST 'https://modelslab.com/api/v1/enterprise/qwen_edit_2_1/text2img' \
+```
+
+## Body
+```json json
+{
+  "key": "enterprise_api_key",
+  "prompt": "a cozy reading nook by a rainy window, warm lamp light, photorealistic",
+  "negative_prompt": "blurry, low quality",
+  "width": 1024,
+  "height": 1024,
+  "samples": 1,
+  "num_inference_steps": 40,
+  "guidance_scale": 4,
+  "seed": null,
+  "safety_checker": false,
+  "watermark": false,
+  "temp": false,
+  "base64": false,
+  "webhook": null,
+  "track_id": null
+}
+```
+
+## Body Attributes
+
+<ParamField query="key" type="string" required placeholder="Your API key">
+  Your API Key used for request authorization.
+</ParamField>
+
+<ParamField query="prompt" type="string" required placeholder="Description of the image">
+  Text prompt with a description of the things you want in the image to be generated.
+</ParamField>
+
+<ParamField query="negative_prompt" type="string" placeholder="Items you don't want">
+  Items you don't want in the image.
+</ParamField>
+
+<ParamField query="width" type="number" default="512" placeholder="max 2048">
+  Width of the generated image in pixels. Maximum is `2048`.
+</ParamField>
+
+<ParamField query="height" type="number" default="512" placeholder="max 2048">
+  Height of the generated image in pixels. Maximum is `2048`.
+</ParamField>
+
+<ParamField query="aspect_ratio" type="string">
+  Shorthand for a width and height pair, used only when `width` and `height` are not both set.
+</ParamField>
+
+<ParamField query="samples" type="number" default="1" placeholder="1-4">
+  Number of images to return in the response. Maximum is `4`.
+</ParamField>
+
+<ParamField query="num_inference_steps" type="number" default="40" placeholder="30-40">
+  Number of denoising steps. Minimum is `30`, maximum is `40`.
+</ParamField>
+
+<ParamField query="guidance_scale" type="number" default="4" placeholder="0-10">
+  How closely the image follows the prompt. Minimum is `0`, maximum is `10`.
+</ParamField>
+
+<ParamField query="seed" type="number" placeholder="Seed number or null">
+  Seed is used to reproduce results. The same seed will give you the same image again. Pass <em>null</em> for a random number.
+</ParamField>
+
+<ParamField query="kv_cache" type="boolean" default="true">
+  Speeds up generation at the cost of GPU memory. Turn it off if a large request runs out of memory. <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="transparent" type="boolean" default="false">
+  Generate the image with a transparent background. <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="safety_checker" type="boolean" default="false">
+  Check the generated image for NSFW content. <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="safety_checker_type" type="string" default="black">
+  What to do with an image the safety checker flags. <strong>options</strong>: <code>black</code>, <code>blur</code> or <code>sensitive_content_text</code>.
+</ParamField>
+
+<ParamField query="watermark" type="boolean" default="false">
+  Whether to watermark the generated image. <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="temp" type="boolean" default="false">
+  If true, stores the image in temporary storage which is cleaned every 24 hours. <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="base64" type="boolean" default="false">
+  Set to `true` when you are sending or expecting base64 rather than URLs. <strong>options</strong>: <code>true</code> or <code>false</code>.
+</ParamField>
+
+<ParamField query="webhook" type="string" placeholder="Webhook URL">
+  Set a URL to get a POST API call once the image generation is complete.
+</ParamField>
+
+<ParamField query="track_id" type="string" placeholder="Tracking ID">
+  This ID is returned in the response to the webhook API call. This will be used to identify the webhook request.
+</ParamField>
