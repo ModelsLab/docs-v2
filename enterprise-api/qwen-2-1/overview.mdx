@@ -1,0 +1,54 @@
+---
+title: "Enterprise Qwen Edit 2.1 API"
+description: "Run Qwen Edit 2.1 on dedicated enterprise GPU servers. Text-to-image, multi-reference image editing and full server control."
+---
+
+<Tip>
+    Not on Enterprise yet? Get your enterprise plan at [ModelsLab](https://modelslab.com/enterprise)
+</Tip>
+
+Qwen Edit 2.1 runs directly on your own enterprise container — requests are posted straight at your
+dedicated server instead of going through the shared queue.
+
+One model serves both generating an image from a prompt and editing images you send it. Image to
+image takes up to **10 reference images** in a single request.
+
+| Capability | Endpoint |
+| --- | --- |
+| Text to image | `/qwen_edit_2_1/text2img` |
+| Image to image | `/qwen_edit_2_1/img2img` |
+
+## Available Endpoints
+<CardGroup>
+  <Card title="Text to Image" href="/enterprise-api/qwen-2-1/text2img">
+    This endpoint generates an image from a text prompt using the Qwen Edit 2.1 model.
+  </Card>
+
+  <Card title="Image to Image" href="/enterprise-api/qwen-2-1/img2img">
+    This endpoint edits or combines up to 10 reference images using a text prompt.
+  </Card>
+
+  <Card title="Fetch Queued Images" href="/enterprise-api/qwen-2-1/fetch">
+    This endpoint fetches already generated or queued images by ID.
+  </Card>
+
+  <Card title="Clear Server Cache" href="/enterprise-api/qwen-2-1/clear-cache">
+    This endpoint clears the server cache.
+  </Card>
+
+  <Card title="Clear Server Queue" href="/enterprise-api/qwen-2-1/clear-queue">
+    This endpoint clears the server queue.
+  </Card>
+
+  <Card title="Restart Server" href="/enterprise-api/qwen-2-1/restart-server">
+    This endpoint restarts the server.
+  </Card>
+
+  <Card title="System Details" href="/enterprise-api/qwen-2-1/system-details">
+    This endpoint retrieves system and server details.
+  </Card>
+
+  <Card title="Update Server" href="/enterprise-api/qwen-2-1/update-server">
+    This endpoint updates the server to the latest version.
+  </Card>
+</CardGroup>
