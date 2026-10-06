@@ -180,7 +180,7 @@ Endpoint prefix: `https://modelslab.com/api/v6/voice/`
 - [Speech to Text](https://docs.modelslab.com/voice-cloning/speech-to-text): Transcribe audio to text. `POST /voice/speech_to_text`
 - [Voice to Voice](https://docs.modelslab.com/voice-cloning/voice-to-voice): Convert one voice to another. `POST /voice/voice_to_voice`
 - [Music Generation](https://docs.modelslab.com/voice-cloning/music-gen): Generate music from text prompts. `POST /voice/music_gen`
-- [SFX](https://docs.modelslab.com/voice-cloning/sfx): Generate sound effects from descriptions. `POST /voice/sfx`
+- [SFX](https://docs.modelslab.com/voice-cloning/sfx): Generate a 3–15 s sound effect from a text prompt with Stable Audio Open 1.0, $0.001 per second of audio ($0.0047 minimum). `POST /voice/sfx`. Params: `prompt`, `duration` (3–15, default 8), `output_format` (mp3, wav, flac), `bitrate` (128k, 192k, 320k).
 - [Voice Cover](https://docs.modelslab.com/voice-cloning/voice-cover): Change the voice of a song. `POST /voice/voice_cover`
 - [Create Dubbing](https://docs.modelslab.com/voice-cloning/create-dubbing): Generate multilingual dubbing. `POST /voice/create_dubbing`
 - [Vocal Isolator](https://docs.modelslab.com/voice-cloning/vocal-isolator): Separate vocals and instruments. `POST /voice/vocal_isolator`
