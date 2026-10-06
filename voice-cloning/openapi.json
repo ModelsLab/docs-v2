@@ -143,7 +143,7 @@
     "/voice/sfx": {
       "post": {
         "summary": "Generate sound effects from text",
-        "description": "Creates sound effects from text prompts",
+        "description": "Generates a 3 to 15 second sound effect from a text prompt with Stable Audio Open 1.0 (44.1 kHz stereo). Billed at $0.001 per second of audio with a $0.0047 minimum per effect.",
         "requestBody": {
           "required": true,
           "content": {
@@ -747,10 +747,22 @@
           },
           "duration": {
             "type": "integer",
-            "default": 10,
+            "default": 8,
             "minimum": 3,
             "maximum": 15,
-            "description": "Length of generated sound effect in seconds"
+            "description": "Length of the sound effect in whole seconds"
+          },
+          "output_format": {
+            "type": "string",
+            "enum": ["mp3", "wav", "flac"],
+            "default": "mp3",
+            "description": "Audio file format"
+          },
+          "bitrate": {
+            "type": "string",
+            "enum": ["128k", "192k", "320k"],
+            "default": "320k",
+            "description": "Audio bitrate"
           },
           "temp": {
             "type": "boolean",

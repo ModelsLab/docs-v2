@@ -1,25 +1,59 @@
 ---
 title: "Sound Effects (SFX)"
-openapi: 'POST /voice/sfx'
-description: 'Generate lifelike Sound effects using text prompts.'
+openapi: 'voice-cloning/openapi.json POST /voice/sfx'
+description: 'Generate a 3 to 15 second sound effect from a text prompt with Stable Audio Open 1.0, at $0.001 per second of audio.'
 ---
+
+The SFX endpoint turns a text prompt into a sound effect. It runs **Stable Audio Open 1.0** (Stability AI) on ModelsLab GPUs and returns 44.1 kHz stereo audio.
+
+| | |
+|---|---|
+| Model | Stable Audio Open 1.0, 80 diffusion steps |
+| Price | **$0.001 per second of audio**, $0.0047 minimum per effect (a 10-second effect costs $0.01). No per-effect charge on the $149/month Open Source Unlimited plan. |
+| Length | 3 to 15 seconds, whole seconds only (default 8) |
+| Formats | `mp3` (default), `wav`, `flac`; bitrate `128k`, `192k` or `320k` (default `320k`) |
+| Speed | About 13 seconds of GPU time per effect when the queue is clear |
+| Input | Text only |
+
+<Note>
+  For ElevenLabs Sound Effects on the same API key, use `POST https://modelslab.com/api/v7/voice/sound-generation` with `model_id: eleven_sound_effect` ($0.06 per generation). Price comparisons with other sound effects APIs are on [modelslab.com/sound-effects-api-pricing](https://modelslab.com/sound-effects-api-pricing).
+</Note>
 
 ## Request
 
-Make a `POST` request to below endpoint and pass the required parameters as a request body.
+Make a `POST` request to the endpoint below with the required parameters.
 
-```curl curl 
---request POST 'https://modelslab.com/api/v6/voice/sfx' \
+```bash
+POST https://modelslab.com/api/v6/voice/sfx
 ```
 
-## Body 
+### Body
 ```json json
-{    
-    "key":"",
-    "prompt":"Thunderstorm with rain",
-    "duration": 10,
-    "temp": false,    
-    "webhook": null,    
+{
+    "key": "your_api_key",
+    "prompt": "Glass bottle shattering on a concrete floor",
+    "duration": 5,
+    "output_format": "mp3",
+    "bitrate": "320k",
+    "temp": false,
+    "webhook": null,
     "track_id": null
 }
 ```
+
+## Response
+
+When the GPU queue is clear, the request returns the finished file:
+
+```json json
+{
+    "status": "success",
+    "generationTime": 13.3,
+    "id": 4706825,
+    "output": ["https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/<file>.mp3"],
+    "proxy_links": ["https://cdn2.sdapi.co/generations/<file>.mp3"],
+    "meta": { "prompt": "Glass bottle shattering on a concrete floor", "duration": 5, "output_format": "mp3", "bitrate": "320k" }
+}
+```
+
+Otherwise the response has `status: "processing"`, an `eta` in seconds, a `fetch_result` URL and the `future_links` where the file will appear. Keep the `fetch_result` URL (fetch replies do not repeat it) and POST to it with your `key` (see [Fetch Voice](/voice-cloning/fetch-voice)) until `status` is `success`, `failed` or `error`, or pass a `webhook` to receive the result.
