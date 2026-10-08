@@ -1,0 +1,73 @@
+---
+title: "ControlNet Video"
+openapi: 'POST /video/controlnet'
+description: "Generate videos from a text prompt guided by a control video using the ControlNet Video API. The supported model_id is `h3-minimax-controlnet`."
+---
+
+Generate a video from a prompt while keeping the structure of a control video: edges, depth, pose and similar signals. Set `controlnet_type` to the kind of signal the control video carries, and send the video as `init_video`.
+
+<Note>
+  `model_id` is required and must be `h3-minimax-controlnet`. `controlnet_type` must be one of the ControlNet models listed on ModelsLab, such as `canny`, `depth`, `openpose`, `lineart` or `scribble`.
+</Note>
+
+## Request
+
+Make a `POST` request to below endpoint and pass the required parameters in the request body.
+
+```curl curl
+--request POST 'https://modelslab.com/api/v6/video/controlnet' \
+```
+
+## Body
+```json json
+{
+    "key": "your_api_key",
+    "model_id": "h3-minimax-controlnet",
+    "prompt": "A cinematic astronaut walking gently on the moon, preserve the helmet silhouette and arm positions from the control video",
+    "controlnet_type": "canny",
+    "init_video": "https://huggingface.co/alibaba-pai/MiniMax-H3-Fun-Controlnet-Union-2.0/resolve/7d2c95de2e351ed6a0b360af45f62daa04c26f88/asset/canny.mp4",
+    "convert_to_controlnet_input": false,
+    "duration": 5,
+    "width": 1280,
+    "height": 704,
+    "num_inference_steps": 40,
+    "seed": 43,
+    "webhook": null,
+    "track_id": null
+}
+```
+
+<Tip>
+  Already have a control video, such as a canny edge map or a depth video? Leave `convert_to_controlnet_input` set to `false`. If you're sending an ordinary video, set it to `true` and the model extracts the `controlnet_type` signal from it first.
+</Tip>
+
+## Response
+
+The request is queued and answers right away with `processing`. The `future_links` field holds the URLs where the video will appear. Poll [Fetch Video](/video-api/fetch-video) with the returned `id`, or pass a `webhook` to be notified when it's ready.
+
+```json json
+{
+    "status": "processing",
+    "tip": "Get 20x faster image generation using enterprise plan. Click here : https://modelslab.com/enterprise",
+    "eta": 80,
+    "message": "Try to fetch request after seconds estimated",
+    "fetch_result": "https://modelslab.com/api/v6/video/fetch/123456789",
+    "id": 123456789,
+    "output": [],
+    "future_links": [
+        "https://pub-3626123a908346a7a8be8d9295f44e26.r2.dev/generations/7f3c2a1e-1b2c-4d5e-8f90-1234567890ab-0.mp4"
+    ],
+    "meta": {
+        "prompt": "A cinematic astronaut walking gently on the moon, preserve the helmet silhouette and arm positions from the control video",
+        "controlnet_type": "canny",
+        "control_video": "https://huggingface.co/alibaba-pai/MiniMax-H3-Fun-Controlnet-Union-2.0/resolve/7d2c95de2e351ed6a0b360af45f62daa04c26f88/asset/canny.mp4",
+        "convert_to_controlnet_input": false,
+        "duration": 5,
+        "width": 1280,
+        "height": 704,
+        "num_inference_steps": 40,
+        "num_samples": 1,
+        "seed": 43
+    }
+}
+```
