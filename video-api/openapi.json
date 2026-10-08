@@ -1236,12 +1236,12 @@
           "init_video": {
             "type": "string",
             "format": "uri",
-            "description": "URL of the control video whose structure the output follows."
+            "description": "URL of the ControlNet video: a video that already shows the control signal (e.g. a canny edge map, depth map or OpenPose skeleton) matching `controlnet_type`, not the source footage. The output follows its structure."
           },
           "convert_to_controlnet_input": {
             "type": "boolean",
             "default": false,
-            "description": "Set to true to send an ordinary video and let the model extract the `controlnet_type` signal from it. Leave false when `init_video` is already a control video (e.g. a canny edge map)."
+            "description": "Set to true to send an ordinary video and let the model extract the `controlnet_type` signal from it. Keep false when `init_video` is a ControlNet video, which is the expected input."
           },
           "duration": {
             "type": "integer",
