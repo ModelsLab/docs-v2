@@ -911,7 +911,7 @@
       "anchors": [
         {
           "anchor": "Support",
-          "href": "https://modelslab.com/support",
+          "href": "https://modelslab.com/support?utm_source=docs.modelslab.com&utm_medium=referral&utm_campaign=docs&utm_content=nav",
           "icon": "headset"
         }
       ]
@@ -934,7 +934,7 @@
     "primary": {
       "type": "button",
       "label": "modelslab.com",
-      "href": "https://modelslab.com"
+      "href": "https://modelslab.com?utm_source=docs.modelslab.com&utm_medium=referral&utm_campaign=docs&utm_content=nav"
     }
   },
   "footer": {
@@ -950,23 +950,23 @@
           { "label": "API Reference", "href": "/api-reference" },
           { "label": "Quickstart Guide", "href": "/quickstart" },
           { "label": "Client SDKs", "href": "/sdk/python" },
-          { "label": "Playground", "href": "https://modelslab.com/playground" }
+          { "label": "Playground", "href": "https://modelslab.com/playground?utm_source=docs.modelslab.com&utm_medium=referral&utm_campaign=docs&utm_content=nav" }
         ]
       },
       {
         "header": "Company",
         "items": [
-          { "label": "ModelsLab", "href": "https://modelslab.com" },
-          { "label": "Pricing", "href": "https://modelslab.com/pricing" },
-          { "label": "Enterprise", "href": "https://modelslab.com/enterprise" },
-          { "label": "Support", "href": "https://modelslab.com/support" }
+          { "label": "ModelsLab", "href": "https://modelslab.com?utm_source=docs.modelslab.com&utm_medium=referral&utm_campaign=docs&utm_content=nav" },
+          { "label": "Pricing", "href": "https://modelslab.com/pricing?utm_source=docs.modelslab.com&utm_medium=referral&utm_campaign=docs&utm_content=nav" },
+          { "label": "Enterprise", "href": "https://modelslab.com/enterprise?utm_source=docs.modelslab.com&utm_medium=referral&utm_campaign=docs&utm_content=nav" },
+          { "label": "Support", "href": "https://modelslab.com/support?utm_source=docs.modelslab.com&utm_medium=referral&utm_campaign=docs&utm_content=nav" }
         ]
       },
       {
         "header": "Legal",
         "items": [
-          { "label": "Privacy Policy", "href": "https://modelslab.com/privacy-policy" },
-          { "label": "Terms of Service", "href": "https://modelslab.com/terms-of-service" }
+          { "label": "Privacy Policy", "href": "https://modelslab.com/privacy-policy?utm_source=docs.modelslab.com&utm_medium=referral&utm_campaign=docs&utm_content=nav" },
+          { "label": "Terms of Service", "href": "https://modelslab.com/terms-of-service?utm_source=docs.modelslab.com&utm_medium=referral&utm_campaign=docs&utm_content=nav" }
         ]
       }
     ]

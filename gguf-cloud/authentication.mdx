@@ -7,7 +7,7 @@ Every GGUF Cloud deployment is a private endpoint with its own base URL, authent
 
 ## Base URL
 
-Each deployment has a unique base URL. The `{deployment_id}` is shown on the deployment's dashboard page at [modelslab.com/gguf-cloud](https://modelslab.com/gguf-cloud):
+Each deployment has a unique base URL. The `{deployment_id}` is shown on the deployment's dashboard page at [modelslab.com/gguf-cloud](https://modelslab.com/gguf-cloud?utm_source=docs.modelslab.com&utm_medium=referral&utm_campaign=docs&utm_content=gguf-cloud-authentication):
 
 ```
 https://modelslab.com/api/gguf/{deployment_id}
@@ -28,7 +28,7 @@ The two SDK families expect the base URL in slightly different forms. Use the ma
 
 ## API key
 
-Authenticate with your existing **ModelsLab API key**. You can find or create one in your [API Keys Dashboard](https://modelslab.com/dashboard/api-keys). The gateway accepts the key in any of three headers, so SDKs from both ecosystems work unchanged:
+Authenticate with your existing **ModelsLab API key**. You can find or create one in your [API Keys Dashboard](https://modelslab.com/dashboard/api-keys?utm_source=docs.modelslab.com&utm_medium=referral&utm_campaign=docs&utm_content=gguf-cloud-authentication). The gateway accepts the key in any of three headers, so SDKs from both ecosystems work unchanged:
 
 <ParamField header="Authorization" type="string">
   Bearer token form used by OpenAI SDKs: `Authorization: Bearer YOUR_MODELSLAB_API_KEY`
