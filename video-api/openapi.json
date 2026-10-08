@@ -1253,12 +1253,16 @@
           "width": {
             "type": "integer",
             "default": 1280,
-            "description": "Output width in pixels."
+            "minimum": 320,
+            "maximum": 1440,
+            "description": "Output width in pixels, from 320 to 1440."
           },
           "height": {
             "type": "integer",
             "default": 704,
-            "description": "Output height in pixels."
+            "minimum": 320,
+            "maximum": 1440,
+            "description": "Output height in pixels, from 320 to 1440."
           },
           "num_inference_steps": {
             "type": "integer",

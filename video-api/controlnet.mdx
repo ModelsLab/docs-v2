@@ -14,6 +14,10 @@ Generate a video from a prompt while keeping the structure of a control video: e
   `init_video` should be a ControlNet video, meaning a video that already shows the control signal, such as a canny edge map, a depth map or an OpenPose skeleton. It is not the source footage. Its signal must match `controlnet_type`; for example, send a canny edge video with `controlnet_type: canny`.
 </Warning>
 
+<Note>
+  The maximum resolution is **1440** pixels: `width` and `height` must each be between 320 and 1440.
+</Note>
+
 ## Request
 
 Make a `POST` request to below endpoint and pass the required parameters in the request body.
