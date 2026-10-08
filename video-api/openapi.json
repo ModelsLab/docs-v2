@@ -362,6 +362,64 @@
         }
       }
     },
+    "/video/controlnet": {
+      "post": {
+        "summary": "Generate video with ControlNet",
+        "description": "Generates a video from a text prompt, keeping the structure (edges, depth, pose…) of a control video. Use model_id `h3-minimax-controlnet`.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ControlnetVideoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ControlNet video generation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - invalid API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/video/scene_maker": {
       "post": {
         "summary": "Create scene transitions between images",
@@ -1143,6 +1201,103 @@
           "track_id": {
             "type": "string",
             "description": "Tracking ID"
+          }
+        }
+      },
+      "ControlnetVideoRequest": {
+        "type": "object",
+        "required": [
+          "key",
+          "model_id",
+          "prompt",
+          "controlnet_type",
+          "init_video"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Your API Key used for request authorization"
+          },
+          "model_id": {
+            "type": "string",
+            "enum": [
+              "h3-minimax-controlnet"
+            ],
+            "description": "The model to use. This endpoint only serves `h3-minimax-controlnet`."
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Text prompt describing the video to generate."
+          },
+          "controlnet_type": {
+            "type": "string",
+            "description": "The ControlNet model the control video represents, e.g. `canny`, `depth`, `openpose`, `lineart`, `scribble`. Must be one of the ControlNet models listed on ModelsLab."
+          },
+          "init_video": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL of the ControlNet video: a video that already shows the control signal (e.g. a canny edge map, depth map or OpenPose skeleton) matching `controlnet_type`, not the source footage. The output follows its structure."
+          },
+          "convert_to_controlnet_input": {
+            "type": "boolean",
+            "default": false,
+            "description": "Set to true to send an ordinary video and let the model extract the `controlnet_type` signal from it. Keep false when `init_video` is a ControlNet video, which is the expected input."
+          },
+          "duration": {
+            "type": "integer",
+            "default": 5,
+            "minimum": 5,
+            "maximum": 15,
+            "description": "Output length in seconds. Values outside 5–15 are clamped."
+          },
+          "width": {
+            "type": "integer",
+            "default": 1280,
+            "minimum": 320,
+            "maximum": 1440,
+            "description": "Output width in pixels, from 320 to 1440."
+          },
+          "height": {
+            "type": "integer",
+            "default": 704,
+            "minimum": 320,
+            "maximum": 1440,
+            "description": "Output height in pixels, from 320 to 1440."
+          },
+          "num_inference_steps": {
+            "type": "integer",
+            "default": 40,
+            "description": "Number of denoising steps. Higher values may improve quality but increase processing time."
+          },
+          "seed": {
+            "oneOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Seed for reproducible results. Random if omitted."
+          },
+          "instant_response": {
+            "type": "boolean",
+            "default": true,
+            "description": "Return future links immediately instead of waiting for the result."
+          },
+          "temp": {
+            "type": "boolean",
+            "default": false,
+            "description": "Store the output in temporary storage."
+          },
+          "webhook": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to receive a POST call once generation completes."
+          },
+          "track_id": {
+            "type": "string",
+            "description": "ID returned in the webhook payload to identify this request."
           }
         }
       },
