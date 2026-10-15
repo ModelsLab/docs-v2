@@ -1137,6 +1137,50 @@
           "track_id": {
             "type": "integer",
             "description": "ID for webhook identification"
+          },
+          "model_id": {
+            "type": "string",
+            "enum": [
+              "drama-3"
+            ],
+            "description": "Voice cloning model to use. Leave it out to use the default model. `drama-3` detects the spoken language itself, so `language`, `emotion` and `speed` are ignored, and the reference clip must be at least 3 seconds long."
+          },
+          "reference_text": {
+            "type": "string",
+            "description": "Drama 3 only. Transcript of the reference clip (`init_audio` or the voice's clip). Optional, but improves how closely the output matches the voice."
+          },
+          "temperature": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 2,
+            "default": 1.0,
+            "description": "Drama 3 only. Sampling temperature; higher values give more varied delivery."
+          },
+          "top_p": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0.9,
+            "description": "Drama 3 only. Nucleus sampling threshold."
+          },
+          "top_k": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 30,
+            "description": "Drama 3 only. Number of most likely tokens sampled from at each step."
+          },
+          "max_new_tokens": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2048,
+            "default": 1024,
+            "description": "Drama 3 only. Maximum number of audio tokens to generate; caps the output length."
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Drama 3 only. Seed for reproducible output. A random seed is used when omitted."
           }
         }
       },

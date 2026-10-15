@@ -27,3 +27,24 @@ Make a `POST` request to below endpoint and pass the required parameters as a re
   "track_id": null
 }
 ```
+
+## Drama 3
+Pass `"model_id": "drama-3"` to generate with Drama 3. It detects the spoken language itself, so `language`, `emotion` and `speed` are ignored. The reference clip must be at least 3 seconds long, and you can pass its transcript as `reference_text` for a closer match.
+
+```json json
+{
+  "key": "your_api_key",
+  "model_id": "drama-3",
+  "prompt": "Hello! This is a test of the Drama three audio model.",
+  "init_audio": "https://assets.modelslab.ai/generations/5c3eef10-0eb4-4db8-8b12-fc4eedbf30b9.mp3",
+  "reference_text": "Transcript of the reference clip.",
+  "language": "english",
+  "temperature": 1.0,
+  "top_p": 0.9,
+  "top_k": 30,
+  "max_new_tokens": 1024,
+  "seed": 123,
+  "webhook": null,
+  "track_id": null
+}
+```
