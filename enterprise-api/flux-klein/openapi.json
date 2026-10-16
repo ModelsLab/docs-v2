@@ -205,8 +205,7 @@
                   "init_image": {
                     "type": "array",
                     "items": { "type": "string" },
-                    "maxItems": 4,
-                    "description": "Array of initial image URLs. Max 4."
+                    "description": "Initial image URL(s). Accepts an array of URLs or a single URL string; only the first image is used for generation."
                   },
                   "width": { "type": "number", "description": "Width in px" },
                   "height": { "type": "number", "description": "Height in px" }
