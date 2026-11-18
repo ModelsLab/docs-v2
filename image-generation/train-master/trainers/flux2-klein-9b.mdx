@@ -1,0 +1,95 @@
+---
+title: "FLUX.2 Klein 9B LoRA Trainer"
+description: "Train a FLUX.2 Klein 9B LoRA from your own images."
+---
+
+Trains a LoRA for **FLUX.2 Klein 9B**. The LoRA is uploaded to your Hugging Face account for you to download.
+
+<Info>
+  New to Train Master? Read the [overview](/image-generation/train-master/overview) for what you need first (Hugging Face token, images, wallet balance) and how billing works.
+</Info>
+
+## Request
+
+Send a `POST` request to the [Start Training](/image-generation/train-master/start-training) endpoint with `trainer_id` set to `flux2-klein-9b-lora-trainer`.
+
+```bash
+POST https://modelslab.com/api/v6/trainer/train
+```
+
+### Body
+```json json
+{
+    "key": "your_api_key",
+    "trainer_id": "flux2-klein-9b-lora-trainer",
+    "images": [
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/1.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/2.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/3.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/4.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/5.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/6.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/7.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/8.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/9.png"
+    ],
+    "trigger_word": "pinkpanda",
+    "hf_username": "your_hf_username",
+    "hf_token": "hf_your_write_token",
+    "training_id": "my-pinkpanda-lora",
+    "training_steps": 2000,
+    "resolution": 1024
+}
+```
+
+Your LoRA is uploaded to `https://huggingface.co/{hf_username}/{training_id}`. Save the `id` from the response to [check the status](/image-generation/train-master/training-status) or [stop the run](/image-generation/train-master/stop-training).
+
+## Body Attributes
+
+<ParamField body="key" type="string" required>
+  Your API key. Get one from your [dashboard](https://modelslab.com/dashboard/api-keys).
+</ParamField>
+
+<ParamField body="trainer_id" type="string" required>
+  Must be `flux2-klein-9b-lora-trainer`.
+</ParamField>
+
+<ParamField body="images" type="string[]" required>
+  Public URLs of your training images, **1 to 100**. Every URL is downloaded before training starts, and the request fails if any of them needs a login or is not an image. Use at least **15 images** for a good result.
+</ParamField>
+
+<ParamField body="trigger_word" type="string" required>
+  A unique word that calls up your subject, e.g. `pinkpanda`. Put it in your prompts when you generate. Up to 50 characters: letters, numbers, spaces, `_`, `.` and `-`.
+</ParamField>
+
+<ParamField body="hf_username" type="string" required>
+  Your Hugging Face username. The LoRA is uploaded to a repo under this account.
+</ParamField>
+
+<ParamField body="hf_token" type="string" required>
+  A Hugging Face access token starting with `hf_`, with **write** access. Create one at [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens).
+</ParamField>
+
+<ParamField body="training_id" type="string" required>
+  The name of the Hugging Face repo your LoRA is uploaded to, e.g. `my-product-lora`. Letters, numbers and single hyphens only, with no hyphen at the start or end. Up to 96 characters.
+</ParamField>
+
+<ParamField body="training_steps" type="integer">
+  How long to train. Start with 100 to 150 steps per image (10 images × 150 = 1,500). Minimum 500. Values above **2,000** are trained at 2,000. Recommended: `2000`.
+</ParamField>
+
+<ParamField body="resolution" type="integer">
+  Resolution the images are trained at, from 520 to 1024. Recommended: `1024`.
+</ParamField>
+
+## Use your LoRA
+
+When the [status endpoint](/image-generation/train-master/training-status) reports `training_completed`, your LoRA is in your Hugging Face repo:
+
+```bash
+https://huggingface.co/{hf_username}/{training_id}
+```
+
+<Note>
+  LoRAs from this trainer are not loaded for inference on ModelsLab yet, so `data.inference` reports `failed`. Download the `.safetensors` file from your repo to use it.
+</Note>

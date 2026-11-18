@@ -256,15 +256,23 @@
                     ]
                   },
                   {
-                    "group": "Train Model",
+                    "group": "Train Master",
                     "pages": [
-                      "image-generation/train-model/overview",
-                      "image-generation/train-model/lora-finetune",
-                      "image-generation/train-model/finetune-list",
-                      "image-generation/train-model/finetune-status",
-                      "image-generation/train-model/finetune-delete",
-                      "image-generation/train-model/cancel-training",
-                      "image-generation/train-model/base64-crop"
+                      "image-generation/train-master/overview",
+                      "image-generation/train-master/start-training",
+                      "image-generation/train-master/training-status",
+                      "image-generation/train-master/stop-training",
+                      {
+                        "group": "Trainers",
+                        "pages": [
+                          "image-generation/train-master/trainers/flux-lora",
+                          "image-generation/train-master/trainers/z-image-turbo",
+                          "image-generation/train-master/trainers/stable-diffusion",
+                          "image-generation/train-master/trainers/flux2-klein-9b",
+                          "image-generation/train-master/trainers/flux3-klein",
+                          "image-generation/train-master/trainers/moss-image"
+                        ]
+                      }
                     ]
                   },
                   {
@@ -971,5 +979,14 @@
         ]
       }
     ]
-  }
+  },
+  "redirects": [
+    { "source": "/image-generation/train-model/overview", "destination": "/image-generation/train-master/overview" },
+    { "source": "/image-generation/train-model/lora-finetune", "destination": "/image-generation/train-master/start-training" },
+    { "source": "/image-generation/train-model/finetune-list", "destination": "/image-generation/train-master/overview" },
+    { "source": "/image-generation/train-model/finetune-status", "destination": "/image-generation/train-master/training-status" },
+    { "source": "/image-generation/train-model/finetune-delete", "destination": "/image-generation/train-master/overview" },
+    { "source": "/image-generation/train-model/cancel-training", "destination": "/image-generation/train-master/stop-training" },
+    { "source": "/image-generation/train-model/base64-crop", "destination": "/image-generation/train-master/overview" }
+  ]
 }

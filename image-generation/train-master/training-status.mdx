@@ -1,0 +1,108 @@
+---
+title: "Training Status"
+openapi: 'image-generation/train-master/openapi.json POST /status/{training_id}'
+description: 'Check the progress of a training run and get the request that runs your trained LoRA.'
+---
+
+Returns the status of a training run. Poll it every minute or two. After the run completes, keep polling until `data.inference.status` is `ready`; the response then contains the exact request to generate with your LoRA.
+
+## Request
+
+Make a `POST` request to the endpoint below, with the training `id` from [Start Training](/image-generation/train-master/start-training) in the path.
+
+```bash
+POST https://modelslab.com/api/v6/trainer/status/{training_id}
+```
+
+### Body
+```json json
+{
+    "key": "your_api_key"
+}
+```
+
+## Status values
+
+| `message` / `data.status` | Meaning |
+| :--- | :--- |
+| `training_started` | Queued or training. |
+| `training_completed` | Training finished, or you stopped the run. |
+| `training_cancelled` | Training failed. `data.response_dump` holds the reason. |
+
+## Response
+
+### While training
+
+```json json
+{
+    "status": "success",
+    "message": "training_started",
+    "data": {
+        "id": "9b2f6c1e-4d3a-4f8e-a1b2-3c4d5e6f7a8b",
+        "status": "training_started",
+        "request_dump": {
+            "trainer_id": "flux_lora_trainer",
+            "trigger_word": "pinkpanda",
+            "hf_username": "your_hf_username",
+            "training_steps": 750
+        },
+        "response_dump": {
+            "status": "queued"
+        },
+        "model_link": null,
+        "inference": null
+    },
+    "id": "9b2f6c1e-4d3a-4f8e-a1b2-3c4d5e6f7a8b",
+    "fetch_result": "https://modelslab.com/api/v6/trainer/status/9b2f6c1e-4d3a-4f8e-a1b2-3c4d5e6f7a8b"
+}
+```
+
+### Completed and ready to generate
+
+```json json
+{
+    "status": "success",
+    "message": "training_completed",
+    "data": {
+        "id": "9b2f6c1e-4d3a-4f8e-a1b2-3c4d5e6f7a8b",
+        "status": "training_completed",
+        "request_dump": {
+            "trainer_id": "flux_lora_trainer",
+            "trigger_word": "pinkpanda",
+            "hf_username": "your_hf_username",
+            "training_steps": 750
+        },
+        "response_dump": {
+            "status": "training_completed"
+        },
+        "model_link": "https://huggingface.co/your_hf_username/9b2f6c1e-4d3a-4f8e-a1b2-3c4d5e6f7a8b",
+        "inference": {
+            "status": "ready",
+            "message": "Your model is ready. Use the trigger word in your prompt.",
+            "model_id": "tm-3f9a1c2b7d4e5f6a8b9c0d1e",
+            "base_model_id": "fluxdev",
+            "trigger_word": "pinkpanda",
+            "playground_url": "https://modelslab.com/models/modelslab/fluxdev?model_id=fluxdev&lora_model=tm-3f9a1c2b7d4e5f6a8b9c0d1e",
+            "api": {
+                "url": "https://modelslab.com/api/v6/images/text2img",
+                "body": {
+                    "key": "YOUR_API_KEY",
+                    "model_id": "fluxdev",
+                    "lora_model": "tm-3f9a1c2b7d4e5f6a8b9c0d1e",
+                    "lora_strength": 1,
+                    "prompt": "pinkpanda, a portrait photo",
+                    "width": 1024,
+                    "height": 1024,
+                    "samples": 1
+                }
+            }
+        }
+    },
+    "id": "9b2f6c1e-4d3a-4f8e-a1b2-3c4d5e6f7a8b",
+    "fetch_result": "https://modelslab.com/api/v6/trainer/status/9b2f6c1e-4d3a-4f8e-a1b2-3c4d5e6f7a8b"
+}
+```
+
+<Note>
+  `data.inference` is `null` until training completes. For FLUX.2 Klein 9B, FLUX.3 Klein and MOSS Image runs it reports `failed` with `This training cannot be prepared for inference.`, because those LoRAs are not loaded on ModelsLab. Download them from your Hugging Face repo instead.
+</Note>

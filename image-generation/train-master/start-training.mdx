@@ -1,0 +1,77 @@
+---
+title: "Start Training"
+openapi: 'image-generation/train-master/openapi.json POST /train'
+description: 'Queue a LoRA training run on any Train Master trainer.'
+---
+
+Starts a LoRA training run. `trainer_id` picks the trainer, and each trainer takes its own fields. See the trainer pages for a full request and every field:
+
+<CardGroup cols={3}>
+  <Card title="Flux LoRA" href="/image-generation/train-master/trainers/flux-lora" />
+  <Card title="Z-Image Turbo" href="/image-generation/train-master/trainers/z-image-turbo" />
+  <Card title="Stable Diffusion" href="/image-generation/train-master/trainers/stable-diffusion" />
+  <Card title="FLUX.2 Klein 9B" href="/image-generation/train-master/trainers/flux2-klein-9b" />
+  <Card title="FLUX.3 Klein" href="/image-generation/train-master/trainers/flux3-klein" />
+  <Card title="MOSS Image" href="/image-generation/train-master/trainers/moss-image" />
+</CardGroup>
+
+## Request
+
+Make a `POST` request to the endpoint below with the required parameters.
+
+```bash
+POST https://modelslab.com/api/v6/trainer/train
+```
+
+### Body
+```json json
+{
+    "key": "your_api_key",
+    "trainer_id": "flux_lora_trainer",
+    "images": [
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/1.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/2.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/3.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/4.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/5.png"
+    ],
+    "trigger_word": "pinkpanda",
+    "hf_username": "your_hf_username",
+    "hf_token": "hf_your_write_token",
+    "training_steps": 750
+}
+```
+
+## Response
+
+A new run is always queued first. Keep the `id`: you need it to check the status or stop the run.
+
+```json json
+{
+    "status": "success",
+    "message": "Training request is being processed",
+    "data": {
+        "status": "pending",
+        "id": "9b2f6c1e-4d3a-4f8e-a1b2-3c4d5e6f7a8b",
+        "meta": {
+            "trainer_id": "flux_lora_trainer",
+            "images": ["https://raw.githubusercontent.com/pnavitha/sampleImages/master/1.png"],
+            "trigger_word": "pinkpanda",
+            "hf_username": "your_hf_username",
+            "training_steps": 750
+        }
+    },
+    "id": "9b2f6c1e-4d3a-4f8e-a1b2-3c4d5e6f7a8b",
+    "fetch_result": "https://modelslab.com/api/v6/trainer/status/9b2f6c1e-4d3a-4f8e-a1b2-3c4d5e6f7a8b"
+}
+```
+
+## Errors
+
+Errors come back with HTTP 200 and `"status": "error"`.
+
+| Message | What to do |
+| :--- | :--- |
+| `Invalid trainer ID` | Use one of the `trainer_id` values from the [trainers table](/image-generation/train-master/overview#trainers). |
+| `Insufficient funds. Please top up your wallet to proceed with training.` | Add at least one hour of training to your wallet. |
+| `code: validation_error` | `errors` lists each field that is wrong, for example an image URL that could not be downloaded or an invalid Hugging Face token. |

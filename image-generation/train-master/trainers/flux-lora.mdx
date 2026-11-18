@@ -1,0 +1,97 @@
+---
+title: "Flux LoRA Trainer"
+description: "Train a Flux LoRA of a person, product, character or style from your own images."
+---
+
+Trains a LoRA for **Flux Dev**. It is the best all-round choice for photoreal people, products and styles, and the trained LoRA is ready to generate with on ModelsLab.
+
+<Info>
+  New to Train Master? Read the [overview](/image-generation/train-master/overview) for what you need first (Hugging Face token, images, wallet balance) and how billing works.
+</Info>
+
+## Request
+
+Send a `POST` request to the [Start Training](/image-generation/train-master/start-training) endpoint with `trainer_id` set to `flux_lora_trainer`.
+
+```bash
+POST https://modelslab.com/api/v6/trainer/train
+```
+
+### Body
+```json json
+{
+    "key": "your_api_key",
+    "trainer_id": "flux_lora_trainer",
+    "images": [
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/1.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/2.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/3.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/4.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/5.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/6.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/7.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/8.png",
+        "https://raw.githubusercontent.com/pnavitha/sampleImages/master/9.png"
+    ],
+    "trigger_word": "pinkpanda",
+    "hf_username": "your_hf_username",
+    "hf_token": "hf_your_write_token",
+    "training_steps": 1000,
+    "resolution": 1024
+}
+```
+
+Your LoRA is uploaded to `https://huggingface.co/{hf_username}/{id}`, where `id` is the training ID returned by this request. Save the `id` from the response to [check the status](/image-generation/train-master/training-status) or [stop the run](/image-generation/train-master/stop-training).
+
+## Body Attributes
+
+<ParamField body="key" type="string" required>
+  Your API key. Get one from your [dashboard](https://modelslab.com/dashboard/api-keys).
+</ParamField>
+
+<ParamField body="trainer_id" type="string" required>
+  Must be `flux_lora_trainer`.
+</ParamField>
+
+<ParamField body="images" type="string[]" required>
+  Public URLs of your training images, **1 to 100**. Every URL is downloaded before training starts, and the request fails if any of them needs a login or is not an image. 10 to 30 images work well.
+</ParamField>
+
+<ParamField body="trigger_word" type="string" required>
+  A unique word that calls up your subject, e.g. `pinkpanda`. Put it in your prompts when you generate. Up to 50 characters: letters, numbers, spaces, `_`, `.` and `-`.
+</ParamField>
+
+<ParamField body="hf_username" type="string" required>
+  Your Hugging Face username. The LoRA is uploaded to a repo under this account.
+</ParamField>
+
+<ParamField body="hf_token" type="string" required>
+  A Hugging Face access token starting with `hf_`, with **write** access. Create one at [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens).
+</ParamField>
+
+<ParamField body="training_steps" type="integer">
+  How long to train. Start with 100 to 150 steps per image (10 images × 150 = 1,500). Minimum 1. Values above **2,000** are trained at 2,000. Recommended: `1000`.
+</ParamField>
+
+<ParamField body="resolution" type="integer">
+  Resolution the images are trained at, from 520 to 1024. Recommended: `1024`.
+</ParamField>
+
+## Use your LoRA
+
+When the [status endpoint](/image-generation/train-master/training-status) reports `training_completed`, ModelsLab loads your LoRA for inference. Keep polling until `data.inference.status` is `ready`, then send the request in `data.inference.api`:
+
+```json json
+{
+    "key": "your_api_key",
+    "model_id": "fluxdev",
+    "lora_model": "tm-3f9a1c2b7d4e5f6a8b9c0d1e",
+    "lora_strength": 1,
+    "prompt": "pinkpanda, a portrait photo",
+    "width": 1024,
+    "height": 1024,
+    "samples": 1
+}
+```
+
+`lora_model` is the `data.inference.model_id` from your status response. Put your trigger word in the prompt.

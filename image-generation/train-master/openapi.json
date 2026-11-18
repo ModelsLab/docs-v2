@@ -1,0 +1,401 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ModelsLab Train Master API",
+    "description": "Train your own LoRA on Flux, FLUX.2 Klein 9B, FLUX.3 Klein, Z-Image Turbo, Stable Diffusion (SDXL / SD 1.5) and MOSS Image, then check its progress or stop it.",
+    "license": {
+      "name": "MIT"
+    },
+    "version": "6.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://modelslab.com/api/v6/trainer",
+      "description": "Train Master LoRA training endpoints"
+    }
+  ],
+  "paths": {
+    "/train": {
+      "post": {
+        "summary": "Start Training",
+        "description": "Queues a LoRA training run on the trainer named by `trainer_id`. Each trainer takes its own set of fields; pick one of the request shapes below.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  { "$ref": "#/components/schemas/FluxLoraTrainRequest" },
+                  { "$ref": "#/components/schemas/Flux2Klein9bTrainRequest" },
+                  { "$ref": "#/components/schemas/Flux3KleinTrainRequest" },
+                  { "$ref": "#/components/schemas/ZImageTurboTrainRequest" },
+                  { "$ref": "#/components/schemas/StableDiffusionTrainRequest" },
+                  { "$ref": "#/components/schemas/MossImageTrainRequest" }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The run was queued, or an error describing why it was not.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    { "$ref": "#/components/schemas/TrainSuccessResponse" },
+                    { "$ref": "#/components/schemas/ValidationErrorResponse" },
+                    { "$ref": "#/components/schemas/ErrorResponse" }
+                  ]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/StandardErrorResponse" },
+          "401": { "$ref": "#/components/responses/StandardErrorResponse" },
+          "500": { "$ref": "#/components/responses/StandardErrorResponse" }
+        }
+      }
+    },
+    "/status/{training_id}": {
+      "post": {
+        "summary": "Training Status",
+        "description": "Returns the current status of a training run. Once the run completes, `data.inference` tells you when the LoRA is ready to generate with and gives the exact API call to use.",
+        "parameters": [
+          {
+            "name": "training_id",
+            "in": "path",
+            "required": true,
+            "description": "The `id` returned by the Start Training endpoint.",
+            "schema": { "type": "string", "format": "uuid" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/KeyRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Current state of the training run.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    { "$ref": "#/components/schemas/StatusResponse" },
+                    { "$ref": "#/components/schemas/ErrorResponse" }
+                  ]
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/StandardErrorResponse" },
+          "404": { "$ref": "#/components/responses/StandardErrorResponse" }
+        }
+      }
+    },
+    "/stop": {
+      "post": {
+        "summary": "Stop Training",
+        "description": "Stops a queued or running training run and ends its hourly billing.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/StopRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The run was stopped, or an error describing why it could not be.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    { "$ref": "#/components/schemas/StopSuccessResponse" },
+                    { "$ref": "#/components/schemas/ErrorResponse" }
+                  ]
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/StandardErrorResponse" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Key": {
+        "type": "string",
+        "description": "Your API key. Get one from https://modelslab.com/dashboard/api-keys."
+      },
+      "Images": {
+        "type": "array",
+        "description": "Public URLs of your training images, 1 to 100 of them. Every URL is downloaded before the run starts; one that needs a login or does not return an image fails the request.",
+        "minItems": 1,
+        "maxItems": 100,
+        "items": { "type": "string", "format": "uri" }
+      },
+      "TriggerWord": {
+        "type": "string",
+        "maxLength": 50,
+        "pattern": "^[\\p{L}\\p{M}\\p{N} _.\\-]+$",
+        "description": "A unique word you put in prompts to call up what the LoRA learned. Letters, numbers, spaces, `_`, `.` and `-` only."
+      },
+      "HfUsername": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 50,
+        "description": "Your Hugging Face username. The trained LoRA is uploaded to a repo under this account."
+      },
+      "HfToken": {
+        "type": "string",
+        "minLength": 10,
+        "description": "A Hugging Face access token (starts with `hf_`) with **write** access, so the trainer can create the repo and upload your LoRA."
+      },
+      "TrainingSteps": {
+        "type": "integer",
+        "maximum": 2000,
+        "description": "How many steps to train for. A good starting point is 100 to 150 steps per image. Values above 2000 are trained at 2000."
+      },
+      "Resolution": {
+        "type": "integer",
+        "minimum": 520,
+        "maximum": 1024,
+        "default": 1024,
+        "description": "Resolution the images are trained at."
+      },
+      "RepoName": {
+        "type": "string",
+        "maxLength": 96,
+        "pattern": "^[A-Za-z0-9]+(-[A-Za-z0-9]+)*$",
+        "description": "Name of the Hugging Face repo the LoRA is uploaded to, e.g. `my-product-lora`. Letters, numbers and single hyphens only, with no hyphen at the start or end."
+      },
+      "FluxLoraTrainRequest": {
+        "title": "Flux LoRA",
+        "type": "object",
+        "required": ["key", "trainer_id", "images", "trigger_word", "hf_username", "hf_token"],
+        "properties": {
+          "key": { "$ref": "#/components/schemas/Key" },
+          "trainer_id": { "type": "string", "enum": ["flux_lora_trainer"], "description": "Selects the Flux LoRA trainer." },
+          "images": { "$ref": "#/components/schemas/Images" },
+          "trigger_word": { "$ref": "#/components/schemas/TriggerWord" },
+          "hf_username": { "$ref": "#/components/schemas/HfUsername" },
+          "hf_token": { "$ref": "#/components/schemas/HfToken" },
+          "training_steps": { "allOf": [{ "$ref": "#/components/schemas/TrainingSteps" }], "minimum": 1, "examples": [1000] },
+          "resolution": { "$ref": "#/components/schemas/Resolution" }
+        }
+      },
+      "Flux2Klein9bTrainRequest": {
+        "title": "FLUX.2 Klein 9B LoRA",
+        "type": "object",
+        "required": ["key", "trainer_id", "images", "trigger_word", "hf_username", "hf_token", "training_id"],
+        "properties": {
+          "key": { "$ref": "#/components/schemas/Key" },
+          "trainer_id": { "type": "string", "enum": ["flux2-klein-9b-lora-trainer"], "description": "Selects the FLUX.2 Klein 9B LoRA trainer." },
+          "images": { "$ref": "#/components/schemas/Images" },
+          "trigger_word": { "$ref": "#/components/schemas/TriggerWord" },
+          "hf_username": { "$ref": "#/components/schemas/HfUsername" },
+          "hf_token": { "$ref": "#/components/schemas/HfToken" },
+          "training_id": { "$ref": "#/components/schemas/RepoName" },
+          "training_steps": { "allOf": [{ "$ref": "#/components/schemas/TrainingSteps" }], "minimum": 500, "examples": [2000] },
+          "resolution": { "$ref": "#/components/schemas/Resolution" }
+        }
+      },
+      "Flux3KleinTrainRequest": {
+        "title": "FLUX.3 Klein LoRA",
+        "type": "object",
+        "required": ["key", "trainer_id", "images", "trigger_word", "hf_username", "hf_token", "training_id"],
+        "properties": {
+          "key": { "$ref": "#/components/schemas/Key" },
+          "trainer_id": { "type": "string", "enum": ["flux3-klein-lora-trainer"], "description": "Selects the FLUX.3 Klein LoRA trainer." },
+          "images": { "$ref": "#/components/schemas/Images" },
+          "trigger_word": { "$ref": "#/components/schemas/TriggerWord" },
+          "hf_username": { "$ref": "#/components/schemas/HfUsername" },
+          "hf_token": { "$ref": "#/components/schemas/HfToken" },
+          "training_id": { "$ref": "#/components/schemas/RepoName" },
+          "training_steps": { "allOf": [{ "$ref": "#/components/schemas/TrainingSteps" }], "minimum": 500, "examples": [2000] },
+          "resolution": { "$ref": "#/components/schemas/Resolution" }
+        }
+      },
+      "ZImageTurboTrainRequest": {
+        "title": "Z-Image Turbo LoRA",
+        "type": "object",
+        "required": ["key", "trainer_id", "images", "trigger_word", "hf_username", "hf_token", "training_id"],
+        "properties": {
+          "key": { "$ref": "#/components/schemas/Key" },
+          "trainer_id": { "type": "string", "enum": ["z-image-turbo-lora-trainer"], "description": "Selects the Z-Image Turbo LoRA trainer." },
+          "images": { "$ref": "#/components/schemas/Images" },
+          "trigger_word": { "$ref": "#/components/schemas/TriggerWord" },
+          "hf_username": { "$ref": "#/components/schemas/HfUsername" },
+          "hf_token": { "$ref": "#/components/schemas/HfToken" },
+          "training_id": { "$ref": "#/components/schemas/RepoName" },
+          "training_steps": { "allOf": [{ "$ref": "#/components/schemas/TrainingSteps" }], "minimum": 500, "examples": [2000] },
+          "resolution": { "$ref": "#/components/schemas/Resolution" }
+        }
+      },
+      "StableDiffusionTrainRequest": {
+        "title": "Stable Diffusion (SDXL / SD 1.5) LoRA",
+        "type": "object",
+        "required": ["key", "trainer_id", "images", "instance_prompt", "hf_username", "hf_token"],
+        "properties": {
+          "key": { "$ref": "#/components/schemas/Key" },
+          "trainer_id": { "type": "string", "enum": ["sd-trainer"], "description": "Selects the Stable Diffusion LoRA trainer." },
+          "images": { "$ref": "#/components/schemas/Images" },
+          "instance_prompt": { "type": "string", "maxLength": 2000, "description": "A prompt describing your subject with a unique token, e.g. `photo of sks man`. Use the same phrase in prompts when you generate." },
+          "hf_username": { "$ref": "#/components/schemas/HfUsername" },
+          "hf_token": { "$ref": "#/components/schemas/HfToken" },
+          "base_model_type": { "type": "string", "enum": ["sdxl", "sd15"], "default": "sdxl", "description": "`sdxl` trains an SDXL LoRA. Any other value trains an SD 1.5 LoRA." },
+          "training_steps": { "allOf": [{ "$ref": "#/components/schemas/TrainingSteps" }], "examples": [1500] },
+          "resolution": { "type": "integer", "minimum": 512, "maximum": 1024, "examples": [1024], "description": "Resolution the images are trained at. Use 1024 for SDXL and 512 for SD 1.5." },
+          "seed": { "type": "integer", "maximum": 999999, "description": "Random seed, for reproducible runs." },
+          "batch_size": { "type": "integer", "minimum": 1, "maximum": 128, "examples": [4], "description": "Images processed per step." },
+          "mixed_precision": { "type": "string", "enum": ["fp16"], "description": "Training precision." },
+          "rank": { "type": "integer", "minimum": 1, "maximum": 512, "examples": [4], "description": "LoRA rank. Higher learns more detail and makes a larger file." },
+          "alpha": { "type": "integer", "minimum": 1, "maximum": 1024, "examples": [2], "description": "LoRA alpha (scaling). Usually half of `rank` or equal to it." },
+          "learning_rate": { "type": "number", "maximum": 1, "examples": [0.0001], "description": "Learning rate." }
+        }
+      },
+      "MossImageTrainRequest": {
+        "title": "MOSS Image LoRA",
+        "type": "object",
+        "required": ["key", "trainer_id", "images", "instance_prompt", "hf_username", "hf_token"],
+        "properties": {
+          "key": { "$ref": "#/components/schemas/Key" },
+          "trainer_id": { "type": "string", "enum": ["moss-image-lora-trainer"], "description": "Selects the MOSS Image LoRA trainer." },
+          "images": { "$ref": "#/components/schemas/Images" },
+          "instance_prompt": { "type": "string", "maxLength": 2000, "description": "A prompt describing your subject with a unique token, e.g. `photo of sks man`." },
+          "hf_username": { "$ref": "#/components/schemas/HfUsername" },
+          "hf_token": { "$ref": "#/components/schemas/HfToken" },
+          "training_steps": { "allOf": [{ "$ref": "#/components/schemas/TrainingSteps" }], "examples": [1500] },
+          "resolution": { "type": "integer", "minimum": 512, "maximum": 1024, "examples": [1024], "description": "Resolution the images are trained at." },
+          "seed": { "type": "integer", "maximum": 999999, "description": "Random seed, for reproducible runs." },
+          "batch_size": { "type": "integer", "minimum": 1, "maximum": 128, "examples": [4], "description": "Images processed per step." },
+          "mixed_precision": { "type": "string", "enum": ["fp16"], "description": "Training precision." },
+          "rank": { "type": "integer", "minimum": 1, "maximum": 512, "examples": [4], "description": "LoRA rank." },
+          "alpha": { "type": "integer", "minimum": 1, "maximum": 1024, "examples": [2], "description": "LoRA alpha (scaling)." },
+          "learning_rate": { "type": "number", "maximum": 0.01, "examples": [0.005], "description": "Learning rate." }
+        }
+      },
+      "KeyRequest": {
+        "type": "object",
+        "required": ["key"],
+        "properties": {
+          "key": { "$ref": "#/components/schemas/Key" }
+        }
+      },
+      "StopRequest": {
+        "type": "object",
+        "required": ["key", "training_id"],
+        "properties": {
+          "key": { "$ref": "#/components/schemas/Key" },
+          "training_id": { "type": "string", "format": "uuid", "description": "The `id` returned by the Start Training endpoint." }
+        }
+      },
+      "TrainSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["success"] },
+          "message": { "type": "string", "examples": ["Training request is being processed"] },
+          "data": {
+            "type": "object",
+            "properties": {
+              "status": { "type": "string", "enum": ["pending"], "description": "Every new run starts queued." },
+              "id": { "type": "string", "format": "uuid" },
+              "meta": { "type": "object", "additionalProperties": true, "description": "The fields you sent, without your Hugging Face token." }
+            }
+          },
+          "id": { "type": "string", "format": "uuid", "description": "The training ID. Use it to check status or stop the run." },
+          "fetch_result": { "type": "string", "format": "uri", "description": "The status URL for this run." }
+        }
+      },
+      "StatusResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["success"] },
+          "message": { "$ref": "#/components/schemas/TrainingStatus" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "format": "uuid" },
+              "status": { "$ref": "#/components/schemas/TrainingStatus" },
+              "request_dump": { "type": "object", "additionalProperties": true, "description": "The fields you sent, without your Hugging Face token." },
+              "response_dump": { "oneOf": [{ "type": "object", "additionalProperties": true }, { "type": "null" }], "description": "The trainer's last report, including the error if the run failed." },
+              "model_link": { "oneOf": [{ "type": "string", "format": "uri" }, { "type": "null" }], "description": "Where the trainer uploaded the LoRA." },
+              "inference": { "oneOf": [{ "$ref": "#/components/schemas/Inference" }, { "type": "null" }] }
+            }
+          },
+          "id": { "type": "string", "format": "uuid" },
+          "fetch_result": { "type": "string", "format": "uri" }
+        }
+      },
+      "TrainingStatus": {
+        "type": "string",
+        "enum": ["training_started", "training_completed", "training_cancelled"],
+        "description": "`training_started`: queued or training. `training_completed`: finished or stopped. `training_cancelled`: failed."
+      },
+      "Inference": {
+        "type": "object",
+        "description": "Present once training completes, for Flux LoRA, Z-Image Turbo and Stable Diffusion runs. `null` while training.",
+        "properties": {
+          "status": { "type": "string", "enum": ["preparing", "ready", "failed"] },
+          "message": { "type": "string" },
+          "model_id": { "type": "string", "description": "Pass this as `lora_model` when you generate." },
+          "base_model_id": { "type": "string", "description": "Pass this as `model_id` when you generate." },
+          "trigger_word": { "type": "string" },
+          "playground_url": { "type": "string", "format": "uri" },
+          "api": {
+            "type": "object",
+            "properties": {
+              "url": { "type": "string", "format": "uri" },
+              "body": { "type": "object", "additionalProperties": true }
+            }
+          }
+        }
+      },
+      "StopSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["success"] },
+          "message": { "type": "string", "examples": ["training stopped"] }
+        }
+      },
+      "ValidationErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["error"] },
+          "code": { "type": "string", "enum": ["validation_error"] },
+          "message": { "type": "string" },
+          "errors": {
+            "type": "object",
+            "description": "Field names mapped to what is wrong with them.",
+            "additionalProperties": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": ["status", "message"],
+        "properties": {
+          "status": { "type": "string", "enum": ["error"] },
+          "message": { "type": "string" }
+        }
+      }
+    },
+    "responses": {
+      "StandardErrorResponse": {
+        "description": "Error response",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+          }
+        }
+      }
+    }
+  }
+}
