@@ -1,6 +1,6 @@
 ---
 title: "Stop Training"
-openapi: 'image-generation/train-master/openapi.json POST /stop'
+openapi: 'image-generation/train-model/openapi.json POST /stop'
 description: 'Stop a queued or running training run and end its hourly billing.'
 ---
 
@@ -8,7 +8,7 @@ Stops a run that is queued or training. Billing ends straight away; if the curre
 
 ## Request
 
-Make a `POST` request to the endpoint below with the training `id` from [Start Training](/image-generation/train-master/start-training).
+Make a `POST` request to the endpoint below with the training `id` from [Start Training](/image-generation/train-model/start-training).
 
 ```bash
 POST https://modelslab.com/api/v6/trainer/stop
@@ -37,5 +37,5 @@ POST https://modelslab.com/api/v6/trainer/stop
 | `Training has already finished.` | The run completed or failed before you stopped it. |
 
 <Note>
-  A stopped run reads `training_completed` on the [status endpoint](/image-generation/train-master/training-status).
+  A stopped run reads `training_completed` on the [status endpoint](/image-generation/train-model/training-status).
 </Note>

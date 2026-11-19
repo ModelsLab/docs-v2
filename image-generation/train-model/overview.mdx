@@ -1,9 +1,9 @@
 ---
-title: "Train Master API"
+title: "Train Model API"
 description: "Train your own LoRA on Flux, FLUX.2 Klein, FLUX.3 Klein, Z-Image Turbo, Stable Diffusion and MOSS Image with a few images and one API call."
 ---
 
-Train Master turns a handful of your own images into a LoRA: a small add-on model that teaches a base model a new person, product, character or style. You send the images, Train Master trains on a dedicated GPU, uploads the LoRA to your Hugging Face account and, for most trainers, gets it ready to generate with on ModelsLab.
+The Train Model API turns a handful of your own images into a LoRA: a small add-on model that teaches a base model a new person, product, character or style. You send the images, ModelsLab trains on a dedicated GPU, uploads the LoRA to your Hugging Face account and, for most trainers, gets it ready to generate with on ModelsLab.
 
 All endpoints live under:
 
@@ -18,10 +18,10 @@ https://modelslab.com/api/v6/trainer
     Choose the base model you want to train on from the [trainers table](#trainers) below. You select it with `trainer_id`.
   </Step>
   <Step title="Start training">
-    Send your image URLs, a trigger word and your Hugging Face details to [Start Training](/image-generation/train-master/start-training). You get back a training `id`.
+    Send your image URLs, a trigger word and your Hugging Face details to [Start Training](/image-generation/train-model/start-training). You get back a training `id`.
   </Step>
   <Step title="Check the status">
-    Poll [Training Status](/image-generation/train-master/training-status) with that `id` every minute or two until it reads `training_completed`.
+    Poll [Training Status](/image-generation/train-model/training-status) with that `id` every minute or two until it reads `training_completed`.
   </Step>
   <Step title="Generate with your LoRA">
     When the status response's `data.inference.status` is `ready`, it gives you the exact text-to-image request to run your LoRA. See [Use your trained LoRA](#use-your-trained-lora).
@@ -39,7 +39,7 @@ https://modelslab.com/api/v6/trainer
 | FLUX.3 Klein | `flux3-klein-lora-trainer` | FLUX.3 Klein LoRAs | No, download from Hugging Face |
 | MOSS Image | `moss-image-lora-trainer` | MOSS Image LoRAs | No, download from Hugging Face |
 
-[Start Training](/image-generation/train-master/start-training) has a ready-to-send request for each trainer.
+[Start Training](/image-generation/train-model/start-training) has a ready-to-send request for each trainer.
 
 ## Before you start
 
@@ -123,13 +123,13 @@ The LoRA file itself is always in your Hugging Face repo at `https://huggingface
 ## Endpoints
 
 <CardGroup cols={2}>
-  <Card title="Start Training" icon="play" href="/image-generation/train-master/start-training">
+  <Card title="Start Training" icon="play" href="/image-generation/train-model/start-training">
     Queue a LoRA training run on any trainer.
   </Card>
-  <Card title="Training Status" icon="chart-line" href="/image-generation/train-master/training-status">
+  <Card title="Training Status" icon="chart-line" href="/image-generation/train-model/training-status">
     Check progress and get the request that runs your LoRA.
   </Card>
-  <Card title="Stop Training" icon="stop" href="/image-generation/train-master/stop-training">
+  <Card title="Stop Training" icon="stop" href="/image-generation/train-model/stop-training">
     Stop a queued or running run and end its billing.
   </Card>
 </CardGroup>

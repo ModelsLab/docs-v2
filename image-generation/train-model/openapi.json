@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "ModelsLab Train Master API",
+    "title": "ModelsLab Train Model API",
     "description": "Train your own LoRA on Flux, FLUX.2 Klein 9B, FLUX.3 Klein, Z-Image Turbo, Stable Diffusion (SDXL / SD 1.5) and MOSS Image, then check its progress or stop it.",
     "license": {
       "name": "MIT"
@@ -11,7 +11,7 @@
   "servers": [
     {
       "url": "https://modelslab.com/api/v6/trainer",
-      "description": "Train Master LoRA training endpoints"
+      "description": "LoRA training endpoints"
     }
   ],
   "paths": {

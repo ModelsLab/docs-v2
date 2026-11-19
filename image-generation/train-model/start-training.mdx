@@ -1,7 +1,7 @@
 ---
 title: "Start Training"
-openapi: 'image-generation/train-master/openapi.json POST /train'
-description: 'Queue a LoRA training run on any Train Master trainer.'
+openapi: 'image-generation/train-model/openapi.json POST /train'
+description: 'Queue a LoRA training run on any trainer.'
 ---
 
 Starts a LoRA training run. `trainer_id` picks the trainer, and each trainer takes its own fields. Pick your trainer in the **Body** tabs below for a ready-to-send request. The parameter list describes every field; switch its body type to your trainer.
@@ -197,6 +197,6 @@ Errors come back with HTTP 200 and `"status": "error"`.
 
 | Message | What to do |
 | :--- | :--- |
-| `Invalid trainer ID` | Use one of the `trainer_id` values from the [trainers table](/image-generation/train-master/overview#trainers). |
+| `Invalid trainer ID` | Use one of the `trainer_id` values from the [trainers table](/image-generation/train-model/overview#trainers). |
 | `Insufficient funds. Please top up your wallet to proceed with training.` | Add at least one hour of training to your wallet. |
 | `code: validation_error` | `errors` lists each field that is wrong, for example an image URL that could not be downloaded or an invalid Hugging Face token. |

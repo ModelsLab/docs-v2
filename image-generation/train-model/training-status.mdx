@@ -1,6 +1,6 @@
 ---
 title: "Training Status"
-openapi: 'image-generation/train-master/openapi.json POST /status/{training_id}'
+openapi: 'image-generation/train-model/openapi.json POST /status/{training_id}'
 description: 'Check the progress of a training run and get the request that runs your trained LoRA.'
 ---
 
@@ -8,7 +8,7 @@ Returns the status of a training run. Poll it every minute or two. After the run
 
 ## Request
 
-Make a `POST` request to the endpoint below, with the training `id` from [Start Training](/image-generation/train-master/start-training) in the path.
+Make a `POST` request to the endpoint below, with the training `id` from [Start Training](/image-generation/train-model/start-training) in the path.
 
 ```bash
 POST https://modelslab.com/api/v6/trainer/status/{training_id}
