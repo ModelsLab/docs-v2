@@ -1,26 +1,135 @@
 ---
-title: "Model Training API"
-description: 'Train and fine-tune custom AI image models with LoRA. Upload datasets, monitor training status, and manage your fine-tuned models.'
+title: "Train Model API"
+description: "Train your own LoRA on Flux, FLUX.2 Klein, FLUX.3 Klein, Z-Image Turbo, Stable Diffusion and MOSS Image with a few images and one API call."
 ---
 
-### Endpoints
-<CardGroup>
-  <Card title="Finetune List" href="/image-generation/train-model/finetune-list">
-    Returns a list with all the models that you have created.
+The Train Model API turns a handful of your own images into a LoRA: a small add-on model that teaches a base model a new person, product, character or style. You send the images, ModelsLab trains on a dedicated GPU, uploads the LoRA to your Hugging Face account and, for most trainers, gets it ready to generate with on ModelsLab.
+
+All endpoints live under:
+
+```bash
+https://modelslab.com/api/v6/trainer
+```
+
+## How it works
+
+<Steps>
+  <Step title="Pick a trainer">
+    Choose the base model you want to train on from the [trainers table](#trainers) below. You select it with `trainer_id`.
+  </Step>
+  <Step title="Start training">
+    Send your image URLs, a trigger word and your Hugging Face details to [Start Training](/image-generation/train-model/start-training). You get back a training `id`.
+  </Step>
+  <Step title="Check the status">
+    Poll [Training Status](/image-generation/train-model/training-status) with that `id` every minute or two until it reads `training_completed`.
+  </Step>
+  <Step title="Generate with your LoRA">
+    When the status response's `data.inference.status` is `ready`, it gives you the exact text-to-image request to run your LoRA. See [Use your trained LoRA](#use-your-trained-lora).
+  </Step>
+</Steps>
+
+## Trainers
+
+| Trainer | `trainer_id` | Best for | Ready to generate on ModelsLab |
+| :--- | :--- | :--- | :--- |
+| Flux LoRA | `flux_lora_trainer` | Photoreal people, products and styles on Flux Dev | Yes |
+| Z-Image Turbo | `z-image-turbo-lora-trainer` | Fast, low-step generation | Yes |
+| Stable Diffusion | `sd-trainer` | SDXL or SD 1.5 LoRAs | Yes |
+| FLUX.2 Klein 9B | `flux2-klein-9b-lora-trainer` | FLUX.2 Klein 9B LoRAs | No, download from Hugging Face |
+| FLUX.3 Klein | `flux3-klein-lora-trainer` | FLUX.3 Klein LoRAs | No, download from Hugging Face |
+| MOSS Image | `moss-image-lora-trainer` | MOSS Image LoRAs | No, download from Hugging Face |
+
+[Start Training](/image-generation/train-model/start-training) has a ready-to-send request for each trainer.
+
+## Before you start
+
+<AccordionGroup>
+  <Accordion title="A Hugging Face account and write token" icon="key">
+    Your trained LoRA is uploaded to a repo on **your** Hugging Face account, so every trainer needs:
+
+    - `hf_username`: your Hugging Face username.
+    - `hf_token`: an access token starting with `hf_`, created at [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) with **write** access.
+
+    The request is refused if the username does not exist or the token is not valid.
+  </Accordion>
+  <Accordion title="Training images" icon="images">
+    - Send **1 to 100** image URLs in `images`. 15 to 30 good images is a sensible target.
+    - Each URL must download directly, without a login. Google Drive, Hugging Face and S3 links work as long as they are public. Every URL is checked before training starts, and the error names any image that failed.
+    - Use clear, varied images of one subject: different angles, lighting and backgrounds.
+  </Accordion>
+  <Accordion title="Wallet balance" icon="wallet">
+    Training is billed per hour of GPU time, currently **$5.14 per hour**. The first hour is charged when the GPU starts on your run, and each further hour as it begins. You need at least one hour's balance to start a run. Stopping a run ends the billing.
+  </Accordion>
+</AccordionGroup>
+
+## Training steps
+
+`training_steps` controls how long the trainer learns from your images. A good starting point is **100 to 150 steps per image**: 10 images × 150 = 1,500 steps. Fewer images need more steps per image; more images need fewer.
+
+<Note>
+  Runs are capped at **2,000 steps**. A higher value is trained at 2,000.
+</Note>
+
+## Training status
+
+The status endpoint reports one of three values in `message` and `data.status`:
+
+| Status | Meaning |
+| :--- | :--- |
+| `training_started` | Your run is queued or training. |
+| `training_completed` | Training finished, or you stopped the run. |
+| `training_cancelled` | Training failed. `data.response_dump` holds the reason. |
+
+<Info>
+  Each trainer runs one job at a time, so a new run can wait in the queue behind others. It still reads `training_started` while it waits, and billing only starts once the GPU picks it up. A run that has not started within 6 hours fails.
+</Info>
+
+## Use your trained LoRA
+
+For Flux LoRA, Z-Image Turbo and Stable Diffusion runs, ModelsLab loads your LoRA for inference automatically after training. Keep polling the status endpoint and watch `data.inference`:
+
+| `data.inference.status` | Meaning |
+| :--- | :--- |
+| `preparing` | Your LoRA is being loaded. Check again in a minute. |
+| `ready` | Generate with it now. |
+| `failed` | It could not be loaded. `message` says why. |
+
+When it is `ready`, `data.inference.api` holds the full request to send. It calls the [LoRA text-to-image endpoint](/image-generation/community-models/dreambooth-lora) with the base model as `model_id` and your LoRA as `lora_model`:
+
+```json json
+{
+    "key": "your_api_key",
+    "model_id": "fluxdev",
+    "lora_model": "tm-3f9a1c2b7d4e5f6a8b9c0d1e",
+    "lora_strength": 1,
+    "prompt": "pinkpanda, a portrait photo",
+    "width": 1024,
+    "height": 1024,
+    "samples": 1
+}
+```
+
+Put your trigger word (or instance prompt) in the prompt to call up what the LoRA learned. `data.inference.playground_url` opens the same model in the ModelsLab playground.
+
+| Trainer | Base model (`model_id`) |
+| :--- | :--- |
+| Flux LoRA | `fluxdev` |
+| Z-Image Turbo | `z-image-turbo` |
+| Stable Diffusion, `base_model_type: sdxl` | `boziorealvisxlv4` |
+| Stable Diffusion, SD 1.5 | `epicrealism-v4` |
+
+The LoRA file itself is always in your Hugging Face repo at `https://huggingface.co/{hf_username}/{repo}`, where `repo` is the `training_id` you sent, or the training `id` if the trainer does not take one.
+
+## Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Start Training" icon="play" href="/image-generation/train-model/start-training">
+    Queue a LoRA training run on any trainer.
   </Card>
-  <Card title="LoRA Finetune" href="/image-generation/train-model/lora-finetune">
-    Train a Lora model any object or person with your own images.
+  <Card title="Training Status" icon="chart-line" href="/image-generation/train-model/training-status">
+    Check progress and get the request that runs your LoRA.
   </Card>
-  <Card title="Finetune Status" href="/image-generation/train-model/finetune-status">
-   This endpoint returns the model's current training status and estimated time remaining, if still in progress.
-  </Card>
-  <Card title="Finetune Delete" href="/image-generation/train-model/finetune-delete">
-    Delete a created dreambooth training request.
-  </Card>
-  <Card title="Cancel Training" href="/image-generation/train-model/cancel-training">
-    Cancel a dreambooth training request.
-  </Card>
-  <Card title="Base64 Crop" href="/image-generation/flux/flux-text-to-image">
-    Lets you upload an image in base64 and crop it.
+  <Card title="Stop Training" icon="stop" href="/image-generation/train-model/stop-training">
+    Stop a queued or running run and end its billing.
   </Card>
 </CardGroup>

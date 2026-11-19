@@ -1,0 +1,202 @@
+---
+title: "Start Training"
+openapi: 'image-generation/train-model/openapi.json POST /train'
+description: 'Queue a LoRA training run on any trainer.'
+---
+
+Starts a LoRA training run. `trainer_id` picks the trainer, and each trainer takes its own fields. Pick your trainer in the **Body** tabs below for a ready-to-send request. The parameter list describes every field; switch its body type to your trainer.
+
+## Request
+
+Make a `POST` request to the endpoint below with the required parameters.
+
+```bash
+POST https://modelslab.com/api/v6/trainer/train
+```
+
+### Body
+
+<Tabs>
+  <Tab title="Flux LoRA">
+    Trains a LoRA for Flux Dev. Ready to generate with on ModelsLab after training.
+
+    ```json json
+    {
+        "key": "your_api_key",
+        "trainer_id": "flux_lora_trainer",
+        "images": [
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/1.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/2.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/3.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/4.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/5.png"
+        ],
+        "trigger_word": "pinkpanda",
+        "hf_username": "your_hf_username",
+        "hf_token": "hf_your_write_token",
+        "training_steps": 750,
+        "resolution": 1024
+    }
+    ```
+  </Tab>
+  <Tab title="Z-Image Turbo">
+    Needs `training_id`: the name of the Hugging Face repo the LoRA is uploaded to. Use at least 15 images for a good result. Ready to generate with on ModelsLab after training.
+
+    ```json json
+    {
+        "key": "your_api_key",
+        "trainer_id": "z-image-turbo-lora-trainer",
+        "images": [
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/1.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/2.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/3.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/4.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/5.png"
+        ],
+        "trigger_word": "pinkpanda",
+        "hf_username": "your_hf_username",
+        "hf_token": "hf_your_write_token",
+        "training_id": "my-pinkpanda-lora",
+        "training_steps": 750,
+        "resolution": 1024
+    }
+    ```
+  </Tab>
+  <Tab title="Stable Diffusion">
+    Uses `instance_prompt` instead of `trigger_word`. Set `base_model_type` to `sdxl` (1024 resolution) or `sd15` (512 resolution). Ready to generate with on ModelsLab after training.
+
+    ```json json
+    {
+        "key": "your_api_key",
+        "trainer_id": "sd-trainer",
+        "images": [
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/1.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/2.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/3.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/4.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/5.png"
+        ],
+        "instance_prompt": "photo of sks man",
+        "hf_username": "your_hf_username",
+        "hf_token": "hf_your_write_token",
+        "base_model_type": "sdxl",
+        "training_steps": 750,
+        "resolution": 1024,
+        "seed": 298329,
+        "batch_size": 4,
+        "mixed_precision": "fp16",
+        "rank": 4,
+        "alpha": 2,
+        "learning_rate": 0.0001
+    }
+    ```
+  </Tab>
+  <Tab title="FLUX.2 Klein 9B">
+    Needs `training_id`: the name of the Hugging Face repo the LoRA is uploaded to. Use at least 15 images for a good result. The LoRA is uploaded to your Hugging Face repo; it is not loaded for inference on ModelsLab.
+
+    ```json json
+    {
+        "key": "your_api_key",
+        "trainer_id": "flux2-klein-9b-lora-trainer",
+        "images": [
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/1.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/2.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/3.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/4.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/5.png"
+        ],
+        "trigger_word": "pinkpanda",
+        "hf_username": "your_hf_username",
+        "hf_token": "hf_your_write_token",
+        "training_id": "my-pinkpanda-lora",
+        "training_steps": 750,
+        "resolution": 1024
+    }
+    ```
+  </Tab>
+  <Tab title="FLUX.3 Klein">
+    Needs `training_id`: the name of the Hugging Face repo the LoRA is uploaded to. Use at least 15 images for a good result. The LoRA is uploaded to your Hugging Face repo; it is not loaded for inference on ModelsLab.
+
+    ```json json
+    {
+        "key": "your_api_key",
+        "trainer_id": "flux3-klein-lora-trainer",
+        "images": [
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/1.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/2.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/3.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/4.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/5.png"
+        ],
+        "trigger_word": "pinkpanda",
+        "hf_username": "your_hf_username",
+        "hf_token": "hf_your_write_token",
+        "training_id": "my-pinkpanda-lora",
+        "training_steps": 750,
+        "resolution": 1024
+    }
+    ```
+  </Tab>
+  <Tab title="MOSS Image">
+    Uses `instance_prompt` instead of `trigger_word`. `learning_rate` goes up to 0.01. The LoRA is uploaded to your Hugging Face repo; it is not loaded for inference on ModelsLab.
+
+    ```json json
+    {
+        "key": "your_api_key",
+        "trainer_id": "moss-image-lora-trainer",
+        "images": [
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/1.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/2.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/3.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/4.png",
+            "https://raw.githubusercontent.com/pnavitha/sampleImages/master/5.png"
+        ],
+        "instance_prompt": "photo of sks man",
+        "hf_username": "your_hf_username",
+        "hf_token": "hf_your_write_token",
+        "training_steps": 750,
+        "resolution": 1024,
+        "seed": 298329,
+        "batch_size": 4,
+        "mixed_precision": "fp16",
+        "rank": 4,
+        "alpha": 2,
+        "learning_rate": 0.005
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Response
+
+A new run is always queued first. Keep the `id`: you need it to check the status or stop the run.
+
+```json json
+{
+    "status": "success",
+    "message": "Training request is being processed",
+    "data": {
+        "status": "pending",
+        "id": "9b2f6c1e-4d3a-4f8e-a1b2-3c4d5e6f7a8b",
+        "meta": {
+            "trainer_id": "flux_lora_trainer",
+            "images": ["https://raw.githubusercontent.com/pnavitha/sampleImages/master/1.png"],
+            "trigger_word": "pinkpanda",
+            "hf_username": "your_hf_username",
+            "training_steps": 750
+        }
+    },
+    "id": "9b2f6c1e-4d3a-4f8e-a1b2-3c4d5e6f7a8b",
+    "fetch_result": "https://modelslab.com/api/v6/trainer/status/9b2f6c1e-4d3a-4f8e-a1b2-3c4d5e6f7a8b"
+}
+```
+
+## Errors
+
+Errors come back with HTTP 200 and `"status": "error"`.
+
+| Message | What to do |
+| :--- | :--- |
+| `Invalid trainer ID` | Use one of the `trainer_id` values from the [trainers table](/image-generation/train-model/overview#trainers). |
+| `Insufficient funds. Please top up your wallet to proceed with training.` | Add at least one hour of training to your wallet. |
+| `code: validation_error` | `errors` lists each field that is wrong, for example an image URL that could not be downloaded or an invalid Hugging Face token. |
