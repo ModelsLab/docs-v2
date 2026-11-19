@@ -137,12 +137,6 @@ Endpoint prefix: `https://modelslab.com/api/v6/images/`
 - [Start Training](https://docs.modelslab.com/image-generation/train-master/start-training): Queue a LoRA training run. `POST /v6/trainer/train`
 - [Training Status](https://docs.modelslab.com/image-generation/train-master/training-status): Check a run and get the request that runs your LoRA. `POST /v6/trainer/status/{training_id}`
 - [Stop Training](https://docs.modelslab.com/image-generation/train-master/stop-training): Stop a run and end its billing. `POST /v6/trainer/stop`
-- [Flux LoRA Trainer](https://docs.modelslab.com/image-generation/train-master/trainers/flux-lora): `trainer_id: flux_lora_trainer`
-- [Z-Image Turbo LoRA Trainer](https://docs.modelslab.com/image-generation/train-master/trainers/z-image-turbo): `trainer_id: z-image-turbo-lora-trainer`
-- [Stable Diffusion LoRA Trainer](https://docs.modelslab.com/image-generation/train-master/trainers/stable-diffusion): SDXL or SD 1.5. `trainer_id: sd-trainer`
-- [FLUX.2 Klein 9B LoRA Trainer](https://docs.modelslab.com/image-generation/train-master/trainers/flux2-klein-9b): `trainer_id: flux2-klein-9b-lora-trainer`
-- [FLUX.3 Klein LoRA Trainer](https://docs.modelslab.com/image-generation/train-master/trainers/flux3-klein): `trainer_id: flux3-klein-lora-trainer`
-- [MOSS Image LoRA Trainer](https://docs.modelslab.com/image-generation/train-master/trainers/moss-image): `trainer_id: moss-image-lora-trainer`
 
 ### Model Operations
 

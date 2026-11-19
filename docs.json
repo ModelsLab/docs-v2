@@ -261,18 +261,7 @@
                       "image-generation/train-master/overview",
                       "image-generation/train-master/start-training",
                       "image-generation/train-master/training-status",
-                      "image-generation/train-master/stop-training",
-                      {
-                        "group": "Trainers",
-                        "pages": [
-                          "image-generation/train-master/trainers/flux-lora",
-                          "image-generation/train-master/trainers/z-image-turbo",
-                          "image-generation/train-master/trainers/stable-diffusion",
-                          "image-generation/train-master/trainers/flux2-klein-9b",
-                          "image-generation/train-master/trainers/flux3-klein",
-                          "image-generation/train-master/trainers/moss-image"
-                        ]
-                      }
+                      "image-generation/train-master/stop-training"
                     ]
                   },
                   {
